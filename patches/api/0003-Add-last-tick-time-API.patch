@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ivan Pekov <ivan@mrivanplays.com>
+Date: Sun, 27 Sep 2020 18:01:50 +0300
+Subject: [PATCH] Add last tick time API
+
+Original code by YatopiaMC, licensed under MIT
+You can find the original code on https://github.com/YatopiaMC/Yatopia
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index e5943f1313f97dd6a353873d54424ae70d46dcef..db066cd84ebb1acdbef21988c7f12e6deedd1d36 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -2430,6 +2430,16 @@ public final class Bukkit {
+         return server.isStopping();
+     }
+ 
++    // Yatopia start
++    @Deprecated
++    public static long getLastTickMs() {
++        return server.getLastTickMs();
++    }
++    @NotNull public static java.time.Duration getLastTickTime() {
++        return server.getLastTickTime();
++    }
++    // Yatopia end
++
+     /**
+      * Returns the {@link com.destroystokyo.paper.entity.ai.MobGoals} manager
+      *
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 9d2cef98b09ba7ac005020c2edc7d299583f07e6..5b99d0978fe4e7885169c665a965684fd923b0f9 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -2138,6 +2138,26 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+      */
+     boolean isStopping();
+ 
++    // Yatopia start
++    /**
++     * Returns the time the last tick took in milliseconds.
++     *
++     * @return long time value
++     * @deprecated newer method with java's Duration and a possibility to convert it from millis to something else
++     */
++    @Deprecated
++    default long getLastTickMs() {
++        return getLastTickTime().toMillis();
++    }
++    /**
++     * Returns the time in {@link java.time.Duration} the last tick took.
++     *
++     * @return duration
++     */
++    @NotNull
++    java.time.Duration getLastTickTime();
++    // Yatopia end
++
+     /**
+      * Returns the {@link com.destroystokyo.paper.entity.ai.MobGoals} manager
+      *
