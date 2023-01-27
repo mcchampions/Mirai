@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: etil2jz <81570777+etil2jz@users.noreply.github.com>
+Date: Fri, 8 Apr 2022 21:20:50 +0200
+Subject: [PATCH] Fix tick function tag running before load
+
+
+diff --git a/src/main/java/net/minecraft/server/ServerFunctionManager.java b/src/main/java/net/minecraft/server/ServerFunctionManager.java
+index 2986f110348b376bcdc64fa39b68885551663d4d..669ae94ad5444a73b5c21ffb3a7947317b19e135 100644
+--- a/src/main/java/net/minecraft/server/ServerFunctionManager.java
++++ b/src/main/java/net/minecraft/server/ServerFunctionManager.java
+@@ -46,13 +46,14 @@ public class ServerFunctionManager {
+     }
+ 
+     public void tick() {
+-        this.executeTagFunctions(this.ticking, ServerFunctionManager.TICK_FUNCTION_TAG);
++        //this.executeTagFunctions(this.ticking, ServerFunctionManager.TICK_FUNCTION_TAG); // Mirai - moved down
+         if (this.postReload) {
+             this.postReload = false;
+             Collection<CommandFunction> collection = this.library.getTag(ServerFunctionManager.LOAD_FUNCTION_TAG);
+ 
+             this.executeTagFunctions(collection, ServerFunctionManager.LOAD_FUNCTION_TAG);
+         }
++        this.executeTagFunctions(this.ticking, ServerFunctionManager.TICK_FUNCTION_TAG); // Mirai - fix tick function tag running before load
+ 
+     }
+ 

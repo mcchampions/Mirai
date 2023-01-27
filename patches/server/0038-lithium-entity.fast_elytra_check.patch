@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: 2No2Name <2No2Name@web.de>
+Date: Sat, 8 Jan 2022 04:32:41 +0100
+Subject: [PATCH] lithium: entity.fast_elytra_check
+
+Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
+
+diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+index 7b66983fc360465508a447e46d4d8ab9eddd0634..9a530b2c6c02de2e9fdaeb09143f6e6640e5f214 100644
+--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+@@ -3556,6 +3556,8 @@ public abstract class LivingEntity extends Entity {
+     }
+ 
+     private void updateFallFlying() {
++        if (!this.isFallFlying()) return; // Mirai
++
+         boolean flag = this.getSharedFlag(7);
+ 
+         if (flag && !this.onGround && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {

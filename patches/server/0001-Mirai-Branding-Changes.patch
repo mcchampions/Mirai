@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 8ffc0d92ea29b95e5406ed81088ecf00e7679a97..8cbb43c4a15371c0b2ae5b049e9188add879db7b 100644
+index 8ffc0d92ea29b95e5406ed81088ecf00e7679a97..c9dd7c376029175527af29aced7071f3c1fb94e8 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,7 +7,7 @@ plugins {
@@ -13,7 +13,7 @@ index 8ffc0d92ea29b95e5406ed81088ecf00e7679a97..8cbb43c4a15371c0b2ae5b049e9188ad
  
  dependencies {
 -    implementation(project(":purpur-api")) // Purpur
-+    implementation(project(":mirai-api")) // Mirai // Purpur
++    implementation(project(":mirai-api")) // Purpur // Mirai
      // Pufferfish start
      implementation("io.papermc.paper:paper-mojangapi:1.19.2-R0.1-SNAPSHOT") {
          exclude("io.papermc.paper", "paper-api")
@@ -216,7 +216,7 @@ index 3cb56595822799926a8141e60a42f5d1edfc6de5..6db7517011ac94532751a88db951d28d
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..5d3dcd46f95c31e3cbaca9319945a0ea64ad63e7
+index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf1118fe6454
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 @@ -0,0 +1,136 @@
@@ -358,7 +358,7 @@ index 0000000000000000000000000000000000000000..5d3dcd46f95c31e3cbaca9319945a0ea
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 735e01c550d561aa21c3c8f7f34a495ec3a0ab67..e60f03bad62d496e00e0367c14e0fba6a622a2dc 100644
+index 02ea949342380567448909ad82b4d701831a92bb..cd472be5377019445742d9113dcf1d0bdb0cb95d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -926,7 +926,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -371,7 +371,7 @@ index 735e01c550d561aa21c3c8f7f34a495ec3a0ab67..e60f03bad62d496e00e0367c14e0fba6
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2491785f5edd782b74189bef33eeffe13288f3da..5b561db06759616a1eef0bfc8bcd395392c0b1e0 100644
+index ed7e59b4d573ea9124a086708ca84f755861c896..450586c0ef96f77220a02d08692e35fd57496360 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -249,7 +249,7 @@ import javax.annotation.Nullable; // Paper
@@ -384,10 +384,10 @@ index 2491785f5edd782b74189bef33eeffe13288f3da..5b561db06759616a1eef0bfc8bcd3953
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 0b248a987d22da21aa802c5dba00b4f987c365ea..856ddfa24cd7164dd8bcd535f925661e92d1d18f 100644
+index b1e11bb17212174e546892cbaa04740e632cd075..aa12903ce545811353f590854953a6be1a3ee9fe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -430,7 +430,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -435,7 +435,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

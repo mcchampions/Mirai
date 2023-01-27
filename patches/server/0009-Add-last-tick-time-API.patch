@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7ace6c1e81519b3e4f673d23627ca603fecb646d..3378298b0c465c0df9618804c390930e875bcce3 100644
+index a1a38d1c770e8b32c0cf046f586a1e52f342cbcb..22b58f9faea1ae3e2fc70104d575fdcddb9386e9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1095,6 +1095,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1109,6 +1109,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
@@ -18,26 +18,24 @@ index 7ace6c1e81519b3e4f673d23627ca603fecb646d..3378298b0c465c0df9618804c390930e
  
      protected void runServer() {
          try {
-@@ -1172,7 +1173,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1191,7 +1192,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTime += 50L;
-                 this.startMetricsRecordingTick();
-                 this.profiler.push("tick");
+                 //this.startMetricsRecordingTick(); // Purpur
+                 //this.profiler.push("tick"); // Purpur
 +                long tickStart = System.nanoTime(); // Yatopia
                  this.tickServer(this::haveTime);
 +                lastTickTime = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
-                 this.profiler.popPush("nextTickWait");
+                 //this.profiler.popPush("nextTickWait"); // Purpur
                  this.mayHaveDelayedTasks = true;
-                 this.delayedTasksMaxNextTickTime = Math.max(Util.getMillis() + 50L, this.nextTickTime);
+                     // Purpur start - tps catchup
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index adf6308c0d8dbd8919db60abce51082091005bd1..f6f15f1913b558b457e6e63db93cb0f9c1b6724d 100644
+index 450586c0ef96f77220a02d08692e35fd57496360..d718ac3701775ff224d990a17b0609d307b6ef53 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2914,6 +2914,12 @@ public final class CraftServer implements Server {
-     public CraftPotionBrewer getPotionBrewer() {
-         return this.potionBrewer;
+@@ -3039,4 +3039,11 @@ public final class CraftServer implements Server {
+         return getServer().lagging;
      }
--
-     // Paper end
+     // Purpur end
 +
 +    // Yatopia start
 +    @Override
@@ -47,16 +45,16 @@ index adf6308c0d8dbd8919db60abce51082091005bd1..f6f15f1913b558b457e6e63db93cb0f9
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 9bede6a26c08ede063c7a38f1149c811df14b258..b735769b7876e54db2950ebb4170484447cfb9a6 100644
+index 088239d17aa8178cf8af09ec23cfd4deaaf2bbb6..08867ef2b99ecb541a28ddb58c8a76ce3c18ba58 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -32,6 +32,10 @@ public class TicksPerSecondCommand extends Command
              tpsAvg[i] = TicksPerSecondCommand.format( tps[i] );
          }
-         sender.sendMessage(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
+         sender.sendMessage(ChatColor.GOLD + "TPS from last 5s, 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", ")); // Purpur
 +        // Yatopia start - Last tick time API
 +        java.time.Duration lastTickTime = org.bukkit.Bukkit.getLastTickTime();
-+        sender.sendMessage(ChatColor.GOLD + "Last tick: " + TicksPerSecondCommand.formatTo( lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS ) + " (" + formatTo( lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS ) + ")");
++        sender.sendMessage(ChatColor.GOLD + "Last tick: " + TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS) + " (" + formatTo(lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS) + ")");
 +        // Yatopia end
          if (args.length > 0 && args[0].equals("mem") && sender.hasPermission("bukkit.command.tpsmemory")) {
              sender.sendMessage(ChatColor.GOLD + "Current Memory Usage: " + ChatColor.GREEN + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024)) + "/" + (Runtime.getRuntime().totalMemory() / (1024 * 1024)) + " mb (Max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " mb)");

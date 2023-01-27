@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Thu, 14 Jan 2016 00:49:14 -0500
+Subject: [PATCH] Do not drop items from Give command
+
+Original code by Starlis, licensed under GNU General Public License v3.0
+You can find the original code on https://github.com/starlis/empirecraft
+
+diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
+index f598ab624f850b45d84c015caf5e37fe5ea12eab..d59292eabc6ba77493126ac9f26e2a823d0c99f2 100644
+--- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
++++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
+@@ -259,7 +259,7 @@ public class PurpurConfig {
+         useAlternateKeepAlive = getBoolean("settings.use-alternate-keepalive", useAlternateKeepAlive);
+     }
+ 
+-    public static boolean disableGiveCommandDrops = false;
++    public static boolean disableGiveCommandDrops = true; // EMC - never drop items
+     private static void disableGiveCommandDrops() {
+         disableGiveCommandDrops = getBoolean("settings.disable-give-dropping", disableGiveCommandDrops);
+     }
