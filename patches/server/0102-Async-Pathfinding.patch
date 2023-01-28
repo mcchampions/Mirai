@@ -8,10 +8,10 @@ This patch was ported downstream from the Petal fork.
 Makes most pathfinding-related work happen asynchronously
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 606a893baeaa28886f5f7f871eee87338a5f2006..8f7adceb96cf1ee38b53deb2ad9dd3fde3a00900 100644
+index c2c905a4ee31f0d1418a89326e4877df78ae56cb..2e9239aab2593affd3da7588a68735cbbd783e64 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -258,4 +258,16 @@ public class MiraiConfig {
+@@ -260,4 +260,16 @@ public class MiraiConfig {
              "Whether or not zombies from spawners should be able to",
              "pick up items on the ground.");
      }

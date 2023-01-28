@@ -8,7 +8,7 @@ Original project: https://github.com/Bloom-host/Petal
 
 1. going into game event dispatching can be expensive so run the checks before dispatching
 
-2. euclideangameeventdispatcher is not used concurrently so we ban that usage for improved performance with allays
+2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 index 163e63e3c538c7c1c75ed634896db9d8c00416f3..d07c31d21c98583f7a387a23697b673feae6ad6b 100644

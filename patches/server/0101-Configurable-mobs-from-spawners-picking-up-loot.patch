@@ -5,12 +5,12 @@ Subject: [PATCH] Configurable mobs from spawners picking up loot
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index a68a04dc6fe6af03bddbbed474efe8d77b7efcce..606a893baeaa28886f5f7f871eee87338a5f2006 100644
+index 3186a8f4fad751cffef318b5ad1bd716d7c045cb..c2c905a4ee31f0d1418a89326e4877df78ae56cb 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -247,4 +247,15 @@ public class MiraiConfig {
-             "Whether or not villagers should be lobotomized when",
+@@ -249,4 +249,15 @@ public class MiraiConfig {
              "standing on a 1x1 block while being stuck.");
+         villagerLobotomizeCheckInterval = getInt("villager.lobotomize.check-interval", 100);
      }
 +
 +    public static boolean skeletonPickupLoot;

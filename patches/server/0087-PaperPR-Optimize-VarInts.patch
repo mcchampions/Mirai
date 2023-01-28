@@ -3,6 +3,8 @@ From: astei <andrew@steinborn.me>
 Date: Sat, 1 Oct 2022 09:56:47 +0200
 Subject: [PATCH] PaperPR Optimize VarInts
 
+need update from upstream maybe
+
 Original license: GPLv3
 Original project: https://github.com/PaperMC/Velocity
 Paper pull request: https://github.com/PaperMC/Paper/pull/8418
