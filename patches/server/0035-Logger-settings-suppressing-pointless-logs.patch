@@ -74,25 +74,6 @@ index d13ed3069e944d138442ea440ac3eaf8d44c18d3..ce0a08ac0d24f2ebf822837751ebb6d6
                  } else {
                      handler.accept((Recipe) optional.get());
                  }
-diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b32f44beab2c9790ee2da8403e362e8b3ecc6175..8f6690650e71e1b1d8d48ad50e7a4d09d798fbf1 100644
---- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-+++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1846,7 +1846,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
- 
-     @Override
-     public boolean canSee(org.bukkit.entity.Entity entity) {
--        return !this.hiddenEntities.containsKey(entity.getUniqueId());
-+        // Purpur start
-+        return this.canSee(entity.getUniqueId());
-+    }
-+
-+    public boolean canSee(UUID uuid) {
-+        return !this.hiddenEntities.containsKey(uuid);
-+        // Purpur end
-     }
- 
-     @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 index 110503062b3043cffa082a1cda6b8d57152869aa..3f9bc54595c4f148b1a9af01d25375aa1f61f8b6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
