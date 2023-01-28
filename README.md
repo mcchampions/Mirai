@@ -4,8 +4,8 @@
   <h3>A powerful Minecraft Server Software coming from the future</h3>
   <h4>Mirai is ❗under heavy development❗ and contributions are welcome!</h4>
   <h5><b>This project is experimental, its usage in production environment is discouraged if you are not ready to face possible bugs.</b></h5>
-  
-  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build.yml?branch=ver%2F1.19.2&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.19.2)
+
+  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build.yml?branch=ver%2F1.19.3&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.19.3)
   [![Discord](https://img.shields.io/discord/928402257605701683?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/DdH6Yfu9gM)
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Downloads
 The latest successful build can be downloaded here:
-[mirai-paperclip-1.19.2-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.19.2)
+[mirai-paperclip-1.19.3-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.19.3)
 
 **Please note Java >= 17 is required.**
 

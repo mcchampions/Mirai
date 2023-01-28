@@ -7,13 +7,13 @@ Original code by CaffeineMC, licensed under GNU Lesser General Public License v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
-index f54ca6383298848b2ee7108c41fcea593f924881..ad12d9660cd57d147859a0e3e123c5b87c8e9748 100644
+index ee692b49c62f36287bf9d008861f5d47e0e42c00..fc19193602514717588aa6e407cbd3e5e8192635 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 +++ b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 @@ -33,7 +33,7 @@ public class EntitySectionStorage<T extends EntityAccess> {
      }
  
-     public void forEachAccessibleNonEmptySection(AABB box, Consumer<EntitySection<T>> action) {
+     public void forEachAccessibleNonEmptySection(AABB box, AbortableIterationConsumer<EntitySection<T>> consumer) {
 -        int i = 2;
 +        // Mirai start - lithium: fast retrieval
          int j = SectionPos.posToSectionCoord(box.minX - 2.0D);
@@ -34,8 +34,8 @@ index f54ca6383298848b2ee7108c41fcea593f924881..ad12d9660cd57d147859a0e3e123c5b8
 -                int u = SectionPos.z(s);
 -                if (t >= k && t <= n && u >= l && u <= o) {
 -                    EntitySection<T> entitySection = this.sections.get(s);
--                    if (entitySection != null && !entitySection.isEmpty() && entitySection.getStatus().isAccessible()) {
--                        action.accept(entitySection);
+-                    if (entitySection != null && !entitySection.isEmpty() && entitySection.getStatus().isAccessible() && consumer.accept(entitySection).shouldAbort()) {
+-                        return;
 +        if (m >= j + 4 || o >= l + 4) {
 +            // Vanilla is likely more optimized when shooting entities with TNT cannons over huge distances.
 +            // Choosing a cutoff of 4 chunk size, as it becomes more likely that these entity sections do not exist when
@@ -52,7 +52,7 @@ index f54ca6383298848b2ee7108c41fcea593f924881..ad12d9660cd57d147859a0e3e123c5b8
 +                    if (t >= k && t <= n && u >= l && u <= o) {
 +                        EntitySection<T> entitySection = this.sections.get(s);
 +                        if (entitySection != null && !entitySection.isEmpty() && entitySection.getStatus().isAccessible()) {
-+                            action.accept(entitySection);
++                            consumer.accept(entitySection);
 +                        }
                      }
                  }
@@ -66,12 +66,12 @@ index f54ca6383298848b2ee7108c41fcea593f924881..ad12d9660cd57d147859a0e3e123c5b8
 +            // are placed somewhere inside the packed long
 +            for (int x = j; x <= m; x++) {
 +                for (int z = Math.max(l, 0); z <= o; z++) {
-+                    this.forEachInColumn(x, k, n, z, action);
++                    this.forEachInColumn(x, k, n, z, consumer);
 +                }
 +
 +                int bound = Math.min(-1, o);
 +                for (int z = l; z <= bound; z++) {
-+                    this.forEachInColumn(x, k, n, z, action);
++                    this.forEachInColumn(x, k, n, z, consumer);
 +                }
 +            }
          }
@@ -79,21 +79,21 @@ index f54ca6383298848b2ee7108c41fcea593f924881..ad12d9660cd57d147859a0e3e123c5b8
 +    }
  
 +    // Mirai start - lithium: fast retrieval
-+    private void forEachInColumn(int x, int k, int n, int z, Consumer<EntitySection<T>> action) {
++    private void forEachInColumn(int x, int k, int n, int z, AbortableIterationConsumer<EntitySection<T>> consumer) {
 +        //y from negative to positive, but y is treated as unsigned
 +        for (int y = Math.max(k, 0); y <= n; y++) {
-+            this.consumeSection(SectionPos.asLong(x, y, z), action);
++            this.consumeSection(SectionPos.asLong(x, y, z), consumer);
 +        }
 +        int bound = Math.min(-1, n);
 +        for (int y = k; y <= bound; y++) {
-+            this.consumeSection(SectionPos.asLong(x, y, z), action);
++            this.consumeSection(SectionPos.asLong(x, y, z), consumer);
 +        }
 +    }
 +
-+    private void consumeSection(long pos, Consumer<EntitySection<T>> action) {
-+        EntitySection<T> entitySection = this.getSection(pos);
++    private void consumeSection(long pos, AbortableIterationConsumer<EntitySection<T>> consumer) {
++        EntitySection<T> entitySection = this.sections.get(pos);
 +        if (entitySection != null && 0 != entitySection.size() && entitySection.getStatus().isAccessible()) {
-+            action.accept(entitySection);
++            consumer.accept(entitySection);
 +        }
      }
 +    // Mirai end

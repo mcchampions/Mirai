@@ -235,10 +235,10 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index d4efadbc87ee0b6cb8564c57fc9dcbb48367a767..d0c3b59233875e3dd05695ef4176573900d74b19 100644
+index 673fb3955291407be37dc78be4eec9bf2018128b..a4eabe2562c6eabf2aecc75a06ee2b3f22f8ac02 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -228,6 +228,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -223,6 +223,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          // Paper end
          gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
          gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish

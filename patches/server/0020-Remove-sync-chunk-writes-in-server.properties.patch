@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GNU General Public License v3.0
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 2ef1d4feff67f9e618dc96bd1a3a086ddff25673..aec14ff5235686a3e02b66eb3ad05fed2c4756b4 100644
+index a4eabe2562c6eabf2aecc75a06ee2b3f22f8ac02..66de4ed9e5f6f960474db61805e66d9bca87da0b 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -394,7 +394,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -388,7 +388,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          BufferedWriter bufferedwriter = Files.newBufferedWriter(file);
  
          try {
@@ -20,10 +20,10 @@ index 2ef1d4feff67f9e618dc96bd1a3a086ddff25673..aec14ff5235686a3e02b66eb3ad05fed
              bufferedwriter.write(String.format(Locale.ROOT, "spawn-monsters=%s%n", dedicatedserverproperties.spawnMonsters));
              bufferedwriter.write(String.format(Locale.ROOT, "entity-broadcast-range-percentage=%d%n", dedicatedserverproperties.entityBroadcastRangePercentage));
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
-index a32cfa75a9bea896f558bab646d0868391b069a9..3e4a3915cdf29fc964e0314ce01d156dd2f4f873 100644
+index c7e4330c93baff1f3027d7c75cf857b673d38970..cc0784560a7405edc8695ec9e652309920d54281 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
-@@ -136,7 +136,7 @@ public class DedicatedServerProperties extends Settings<DedicatedServerPropertie
+@@ -144,7 +144,7 @@ public class DedicatedServerProperties extends Settings<DedicatedServerPropertie
          this.maxWorldSize = this.get("max-world-size", (integer) -> {
              return Mth.clamp(integer, (int) 1, 29999984);
          }, 29999984);
