@@ -208,19 +208,6 @@ index 6d8ce6885f879eb2bffbe45374ba87fb4c72dd42..45af598ba66150a31123b06ac65cf0bd
      }
  
      @Override
-diff --git a/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java b/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
-index a9025c018bd709a0444e96344e2ba203638c3e2f..76f1efd8af818ac331b9b83b9f62620f05e66397 100644
---- a/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
-+++ b/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
-@@ -81,7 +81,7 @@ public final class NoiseBasedChunkGenerator extends ChunkGenerator {
-         return (j, k, l) -> {
-             return k < Math.min(-54, i) ? aquifer_b : aquifer_b1;
-         };
--        this.cachedSeaLevel = ((NoiseGeneratorSettings) this.settings.value()).seaLevel(); // Mirai - lithium: gen
-+        this.cachedSeaLevel = this.settings.value().seaLevel(); // Mirai - lithium: gen
-     }
- 
-     @Override
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java
 index f9ee7e23e69a36730c5585a2989cebdc6b2f3342..e84a8bf780dbdcbb5ee1b1260928dc2b3ad21b39 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java

@@ -6,14 +6,14 @@ Subject: [PATCH] Fix brewing stands resetting their brewTime when being
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
-index 55006724ccec9f3de828ec18693728e9741ff65f..bc860dbb9a896dce1577b4b9efb31b6244472803 100644
+index 55006724ccec9f3de828ec18693728e9741ff65f..19c998c7458c8704b6f84da2b3e81a4c4afcc2e1 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
 @@ -295,6 +295,7 @@ public class BrewingStandBlockEntity extends BaseContainerBlockEntity implements
          ContainerHelper.loadAllItems(nbt, this.items);
          this.brewTime = nbt.getShort("BrewTime");
          this.fuel = nbt.getByte("Fuel");
-+        this.ingredient = net.minecraft.core.Registry.ITEM.get(new net.minecraft.resources.ResourceLocation(nbt.getString("Mirai.ingredient"))); // Mirai - fix brewing stands resetting their brewTime when being unloaded
++        this.ingredient = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(new net.minecraft.resources.ResourceLocation(nbt.getString("Mirai.ingredient"))); // Mirai - fix brewing stands resetting their brewTime when being unloaded
      }
  
      @Override
@@ -21,7 +21,7 @@ index 55006724ccec9f3de828ec18693728e9741ff65f..bc860dbb9a896dce1577b4b9efb31b62
          nbt.putShort("BrewTime", (short) this.brewTime);
          ContainerHelper.saveAllItems(nbt, this.items);
          nbt.putByte("Fuel", (byte) this.fuel);
-+        nbt.putString("Mirai.ingredient", net.minecraft.core.Registry.ITEM.getKey(this.ingredient).toString()); // Mirai - fix brewing stands resetting their brewTime when being unloaded
++        nbt.putString("Mirai.ingredient", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this.ingredient).toString()); // Mirai - fix brewing stands resetting their brewTime when being unloaded
      }
  
      @Override

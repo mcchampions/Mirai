@@ -201,7 +201,7 @@ index b0c8cea531fc9872875781235b61502140406644..521f594a93f0ebeba1fefe6f547f4bc7
      @Override
      public FluidState getFluidState(BlockPos pos) {
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java b/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
-index 6b84633bf6956406d2e2c5dd32fa358f41ccc890..a9025c018bd709a0444e96344e2ba203638c3e2f 100644
+index 6b84633bf6956406d2e2c5dd32fa358f41ccc890..b1557a421b91f53a182389e603349a40a680ca70 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.java
 @@ -62,6 +62,7 @@ public final class NoiseBasedChunkGenerator extends ChunkGenerator {
@@ -212,14 +212,14 @@ index 6b84633bf6956406d2e2c5dd32fa358f41ccc890..a9025c018bd709a0444e96344e2ba203
  
      public NoiseBasedChunkGenerator(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
          super(biomeSource);
-@@ -80,6 +81,7 @@ public final class NoiseBasedChunkGenerator extends ChunkGenerator {
-         return (j, k, l) -> {
-             return k < Math.min(-54, i) ? aquifer_b : aquifer_b1;
-         };
-+        this.cachedSeaLevel = ((NoiseGeneratorSettings) this.settings.value()).seaLevel(); // Mirai - lithium: gen
+@@ -69,6 +70,7 @@ public final class NoiseBasedChunkGenerator extends ChunkGenerator {
+         this.globalFluidPicker = Suppliers.memoize(() -> {
+             return NoiseBasedChunkGenerator.createFluidPicker((NoiseGeneratorSettings) settings.value());
+         });
++        this.cachedSeaLevel = this.settings.value().seaLevel(); // Mirai - lithium: gen
      }
  
-     @Override
+     private static Aquifer.FluidPicker createFluidPicker(NoiseGeneratorSettings settings) {
 @@ -395,10 +397,19 @@ public final class NoiseBasedChunkGenerator extends ChunkGenerator {
          return ((NoiseGeneratorSettings) this.settings.value()).noiseSettings().height();
      }

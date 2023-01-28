@@ -645,7 +645,7 @@ index a25d86941d7ed63ac9bcd6f4be71232b0ef6a7a9..ca4774b012c9746229b2695ff7a7bb19
  
      private boolean tryComputePath(Mob entity, WalkTarget walkTarget, long time) {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java b/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
-index 271efbb027f6f5d69ac5bc5dc51102a1eb00ab31..329fc8db1c8c7fa76e8a06e8a96a1b48d7a35733 100644
+index 271efbb027f6f5d69ac5bc5dc51102a1eb00ab31..ed7e4c3a68fee92b9ef3bd4a2651ca79db6d43bd 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/SetClosestHomeAsWalkTarget.java
 @@ -57,20 +57,42 @@ public class SetClosestHomeAsWalkTarget {
@@ -669,7 +669,7 @@ index 271efbb027f6f5d69ac5bc5dc51102a1eb00ab31..329fc8db1c8c7fa76e8a06e8a96a1b48
 +
 +                                // Mirai - wait on the path to be processed
 +                                dev.etil.mirai.path.AsyncPathProcessor.awaitProcessing(possiblePath, path -> {
-+                                    if (path == null || !path.canReach() || this.triedCount < 5) { // Mirai - readd canReach check
++                                    if (path == null || !path.canReach() || mutableInt.getValue() < 5) { // Mirai - readd canReach check
 +                                        long2LongMap.long2LongEntrySet().removeIf((entry) -> {
 +                                            return entry.getLongValue() < mutableLong.getValue();
 +                                        });
@@ -692,7 +692,7 @@ index 271efbb027f6f5d69ac5bc5dc51102a1eb00ab31..329fc8db1c8c7fa76e8a06e8a96a1b48
 +                                        walkTarget.set(new WalkTarget(blockPos, speed, 1));
 +                                        DebugPackets.sendPoiTicketCountPacket(world, blockPos);
 +                                    }
-+                                } else if (this.triedCount < 5) {
++                                } else if (mutableInt.getValue() < 5) {
 +                                    long2LongMap.long2LongEntrySet().removeIf((entry) -> {
 +                                        return entry.getLongValue() < mutableLong.getValue();
 +                                    });
