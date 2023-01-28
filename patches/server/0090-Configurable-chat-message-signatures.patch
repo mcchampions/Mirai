@@ -46,20 +46,22 @@ index 66de4ed9e5f6f960474db61805e66d9bca87da0b..fea141e8064c576790bd1dacffde18bd
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 95341d9f1beba0c42139d8469d0e1442015c7da9..a57ba682bee62fda59e64d179c36c6701b37077c 100644
+index d1460e549bae574ddb80a15db1602277eb1d383a..66fa1442db32fa6c4539e7a27c086d0781e49423 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2157,10 +2157,34 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2157,10 +2157,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
-+            if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatHeaderPacket) {
-+                return;
++            if (packet instanceof ClientboundPlayerChatPacket chat) {
++                LOGGER.info("Sending message: {}", chat.unsignedContent() != null ? chat.unsignedContent()
++                    : chat.body().content());
 +            } else if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat) {
 +                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level.registryAccess())
-+                    .get().decorate(chat.message().serverContent()), false);
++                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
++                        : Component.literal(chat.body().content())), false);
 +
 +
 +                this.send(packet);
@@ -73,8 +75,9 @@ index 95341d9f1beba0c42139d8469d0e1442015c7da9..a57ba682bee62fda59e64d179c36c670
      public void send(Packet<?> packet, @Nullable PacketSendListener callbacks) {
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
-+            if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatHeaderPacket) {
-+                return;
++            if (packet instanceof ClientboundPlayerChatPacket chat) {
++                LOGGER.info("Sending message: {}", chat.unsignedContent() != null ? chat.unsignedContent()
++                    : chat.body().content());
 +            } else if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat && callbacks != null) {
 +                this.send(chat);
 +                return;
