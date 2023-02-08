@@ -1,0 +1,101 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: etil2jz <81570777+etil2jz@users.noreply.github.com>
+Date: Tue, 2 Aug 2022 14:48:12 +0200
+Subject: [PATCH] Configurable chat message signatures
+
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 05e75bd656d99531a4d646da9c902170461ba9d1..c9ad2e722a36907c2bd3f6c44bedb28f52cd6a9e 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -186,4 +186,12 @@ public class MiraiConfig {
+         optimizedHypot = getBoolean("optimize-math-hypot", true,
+             "Whether or not Math.hypot should be replaced by a faster version.");
+     }
++
++    public static boolean chatMessageSignatures;
++    private static void chatreport() {
++        chatMessageSignatures = getBoolean("disable-chat-reports", false,
++            "Whether or not players should be able to report chat messages.",
++            "It also disables the popup when joining a server without",
++            "'secure chat', such as offline-mode servers.");
++    }
+ }
+diff --git a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
+index 6e0a3086da142f1c42007a16bbec7edbab17da04..8369b1be3a58458678b801160f997ad1bf30e6f7 100644
+--- a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
++++ b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
+@@ -69,6 +69,7 @@ public class ServerStatus {
+     }
+ 
+     public boolean enforcesSecureChat() {
++        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return true; // Mirai - configurable chat message signatures
+         return this.enforcesSecureChat;
+     }
+ 
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 64f6f5fdb9a9a2d596eb2570bfafa3a4ee897716..a9a290a80878e3268c57a57381143ec42d1bd246 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -674,6 +674,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+ 
+     @Override
+     public boolean enforceSecureProfile() {
++        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return false; // Mirai - configurable chat message signatures
+         return this.getProperties().enforceSecureProfile && this.getProperties().onlineMode;
+     }
+ 
+diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+index ddc8cfbdca379ddb1b425bb5384bc4303d22b064..aeed19136bf419c7880189d54490758909e886a8 100644
+--- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -2231,10 +2231,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+ 
+     @Override
+     public void send(Packet<?> packet) {
++        // Mirai start - configurable chat message signatures
++        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
++            if (packet instanceof ClientboundPlayerChatPacket chat) {
++                LOGGER.info("Sending message: {}", chat.unsignedContent() != null ? chat.unsignedContent()
++                    : chat.body().content());
++            } else if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat) {
++                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level.registryAccess())
++                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
++                        : Component.literal(chat.body().content())), false);
++
++
++                this.send(packet);
++                return;
++            }
++        }
++        // Mirai end
+         this.send(packet, (PacketSendListener) null);
+     }
+ 
+     public void send(Packet<?> packet, @Nullable PacketSendListener callbacks) {
++        // Mirai start - configurable chat message signatures
++        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
++            if (packet instanceof ClientboundPlayerChatPacket chat) {
++                LOGGER.info("Sending message: {}", chat.unsignedContent() != null ? chat.unsignedContent()
++                    : chat.body().content());
++            } else if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat && callbacks != null) {
++                this.send(chat);
++                return;
++            }
++        }
++        // Mirai end
+         // CraftBukkit start
+         if (packet == null || this.processedDisconnect) { // Spigot
+             return;
+diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
+index e7c37421dda74686a36fc2ad143dc8db14f643b2..9f1cc3a478a923da5b95dc7069e527142c8fd072 100644
+--- a/src/main/java/net/minecraft/server/players/PlayerList.java
++++ b/src/main/java/net/minecraft/server/players/PlayerList.java
+@@ -1460,6 +1460,7 @@ public abstract class PlayerList {
+     }
+ 
+     public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public
++        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return true; // Mirai - configurable chat message signatures
+         return message.hasSignature() && !message.hasExpiredServer(Instant.now());
+     }
+ 

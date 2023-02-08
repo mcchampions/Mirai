@@ -23,12 +23,12 @@ index 54cab7abec16b0c7155fc494f317119f17804d49..5f3ba184fae5170425cfdbd95150ed00
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 5a00ff1ddab485db221abc94cad29df859bf1562..f9dff913e15b92b4baf9de8489f1c4349f2c3212 100644
+index 70a130ad9ae09e9606e01a7e08fecdf0a4018c79..c0194111ce5d13109022ec6d3746c058640aed59 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -456,7 +456,13 @@ public abstract class PlayerList {
-         }
+@@ -457,7 +457,13 @@ public abstract class PlayerList {
          // Paper end
+         org.purpurmc.purpur.task.BossBarTask.addToAll(player); // Purpur
          // CraftBukkit - Moved from above, added world
 -        PlayerList.LOGGER.info("{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", player.getName().getString(), s1, player.getId(), worldserver1.serverLevelData.getLevelName(), player.getX(), player.getY(), player.getZ());
 +        // Yatopia start - configurable logging of player login location

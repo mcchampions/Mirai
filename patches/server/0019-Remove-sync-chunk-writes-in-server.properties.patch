@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Simon Gardling <titaniumtown@gmail.com>
+Date: Mon, 6 Dec 2021 10:27:12 -0500
+Subject: [PATCH] Remove 'sync-chunk-writes' in server.properties
+
+Original code by Titaniumtown, licensed under GNU General Public License v3.0
+You can find the original code on https://gitlab.com/Titaniumtown/JettPack
+
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index c5428e3cc02ca879b566f19b0e4396ed6edcf68d..64f6f5fdb9a9a2d596eb2570bfafa3a4ee897716 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -427,7 +427,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         BufferedWriter bufferedwriter = Files.newBufferedWriter(file);
+ 
+         try {
+-            bufferedwriter.write(String.format(Locale.ROOT, "sync-chunk-writes=%s%n", dedicatedserverproperties.syncChunkWrites));
++            //bufferedwriter.write(String.format(Locale.ROOT, "sync-chunk-writes=%s%n", dedicatedserverproperties.syncChunkWrites)); // JettPack - remove 'sync-chunk-writes' in server.properties
+             bufferedwriter.write(String.format(Locale.ROOT, "gamemode=%s%n", dedicatedserverproperties.gamemode));
+             bufferedwriter.write(String.format(Locale.ROOT, "spawn-monsters=%s%n", dedicatedserverproperties.spawnMonsters));
+             bufferedwriter.write(String.format(Locale.ROOT, "entity-broadcast-range-percentage=%d%n", dedicatedserverproperties.entityBroadcastRangePercentage));
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
+index 5134fed0cd0eedbe0c2177bce91b978b20061517..ec3b70c60e5aa337c8da65eff70bbb8a549ce34b 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
+@@ -145,7 +145,7 @@ public class DedicatedServerProperties extends Settings<DedicatedServerPropertie
+         this.maxWorldSize = this.get("max-world-size", (integer) -> {
+             return Mth.clamp(integer, (int) 1, 29999984);
+         }, 29999984);
+-        this.syncChunkWrites = this.get("sync-chunk-writes", true) && Boolean.getBoolean("Paper.enable-sync-chunk-writes"); // Paper - hide behind flag
++        this.syncChunkWrites = Boolean.getBoolean("Paper.enable-sync-chunk-writes"); // Paper - hide behind flag // JettPack - remove 'sync-chunk-writes' in server.properties
+         this.enableJmxMonitoring = this.get("enable-jmx-monitoring", false);
+         this.enableStatus = this.get("enable-status", true);
+         this.hideOnlinePlayers = this.get("hide-online-players", false);
