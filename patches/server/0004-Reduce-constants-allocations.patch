@@ -364,7 +364,7 @@ index a50af1f62661622f4a162c7dbad4e7ff056a64ef..6f99ddcc324e07ce73a34d36b953d671
              }
          }
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 3f7fab2f80ded9a7a720bd623f1ef028a4d0dca6..3b8071a8169dec7b57974ca32bf3f171d9deacbb 100644
+index a25306fe8a35bb70a490e6a0c01d0340bbc0d781..899076c9e812148ac3d24eafe3824342ba831d4a 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 @@ -236,8 +236,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
@@ -451,7 +451,7 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 120c0804010fd5b38a5f806ca580962ff8b47339..461d9849fad871f0ff1ba3650bc5ea071ca9b70d 100644
+index 413652284e229a51e3eefe47f239e8fa9a09ccb2..8c53d09dfb2a65fb1e3cd4602f0c312033c3cca0 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3105,7 +3105,7 @@ public abstract class LivingEntity extends Entity {
@@ -517,10 +517,10 @@ index 71a36cf9b976443cca9ab63cd0eb23253f638562..8d16113a91bcacc819571a6cfcabd346
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 8450a22b0fc6e8dc5cad0f61ac52a82b3cd3791e..be1381373b022d722ed1506695efa34c6bc6d2b1 100644
+index 6860096cb8c0deecc9c1d87543d1128fb95fd2d4..f4fe9366c4df68516d6fb902808ff6c62926a833 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -976,7 +976,7 @@ public final class ItemStack {
+@@ -977,7 +977,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {

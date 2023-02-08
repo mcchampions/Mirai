@@ -86,7 +86,7 @@ index 574ebb3a2fcd0e4e426a8a7ee88d722ed3b9c3f5..92e548af2bb7b2f67802dae9a7bf8b83
      }
  
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index be1381373b022d722ed1506695efa34c6bc6d2b1..97904fa1bb866f6ca21da902a7c7cd34f480cb07 100644
+index f4fe9366c4df68516d6fb902808ff6c62926a833..9ff700401e8fc3c0a8f1a1041de45535691ae627 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -108,6 +108,7 @@ import org.bukkit.event.world.StructureGrowEvent;
