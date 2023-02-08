@@ -24,7 +24,7 @@ index 9379fd91df73ac482064a89462764dac9835c71f..432ba1293419dea0903e31043f68f5ad
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a3913bbddbf91c5d43625eab5621d54f2056724c..d1460e549bae574ddb80a15db1602277eb1d383a 100644
+index a3913bbddbf91c5d43625eab5621d54f2056724c..6643e8b87912ca9b9e263eda2aaedc263f972ff4 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -259,6 +259,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -43,7 +43,7 @@ index a3913bbddbf91c5d43625eab5621d54f2056724c..d1460e549bae574ddb80a15db1602277
 +        if (dev.etil.mirai.MiraiConfig.useAlternateKeepAlive) {
 +            if (elapsedTime >= 1000L) { // 1 second
 +                if (!processedDisconnect && keepAlives.size() > KEEPALIVE_LIMIT) {
-+                    LOGGER.warn("{} was kicked due to keepalive timeout!", player.getName());
++                    LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName());
 +                    disconnect(Component.translatable("disconnect.timeout"), org.bukkit.event.player.PlayerKickEvent.Cause.TIMEOUT);
 +                } else {
 +                    keepAliveTime = currentTime; // hijack this field for 1 second intervals
