@@ -7,7 +7,7 @@ jobs:
       - name: Checkout Git Repository
         uses: actions/checkout@v3
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@master
+        uses: gradle/wrapper-validation-action@main
       - name: Set up JDK (GraalVM)
         uses: graalvm/setup-graalvm@v1
         with:
@@ -39,3 +39,4 @@ jobs:
           automatic_release_tag: "purpur-1.19.3"
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           files: build/libs/mirai-paperclip-1.19.3-R0.1-SNAPSHOT-reobf.jar
+          prerelease: false

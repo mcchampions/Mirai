@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 020927dfe9624453311d1d171a10f44344ec8710..9ff9fa1ead601ece395d9f5e2d6ebb540032cb36 100644
+index f25c0557cf984b97e0ab361f579eccbf46f82170..c90b165bd8eb64e4543b00b439d0d33bade826b3 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,7 +7,7 @@ plugins {
@@ -17,7 +17,7 @@ index 020927dfe9624453311d1d171a10f44344ec8710..9ff9fa1ead601ece395d9f5e2d6ebb54
      // Pufferfish start
      implementation("io.papermc.paper:paper-mojangapi:1.19.3-R0.1-SNAPSHOT") {
          exclude("io.papermc.paper", "paper-api")
-@@ -83,7 +83,7 @@ tasks.jar {
+@@ -84,7 +84,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -381,10 +381,10 @@ index cea4447aad2d64db56a76e4ba180dc7326d2e13b..896835e5be690a6fa0e21285a306bbea
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4a8aafd341fdad4b5ae326c4759b3381f5061fb5..a420577958b9b37165fc68c5b7ac4191e7f5c170 100644
+index e5b5510806d183944f0ac926604e86f3b3dc1d7a..137cfa31b9bbe179d8dbc2ef5f2ce38c17a52cfc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -262,7 +262,7 @@ import javax.annotation.Nullable; // Paper
+@@ -261,7 +261,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -394,10 +394,10 @@ index 4a8aafd341fdad4b5ae326c4759b3381f5061fb5..a420577958b9b37165fc68c5b7ac4191
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 99ecf59b25e67b9203ed35fefc96879e40875c59..7ba403e4d2ecef7e29a1e0dca1f77f7a5608889b 100644
+index a3a627eca3219d234c57ab491a30c770baf24395..074ba3e699e6785b9d8ebf2c7f3e93d85f783873 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -433,7 +433,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -468,7 +468,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {

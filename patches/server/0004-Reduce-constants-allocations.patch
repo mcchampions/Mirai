@@ -263,7 +263,7 @@ index 88f795681f8f37a90212f6c9613f06d37b07fd0a..c6f50792cbf60762e77ff02831e6477b
      private static final FormattedText TEXT_NULL = FormattedText.of("null");
      private final String key;
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index 31faf2d6492696f7d0c99a48edbc0d6f15db1209..b2f1a6578299e2b4a41461fe396ccd1acbbdbaf5 100644
+index 066b18444e92508908dd823c8d928721e338d06d..40d32139e6274e02700c600a0fc39f43f5c7a56f 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
 @@ -88,7 +88,7 @@ public class Main {
@@ -326,7 +326,7 @@ index b396a329e753f42b3878736b6b14bafda02d3744..bf673299474348fd23c4ecb1291fc7ec
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 59125a25e4cdbbc378f628b1c842236431a70885..aa0946c4a4acbe65a0ad924df6f093b59f3e5dff 100644
+index 04652735fad2d2ef5bd4d08d85ac2df10be7e75d..be4c5a38d67a51dd31d2cc3a87d7bbae8a2f5a26 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -429,7 +429,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -354,7 +354,7 @@ index 59125a25e4cdbbc378f628b1c842236431a70885..aa0946c4a4acbe65a0ad924df6f093b5
              return;
          }
          // Paper end
-@@ -3344,7 +3344,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3350,7 +3350,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -388,7 +388,7 @@ index cd718c7a9f95d003014ea28642b375297872e5f9..82d097f3f5d130201ec8a4daa95b7133
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c34c5368e336ba4b181a95932a9b40cb4f50ae1d..70a130ad9ae09e9606e01a7e08fecdf0a4018c79 100644
+index f9868a0f3d57e5be0a58fabeddd74b0d46e06636..77dc0622b93e1f1b46860c5e1565d26c2cafcdd2 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -681,7 +681,7 @@ public abstract class PlayerList {
@@ -517,7 +517,7 @@ index 0fdfcb3a26698f26caf163828f2cf89e2a28054a..14abd01fea2b7cce7877d2849fd816de
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 39a62d1dd85dbee349b05ac16ef4ee5572ddb1d6..07df7245c628ace3540e4e0485ff22cb589bc059 100644
+index e2b341ecddb946e9c1e546b9706d86dd030db865..2fff769c142e3d12618d9aa82696fe1765f6781e 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -996,7 +996,7 @@ public final class ItemStack {

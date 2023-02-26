@@ -6,10 +6,10 @@ Subject: [PATCH] Fix brewing stands resetting their brewTime when being
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
-index 55006724ccec9f3de828ec18693728e9741ff65f..19c998c7458c8704b6f84da2b3e81a4c4afcc2e1 100644
+index 0bab2693b91d5bab222c7db8bc6965ccde954003..1f6aa88b22471827fce6196b43bcf2a21e16bae5 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/BrewingStandBlockEntity.java
-@@ -295,6 +295,7 @@ public class BrewingStandBlockEntity extends BaseContainerBlockEntity implements
+@@ -300,6 +300,7 @@ public class BrewingStandBlockEntity extends BaseContainerBlockEntity implements
          ContainerHelper.loadAllItems(nbt, this.items);
          this.brewTime = nbt.getShort("BrewTime");
          this.fuel = nbt.getByte("Fuel");
@@ -17,7 +17,7 @@ index 55006724ccec9f3de828ec18693728e9741ff65f..19c998c7458c8704b6f84da2b3e81a4c
      }
  
      @Override
-@@ -303,6 +304,7 @@ public class BrewingStandBlockEntity extends BaseContainerBlockEntity implements
+@@ -308,6 +309,7 @@ public class BrewingStandBlockEntity extends BaseContainerBlockEntity implements
          nbt.putShort("BrewTime", (short) this.brewTime);
          ContainerHelper.saveAllItems(nbt, this.items);
          nbt.putByte("Fuel", (byte) this.fuel);

@@ -81,25 +81,3 @@ index 3b3d9642a8d63798dc28f2f8df77f0466451cbff..8d3605f25e97a375971705c737bc7bac
                  return;
              }
          }
-diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 75be5cdfeb30732975bbc38dc7aab52a0cdead9c..37b42f155f7e1f743ea49d957123f2dc05f3b3fd 100644
---- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-+++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -662,11 +662,15 @@ public final class SimplePluginManager implements PluginManager {
-     @Override
-     public void callEvent(@NotNull Event event) {
-         // Paper - replace callEvent by merging to below method
--        if (event.isAsynchronous() && server.isPrimaryThread()) {
-+        // KTP start - optimize spigot event bus
-+        final boolean isAsync = event.isAsynchronous();
-+        final boolean isPrimary = server.isPrimaryThread(); // Cache to prevent multiple thread object comparisons.
-+        if (isAsync && isPrimary) {
-             throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
--        } else if (!event.isAsynchronous() && !server.isPrimaryThread() && !server.isStopping() ) {
-+        } else if (!isAsync && !isPrimary && !server.isStopping() ) {
-             throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
-         }
-+        // KTP end - optimize spigot event bus
- 
-         HandlerList handlers = event.getHandlers();
-         RegisteredListener[] listeners = handlers.getRegisteredListeners();
