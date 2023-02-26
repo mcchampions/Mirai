@@ -34,10 +34,10 @@ index 6e0a3086da142f1c42007a16bbec7edbab17da04..8369b1be3a58458678b801160f997ad1
      }
  
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 66de4ed9e5f6f960474db61805e66d9bca87da0b..fea141e8064c576790bd1dacffde18bd4d3b796f 100644
+index e2ec1ecb1d9479835afb1323ee5ee8da7bfec358..260edd681112f19e6204ff8d5fe685f87ffb578e 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -635,6 +635,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -642,6 +642,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
@@ -46,7 +46,7 @@ index 66de4ed9e5f6f960474db61805e66d9bca87da0b..fea141e8064c576790bd1dacffde18bd
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index d1460e549bae574ddb80a15db1602277eb1d383a..66fa1442db32fa6c4539e7a27c086d0781e49423 100644
+index 7b6effea9f88398ba17acd89b4111648b0724552..706b696be5781d6b91921fdf4c55e83202128660 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2157,10 +2157,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic

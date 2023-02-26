@@ -326,7 +326,7 @@ index 53198ebfa30273c5ddc1bb4324f5174ff99f688d..b93b626d635fe9d9a3f43a6eff2148d0
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a50af1f62661622f4a162c7dbad4e7ff056a64ef..6f99ddcc324e07ce73a34d36b953d671b3881c62 100644
+index d04a30ee940a785b848240ae6b1aa9705deb7902..b8c78b8474270a6c784770b426df2176d7820a22 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -399,7 +399,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -354,7 +354,7 @@ index a50af1f62661622f4a162c7dbad4e7ff056a64ef..6f99ddcc324e07ce73a34d36b953d671
              return;
          }
          // Paper end
-@@ -3251,7 +3251,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3257,7 +3257,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -517,7 +517,7 @@ index 71a36cf9b976443cca9ab63cd0eb23253f638562..8d16113a91bcacc819571a6cfcabd346
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 6860096cb8c0deecc9c1d87543d1128fb95fd2d4..f4fe9366c4df68516d6fb902808ff6c62926a833 100644
+index 31eed67d07097c7eb1b06547a9f556bcc709d96c..c955083cc00c4a07c3f32e314e6aa8bb7cc040dd 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -977,7 +977,7 @@ public final class ItemStack {

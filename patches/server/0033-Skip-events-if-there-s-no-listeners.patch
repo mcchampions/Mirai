@@ -7,10 +7,10 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/commands/Commands.java b/src/main/java/net/minecraft/commands/Commands.java
-index 330f6c79417378da855326b4da665f9d240e748d..313a9b0ca2f543e782e1884951fcba2d80300524 100644
+index e92864ecf32dd984f6f87f7b05341e43af3a2977..ba66debe6ee5934abead7a5e146741d48bda9749 100644
 --- a/src/main/java/net/minecraft/commands/Commands.java
 +++ b/src/main/java/net/minecraft/commands/Commands.java
-@@ -423,6 +423,7 @@ public class Commands {
+@@ -446,6 +446,7 @@ public class Commands {
      }
  
      private void runSync(ServerPlayer player, Collection<String> bukkit, RootCommandNode<SharedSuggestionProvider> rootcommandnode) {
@@ -18,7 +18,7 @@ index 330f6c79417378da855326b4da665f9d240e748d..313a9b0ca2f543e782e1884951fcba2d
          // Paper end - Async command map building
          new com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent<CommandSourceStack>(player.getBukkitEntity(), (RootCommandNode) rootcommandnode, false).callEvent(); // Paper
          PlayerCommandSendEvent event = new PlayerCommandSendEvent(player.getBukkitEntity(), new LinkedHashSet<>(bukkit));
-@@ -435,6 +436,7 @@ public class Commands {
+@@ -458,6 +459,7 @@ public class Commands {
              }
          }
          // CraftBukkit end
