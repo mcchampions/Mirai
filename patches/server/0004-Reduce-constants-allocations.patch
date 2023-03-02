@@ -263,7 +263,7 @@ index 88f795681f8f37a90212f6c9613f06d37b07fd0a..c6f50792cbf60762e77ff02831e6477b
      private static final FormattedText TEXT_NULL = FormattedText.of("null");
      private final String key;
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index 066b18444e92508908dd823c8d928721e338d06d..40d32139e6274e02700c600a0fc39f43f5c7a56f 100644
+index 781b72fd88149642c9fceaecfbfe7546273fb749..f01c4394c99fac61f1e1e642a00e021d1d23ec24 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
 @@ -88,7 +88,7 @@ public class Main {
@@ -388,7 +388,7 @@ index cd718c7a9f95d003014ea28642b375297872e5f9..82d097f3f5d130201ec8a4daa95b7133
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index f9868a0f3d57e5be0a58fabeddd74b0d46e06636..77dc0622b93e1f1b46860c5e1565d26c2cafcdd2 100644
+index 82093c413722e280b9fcb46fb0ba03ca629e54fa..662a226cf7dc523ee8da8a92f4e175c3906994ac 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -681,7 +681,7 @@ public abstract class PlayerList {
@@ -583,10 +583,10 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index a9289072b048095330ea32d7c965e8dda61a36fc..b2fbc35dab1736ef0ba3a1593d4f6e5e0702f272 100644
+index fef709fce7309795b6d62d33a220a2be2399efd3..fd9bc5004ad2c37749925b98726eb67ee769b527 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1636,7 +1636,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1638,7 +1638,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public org.bukkit.entity.Entity[] getChunkEntities(int chunkX, int chunkZ) {
          io.papermc.paper.world.ChunkEntitySlices slices = ((ServerLevel)this).getEntityLookup().getChunk(chunkX, chunkZ);
          if (slices == null) {

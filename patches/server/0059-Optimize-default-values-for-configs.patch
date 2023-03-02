@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize default values for configs
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index f3593297929842b52e4467ed4386ab12586b1b70..83decb3b591d6fc2782179f5d992e8df88e91802 100644
+index 47e77541e558e18758ae0fcc2aa4e47261e928b6..6beec26c483eb00ef99e294f3c7c5c92a51015bc 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -210,7 +210,7 @@ public class PufferfishConfig {
+@@ -212,7 +212,7 @@ public class PufferfishConfig {
      public static int maxProjectileLoadsPerProjectile;
      private static void projectileLoading() {
          maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 10, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick.");
