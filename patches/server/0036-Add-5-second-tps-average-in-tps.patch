@@ -29,7 +29,7 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f33f9acf52dfa4bdcb913f5d1ad3db1f88e2bf4f..5e5ab31829e22390200d45898df923e8cea6e94c 100644
+index dc309093aa8e7d2688e3bf6ac1d85afb8bccc26f..8716df32cfc131fd8571430908359661b1e2e416 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -301,7 +301,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
@@ -71,10 +71,10 @@ index f33f9acf52dfa4bdcb913f5d1ad3db1f88e2bf4f..5e5ab31829e22390200d45898df923e8
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e2bf06c7aa618c3d6dca592765cfe7542c846b14..74aa04049d6f8441c8d5f9f6c41a78ae00ef0b52 100644
+index 66c2bc60a39fd60f943b68f472d6c663879ee173..eb16f7aa0559c61a2332f484a70177ac7c06d35c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2724,6 +2724,7 @@ public final class CraftServer implements Server {
+@@ -2705,6 +2705,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {

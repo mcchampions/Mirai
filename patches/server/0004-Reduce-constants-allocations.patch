@@ -263,7 +263,7 @@ index 88f795681f8f37a90212f6c9613f06d37b07fd0a..c6f50792cbf60762e77ff02831e6477b
      private static final FormattedText TEXT_NULL = FormattedText.of("null");
      private final String key;
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index 31faf2d6492696f7d0c99a48edbc0d6f15db1209..b2f1a6578299e2b4a41461fe396ccd1acbbdbaf5 100644
+index 781b72fd88149642c9fceaecfbfe7546273fb749..f01c4394c99fac61f1e1e642a00e021d1d23ec24 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
 @@ -88,7 +88,7 @@ public class Main {
@@ -276,7 +276,7 @@ index 31faf2d6492696f7d0c99a48edbc0d6f15db1209..b2f1a6578299e2b4a41461fe396ccd1a
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ece25e6f91620074d0b940f19e5e409401fb3bc5..d82f740ebc088fdb654eb1692416b7d33eae985a 100644
+index f0da8bb61ca9ff7351e123a30bee7147e4d2cfcc..23b9267ef774e8d7994a0c6b113bd7c192c4b832 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1354,8 +1354,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -388,7 +388,7 @@ index a25306fe8a35bb70a490e6a0c01d0340bbc0d781..899076c9e812148ac3d24eafe3824342
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 4b754f6eae683248d7fe11d6d6cb168d5dd696a2..5a00ff1ddab485db221abc94cad29df859bf1562 100644
+index 835e439a1af327c67558653ef79ef7e59692a976..57daa093f97bea259ba0eee65fa9b6691451a6df 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -678,7 +678,7 @@ public abstract class PlayerList {
@@ -583,10 +583,10 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index edd2c236ca7c37e1a3aec0048b8974f4cd62f2cc..794fdad4801e1e7a88207f89b15e64f15c49a0f5 100644
+index eb0a31c885ea64da00abcd5e67083392138b1ca0..638c075a0d170b68604614b17fe02970e6017ca6 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1589,7 +1589,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1591,7 +1591,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public org.bukkit.entity.Entity[] getChunkEntities(int chunkX, int chunkZ) {
          io.papermc.paper.world.ChunkEntitySlices slices = ((ServerLevel)this).getEntityLookup().getChunk(chunkX, chunkZ);
          if (slices == null) {

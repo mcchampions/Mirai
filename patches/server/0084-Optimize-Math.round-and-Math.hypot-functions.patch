@@ -132,7 +132,7 @@ index 40447d00aefb5ffedb8a2ee87155a04088f0649f..633a6e313174244cf13ed89b53893ea5
      }
  }
 diff --git a/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java b/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
-index 0b060183429f4c72ec767075538477b4302bbf0d..75e7d181a8dff7247c6db8448cbf5f22772eab4b 100644
+index e77972c4c264100ffdd824bfa2dac58dbbc6d678..ef62a82a959646d3df0c18100047fe45bc707eb8 100644
 --- a/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
 +++ b/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
 @@ -387,11 +387,11 @@ public final class PlayerChunkLoader {
@@ -182,10 +182,10 @@ index e3e80db89c18588322ffdaa0f9fd85e398cb1471..d947011b80ee14e7aaf74af3d9081fc7
                  throw ERROR_INVALID_TICK_COUNT.create(j);
              } else {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5e5ab31829e22390200d45898df923e8cea6e94c..0d91fb717241ddb153f3d64e14f887fe42199fd5 100644
+index 8716df32cfc131fd8571430908359661b1e2e416..f6d38ba5c8ead167751753e34c2ebd6424209946 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2777,7 +2777,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2776,7 +2776,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -306,7 +306,7 @@ index 046b289174cba6f68e8c06c7e2be7d1210521a89..2975c63fc46f4cf611449a2c09ee64f3
  
          this.level.getProfiler().pop();
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index a496abc0c9b09acc6c97535b615cabe9335eb7d9..179e37992ed35f6965a1ed4ec7e85d87252bbebe 100644
+index aa09a7f49eed842a07566c987f9014f762e4cfe2..5eda750b5fd8d1d0fe14cda98b0d84720b0e8600 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -1066,7 +1066,7 @@ public abstract class Player extends LivingEntity {
