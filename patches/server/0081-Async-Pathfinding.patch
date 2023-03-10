@@ -993,10 +993,10 @@ index 87bd7991a81a2e30ecfccb60e614d7f13acd3744..4e83feb7029a85f7f4d2951a5fa4f880
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index fe1f01d7aa27907298dd2e97e6b4d4fa9c507628..b81e52502d50a2da314c07640ed387cae0e593e6 100644
+index d34600bca83e2742c2f26c300e4528f0bbd203e8..dd7868765541b6b2bf3c114d4fd7d75df32c34a7 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -468,6 +468,14 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -479,6 +479,14 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
      }
  
      static class FrogPathNavigation extends AmphibiousPathNavigation {
@@ -1011,7 +1011,7 @@ index fe1f01d7aa27907298dd2e97e6b4d4fa9c507628..b81e52502d50a2da314c07640ed387ca
          FrogPathNavigation(Frog frog, Level world) {
              super(frog, world);
          }
-@@ -476,7 +484,13 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -487,7 +495,13 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
          protected PathFinder createPathFinder(int range) {
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
              this.nodeEvaluator.setCanPassDoors(true);

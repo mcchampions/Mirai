@@ -276,7 +276,7 @@ index 781b72fd88149642c9fceaecfbfe7546273fb749..f01c4394c99fac61f1e1e642a00e021d
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 896835e5be690a6fa0e21285a306bbea8314a665..9fb96a1d4a3791b8e7ea9c31f9c521db094532da 100644
+index d476beb12fa6bf025cfe09762b27523988acd7fb..df413e88b8a6d327931d93429f760a4f4e957fd3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1379,8 +1379,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -304,7 +304,7 @@ index 0f9a3a6c05fee59c29764f0c0d7a6cb8a2a861b1..15c20a6da60e24d46df160834ac4f3b9
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index b396a329e753f42b3878736b6b14bafda02d3744..bf673299474348fd23c4ecb1291fc7eca68dd103 100644
+index a5655ebb233f1e1e1dd7f79fdd948020478928fc..313c40ac7aa92735b519eae196ff421711dd15f9 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -978,7 +978,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -326,7 +326,7 @@ index b396a329e753f42b3878736b6b14bafda02d3744..bf673299474348fd23c4ecb1291fc7ec
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 04652735fad2d2ef5bd4d08d85ac2df10be7e75d..be4c5a38d67a51dd31d2cc3a87d7bbae8a2f5a26 100644
+index 69463c7ca9995c02968bc2688adbe7131d91aa8b..d8d8b5633f76639c6ec4762d15bf1156933fd4a8 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -429,7 +429,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -596,10 +596,10 @@ index fef709fce7309795b6d62d33a220a2be2399efd3..fd9bc5004ad2c37749925b98726eb67e
          return slices.getChunkEntities();
      }
 diff --git a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-index 5d1567f7413b4065b5587ae45ccf9a3e11355c20..83a1085314a2ac8ac67d0beb02f00b0f72e972c8 100644
+index 558563aed82adaa44d874a6cbb3e381819c2f638..9954a40a63a1c4a21f507c01a7e012876cfeeff6 100644
 --- a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-@@ -404,7 +404,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -445,7 +445,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -608,7 +608,7 @@ index 5d1567f7413b4065b5587ae45ccf9a3e11355c20..83a1085314a2ac8ac67d0beb02f00b0f
          }
  
          @Override
-@@ -453,7 +453,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -494,7 +494,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -617,7 +617,7 @@ index 5d1567f7413b4065b5587ae45ccf9a3e11355c20..83a1085314a2ac8ac67d0beb02f00b0f
          }
  
          @Override
-@@ -490,7 +490,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -536,7 +536,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {

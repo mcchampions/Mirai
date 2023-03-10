@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/Eula.java b/src/main/java/net/minecraft/server/Eula.java
-index 5528a4b7a67e0c257966c587437006004a2e1292..01b84f0ed8b43cd26c3e7c19a32179d9437e03ec 100644
+index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..b4921adf75ec4be9ef2ba83c7ed628da790c75f9 100644
 --- a/src/main/java/net/minecraft/server/Eula.java
 +++ b/src/main/java/net/minecraft/server/Eula.java
-@@ -16,13 +16,27 @@ public class Eula {
+@@ -16,11 +16,25 @@ public class Eula {
  
      public Eula(Path eulaFile) {
          this.file = eulaFile;
@@ -19,6 +19,7 @@ index 5528a4b7a67e0c257966c587437006004a2e1292..01b84f0ed8b43cd26c3e7c19a32179d9
      }
  
 -    private boolean readFile() {
+-        try (InputStream inputStream = Files.newInputStream(this.file)) {
 +    // Yatopia start - global eula file
 +    private boolean globalEula() {
 +        java.io.File globalEula = new java.io.File(System.getProperty("user.home"), "eula.txt");
@@ -34,10 +35,7 @@ index 5528a4b7a67e0c257966c587437006004a2e1292..01b84f0ed8b43cd26c3e7c19a32179d9
 +    // Yatopia end
 +
 +    private boolean readFile(java.nio.file.Path path) {
-         try {
-             boolean var3;
--            try (InputStream inputStream = Files.newInputStream(this.file)) {
-+            try (InputStream inputStream = Files.newInputStream(path)) {
-                 Properties properties = new Properties();
-                 properties.load(inputStream);
-                 var3 = Boolean.parseBoolean(properties.getProperty("eula", "false"));
++        try (InputStream inputStream = Files.newInputStream(path)) {
+             Properties properties = new Properties();
+             properties.load(inputStream);
+             return Boolean.parseBoolean(properties.getProperty("eula", "false"));
