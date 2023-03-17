@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index df413e88b8a6d327931d93429f760a4f4e957fd3..afe8ccae3bbd79261dbb08aaf7a6fd09ad86c830 100644
+index c8f0017ce1fb073bc3b145551df1f80370ab9b50..f56b20071e6d2ac065139780c1baa1e295a01390 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1110,6 +1110,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -18,7 +18,7 @@ index df413e88b8a6d327931d93429f760a4f4e957fd3..afe8ccae3bbd79261dbb08aaf7a6fd09
  
      protected void runServer() {
          try {
-@@ -1191,7 +1192,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1189,7 +1190,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTime += 50L;
                  //this.startMetricsRecordingTick(); // Purpur
                  //this.profiler.push("tick"); // Purpur
@@ -29,10 +29,10 @@ index df413e88b8a6d327931d93429f760a4f4e957fd3..afe8ccae3bbd79261dbb08aaf7a6fd09
                  this.mayHaveDelayedTasks = true;
                      // Purpur start - tps catchup
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index accae453773220531ee82dec72e8fe002c325ac9..8040151e543d3909bd478d914f13393eb54287e2 100644
+index 12488962f5c623762e9c6583924cbc8767f0a3a7..4ace5e92850f41c6c2aa0b43124e962b07da91ef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3003,7 +3003,6 @@ public final class CraftServer implements Server {
+@@ -2996,7 +2996,6 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -40,7 +40,7 @@ index accae453773220531ee82dec72e8fe002c325ac9..8040151e543d3909bd478d914f13393e
      // Paper end
  
      // Purpur start
-@@ -3017,4 +3016,11 @@ public final class CraftServer implements Server {
+@@ -3010,4 +3009,11 @@ public final class CraftServer implements Server {
          return getServer().lagging;
      }
      // Purpur end
