@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index f25c0557cf984b97e0ab361f579eccbf46f82170..c90b165bd8eb64e4543b00b439d0d33bade826b3 100644
+index 0435c1eb5c1fa6f9180ee8dc36a61afbac0f952e..d6fb576812c1db50f877b3941b8c9b5dc64532e6 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,7 +7,7 @@ plugins {
@@ -17,7 +17,7 @@ index f25c0557cf984b97e0ab361f579eccbf46f82170..c90b165bd8eb64e4543b00b439d0d33b
      // Pufferfish start
      implementation("io.papermc.paper:paper-mojangapi:1.19.3-R0.1-SNAPSHOT") {
          exclude("io.papermc.paper", "paper-api")
-@@ -84,7 +84,7 @@ tasks.jar {
+@@ -85,7 +85,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -368,7 +368,7 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cea4447aad2d64db56a76e4ba180dc7326d2e13b..896835e5be690a6fa0e21285a306bbea8314a665 100644
+index 1772800c123353207e3563a7e2c2b70431aec097..d476beb12fa6bf025cfe09762b27523988acd7fb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -927,7 +927,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -381,7 +381,7 @@ index cea4447aad2d64db56a76e4ba180dc7326d2e13b..896835e5be690a6fa0e21285a306bbea
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e5b5510806d183944f0ac926604e86f3b3dc1d7a..137cfa31b9bbe179d8dbc2ef5f2ce38c17a52cfc 100644
+index 584596c8849b4dd7f955216f313eefb3229b375c..accae453773220531ee82dec72e8fe002c325ac9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -261,7 +261,7 @@ import javax.annotation.Nullable; // Paper
@@ -394,10 +394,10 @@ index e5b5510806d183944f0ac926604e86f3b3dc1d7a..137cfa31b9bbe179d8dbc2ef5f2ce38c
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index a3a627eca3219d234c57ab491a30c770baf24395..074ba3e699e6785b9d8ebf2c7f3e93d85f783873 100644
+index 2d53d30d603a4627ad96dfff659ad04012aaf7f9..6a7ea00b6f840c8ce263db359dfc12762fb3f3fd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -468,7 +468,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -464,7 +464,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -444,7 +444,7 @@ index fb87620c742ff7912f5e8ccd2a7930dd605576d9..1e6a999812495e370d7253ad1d746328
      }
  }
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
-index c7c0ed8dfe58c841faf684a1fe228eeda6cd57b7..6394944df2b6574900ec028caac8849b5d09096e 100644
+index 3e6d3b71931a18263eff11841cb4e916ba44e1b8..faaf599bc475c946b87ea35e8d9d2a7a98414fdd 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 @@ -227,7 +227,7 @@ public class PurpurConfig {

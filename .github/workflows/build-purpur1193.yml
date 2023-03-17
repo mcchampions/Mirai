@@ -1,4 +1,4 @@
-name: Build
+name: Build MiraiPurpur 1.19.3
 on: push
 jobs:
   build:

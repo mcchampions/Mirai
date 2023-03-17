@@ -9,7 +9,7 @@ Original license: MIT
 Original project: https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 3f0f14cc70ed5a5b1bea79cc1410a51aa3227e0a..cfa01456b272f3404900bb696b8ecef0147ecc9b 100644
+index 16e25a4810476d1b64f0ed55cab07f90f9b55d85..0a74d4c2f0c217666ca1a6e05f0b0f3b57c8dd18 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -273,6 +273,7 @@ public class ServerPlayer extends Player {
@@ -21,7 +21,7 @@ index 3f0f14cc70ed5a5b1bea79cc1410a51aa3227e0a..cfa01456b272f3404900bb696b8ecef0
      public ServerPlayer(MinecraftServer server, ServerLevel world, GameProfile profile) {
          super(world, world.getSharedSpawnPos(), world.getSharedSpawnAngle(), profile);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 82f5455c3af8dada8e0fbbd6fe42e8794d15f82c..8dc734409ce9b62889725244fdc59cd6572d3525 100644
+index d4c4cafdb786309952a1f2e973a26aa323b5ad3e..046be978ec6d8001137592bab1dcfac519808d13 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -912,12 +912,12 @@ public abstract class PlayerList {
@@ -40,10 +40,10 @@ index 82f5455c3af8dada8e0fbbd6fe42e8794d15f82c..8dc734409ce9b62889725244fdc59cd6
  
          // entityplayer1.connection.teleport(entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b2e4eac89fb2dc223c2b2ae8e36fe430f3f689c5..06ccb88d7d32f7e36edd79a6feca9f41a6afee56 100644
+index 08649f51adb40fa69d45b95c2d13aa918fff41bf..68cacf98a234eee2edec5b367365fe739cbb3942 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1216,6 +1216,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1222,6 +1222,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          // Paper end
      }
  
