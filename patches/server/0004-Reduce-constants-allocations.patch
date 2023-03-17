@@ -304,7 +304,7 @@ index 50cf4d200bc2892f2140c9929193b4b20ad2bd17..58b94632be8d803be247d833c2046d80
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 53198ebfa30273c5ddc1bb4324f5174ff99f688d..b93b626d635fe9d9a3f43a6eff2148d09622e696 100644
+index 619ee9d8b99970fb6fce19438f29e09858412ac4..9415432690edaf01e1ba9cac4b22938e02b3936a 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -929,7 +929,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -326,7 +326,7 @@ index 53198ebfa30273c5ddc1bb4324f5174ff99f688d..b93b626d635fe9d9a3f43a6eff2148d0
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index d04a30ee940a785b848240ae6b1aa9705deb7902..b8c78b8474270a6c784770b426df2176d7820a22 100644
+index 2ca19bbe3a71091843fc7175d726c70321d1fee3..9bc4f6f71c5018e0f9393a4897d2b93a2ce33b76 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -399,7 +399,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -451,7 +451,7 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 413652284e229a51e3eefe47f239e8fa9a09ccb2..8c53d09dfb2a65fb1e3cd4602f0c312033c3cca0 100644
+index f0acc1fd51a49589c33c089562ac80053b4c1ef9..7d460446c431d82c175caa7bc7faca3173ffe9e6 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3105,7 +3105,7 @@ public abstract class LivingEntity extends Entity {
@@ -596,10 +596,10 @@ index eb0a31c885ea64da00abcd5e67083392138b1ca0..638c075a0d170b68604614b17fe02970
          return slices.getChunkEntities();
      }
 diff --git a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-index 564822911c25238900b361d564c5db3103900fb3..f278ef2907e60351a049120765037ce409d8eab4 100644
+index f6268231e39f50bb6adedd85e3c18d746ae3792d..f06294cda300d59310d70faa8ce97486a9f517b8 100644
 --- a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-@@ -383,7 +383,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -417,7 +417,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -608,7 +608,7 @@ index 564822911c25238900b361d564c5db3103900fb3..f278ef2907e60351a049120765037ce4
          }
  
          @Override
-@@ -432,7 +432,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -466,7 +466,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -617,7 +617,7 @@ index 564822911c25238900b361d564c5db3103900fb3..f278ef2907e60351a049120765037ce4
          }
  
          @Override
-@@ -469,7 +469,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -508,7 +508,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {

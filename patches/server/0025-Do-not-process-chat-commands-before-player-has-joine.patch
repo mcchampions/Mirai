@@ -7,12 +7,12 @@ Original code by Starlis, licensed under GNU General Public License v3.0
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 475e87d53d11274657593af1d802486332869de7..a3913bbddbf91c5d43625eab5621d54f2056724c 100644
+index e701ba039e05ed3bd5b6ae093afe10c93478d177..4545264bcf2e8157821f5de46b607b5e1cbdce3e 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2329,6 +2329,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          } else if (this.player.isRemoved() || this.player.getChatVisibility() == ChatVisiblity.HIDDEN) { // CraftBukkit - dead men tell no tales
-             this.send(new ClientboundSystemChatPacket(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED), false));
+             this.send(new ClientboundSystemChatPacket(PaperAdventure.asAdventure(Component.translatable("chat.disabled.options").withStyle(ChatFormatting.RED)), false)); // Paper - Adventure
              return Optional.empty();
 +        } else if (player.joining) { return Optional.empty(); // EMC - do not handle chat messages before they joined
          } else {
