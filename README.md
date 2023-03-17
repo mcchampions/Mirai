@@ -11,7 +11,7 @@
 
 ## Features
 
-- **Fork of [Pufferfish](https://github.com/pufferfish-gg/Pufferfish)** for the best performance.
+- **Fork of [Purpur](https://github.com/PurpurMC/Purpur)** for the best performance.
 - **Contains [Lithium](https://github.com/CaffeineMC/lithium-fabric) patches** which respect Vanilla parity.
 - **Efficient redstone** relying on [Alternate Current](https://github.com/SpaceWalkerRS/alternate-current), up to 4 times faster than Eigencraft's algorithm.
 - **(WIP) Implements [C2ME](https://github.com/RelativityMC/C2ME-fabric)** to improve chunk generation speed, I/O and loading.
