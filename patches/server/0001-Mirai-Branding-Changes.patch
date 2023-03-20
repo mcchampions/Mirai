@@ -5,25 +5,19 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 19dee7357ed60769ae1a238b2c48c3799f3708fd..1e50e7501a4fd0003b805e19c4fb9e1ae99951ef 100644
+index 761bee802da0d3616ba0739434261b14a030805d..85b0a887a49822fb232fb995adc6853aceba0930 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -7,8 +7,12 @@ plugins {
+@@ -7,7 +7,7 @@ plugins {
  }
  
  dependencies {
 -    implementation(project(":purpur-api")) // Purpur
--    implementation("io.papermc.paper:paper-mojangapi:1.19.3-R0.1-SNAPSHOT") // Purpur
 +    implementation(project(":mirai-api")) // Purpur // Mirai
-+    // Pufferfish start
-+    implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") {
-+        exclude("io.papermc.paper", "paper-api")
-+    }
-+    // Pufferfish end
+     implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") // Purpur
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.21.0")
-     implementation("net.minecrell:terminalconsoleappender:1.3.0")
-@@ -66,7 +70,7 @@ tasks.jar {
+@@ -66,7 +66,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -374,7 +368,7 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a8692681accfb132aa984f5e6139459cdfa74cb0..cc196dbf7cf430f288aafbf78fb920271b5a2c6b 100644
+index 0583c4552313d3d4eecdbbc45ba9edd16c47cd38..608674add287318164bbbb59c738075d6ec7ea8d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -927,7 +927,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

@@ -276,7 +276,7 @@ index c6fa6bcd66d61359124a8426b919493c6ec43f06..9f9c5a68bd96de4fc69abd891a7943d8
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cc196dbf7cf430f288aafbf78fb920271b5a2c6b..c8f0017ce1fb073bc3b145551df1f80370ab9b50 100644
+index 608674add287318164bbbb59c738075d6ec7ea8d..8d4053864ea85f14a156547b2be8c91707f7fa23 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1379,8 +1379,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -517,10 +517,10 @@ index 433399fe43acdd8a7a199b95f8de2c02b3f69df3..60dba257e8cff765427941aebb18d3cc
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index dbcaf01760f2e87d1f3119a55a16957b4caad6d5..8a9318deddd9916eb4f8e292e1578ab265faab6c 100644
+index 234d992206f34febc7aff24b78cb3e526254e35f..df6e364bf3faaa4e3e04389e623c265e25b48703 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1013,7 +1013,7 @@ public final class ItemStack {
+@@ -1019,7 +1019,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {
@@ -640,7 +640,7 @@ index 507b3756238ec3054232b805a9b689be6ea12e25..b8232108bb0fae55225b70e7a1e3b035
      private static final int[] SLOTS_FOR_SIDES = new int[]{1};
      public static final int DATA_LIT_DURATION = 1;
 diff --git a/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java b/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
-index 1b076dc77ea57cc779ce3c8742aba2b8c25ce92b..8f76d337cf3f85593ddcd9f17c8a97c538a3a395 100644
+index 36af81f0957d17e170d229059c66f4eb4539dfeb..a4a864a4ad71a75473106106210539db3277df37 100644
 --- a/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
 +++ b/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
 @@ -119,7 +119,7 @@ public class PlayerDataStorage {

@@ -168,10 +168,10 @@ index b2f1d117abd3828140c1edf2baf314b34d2ccf40..d13bafdfa4175e193fa3e337f93e796d
                  throw ERROR_TICK_COUNT_TOO_LOW.create(j, this.minimum);
              } else {
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 578415e5d6c528d24caa5596cbc463ca3c608049..1f1530ed75ea26e4d51585ac7406b6926dea169f 100644
+index 8adc929b556799f26fe73e71f81a0b536a45a4cf..660d8f9e1f1c9d6865b068a75c2522129bb3d38d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2825,7 +2825,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2827,7 +2827,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -297,7 +297,7 @@ index afdf536822a548939be30c673e928eaaec8acfb8..093e4e1d5206fd0a6eab6aea808cf724
  
          //this.level.getProfiler().pop(); // Purpur
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 26ebf695ac4d439cb535bd5f0692ca285a3b8265..05ac4232a26de3ecccfa8a0cdbc4a312ea7346b1 100644
+index d794d03ef221552df029f5e8baadb28003f582ea..d740d95dc896b9e02b368d3894f06090fbe8485d 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -1104,7 +1104,7 @@ public abstract class Player extends LivingEntity {
