@@ -295,10 +295,10 @@ index 0000000000000000000000000000000000000000..4128567173d3985257a1bdd4412c7db0
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 794fdad4801e1e7a88207f89b15e64f15c49a0f5..bf831868c98e7e26ecb04d1b9bd4b11f83bd1872 100644
+index c8bfd87e1aa8b0d9d13c7d2b74f450ee3f5e32c2..061503c103b82034c924eee025efbde572e3dfe7 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -116,9 +116,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -118,9 +118,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public static final int TICKS_PER_DAY = 24000;
      public static final int MAX_ENTITY_SPAWN_Y = 20000000;
      public static final int MIN_ENTITY_SPAWN_Y = -20000000;

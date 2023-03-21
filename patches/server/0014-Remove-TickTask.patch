@@ -9,7 +9,7 @@ Original code by PatinaMC, licensed under GNU General Public License v3.0
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 533621ee9a4864acc94bcc493e326264dcce0824..f33f9acf52dfa4bdcb913f5d1ad3db1f88e2bf4f 100644
+index 1555c56b1dea8d9a9be2393242e8634e000e902b..9186b1800e381d58cb5756b3645a69352ea39351 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -194,7 +194,7 @@ import org.bukkit.event.server.ServerLoadEvent;
@@ -56,8 +56,8 @@ index 533621ee9a4864acc94bcc493e326264dcce0824..f33f9acf52dfa4bdcb913f5d1ad3db1f
      }
 +    */
  
-     private void updateStatusIcon(ServerStatus metadata) {
-         Optional<File> optional = Optional.of(this.getFile("server-icon.png")).filter(File::isFile);
+     private Optional<ServerStatus.Favicon> loadStatusIcon() {
+         Optional<Path> optional = Optional.of(this.getFile("server-icon.png").toPath()).filter((path) -> {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 index c6f5d6756fa0e068a462d9c0ded12e0771abba37..6b8b99f32629c0b4a6db3f7c808430dd88249f8e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
