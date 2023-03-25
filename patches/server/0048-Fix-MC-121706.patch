@@ -3,6 +3,7 @@ From: Etil <81570777+etil2jz@users.noreply.github.com>
 Date: Sun, 2 Jan 2022 20:37:30 +0100
 Subject: [PATCH] Fix MC-121706
 
+// TODO - needs update from purpur
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
 index 6558b0d4bea99948fdc2b51751f3cfdc239d4b67..70a1b1821d4f05e9d2baac85f298eedd425577d2 100644

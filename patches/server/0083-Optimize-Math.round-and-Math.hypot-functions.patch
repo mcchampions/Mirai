@@ -3,6 +3,7 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Wed, 29 Jun 2022 02:17:00 +0200
 Subject: [PATCH] Optimize `Math.round` and `Math.hypot` functions
 
+// TODO - needs to adds more math opt
 Original license: MIT
 Original project: https://github.com/fxmorin/carpet-fixes
 

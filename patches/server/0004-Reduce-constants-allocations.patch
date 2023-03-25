@@ -3,6 +3,7 @@ From: Simon Gardling <titaniumtown@gmail.com>
 Date: Tue, 9 Nov 2021 16:53:39 -0500
 Subject: [PATCH] Reduce constants allocations
 
+// TODO - uses Gale's version
 This patch includes code from the lithium project under the GNU Lesser General Public License v3.0: https://github.com/CaffeineMC/lithium-fabric/ but also original code created by your's truly
 
 Original code by Titaniumtown, licensed under GNU General Public License v3.0

@@ -3,6 +3,7 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Sun, 8 May 2022 13:13:02 +0200
 Subject: [PATCH] Optimize default values for configs
 
+// TODO - needs update
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 index e0076044d0a29e33ee297fe6180a041436075297..dccf3d15fbdc69b565b542634444a92f6dd650c6 100644

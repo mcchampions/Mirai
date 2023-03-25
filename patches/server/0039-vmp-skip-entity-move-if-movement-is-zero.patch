@@ -3,6 +3,7 @@ From: ishland <ishlandmc@yeah.net>
 Date: Sun, 12 Dec 2021 17:19:00 -0500
 Subject: [PATCH] vmp: skip entity move if movement is zero
 
+// TODO - uses Gale's version
 Copyright (c) 2021-2022 ishland
 
 Original code by RelativityMC, licensed under MIT

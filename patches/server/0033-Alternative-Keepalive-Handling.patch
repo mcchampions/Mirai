@@ -3,6 +3,7 @@ From: William Blake Galbreath <blake.galbreath@gmail.com>
 Date: Fri, 11 Oct 2019 00:17:39 -0500
 Subject: [PATCH] Alternative Keepalive Handling
 
+// TODO - uses Gale's version
 Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 

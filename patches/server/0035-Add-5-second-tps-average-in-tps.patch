@@ -3,6 +3,7 @@ From: William Blake Galbreath <blake.galbreath@gmail.com>
 Date: Sun, 28 Jul 2019 01:27:37 -0500
 Subject: [PATCH] Add 5 second tps average in /tps
 
+// TODO - uses Gale's version
 Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
