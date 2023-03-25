@@ -35,7 +35,7 @@ index e6cc2bab1fde2e8c1394772b99201ea8d7eb8057..e35686a816c22b92ed8d988dc68c440e
      public static final Codec<ServerStatus> CODEC = RecordCodecBuilder.create((instance) -> {
          return instance.group(ExtraCodecs.COMPONENT.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new);
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index e2ec1ecb1d9479835afb1323ee5ee8da7bfec358..260edd681112f19e6204ff8d5fe685f87ffb578e 100644
+index 6fcd07ecc03b136b0181154c28c739028915af16..b0b059007b6f46c02168497610c0afb3824f296e 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -642,6 +642,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
