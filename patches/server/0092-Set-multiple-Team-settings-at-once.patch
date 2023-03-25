@@ -3,10 +3,8 @@ From: Cryptite <cryptite@gmail.com>
 Date: Sat, 13 Aug 2022 08:40:09 -0500
 Subject: [PATCH] Set multiple Team settings at once
 
-Copyright (c) 2021 Tom Miller
-
-Original license: MIT
-Original project: https://github.com/Cryptite/Slice
+Original code by Cryptite, licensed under MIT
+You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/world/scores/PlayerTeam.java b/src/main/java/net/minecraft/world/scores/PlayerTeam.java
 index 9464054912e19fc78dd965b71fce20a18564b351..1624a0f8ea211a4c43fd01612674ca501c10d7e6 100644

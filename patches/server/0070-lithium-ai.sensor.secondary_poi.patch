@@ -3,7 +3,7 @@ From: 2No2Name <2No2Name@web.de>
 Date: Tue, 15 Mar 2022 07:14:26 +0100
 Subject: [PATCH] lithium: ai.sensor.secondary_poi
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/sensing/SecondaryPoiSensor.java b/src/main/java/net/minecraft/world/entity/ai/sensing/SecondaryPoiSensor.java

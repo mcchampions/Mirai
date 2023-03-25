@@ -3,10 +3,8 @@ From: Cryptite <cryptite@gmail.com>
 Date: Sat, 13 Aug 2022 08:58:21 -0500
 Subject: [PATCH] Smooth Teleports
 
-Copyright (c) 2021 Tom Miller
-
-Original license: MIT
-Original project: https://github.com/Cryptite/Slice
+Original code by Cryptite, licensed under MIT
+You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
 index b5fd857896b3afcfa69cce55cbc2696dd625f805..3ea7219659dc2a4314c0beacad7fcd78c077161b 100644

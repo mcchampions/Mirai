@@ -3,8 +3,8 @@ From: peaches94 <peachescu94@gmail.com>
 Date: Sun, 10 Jul 2022 13:29:20 -0500
 Subject: [PATCH] reduce work done by game event system
 
-Original license: GPLv3
-Original project: https://github.com/Bloom-host/Petal
+Original code by Bloom-host, licensed under GPL v3
+You can find the original code on https://github.com/Bloom-host/Petal
 
 1. going into game event dispatching can be expensive so run the checks before dispatching
 

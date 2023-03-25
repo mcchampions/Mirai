@@ -4,7 +4,7 @@ Date: Thu, 8 Jul 2021 17:03:31 -0400
 Subject: [PATCH] Use MCUtil.asyncExecutor for MAIN_WORKER_EXECUTOR in
  SystemUtils
 
-Original code by Titaniumtown, licensed under GNU General Public License v3.0
+Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/me/titaniumtown/ServerWorkerWrapper.java b/src/main/java/me/titaniumtown/ServerWorkerWrapper.java

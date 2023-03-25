@@ -3,7 +3,7 @@ From: jellysquid3 <jellysquid3@users.noreply.github.com>
 Date: Mon, 10 Jan 2022 15:27:58 -0500
 Subject: [PATCH] lithium: chunk.serialization
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette.java b/src/main/java/me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette.java

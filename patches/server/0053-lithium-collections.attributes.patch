@@ -3,7 +3,7 @@ From: 2No2Name <2No2Name@web.de>
 Date: Sun, 9 Jan 2022 17:53:11 +0100
 Subject: [PATCH] lithium: collections.attributes
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java

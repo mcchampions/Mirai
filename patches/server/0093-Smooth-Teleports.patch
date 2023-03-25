@@ -3,10 +3,8 @@ From: Cryptite <cryptite@gmail.com>
 Date: Sat, 13 Aug 2022 08:58:14 -0500
 Subject: [PATCH] Smooth Teleports
 
-Copyright (c) 2021 Tom Miller
-
-Original license: MIT
-Original project: https://github.com/Cryptite/Slice
+Original code by Cryptite, licensed under MIT
+You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 index 132ea1a02388a9d0a23f22e725492808ec5acbdd..b41bffcd19c827c1d6ef8f7eb769c8ff10f9977f 100644

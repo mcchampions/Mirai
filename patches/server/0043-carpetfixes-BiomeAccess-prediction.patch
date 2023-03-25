@@ -3,12 +3,8 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Fri, 22 Apr 2022 22:44:56 +0200
 Subject: [PATCH] carpetfixes: BiomeAccess prediction
 
-Author: fxmorin <fx.e.morin@gmail.com>
-
-Original license: MIT
-Original project: https://github.com/fxmorin/carpet-fixes (Yarn mappings)
-
-Copyright (c) 2020 Fx Morin
+Original code by fxmorin, licensed under MIT
+You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/biome/BiomeManager.java b/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
 index 5695c5116c8a338b2e41aafcb2dc9f2146856970..e477b2f28121e043f2edfd0918e2a4dd8ba6f091 100644

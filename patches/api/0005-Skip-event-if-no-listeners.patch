@@ -3,7 +3,7 @@ From: Simon Gardling <titaniumtown@gmail.com>
 Date: Mon, 13 Dec 2021 11:28:08 -0500
 Subject: [PATCH] Skip event if no listeners
 
-Original code by GaleMC, licensed under GNU General Public License v3.0
+Original code by GaleMC, licensed under GPL v3
 You can find the original code on https://github.com/GaleMC/Gale
 
 This patch is based on the following patch:

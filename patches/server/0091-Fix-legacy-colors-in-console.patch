@@ -3,8 +3,8 @@ From: BillyGalbreath <blake.galbreath@gmail.com>
 Date: Sun, 13 Mar 2022 21:00:02 -0500
 Subject: [PATCH] Fix legacy colors in console
 
-Original license: MIT
-Original project: https://github.com/PurpurMC/Purpur
+Original code by PurpurMC, licensed under MIT
+You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/io/papermc/paper/console/HexFormattingConverter.java b/src/main/java/io/papermc/paper/console/HexFormattingConverter.java
 index b9922b07cb105618390187d98acdf89e728e1f5a..6a1eda942aa33fc0802066416f8bc64f5f15d011 100644

@@ -3,8 +3,8 @@ From: PureGero <puregero@gmail.com>
 Date: Sun, 27 Feb 2022 19:21:10 +1000
 Subject: [PATCH] Don't double save the json lists
 
-Original license: GPLv3
-Original project: https://github.com/MultiPaper/MultiPaper
+Original code by MultiPaper, licensed under GPL v3
+You can find the original code on https://github.com/MultiPaper/MultiPaper
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedPlayerList.java b/src/main/java/net/minecraft/server/dedicated/DedicatedPlayerList.java
 index 935dac757280731bfeb0a8f033cbe315ecac46da..ea8b84758cf7cc2b8394467481a175dc3ef9e507 100644

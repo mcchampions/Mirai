@@ -3,9 +3,7 @@ From: foss-mc <69294560+foss-mc@users.noreply.github.com>
 Date: Thu, 1 Jul 2021 11:59:11 +0000
 Subject: [PATCH] Remove TickTask
 
-this patch has removed in Patina
-
-Original code by PatinaMC, licensed under GNU General Public License v3.0
+Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java

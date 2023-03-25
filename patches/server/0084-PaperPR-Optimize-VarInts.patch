@@ -4,10 +4,9 @@ Date: Sat, 1 Oct 2022 09:56:47 +0200
 Subject: [PATCH] PaperPR Optimize VarInts
 
 // TODO - needs update from upstream maybe
-
-Original license: GPLv3
+Original code by PaperMC, licensed under GPL v3
+You can find the original code on https://github.com/PaperMC/Paper/pull/8425
 Original project: https://github.com/PaperMC/Velocity
-Paper pull request: https://github.com/PaperMC/Paper/pull/8418
 
 diff --git a/src/main/java/net/minecraft/network/FriendlyByteBuf.java b/src/main/java/net/minecraft/network/FriendlyByteBuf.java
 index 9938bb90bef84cf784f9a1ceb02a1a45aa8b48a1..015685c97dc4a3485e009e0bf6c8f04302249578 100644

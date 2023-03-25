@@ -3,7 +3,7 @@ From: SuperCoder7979 <25208576+SuperCoder7979@users.noreply.github.com>
 Date: Fri, 22 Jan 2021 16:38:19 -0500
 Subject: [PATCH] lithium: gen
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/Pos.java b/src/main/java/me/jellysquid/mods/lithium/common/util/Pos.java

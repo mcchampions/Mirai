@@ -3,10 +3,8 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Wed, 29 Jun 2022 02:49:45 +0200
 Subject: [PATCH] Faster Sheep.getOffspringColor
 
-Original license: MIT
-Original project: https://github.com/fxmorin/carpet-fixes
-
-Copyright (c) 2020 Fx Morin
+Original code by fxmorin, licensed under MIT
+You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Sheep.java b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 index fb3777e158065a6ce306a2a6e66bec053da2aeb4..13e0d2289e1424a16eb52e525a602ec9a58edef2 100644

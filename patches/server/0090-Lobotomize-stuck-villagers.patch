@@ -4,8 +4,8 @@ Date: Thu, 3 Dec 2020 17:56:18 -0600
 Subject: [PATCH] Lobotomize stuck villagers
 
 // TODO - needs update from Purpur
-Original license: MIT
-Original project: https://github.com/PurpurMC/Purpur
+Original code by PurpurMC, licensed under MIT
+You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
 index e0eae8b46fa1177214f2ed833f2b40e0bf407211..3186a8f4fad751cffef318b5ad1bd716d7c045cb 100644

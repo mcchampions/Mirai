@@ -3,10 +3,8 @@ From: Cryptite <cryptite@gmail.com>
 Date: Sat, 13 Aug 2022 08:40:03 -0500
 Subject: [PATCH] Set multiple Team settings at once
 
-Copyright (c) 2021 Tom Miller
-
-Original license: MIT
-Original project: https://github.com/Cryptite/Slice
+Original code by Cryptite, licensed under MIT
+You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/org/bukkit/scoreboard/Team.java b/src/main/java/org/bukkit/scoreboard/Team.java
 index 06a5d3177ca7ab90c3fd9d2053b2ec5e887c7c62..31e2756c134462debfcfa768d2d0ccb988046d72 100644

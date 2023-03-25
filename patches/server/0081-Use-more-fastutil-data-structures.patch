@@ -3,10 +3,8 @@ From: nopjmp <kthompson@hey.com>
 Date: Mon, 20 Dec 2021 19:16:11 -0600
 Subject: [PATCH] Use more fastutil data structures
 
-Original license: MIT
-Original project: https://github.com/nopjmp/Dionysus
-
-Copyright 2021 Kayla Thompson
+Original code by nopjmp, licensed under MIT
+You can find the original code on https://github.com/nopjmp/Dionysus
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 index 8f52acc03943b18f87b3b2581066496a254b1156..45a8ff666c74408d1659d8afa44df8e61aa65587 100644

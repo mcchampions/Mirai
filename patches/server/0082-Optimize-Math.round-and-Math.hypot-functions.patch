@@ -4,10 +4,8 @@ Date: Wed, 29 Jun 2022 02:17:00 +0200
 Subject: [PATCH] Optimize `Math.round` and `Math.hypot` functions
 
 // TODO - needs to adds more math opt
-Original license: MIT
-Original project: https://github.com/fxmorin/carpet-fixes
-
-Copyright (c) 2020 Fx Morin
+Original code by fxmorin, licensed under MIT
+You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/carpetfixes/helpers/FastMath.java b/src/main/java/carpetfixes/helpers/FastMath.java
 new file mode 100644

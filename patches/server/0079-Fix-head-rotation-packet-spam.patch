@@ -3,8 +3,8 @@ From: cswhite2000 <18whitechristop@gmail.com>
 Date: Sun, 5 Aug 2018 15:00:46 -0700
 Subject: [PATCH] Fix head rotation packet spam
 
-Original license: GPLv3
-Original project: https://github.com/Electroid/SportPaper
+Original code by Electroid, licensed under GPL v3
+You can find the original code on https://github.com/Electroid/SportPaper
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
 index 1253a2f67b9627b52510f0957092bbaf3b60d0b0..cae6ef0c99c383907057a406355bec1ffb69426a 100644

@@ -4,8 +4,8 @@ From: =?UTF-8?q?=E3=84=97=E3=84=A0=CB=8B=20=E3=84=91=E3=84=A7=CB=8A?=
 Date: Fri, 10 Apr 2020 15:47:15 +0800
 Subject: [PATCH] Swaps the predicate order of collision
 
-Original license: GPLv3
-Original project: https://github.com/Akarin-project/Akarin
+Original code by Akarin-project, licensed under GPL v3
+You can find the original code on https://github.com/Akarin-project/Akarin
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
 index cd6f1ec6597c4f6c36ea100c2ffefe991d20f758..c6f629869c9eacaa57de38e09c55ebd797b059f3 100644

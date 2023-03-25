@@ -4,8 +4,8 @@ From: =?UTF-8?q?=E3=84=97=E3=84=A0=CB=8B=20=E3=84=91=E3=84=A7=CB=8A?=
 Date: Thu, 2 Apr 2020 11:16:18 +0800
 Subject: [PATCH] Save Json list asynchronously
 
-Original license: GPLv3
-Original project: https://github.com/Akarin-project/Akarin
+Original code by Akarin-project, licensed under GPL v3
+You can find the original code on https://github.com/Akarin-project/Akarin
 
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
 index 109e08e098a6c1ca1ba3dc2a9a293eaf9d5d7cb7..26c35cc4f40af6cd1465ab2da89624e160a2d096 100644

@@ -3,7 +3,7 @@ From: Bjarne Koll <lynxplay101@gmail.com>
 Date: Thu, 9 Dec 2021 01:53:30 +0100
 Subject: [PATCH] Optimize Spigot event bus
 
-Original code by lynxplay, licensed under GNU General Public License v3.0
+Original code by lynxplay, licensed under GPL v3
 You can find the original code on https://github.com/lynxplay/ktp
 
 This patch contains a lot of small optimizations to the spigot event bus

@@ -4,10 +4,8 @@ Date: Sat, 2 Oct 2021 20:08:30 +0200
 Subject: [PATCH] PaperPR Fix CME in CraftPersistentDataTypeRegistry
 
 // TODO - needs update from upstream
-
-Original license: GPLv3
-Original project: https://github.com/PaperMC/Paper
-Paper pull request: https://github.com/PaperMC/Paper/pull/8425
+Original code by PaperMC, licensed under GPL v3
+You can find the original code on https://github.com/PaperMC/Paper/pull/8425
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
 index 355c9f79fd3132848a00eacde951d1e1bfa92737..6070f7d954e201e06efb6ef27ad0e7d9ff1ab9ff 100644

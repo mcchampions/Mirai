@@ -3,10 +3,10 @@ From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
 Date: Sat, 24 Oct 2020 21:08:17 -0500
 Subject: [PATCH] Configurable criterion triggers
 
-This patch adds toggles for three criterion triggers that are called every tick. These can be very unnecessary, and especially in the case of CriterionTriggerEnterBlock, quite heavy.
-
 Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
+
+This patch adds toggles for three criterion triggers that are called every tick. These can be very unnecessary, and especially in the case of CriterionTriggerEnterBlock, quite heavy.
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
 index b913cdda1625facd5a9a57ae3c6844072d3935e6..6266ae81a2b7f89da1bee07340b6b1c1e5c975ec 100644

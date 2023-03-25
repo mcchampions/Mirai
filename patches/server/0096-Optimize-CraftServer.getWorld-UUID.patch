@@ -3,8 +3,8 @@ From: PureGero <puregero@gmail.com>
 Date: Sun, 26 Jun 2022 11:17:27 +1000
 Subject: [PATCH] Optimize CraftServer.getWorld(UUID)
 
-Original license: GPLv3
-Original project: https://github.com/MultiPaper/MultiPaper
+Original code by MultiPaper, licensed under GPL v3
+You can find the original code on https://github.com/MultiPaper/MultiPaper
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index e2e9fcce7d3a97ee93ac98dbb95214af723b37de..6477809a6e668c6cf120af8e00d169d791a66847 100644

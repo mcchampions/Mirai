@@ -4,10 +4,10 @@ Date: Tue, 9 Nov 2021 16:53:39 -0500
 Subject: [PATCH] Reduce constants allocations
 
 // TODO - uses Gale's version
-This patch includes code from the lithium project under the GNU Lesser General Public License v3.0: https://github.com/CaffeineMC/lithium-fabric/ but also original code created by your's truly
-
-Original code by Titaniumtown, licensed under GNU General Public License v3.0
+Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
+
+This patch includes code from the lithium project under LPGL v3: https://github.com/CaffeineMC/lithium-fabric but also original code created by your's truly
 
 diff --git a/src/main/java/com/destroystokyo/paper/util/maplist/EntityList.java b/src/main/java/com/destroystokyo/paper/util/maplist/EntityList.java
 index 0133ea6feb1ab88f021f66855669f58367e7420b..5f4ad69862b24b568b9e907563289624d196d6ea 100644

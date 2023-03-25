@@ -3,11 +3,11 @@ From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
 Date: Sat, 24 Oct 2020 21:03:53 -0500
 Subject: [PATCH] Smarter statistics ticking
 
-In vanilla, statistics that count time spent for an action (i.e. time played or sneak time) are incremented every tick. This is retarded. With this patch and a configured interval of 20, the statistics are only ticked every 20th tick and are incremented by 20 ticks at a time. This means a lot less ticking with the same accurate counting.
-With an interval of 20, this patch saves roughly 3ms per tick on a server w/ 80 players online.
-
 Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
+
+In vanilla, statistics that count time spent for an action (i.e. time played or sneak time) are incremented every tick. This is retarded. With this patch and a configured interval of 20, the statistics are only ticked every 20th tick and are incremented by 20 ticks at a time. This means a lot less ticking with the same accurate counting.
+With an interval of 20, this patch saves roughly 3ms per tick on a server w/ 80 players online.
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
 index 2b02800666b358159c8ecb63208a14855f90657b..f77cc2ecdc12e0c4a34cd9883940db790d618e4f 100644

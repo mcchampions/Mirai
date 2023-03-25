@@ -3,7 +3,7 @@ From: Aikar <aikar@aikar.co>
 Date: Thu, 14 Jan 2016 00:49:14 -0500
 Subject: [PATCH] Do not drop items from Give command
 
-Original code by Starlis, licensed under GNU General Public License v3.0
+Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/commands/GiveCommand.java b/src/main/java/net/minecraft/server/commands/GiveCommand.java

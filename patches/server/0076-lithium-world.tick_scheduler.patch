@@ -3,8 +3,8 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Fri, 24 Jun 2022 21:17:05 +0200
 Subject: [PATCH] lithium: world.tick_scheduler
 
-Original license: GPLv3
-Original project: https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
+Original code by CaffeineMC, licensed under LGPL v3
+You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/world/scheduler/OrderedTickQueue.java b/src/main/java/me/jellysquid/mods/lithium/common/world/scheduler/OrderedTickQueue.java
 new file mode 100644
