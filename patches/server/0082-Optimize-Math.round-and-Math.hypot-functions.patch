@@ -3,7 +3,7 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Wed, 29 Jun 2022 02:17:00 +0200
 Subject: [PATCH] Optimize `Math.round` and `Math.hypot` functions
 
-// TODO - needs to adds more math opt
+// TODO - needs to add more `Math.hypot` opt
 Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
@@ -180,6 +180,19 @@ index b2f1d117abd3828140c1edf2baf314b34d2ccf40..9ad796fbe60f15be09c3d47e9f7ae210
              if (j < this.minimum) {
                  throw ERROR_TICK_COUNT_TOO_LOW.create(j, this.minimum);
              } else {
+diff --git a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
+index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def4f030041 100644
+--- a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
++++ b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
+@@ -9,7 +9,7 @@ public class VecDeltaCodec {
+ 
+     @VisibleForTesting
+     static long encode(double value) {
+-        return Math.round(value * 4096.0D); // Paper - diff on change
++        return carpetfixes.helpers.FastMath.round(value * 4096.0D); // Paper - diff on change // Mirai
+     }
+ 
+     @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index 92f2ccc45f91cc54a4fdad09965ab021dfa3a7ae..eac852b8b7fa310577721fe8e7c1f424763f879d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
@@ -406,6 +419,19 @@ index f023c01e6a2672cb1c92cc24676cbd90664cf39b..97bfce635b2ada2c75f00f0e0da2d348
              }
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
+diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
+index e6f87e1e3c99195ed11c81162cb54e7f5750c4ba..29f1528b3fc351050a9cbb32d3cf21ed5fcc8ea6 100644
+--- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
++++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
+@@ -280,7 +280,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+     }
+ 
+     protected static float lerpRotation(float prevRot, float newRot) {
+-        prevRot += Math.round((newRot - prevRot) / 360.0F) * 360.0F; // Paper - stop large look changes from crashing the server
++        prevRot += carpetfixes.helpers.FastMath.round((newRot - prevRot) / 360.0F) * 360.0F; // Paper - stop large look changes from crashing the server // Mirai
+ 
+         return Mth.lerp(0.2F, prevRot, newRot);
+     }
 diff --git a/src/main/java/net/minecraft/world/item/Item.java b/src/main/java/net/minecraft/world/item/Item.java
 index dd2f6c67533cc3344a171fe3ae9b3704796d8c50..78e641cf4f5857712f60b168be803f311e7def10 100644
 --- a/src/main/java/net/minecraft/world/item/Item.java
@@ -445,6 +471,21 @@ index 81376e725151f723dad8a7b5c1a4bd597e60294e..5a33c98d29e1a76e5239dab166514ab9
          }
  
          i = Mth.clamp(i, 0, 15);
+diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
+index 51a05900d02dc116ea215730713cd2cf2a4f1c23..eb4a7c41f902fa3d3b424c39eafcf0be068478d6 100644
+--- a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
++++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
+@@ -233,8 +233,8 @@ public class ChunkGeneratorStructureState {
+ 
+             for (int j1 = 0; j1 < j; ++j1) {
+                 double d1 = (double) (4 * i + i * i1 * 6) + (randomsource.nextDouble() - 0.5D) * (double) i * 2.5D;
+-                int k1 = (int) Math.round(Math.cos(d0) * d1);
+-                int l1 = (int) Math.round(Math.sin(d0) * d1);
++                int k1 = (int) carpetfixes.helpers.FastMath.round(Math.cos(d0) * d1);  // Mirai
++                int l1 = (int) carpetfixes.helpers.FastMath.round(Math.sin(d0) * d1);  // Mirai
+                 RandomSource randomsource1 = randomsource.fork();
+ 
+                 list.add(CompletableFuture.supplyAsync(() -> {
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java b/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java
 index 3152d995f87beca1e0243a7d594d352ec458b0ed..d4dbee946d292e0d01910cc4fd1c67cda8fd7dc8 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java
