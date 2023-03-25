@@ -3,7 +3,6 @@ From: chickeneer <emcchickeneer@gmail.com>
 Date: Tue, 3 Aug 2021 10:39:44 -0500
 Subject: [PATCH] Do not process chat/commands before player has joined
 
-// TODO - needs update from upstream
 Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
