@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: l_MrBoom_l <admin@epserv.ru>
+Date: Wed, 30 Sep 2020 18:20:12 +0300
+Subject: [PATCH] Configurable flight checks
+
+Original code by YatopiaMC, licensed under MIT
+You can find the original code on https://github.com/YatopiaMC/Yatopia
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 5f3ba184fae5170425cfdbd95150ed00c3f3433b..293889cf1aab7fc512c4816ddf26d4f1d45ccd7d 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -137,4 +137,12 @@ public class MiraiConfig {
+                                 "Whether or not player login location should be written in logs.");
+     }
+ 
+-}
+\ No newline at end of file
++    public static boolean checkFlying;
++    public static boolean checkVehicleFlying;
++    private static void flightChecks() {
++        checkFlying = getBoolean("checks.flight", true,
++                            "Whether or not vanilla anticheat should check for players flying.");
++        checkVehicleFlying = getBoolean("checks.vehicle-flight", true,
++                                "Whether or not vanilla anticheat should check for passengers flying.");
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+index 19cb3d2369424b6d53f2a0b3db2b908d08c34656..2c66acb5d94afb36cd360682766af44255c85acb 100644
+--- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -373,7 +373,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+         ++this.tickCount;
+         this.knownMovePacketCount = this.receivedMovePacketCount;
+         if (this.clientIsFloating && !this.player.isSleeping() && !this.player.isPassenger() && !this.player.isDeadOrDying()) {
+-            if (++this.aboveGroundTickCount > 80) {
++            if (dev.etil.mirai.MiraiConfig.checkFlying && ++this.aboveGroundTickCount > 80) { // Yatopia - Configurable flight checks
+                 ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked for floating too long!", this.player.getName().getString());
+                 this.disconnect(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.flyingPlayer, org.bukkit.event.player.PlayerKickEvent.Cause.FLYING_PLAYER); // Paper - use configurable kick message & kick event cause
+                 return;
+@@ -392,7 +392,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+             this.vehicleLastGoodY = this.lastVehicle.getY();
+             this.vehicleLastGoodZ = this.lastVehicle.getZ();
+             if (this.clientVehicleIsFloating && this.player.getRootVehicle().getControllingPassenger() == this.player) {
+-                if (++this.aboveGroundVehicleTickCount > 80) {
++                if (dev.etil.mirai.MiraiConfig.checkVehicleFlying && ++this.aboveGroundVehicleTickCount > 80) { // Yatopia - Configurable flight checks
+                     ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked for floating a vehicle too long!", this.player.getName().getString());
+                     this.disconnect(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.flyingVehicle, org.bukkit.event.player.PlayerKickEvent.Cause.FLYING_VEHICLE); // Paper - use configurable kick message & kick event cause
+                     return;

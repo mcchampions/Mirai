@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: 2No2Name <2No2Name@web.de>
+Date: Sat, 8 Jan 2022 03:51:28 +0100
+Subject: [PATCH] lithium: entity.fast_powder_snow_check
+
+Original code by CaffeineMC, licensed under LGPL v3
+You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
+
+diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+index 1fb7a0bb745d03b3eee8e2c09a7325dc7da9a8c5..7b1a83b6fc4cf9f9d241220d8e7923e9bcfc0798 100644
+--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+@@ -572,11 +572,11 @@ public abstract class LivingEntity extends Entity implements Attackable {
+     }
+ 
+     protected void tryAddFrost() {
+-        if (!this.getBlockStateOnLegacy().isAir()) {
++        //if (!this.getBlockStateOnLegacy().isAir()) { // Mirai
+             int i = this.getTicksFrozen();
+ 
+             if (i > 0) {
+-                AttributeInstance attributemodifiable = this.getAttribute(Attributes.MOVEMENT_SPEED);
++                AttributeInstance attributemodifiable = this.getBlockStateOnLegacy().isAir() ? null : this.getAttribute(Attributes.MOVEMENT_SPEED); // Mirai
+ 
+                 if (attributemodifiable == null) {
+                     return;
+@@ -586,7 +586,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+ 
+                 attributemodifiable.addTransientModifier(new AttributeModifier(LivingEntity.SPEED_MODIFIER_POWDER_SNOW_UUID, "Powder snow slow", (double) f, AttributeModifier.Operation.ADDITION));
+             }
+-        }
++        //} // Mirai
+ 
+     }
+ 

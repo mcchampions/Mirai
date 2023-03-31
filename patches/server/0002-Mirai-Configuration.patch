@@ -5,16 +5,15 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index 06bff37e4c1fddd3be6343049a66787c63fb420c..87dba3b296b9849e6eecf9a94c9b8d19e243c8ce 100644
+index 5af15c85fab72034b97ac210ff775e0a8fa0be78..8661896bbde12aba3a17789797cbd2d57a91fad7 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -241,7 +241,9 @@ public class TimingsExport extends Thread {
-         parent.put("config", createObject(
+@@ -243,7 +243,8 @@ public class TimingsExport extends Thread {
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
              pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
--            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
-+            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
-+//            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)), // Pufferfish // Mirai
+             pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
+-            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)) // Pufferfish
++            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)), // Pufferfish // Mirai
 +            pair("mirai", mapAsJSON(dev.etil.mirai.MiraiConfig.getConfigCopy(), null)) // Mirai
          ));
  
@@ -236,22 +235,19 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index bd09e2a96590a78c98a48833023d09e731545aaf..ba8923c7b502e8b2bb5a7fd020b1d0e33884baea 100644
+index 582467e3419c23446b20d3076fbfce22115250a8..7d7377c2b04754c4b023e32b7c9e195668ba8824 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -230,6 +230,12 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // load version history now
-         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
-         // Paper end
-+// Mirai - Waiting Purpur add Pufferfish patch again
-+//        gg.pufferfish.pufferfish.PufferfishConfig.pufferfishFile = (java.io.File) options.valueOf("pufferfish-settings"); // Purpur
-+//        gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
-+//        gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish
+@@ -233,7 +233,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         gg.pufferfish.pufferfish.PufferfishConfig.pufferfishFile = (java.io.File) options.valueOf("pufferfish-settings"); // Purpur
+         gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
+         gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish
+-
 +        dev.etil.mirai.MiraiConfig.load(); // Mirai
 +        dev.etil.mirai.MiraiCommand.init(); // Mirai
- 
          this.setPvpAllowed(dedicatedserverproperties.pvp);
          this.setFlightAllowed(dedicatedserverproperties.allowFlight);
+         this.setMotd(dedicatedserverproperties.motd);
 diff --git a/src/main/resources/logo.png b/src/main/resources/logo.png
 index a7d785f60c884ee4ee487cc364402d66c3dc2ecc..17697262316fba32f4a87ea50a9bc8993be50820 100644
 GIT binary patch

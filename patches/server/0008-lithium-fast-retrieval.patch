@@ -3,7 +3,7 @@ From: 2No2Name <2No2Name@web.de>
 Date: Wed, 15 Dec 2021 11:20:48 -0500
 Subject: [PATCH] lithium: fast retrieval
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java

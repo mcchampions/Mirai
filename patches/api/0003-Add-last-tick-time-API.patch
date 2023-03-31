@@ -3,14 +3,15 @@ From: Ivan Pekov <ivan@mrivanplays.com>
 Date: Sun, 27 Sep 2020 18:01:50 +0300
 Subject: [PATCH] Add last tick time API
 
+// TODO - use Gale's version
 Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 83571abfe9a2eb8736b481de35dfd7fd4c663f5a..7c41322623f7199b6413ac3e0fbaa07ca953b18f 100644
+index 78a9155e78178f1cc8da2a2d42fd3276565030f5..dbc60c909c13990df7ac1a6221401788c48a9b04 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -2432,6 +2432,16 @@ public final class Bukkit {
+@@ -2429,6 +2429,16 @@ public final class Bukkit {
          return server.isStopping();
      }
  
@@ -28,10 +29,10 @@ index 83571abfe9a2eb8736b481de35dfd7fd4c663f5a..7c41322623f7199b6413ac3e0fbaa07c
       * Returns the {@link com.destroystokyo.paper.entity.ai.MobGoals} manager
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 5e951eba9c4865a4727c4c0e58783b0ece357ac0..e56e75b901a5377b844271fa651eb3fdfc1e3fd3 100644
+index 59150f4d5efd05c9cf0bff2c0a2a90ed45a67858..d3e6858099e22a6f98637a4ad227dd14cc436240 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2137,6 +2137,26 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2134,6 +2134,26 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
       */
      boolean isStopping();
  

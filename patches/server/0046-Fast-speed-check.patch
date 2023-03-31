@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jacob <jacob@stellardev.org>
+Date: Wed, 19 Jan 2022 16:55:38 -0700
+Subject: [PATCH] Fast speed check
+
+Original code by NFT-Worlds, licensed under GPL v3
+You can find the original code on https://github.com/NFT-Worlds/Server
+
+etil2jz's note:
+NFT-Worlds is related to Stellar devs, known for countless paid forks mostly taking open source patches,
+doing questionable/buggy ones, and claiming breathtaking performance improvements. Never ever pay for
+any of those Spigot forks!
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index c75568116166e23152e6e34307fbea4ef6d4c2f8..6f5d24e1ef7a033d88ec4e039b7bab24441cb0d0 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -170,4 +170,11 @@ public class MiraiConfig {
+         criterionTriggerLocation = getBoolean("criterion-trigger.location", true,
+             "Whether or not server should listen to location triggers.");
+     }
++
++    public static boolean fastSpeedCheck;
++    private static void speedCheck() {
++        fastSpeedCheck = getBoolean("fast-speed-check", true,
++            "Whether or not server should use a faster method",
++            "to check when entity delta movement is null.");
++    }
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index b402fe4dc972bf87782b23d0b012ebc02fd4b135..a4b3aad2d6685579d64b019c16fffd6c6329f06d 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -1210,7 +1210,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+                 }
+ 
+                 this.tryCheckInsideBlocks();
+-                float f2 = this.getBlockSpeedFactor();
++                // NFT-Worlds start
++                float f2;
++                if (dev.etil.mirai.MiraiConfig.fastSpeedCheck) {
++                    if (this.getDeltaMovement().x == 0 && this.getDeltaMovement().z == 0) {
++                        f2 = 1;
++                    } else {
++                        f2 = this.getBlockSpeedFactor();
++                    }
++                } else {
++                    f2 = this.getBlockSpeedFactor();
++                }
++                // NFT-Worlds stop
+ 
+                 this.setDeltaMovement(this.getDeltaMovement().multiply((double) f2, 1.0D, (double) f2));
+                 // Paper start - remove expensive streams from here

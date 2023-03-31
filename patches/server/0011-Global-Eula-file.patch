@@ -3,14 +3,15 @@ From: tr7zw <tr7zw@live.de>
 Date: Sat, 25 Jul 2020 17:16:18 +0200
 Subject: [PATCH] Global Eula file
 
+// TODO - uses Gale's version
 Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/Eula.java b/src/main/java/net/minecraft/server/Eula.java
-index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..b4921adf75ec4be9ef2ba83c7ed628da790c75f9 100644
+index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..d2a164fc61a249f623c9495c4aa40a7fe61a5708 100644
 --- a/src/main/java/net/minecraft/server/Eula.java
 +++ b/src/main/java/net/minecraft/server/Eula.java
-@@ -16,11 +16,25 @@ public class Eula {
+@@ -16,11 +16,24 @@ public class Eula {
  
      public Eula(Path eulaFile) {
          this.file = eulaFile;
@@ -33,7 +34,6 @@ index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..b4921adf75ec4be9ef2ba83c7ed628da
 +        return false;
 +    }
 +    // Yatopia end
-+
 +    private boolean readFile(java.nio.file.Path path) {
 +        try (InputStream inputStream = Files.newInputStream(path)) {
              Properties properties = new Properties();

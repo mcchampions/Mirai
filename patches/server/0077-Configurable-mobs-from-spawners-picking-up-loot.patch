@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: etil2jz <81570777+etil2jz@users.noreply.github.com>
+Date: Wed, 31 Aug 2022 11:19:23 +0200
+Subject: [PATCH] Configurable mobs from spawners picking up loot
+
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 38cb85492aeb7c84d1dcfe8647ead4c99a9a8f1c..198230ca348782cb5b933b9a21484d2848dd7de8 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -194,4 +194,15 @@ public class MiraiConfig {
+             "It also disables the popup when joining a server without",
+             "'secure chat', such as offline-mode servers.");
+     }
++
++    public static boolean skeletonPickupLoot;
++    public static boolean zombiePickupLoot;
++    private static void spawnersPickupLoot() {
++        skeletonPickupLoot = getBoolean("disable-spawners-pick-up-items.skeleton", false,
++            "Whether or not skeletons from spawners should be able to",
++            "pick up items on the ground.");
++        zombiePickupLoot = getBoolean("disable-spawners-pick-up-items.zombie", false,
++            "Whether or not zombies from spawners should be able to",
++            "pick up items on the ground.");
++    }
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
+index 9c8713ef3aeb2ff203bd0328d15d80c2d78d09e9..a5d407b7e46ade260267881edef1535074fff320 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
++++ b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
+@@ -141,7 +141,13 @@ public abstract class AbstractSkeleton extends Monster implements RangedAttackMo
+         this.populateDefaultEquipmentSlots(randomsource, difficulty);
+         this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
+         this.reassessWeaponGoal();
+-        this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
++        // Mirai start
++        if (dev.etil.mirai.MiraiConfig.skeletonPickupLoot && spawnReason == MobSpawnType.SPAWNER) {
++            this.setCanPickUpLoot(false);
++        } else {
++            this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
++        }
++        // Mirai end
+         if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+             if (net.minecraft.world.entity.ambient.Bat.isHalloweenSeason(world.getMinecraftWorld()) && this.random.nextFloat() < this.level.purpurConfig.chanceHeadHalloweenOnEntity) { // Purpur
+                 this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(randomsource.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
+index 36d37e544e342e1bc584374580dbb5c883523204..d709ca1f1e946d2551d8db272f9819cd786688f5 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
++++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
+@@ -556,7 +556,13 @@ public class Zombie extends Monster {
+         Object object = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+         float f = difficulty.getSpecialMultiplier();
+ 
+-        this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
++        // Mirai start
++        if (dev.etil.mirai.MiraiConfig.zombiePickupLoot && spawnReason == MobSpawnType.SPAWNER) {
++            this.setCanPickUpLoot(false);
++        } else {
++            this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
++        }
++        // Mirai end
+         if (object == null) {
+             object = new Zombie.ZombieGroupData(Zombie.getSpawnAsBabyOdds(randomsource), true);
+         }

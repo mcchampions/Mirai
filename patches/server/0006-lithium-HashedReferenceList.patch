@@ -3,7 +3,7 @@ From: JellySquid <jellysquid+atwork@protonmail.com>
 Date: Fri, 31 Jul 2020 21:46:32 -0500
 Subject: [PATCH] lithium: HashedReferenceList
 
-Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/collections/HashedReferenceList.java b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/HashedReferenceList.java
@@ -295,7 +295,7 @@ index 0000000000000000000000000000000000000000..4128567173d3985257a1bdd4412c7db0
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 09fe9ea37ed556b214dfead6c672146a33b7a200..6f9f067c4c4f028cb6b904ceb1624a2cb042a028 100644
+index 72ff3d3d0056b04459a9d0959c6d9d999bc2d2d8..4428c0ea95570676935bcc7fafb7205fc40a79e1 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -118,9 +118,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {

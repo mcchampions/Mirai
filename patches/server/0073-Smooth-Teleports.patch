@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Cryptite <cryptite@gmail.com>
+Date: Sat, 13 Aug 2022 08:58:14 -0500
+Subject: [PATCH] Smooth Teleports
+
+Original code by Cryptite, licensed under MIT
+You can find the original code on https://github.com/Cryptite/Slice
+
+diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+index 12dd921efb23591357ea5c1de62bdf8357668a86..cdfa420d110e714c89a2b751050618766ae18ae0 100644
+--- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
++++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+@@ -280,6 +280,7 @@ public class ServerPlayer extends Player {
+     private boolean ramBar = false; // Purpur
+     private boolean tpsBar = false; // Purpur
+     private boolean compassBar = false; // Purpur
++    public boolean smoothWorldTeleport; // Slice
+ 
+     public ServerPlayer(MinecraftServer server, ServerLevel world, GameProfile profile) {
+         super(world, world.getSharedSpawnPos(), world.getSharedSpawnAngle(), profile);
+diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
+index edef53befd84f6785c49cb9d87998922b2132d42..184aabe34500fa80b16d9c85fffa21463acb6811 100644
+--- a/src/main/java/net/minecraft/server/players/PlayerList.java
++++ b/src/main/java/net/minecraft/server/players/PlayerList.java
+@@ -919,12 +919,12 @@ public abstract class PlayerList {
+         int i = flag ? 1 : 0;
+         // CraftBukkit start
+         LevelData worlddata = worldserver1.getLevelData();
+-        entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation()));
++        if (!entityplayer.smoothWorldTeleport) entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation())); // Slice
+         entityplayer1.connection.send(new ClientboundSetChunkCacheRadiusPacket(worldserver1.getChunkSource().chunkMap.playerChunkManager.getTargetSendDistance())); // Spigot // Paper - replace old player chunk management
+         entityplayer1.connection.send(new ClientboundSetSimulationDistancePacket(worldserver1.getChunkSource().chunkMap.playerChunkManager.getTargetTickViewDistance())); // Spigot // Paper - replace old player chunk management
+         entityplayer1.spawnIn(worldserver1);
+         entityplayer1.unsetRemoved();
+-        entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
++        if (!entityplayer.smoothWorldTeleport) entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot())); // Slice
+         entityplayer1.setShiftKeyDown(false);
+ 
+         // entityplayer1.connection.teleport(entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot());
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index f81b320ef330d03b68cf8b4af04b7c991ce9636b..9f1fb947d997ebf1716df4f67ce44e6e106d6a13 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1245,6 +1245,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         // Paper end
+     }
+ 
++    // Slice start
++    public void teleportWithoutRespawn(Location location) {
++        ServerPlayer serverPlayer = getHandle();
++        serverPlayer.smoothWorldTeleport = true;
++        teleport(location);
++        serverPlayer.smoothWorldTeleport = false;
++    }
++    // Slice end
++
+     @Override
+     public boolean teleport(Location location, PlayerTeleportEvent.TeleportCause cause) {
+         // Paper start - Teleport API

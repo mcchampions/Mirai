@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e0f69edf603c2ec99bc92b16b18912272cc41bd9..5e951eba9c4865a4727c4c0e58783b0ece357ac0 100644
+index 730caafaf9629664ba125f3884559da76616f655..59150f4d5efd05c9cf0bff2c0a2a90ed45a67858 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1983,6 +1983,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1980,6 +1980,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          }
          // Purpur end
  
