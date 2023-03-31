@@ -312,7 +312,7 @@ index ff2862bf1f511196d1e911e2584262ed728e9a81..4a5a8eb72a39c11331d18c6c35d880f4
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 24d48fb4a63c2db19c7f957ad2260415fe1db9fe..f48e89862234104310d4c83d620ec5608ccbd189 100644
+index e6e1c46a01961d47a774e34e430c8eacda22d558..8a261cb171fe0d6efbcdd55e5e6c5f9c61e7ff5c 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -401,7 +401,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -340,7 +340,7 @@ index 24d48fb4a63c2db19c7f957ad2260415fe1db9fe..f48e89862234104310d4c83d620ec560
              return;
          }
          // Paper end
-@@ -3271,7 +3271,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3272,7 +3272,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -503,10 +503,10 @@ index 71a36cf9b976443cca9ab63cd0eb23253f638562..8d16113a91bcacc819571a6cfcabd346
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index a6253272205337b3b855679b3057c2519a807a4c..b38c83cb69b52d48bac0812115c0f44208ee0754 100644
+index d690b8d0c1da1f56b226376df8c76c34375e3c73..ae46ecce39319c78cc8f6c443ad1cd2182bf6cb8 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1000,7 +1000,7 @@ public final class ItemStack {
+@@ -1001,7 +1001,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {
@@ -613,7 +613,7 @@ index ae90e86327957bb784e2d81694ee7eea288bb455..079e199bb54ddfb9307af0a57992b974
  
          @Override
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index 2a786c9fd29dc2139cf487fa645cd43345d60167..68c482f893d45bac9d362979f3502ed8c06ff8d6 100644
+index a3f073066f6e2eea8964461ad2b0409ade202f35..62fa0a878ca0916d0070cf57b27bb3816c4e1288 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 @@ -65,7 +65,7 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit

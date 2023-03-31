@@ -47,10 +47,10 @@ index 6fcd07ecc03b136b0181154c28c739028915af16..b0b059007b6f46c02168497610c0afb3
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 94abdfe2e8148ea04167e275bf661ea74a1b8bad..634f8518fd03c467c6d03c8ac097afa2ba21c309 100644
+index 950afc95755f619a46b5e1beb1aea3b6efefa0d3..a1a5dcac23a55819f0a7c4978ae73feb31420b41 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2149,10 +2149,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2150,10 +2150,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {

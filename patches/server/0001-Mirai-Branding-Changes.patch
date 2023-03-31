@@ -368,10 +368,10 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6d5e9400892b86562519a893349ca55e566bfb24..548482b0ddce3f3b75dc77d8278baf0a2d981254 100644
+index a29d92b3f2658b63545b25092bb3a1fea46ca36b..866d100de526e5995408806ac313546ce4fcdfa7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -926,7 +926,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -927,7 +927,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          shutdownThread = Thread.currentThread();
          org.spigotmc.WatchdogThread.doStop(); // Paper
          if (!isSameThread()) {
@@ -380,7 +380,7 @@ index 6d5e9400892b86562519a893349ca55e566bfb24..548482b0ddce3f3b75dc77d8278baf0a
              while (this.getRunningThread().isAlive()) {
                  this.getRunningThread().stop();
                  try {
-@@ -1683,7 +1683,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1684,7 +1684,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {

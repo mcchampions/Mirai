@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index 2cc44fbf8e5bd436b6d4e19f6c06b351e750cb31..3491ee7e1dfeb130ffab57e9696b784220aeae67 100644
+index 5af15c85fab72034b97ac210ff775e0a8fa0be78..8661896bbde12aba3a17789797cbd2d57a91fad7 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
+@@ -243,7 +243,8 @@ public class TimingsExport extends Thread {
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
              pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
              pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
@@ -235,7 +235,7 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 673fb3955291407be37dc78be4eec9bf2018128b..a4eabe2562c6eabf2aecc75a06ee2b3f22f8ac02 100644
+index ad4fdbdcf09f30d10e61ccf47f8fb9ce6bd92e73..6fcd07ecc03b136b0181154c28c739028915af16 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,6 +223,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
