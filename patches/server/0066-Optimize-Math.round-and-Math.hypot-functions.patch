@@ -180,7 +180,7 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a8facf498afedbf8cf72784c531d01157f02ea2e..b0abd77295976b6310b51e707c495751450e242b 100644
+index ab243baefcb46d5abb6e62b8ac25fc4f3e44cfe8..885412a86720d4ea9e29be8a3d799e519e79744d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -2833,7 +2833,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
@@ -539,15 +539,15 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 0ecac76577eb440a0c3104ef4603acec826c474d..26ff7f68dacad945095d794c1def4752e0775abb 100644
+index 98de143b19c37f5e5a85e1475fafa32dd018e765..29590e63333f0184b59ade1605370ee70f5d077d 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -52,7 +52,7 @@ public class TicksPerSecondCommand extends Command
-     private static String format(double tps) // Paper - Made static
+@@ -66,7 +66,7 @@ public class TicksPerSecondCommand extends Command
      {
-         return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
--                + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
-+                + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( carpetfixes.helpers.FastMath.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise // Mirai
+         // Paper
+         net.kyori.adventure.text.format.TextColor color = ( ( tps > 18.0 ) ? net.kyori.adventure.text.format.NamedTextColor.GREEN : ( tps > 16.0 ) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED );
+-        String amount = Math.min(Math.round(tps * 100.0) / 100.0, 20.0) + (tps > 21.0  ? "*" : ""); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
++        String amount = Math.min(carpetfixes.helpers.FastMath.round(tps * 100.0) / 100.0, 20.0) + (tps > 21.0  ? "*" : ""); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
+         return net.kyori.adventure.text.Component.text(amount, color);
+         // Paper end
      }
- 
-     // Yatopia start - Last tick time API

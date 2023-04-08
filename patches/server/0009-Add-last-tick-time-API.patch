@@ -8,7 +8,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 201a63ba446062ecd1254a9e7fcb276b79f2281c..3f5829a3cbba7819cb3696545c625855c6758221 100644
+index f4bea1fc4a52f25e9eb3673b81476b661849de3e..07659191f0a09e31422a43a088cb6255a19cc16f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1113,6 +1113,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -30,7 +30,7 @@ index 201a63ba446062ecd1254a9e7fcb276b79f2281c..3f5829a3cbba7819cb3696545c625855
                  this.mayHaveDelayedTasks = true;
                      // Purpur start - tps catchup
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 84a8bff8b07f074b06ec38f2715e062fcf68dcb1..b2b129446ca75e1d824b1ca4b95ef102e592a38e 100644
+index 7462725fc63adb2b39db24c46d4e02ca0fed9860..c3a5fc243a7128d6c0e2dbb939d6e694f6eefa6e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -3001,7 +3001,6 @@ public final class CraftServer implements Server {
@@ -54,23 +54,23 @@ index 84a8bff8b07f074b06ec38f2715e062fcf68dcb1..b2b129446ca75e1d824b1ca4b95ef102
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 088239d17aa8178cf8af09ec23cfd4deaaf2bbb6..0ecac76577eb440a0c3104ef4603acec826c474d 100644
+index 08221c7256f41ca511a4a61ffb2b979325aebee9..98de143b19c37f5e5a85e1475fafa32dd018e765 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -32,6 +32,10 @@ public class TicksPerSecondCommand extends Command
-             tpsAvg[i] = TicksPerSecondCommand.format( tps[i] );
-         }
-         sender.sendMessage(ChatColor.GOLD + "TPS from last 5s, 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", ")); // Purpur
+@@ -42,6 +42,10 @@ public class TicksPerSecondCommand extends Command
+         builder.append(net.kyori.adventure.text.Component.text("TPS from last 5s, 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD));
+         builder.append(net.kyori.adventure.text.Component.join(net.kyori.adventure.text.JoinConfiguration.commas(true), tpsAvg));
+         sender.sendMessage(builder.asComponent());
 +        // Yatopia start - Last tick time API
 +        java.time.Duration lastTickTime = org.bukkit.Bukkit.getLastTickTime();
-+        sender.sendMessage(ChatColor.GOLD + "Last tick: " + TicksPerSecondCommand.formatTo( lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS ) + " (" + formatTo( lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS ) + ")");
++        sender.sendMessage(ChatColor.GOLD + "Last tick: " + TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS) + " (" + formatTo(lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS) + ")");
 +        // Yatopia end
          if (args.length > 0 && args[0].equals("mem") && sender.hasPermission("bukkit.command.tpsmemory")) {
-             sender.sendMessage(ChatColor.GOLD + "Current Memory Usage: " + ChatColor.GREEN + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024)) + "/" + (Runtime.getRuntime().totalMemory() / (1024 * 1024)) + " mb (Max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " mb)");
-             if (!hasShownMemoryWarning) {
-@@ -50,4 +54,15 @@ public class TicksPerSecondCommand extends Command
-         return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
-                 + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
+             sender.sendMessage(net.kyori.adventure.text.Component.text()
+                 .append(net.kyori.adventure.text.Component.text("Current Memory Usage: ", net.kyori.adventure.text.format.NamedTextColor.GOLD))
+@@ -66,4 +70,15 @@ public class TicksPerSecondCommand extends Command
+         return net.kyori.adventure.text.Component.text(amount, color);
+         // Paper end
      }
 +
 +    // Yatopia start - Last tick time API
