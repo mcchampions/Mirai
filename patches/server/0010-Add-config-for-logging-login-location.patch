@@ -23,10 +23,10 @@ index 54cab7abec16b0c7155fc494f317119f17804d49..5f3ba184fae5170425cfdbd95150ed00
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index af717eef9f3be0cb20d7315d5081aba8d28992ae..3cb4a937dd5a77aec5a3a5da8150ee51b78a6e6a 100644
+index 48bd42465865d2675a4713c1d9ecbbf7b8438629..197789abfcc9a80e8139e75fde49b5f74c1b7bfb 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -463,7 +463,13 @@ public abstract class PlayerList {
+@@ -467,7 +467,13 @@ public abstract class PlayerList {
          }
          // Paper end
          // CraftBukkit - Moved from above, added world

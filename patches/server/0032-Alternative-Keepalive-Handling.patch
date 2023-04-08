@@ -25,7 +25,7 @@ index 9379fd91df73ac482064a89462764dac9835c71f..432ba1293419dea0903e31043f68f5ad
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 06d41643c7b6fd404fbe7cf01771fc3a0b1d1b80..950afc95755f619a46b5e1beb1aea3b6efefa0d3 100644
+index c997ebe9938c10954f922dc1847d583887e6ec4e..1be61d2257872e5b129b6064a41c36ff72246964 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -261,6 +261,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -36,7 +36,7 @@ index 06d41643c7b6fd404fbe7cf01771fc3a0b1d1b80..950afc95755f619a46b5e1beb1aea3b6
      // CraftBukkit start - multithreaded fields
      private final AtomicInteger chatSpamTickCount = new AtomicInteger();
      private final java.util.concurrent.atomic.AtomicInteger tabSpamLimiter = new java.util.concurrent.atomic.AtomicInteger(); // Paper - configurable tab spam limits
-@@ -398,6 +399,21 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -399,6 +400,21 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          long currentTime = Util.getMillis();
          long elapsedTime = currentTime - this.keepAliveTime;
  
@@ -58,7 +58,7 @@ index 06d41643c7b6fd404fbe7cf01771fc3a0b1d1b80..950afc95755f619a46b5e1beb1aea3b6
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
-@@ -3477,6 +3493,16 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3485,6 +3501,16 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void handleKeepAlive(ServerboundKeepAlivePacket packet) {

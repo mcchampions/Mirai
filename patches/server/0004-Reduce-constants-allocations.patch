@@ -290,7 +290,7 @@ index d5cb594f0b17ec9dc1a19cdb99bba553e70171be..cd65e89579965a176ba28ecb135fc7af
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index ff2862bf1f511196d1e911e2584262ed728e9a81..4a5a8eb72a39c11331d18c6c35d880f4930188ad 100644
+index 17b1a891073521be51e7c6bf8f53cb4ed79983ce..aa3f42a284895dcd616ba89b61938cb3482c6fef 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -928,7 +928,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -312,10 +312,10 @@ index ff2862bf1f511196d1e911e2584262ed728e9a81..4a5a8eb72a39c11331d18c6c35d880f4
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index e6e1c46a01961d47a774e34e430c8eacda22d558..8a261cb171fe0d6efbcdd55e5e6c5f9c61e7ff5c 100644
+index b357953dedc2af39673ad4ef78fed14d5e7235bb..dc02f6f08f10ff56337eef8622e88cc7df7c9b7c 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -401,7 +401,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -402,7 +402,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
@@ -324,7 +324,7 @@ index e6e1c46a01961d47a774e34e430c8eacda22d558..8a261cb171fe0d6efbcdd55e5e6c5f9c
              }
          } else {
              if (elapsedTime >= 15000L) { // 15 seconds
-@@ -866,13 +866,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -874,13 +874,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // PacketUtils.ensureRunningOnSameThread(packet, this, this.player.getLevel()); // Paper - run this async
          // CraftBukkit start
          if (this.chatSpamTickCount.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamLimit && !this.server.getPlayerList().isOp(this.player.getGameProfile())) { // Paper start - split and make configurable
@@ -340,7 +340,7 @@ index e6e1c46a01961d47a774e34e430c8eacda22d558..8a261cb171fe0d6efbcdd55e5e6c5f9c
              return;
          }
          // Paper end
-@@ -3272,7 +3272,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3280,7 +3280,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -374,10 +374,10 @@ index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c0c14766adaac855112f85a203a6163b8adfdded..af717eef9f3be0cb20d7315d5081aba8d28992ae 100644
+index a1096ea424c0724af93a2dc65512ee71f4a0bf72..48bd42465865d2675a4713c1d9ecbbf7b8438629 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -685,7 +685,7 @@ public abstract class PlayerList {
+@@ -689,7 +689,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved

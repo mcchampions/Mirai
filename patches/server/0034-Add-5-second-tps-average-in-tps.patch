@@ -72,7 +72,7 @@ index 3c8c38727f2a098b0239992823b0222a926036bc..f8d70c2568848ee29a86d1b2e14c9c6a
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b6bb80a3394fb7329c5432f2bb20f0a7bb5814b6..e2e9fcce7d3a97ee93ac98dbb95214af723b37de 100644
+index b8b1ca219d87d8e307752e3026456be9fe76dbdc..5e9e95e0782522e9310e32f12f6257340f95fca3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2703,6 +2703,7 @@ public final class CraftServer implements Server {
@@ -84,15 +84,15 @@ index b6bb80a3394fb7329c5432f2bb20f0a7bb5814b6..e2e9fcce7d3a97ee93ac98dbb95214af
                  net.minecraft.server.MinecraftServer.getServer().tps5.getAverage(),
                  net.minecraft.server.MinecraftServer.getServer().tps15.getAverage()
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index b735769b7876e54db2950ebb4170484447cfb9a6..0ecac76577eb440a0c3104ef4603acec826c474d 100644
+index 2941a6886ab87bd85c064cca079e8da8ebdbba1f..649845a57b9d6d88057195b979cc5076761bcbb7 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -31,7 +31,7 @@ public class TicksPerSecondCommand extends Command
+@@ -37,7 +37,7 @@ public class TicksPerSecondCommand extends Command
          for ( int i = 0; i < tps.length; i++) {
              tpsAvg[i] = TicksPerSecondCommand.format( tps[i] );
          }
--        sender.sendMessage(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
-+        sender.sendMessage(ChatColor.GOLD + "TPS from last 5s, 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", ")); // Purpur
+-        sender.sendMessage(net.kyori.adventure.text.Component.text("TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "), net.kyori.adventure.text.format.NamedTextColor.GOLD));
++        sender.sendMessage(net.kyori.adventure.text.Component.text("TPS from last 5s, 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "), net.kyori.adventure.text.format.NamedTextColor.GOLD)); // Purpur
          // Yatopia start - Last tick time API
          java.time.Duration lastTickTime = org.bukkit.Bukkit.getLastTickTime();
          sender.sendMessage(ChatColor.GOLD + "Last tick: " + TicksPerSecondCommand.formatTo( lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS ) + " (" + formatTo( lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS ) + ")");

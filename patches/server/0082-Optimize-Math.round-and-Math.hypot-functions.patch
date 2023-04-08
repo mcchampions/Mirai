@@ -553,10 +553,10 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 0ecac76577eb440a0c3104ef4603acec826c474d..26ff7f68dacad945095d794c1def4752e0775abb 100644
+index 649845a57b9d6d88057195b979cc5076761bcbb7..4cfec07a2fd5d6f94548ec9ae9501d02f766f546 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -52,7 +52,7 @@ public class TicksPerSecondCommand extends Command
+@@ -61,7 +61,7 @@ public class TicksPerSecondCommand extends Command
      private static String format(double tps) // Paper - Made static
      {
          return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()

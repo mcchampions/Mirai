@@ -47,10 +47,10 @@ index 6fcd07ecc03b136b0181154c28c739028915af16..b0b059007b6f46c02168497610c0afb3
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 950afc95755f619a46b5e1beb1aea3b6efefa0d3..a1a5dcac23a55819f0a7c4978ae73feb31420b41 100644
+index 1be61d2257872e5b129b6064a41c36ff72246964..e93e7fe3335e4adcd1108a2e0296159b18834a27 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2150,10 +2150,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2158,10 +2158,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
@@ -89,10 +89,10 @@ index 950afc95755f619a46b5e1beb1aea3b6efefa0d3..a1a5dcac23a55819f0a7c4978ae73feb
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 081540fb13ee7f1c2da0a5126bdd7b3dd38a29ab..1d91f293663a30547712d552aef8e19edaf95111 100644
+index 3646038273af6c202974dcb91141f0d0a9a903ec..f6d1d5085ed212828a0bd09471dd10dc00ea0ab2 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1428,6 +1428,7 @@ public abstract class PlayerList {
+@@ -1432,6 +1432,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public
