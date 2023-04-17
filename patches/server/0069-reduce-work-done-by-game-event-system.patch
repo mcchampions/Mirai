@@ -29,7 +29,7 @@ index 902f2b39104bf059849228829bfe93b6dbc757d4..088bc38bfe82532a9ec80a96de8178de
          org.bukkit.craftbukkit.event.CraftEventFactory.sourceBlockOverride = blockEntity.getBlockPos(); // CraftBukkit - SPIGOT-7068: Add source block override, not the most elegant way but better than passing down a BlockPosition up to five methods deep.
          blockEntity.sculkSpreader.updateCursors(world, pos, world.getRandom(), true);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index b367184f415b6e20c2fc02a1e8853003349a0a1b..eb2b47bf46fd43eeff17978de0bdd0f821f57d71 100644
+index e9d92bf484fb0d2fcb66a7c424eced109bfa031d..f6b7292072c0475fe18ceeb807be257517f30e8c 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -84,7 +84,19 @@ public class LevelChunk extends ChunkAccess {
@@ -62,7 +62,7 @@ index b367184f415b6e20c2fc02a1e8853003349a0a1b..eb2b47bf46fd43eeff17978de0bdd0f8
          Heightmap.Types[] aheightmap_type = Heightmap.Types.values();
          int j = aheightmap_type.length;
  
-@@ -446,9 +458,23 @@ public class LevelChunk extends ChunkAccess {
+@@ -440,9 +452,23 @@ public class LevelChunk extends ChunkAccess {
          if (world instanceof ServerLevel) {
              ServerLevel worldserver = (ServerLevel) world;
  
@@ -89,7 +89,7 @@ index b367184f415b6e20c2fc02a1e8853003349a0a1b..eb2b47bf46fd43eeff17978de0bdd0f8
          } else {
              return super.getListenerRegistry(ySectionCoord);
          }
-@@ -812,7 +838,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -806,7 +832,7 @@ public class LevelChunk extends ChunkAccess {
  
                  gameeventlistenerregistry.unregister(gameeventlistener);
                  if (gameeventlistenerregistry.isEmpty()) {

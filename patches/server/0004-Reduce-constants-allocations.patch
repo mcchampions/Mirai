@@ -264,7 +264,7 @@ index 8a68baf6bd46b59cf57c94ffe5651d47a7cae99c..c64878c90c10ef8bb02bc44736f43fde
      private static final FormattedText TEXT_NULL = FormattedText.of("null");
      private final String key;
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index c6fa6bcd66d61359124a8426b919493c6ec43f06..9f9c5a68bd96de4fc69abd891a7943d88b0f9b35 100644
+index cdbf10339a8e8846a8c364de483a0ccd95cd225a..812b6c037363dd03d3d1f94c7c7c6ac8b9f022fd 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
 @@ -93,7 +93,7 @@ public class Main {
@@ -312,10 +312,10 @@ index 10d602b947edaae6b78efe9d0773021bcb1c35bf..7d00536bfdff8aa47f6483449bf5595c
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 21211e2790cd667ec389353fb90fb700f33421cc..72380a5265cde87d18b6a418f32407dcc4171168 100644
+index 7254d62f3713113027eba29853e9d975eab15f7f..bd26af10b52e7d64135878f4c12569b8c614c096 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -432,7 +432,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -433,7 +433,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
@@ -324,7 +324,7 @@ index 21211e2790cd667ec389353fb90fb700f33421cc..72380a5265cde87d18b6a418f32407dc
              }
          } else {
              if (elapsedTime >= 15000L) { // 15 seconds
-@@ -913,13 +913,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -914,13 +914,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // PacketUtils.ensureRunningOnSameThread(packet, this, this.player.getLevel()); // Paper - run this async
          // CraftBukkit start
          if (this.chatSpamTickCount.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamLimit && !this.server.getPlayerList().isOp(this.player.getGameProfile())) { // Paper start - split and make configurable
@@ -340,7 +340,7 @@ index 21211e2790cd667ec389353fb90fb700f33421cc..72380a5265cde87d18b6a418f32407dc
              return;
          }
          // Paper end
-@@ -3374,7 +3374,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3375,7 +3375,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -374,10 +374,10 @@ index f719f8aafe7c75e2ef8fcb05f556a8d6bd94b9a0..c6aef636c656e89ce2fac6419203d054
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 59534796e0b3813f35fe40c749b5d76c005436b2..c58bda8af6f23dc44fb4c4826eba04f7ec0717e7 100644
+index 33d4c1af86382cc3343d5db42283b27f69f52374..5d52e3373b7681de9e8d0dac4cb478be710d2dc1 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -692,7 +692,7 @@ public abstract class PlayerList {
+@@ -693,7 +693,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -437,7 +437,7 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 8d7c33e16f9eaec2120c5aad75172ff656d1bd17..e86cba8541a28565c1a528966e1932b6a3882b18 100644
+index b67660cda74a4754d1701e746aca99bde868c150..65a068bcb5df1060f9d5caa3c8ddc8e40c72ec3e 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3136,7 +3136,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -503,10 +503,10 @@ index 0c6e8e05014125427513e96c32510125ec34ece9..d159e3480257d2d06d386a372318f717
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index fa71d98b4496147ea3a30b99cee48057cf237013..b6e9f245685ede7672714d22e297e08a9e97d35b 100644
+index 45d864679816cb39420e079d37220a967e9d71d1..e8f46ea83991a6f7de5ea61f7e428605b012c0d7 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1014,7 +1014,7 @@ public final class ItemStack {
+@@ -1027,7 +1027,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {

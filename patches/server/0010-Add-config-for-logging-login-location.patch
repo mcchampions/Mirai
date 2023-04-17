@@ -23,10 +23,10 @@ index 54cab7abec16b0c7155fc494f317119f17804d49..5f3ba184fae5170425cfdbd95150ed00
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c58bda8af6f23dc44fb4c4826eba04f7ec0717e7..3c1e090674bf0fae2de7c4207afe3484b5007901 100644
+index 5d52e3373b7681de9e8d0dac4cb478be710d2dc1..9ac6f4bc9c8bec4ba03b436977910ebf7f4e3e29 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -468,7 +468,13 @@ public abstract class PlayerList {
+@@ -469,7 +469,13 @@ public abstract class PlayerList {
          // Paper end
          org.purpurmc.purpur.task.BossBarTask.addToAll(player); // Purpur
          // CraftBukkit - Moved from above, added world
