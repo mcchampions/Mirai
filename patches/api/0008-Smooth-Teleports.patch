@@ -7,10 +7,10 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index b5fd857896b3afcfa69cce55cbc2696dd625f805..3ea7219659dc2a4314c0beacad7fcd78c077161b 100644
+index ee446bfb3e6c4b1d4428c00d6406bf9455c68ad5..66226b67b8c28522c7673d487ee4a33be9351386 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -2882,6 +2882,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -2917,6 +2917,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
      String getClientBrandName();
      // Paper end
  

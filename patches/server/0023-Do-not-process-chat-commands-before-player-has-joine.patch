@@ -7,10 +7,10 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 795246cba0df6fb7724340e6517cf0a42fd11248..c997ebe9938c10954f922dc1847d583887e6ec4e 100644
+index 330327f01ae3f9dfe12a9e0cebe7cb7044a32ed0..8cc6e48cb91ecb8b445df2d6f450ebf3b3737bef 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2324,9 +2324,10 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2325,9 +2325,10 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          if (!this.updateChatOrder(timestamp)) {
              ServerGamePacketListenerImpl.LOGGER.warn("{} sent out-of-order chat: '{}': {} > {}", this.player.getName().getString(), message, this.lastChatTimeStamp.get().getEpochSecond(), timestamp.getEpochSecond()); // Paper
              this.server.scheduleOnMain(() -> { // Paper - push to main

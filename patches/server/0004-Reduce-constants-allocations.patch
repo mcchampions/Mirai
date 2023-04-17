@@ -264,7 +264,7 @@ index 8a68baf6bd46b59cf57c94ffe5651d47a7cae99c..c64878c90c10ef8bb02bc44736f43fde
      private static final FormattedText TEXT_NULL = FormattedText.of("null");
      private final String key;
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index c6fa6bcd66d61359124a8426b919493c6ec43f06..9f9c5a68bd96de4fc69abd891a7943d88b0f9b35 100644
+index cdbf10339a8e8846a8c364de483a0ccd95cd225a..812b6c037363dd03d3d1f94c7c7c6ac8b9f022fd 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
 @@ -93,7 +93,7 @@ public class Main {
@@ -290,7 +290,7 @@ index d5cb594f0b17ec9dc1a19cdb99bba553e70171be..cd65e89579965a176ba28ecb135fc7af
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 17b1a891073521be51e7c6bf8f53cb4ed79983ce..aa3f42a284895dcd616ba89b61938cb3482c6fef 100644
+index dda5e77f7d9fb2340d50997c0a17bc7f5e2bb961..8184b11a1fd33692b6ecc9189be078b64cf8bdbb 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -928,7 +928,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -312,10 +312,10 @@ index 17b1a891073521be51e7c6bf8f53cb4ed79983ce..aa3f42a284895dcd616ba89b61938cb3
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index b357953dedc2af39673ad4ef78fed14d5e7235bb..dc02f6f08f10ff56337eef8622e88cc7df7c9b7c 100644
+index cc7187c597337665d3cf3c3de4b53e3105b9e4c3..5804c5d75975c6ab75dc12452edcfb88c7ffb479 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -402,7 +402,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -403,7 +403,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
@@ -324,7 +324,7 @@ index b357953dedc2af39673ad4ef78fed14d5e7235bb..dc02f6f08f10ff56337eef8622e88cc7
              }
          } else {
              if (elapsedTime >= 15000L) { // 15 seconds
-@@ -874,13 +874,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -875,13 +875,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // PacketUtils.ensureRunningOnSameThread(packet, this, this.player.getLevel()); // Paper - run this async
          // CraftBukkit start
          if (this.chatSpamTickCount.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamLimit && !this.server.getPlayerList().isOp(this.player.getGameProfile())) { // Paper start - split and make configurable
@@ -340,7 +340,7 @@ index b357953dedc2af39673ad4ef78fed14d5e7235bb..dc02f6f08f10ff56337eef8622e88cc7
              return;
          }
          // Paper end
-@@ -3280,7 +3280,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3281,7 +3281,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -374,10 +374,10 @@ index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a1096ea424c0724af93a2dc65512ee71f4a0bf72..48bd42465865d2675a4713c1d9ecbbf7b8438629 100644
+index 4d837c1530a3031a4c2a5a39d87bd013d60e14a6..4a7044ba9f762b7cf260e0f1bec9663f24179d08 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -689,7 +689,7 @@ public abstract class PlayerList {
+@@ -690,7 +690,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -437,7 +437,7 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 791f672b30f2a4d3b329e2ce0f4fb9c2ca627b01..589eaa7053e4b08305e862fe0fcd29289fcd5441 100644
+index f3d96caa83ef4a8083b78e3265282d4723e37d28..d39687d313060907f85712717c95e53da9294a00 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3071,7 +3071,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -503,10 +503,10 @@ index 71a36cf9b976443cca9ab63cd0eb23253f638562..8d16113a91bcacc819571a6cfcabd346
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index d690b8d0c1da1f56b226376df8c76c34375e3c73..ae46ecce39319c78cc8f6c443ad1cd2182bf6cb8 100644
+index a7533d18fe6148d7bfd3106b9cdcb6fa3347cf7c..54303a270a798d4768e9bdcad05b5859e21a1fff 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1001,7 +1001,7 @@ public final class ItemStack {
+@@ -1008,7 +1008,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {
