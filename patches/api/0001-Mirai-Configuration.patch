@@ -5,21 +5,16 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 8621dba7f10ab822b5b99ce0d05da58823605cb6..0fb038ddd57a6e0b8281b1ef5e1179930df16f03 100644
+index 8621dba7f10ab822b5b99ce0d05da58823605cb6..a8be7c9f728794b06de28d9241cbbceab8898f32 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1968,6 +1968,18 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -1968,6 +1968,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
          }
          // Paper end
  
 +        // Mirai start
 +        @NotNull
 +        public org.bukkit.configuration.file.YamlConfiguration getMiraiConfig() {
-+            throw new UnsupportedOperationException("Not supported yet.");
-+        }
-+
-+        @NotNull
-+        public java.util.Properties getServerProperties() {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
 +        // Mirai end
