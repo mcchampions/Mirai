@@ -9,7 +9,7 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@main
       - name: Set up JDK (GraalVM)
-        uses: graalvm/setup-graalvm@v1
+        uses: graalvm/setup-graalvm@main
         with:
           version: latest
           java-version: 17

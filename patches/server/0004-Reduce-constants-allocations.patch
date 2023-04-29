@@ -238,10 +238,10 @@ index a2920b8a9eff77d9c5d1d7f70ad3abdacba8f0fa..f7f19e360d712211625ff28e92f83949
      protected CipherBase(Cipher cipher) {
          this.cipher = cipher;
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index c5d030379a25e17befafd566e5ec61592bba7eba..d25ae95aac2995a8500cc9d994a01816f53889a0 100644
+index 323416311f14f5ad887f05183ad3b4921981aecd..7539739bc67d3b979be6c7a9284872f251982b73 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
-@@ -315,7 +315,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -318,7 +318,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void setListener(PacketListener listener) {
