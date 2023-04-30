@@ -20,10 +20,10 @@ index 5af15c85fab72034b97ac210ff775e0a8fa0be78..8661896bbde12aba3a17789797cbd2d5
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/dev/etil/mirai/MiraiCommand.java b/src/main/java/dev/etil/mirai/MiraiCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..cdfb44177311987a19d3867df2d158647e6cc9a3
+index 0000000000000000000000000000000000000000..0fd7521a6dca8eaadf868acf617f5901b5cdba67
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiCommand.java
-@@ -0,0 +1,68 @@
+@@ -0,0 +1,65 @@
 +package dev.etil.mirai;
 +
 +import java.io.IOException;
@@ -31,9 +31,6 @@ index 0000000000000000000000000000000000000000..cdfb44177311987a19d3867df2d15864
 +import java.util.List;
 +import java.util.stream.Collectors;
 +import java.util.stream.Stream;
-+import net.kyori.adventure.text.Component;
-+import net.kyori.adventure.text.format.NamedTextColor;
-+import net.md_5.bungee.api.ChatColor;
 +import net.minecraft.server.MinecraftServer;
 +import org.bukkit.Bukkit;
 +import org.bukkit.Location;
@@ -66,10 +63,10 @@ index 0000000000000000000000000000000000000000..cdfb44177311987a19d3867df2d15864
 +    @Override
 +    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 +        if (!testPermission(sender)) return true;
-+        String prefix = ChatColor.of("#12fff6") + "" + ChatColor.BOLD + "Mirai » " + ChatColor.of("#e8f9f9");
++        String prefix = net.kyori.adventure.text.format.TextColor.color(0x12fff6) + "" + net.kyori.adventure.text.Component.text("Mirai » ", net.kyori.adventure.text.format.Style.style(net.kyori.adventure.text.format.TextDecoration.BOLD)) + net.kyori.adventure.text.format.TextColor.color(0xe8f9f9);
 +
 +        if (args.length != 1) {
-+            sender.sendMessage(prefix + "Usage: " + usageMessage);
++            sender.sendMessage(net.kyori.adventure.text.Component.text(prefix + "Usage: " + usageMessage));
 +            args = new String[]{"version"};
 +        }
 +
@@ -78,21 +75,20 @@ index 0000000000000000000000000000000000000000..cdfb44177311987a19d3867df2d15864
 +            try {
 +                MiraiConfig.load();
 +            } catch (IOException e) {
-+                sender.sendMessage(Component.text("Failed to reload.", NamedTextColor.RED));
++                sender.sendMessage(net.kyori.adventure.text.Component.text("Failed to reload.", net.kyori.adventure.text.format.NamedTextColor.RED));
 +                e.printStackTrace();
 +                return true;
 +            }
 +            console.server.reloadCount++;
 +
-+            Command.broadcastCommandMessage(sender, prefix + "Mirai configuration has been reloaded.");
++            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text(prefix + "Mirai configuration has been reloaded."));
 +        } else if (args[0].equalsIgnoreCase("version")) {
-+            Command.broadcastCommandMessage(sender, prefix + "This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
++            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text(prefix + "This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")"));
 +        }
 +
 +        return true;
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f17804d49

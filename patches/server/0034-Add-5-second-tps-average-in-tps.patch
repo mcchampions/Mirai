@@ -84,10 +84,10 @@ index 4121a5f6d5f3b128cdf24a720569e0d36e357636..bb70a39c879215dad049b4c5f6eb2aae
                  net.minecraft.server.MinecraftServer.getServer().tps5.getAverage(),
                  net.minecraft.server.MinecraftServer.getServer().tps15.getAverage()
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index d625a7d0c350113cec0da7ac01ea83a20ea8d7f8..7957919a06920dc7079114e1591d345f016f764c 100644
+index b498bc59b0dd996577ad0973cad760464307e446..828a604e18c537135994f9c66f54e4da7e904b5d 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -39,7 +39,7 @@ public class TicksPerSecondCommand extends Command
+@@ -37,7 +37,7 @@ public class TicksPerSecondCommand extends Command
          }
  
          net.kyori.adventure.text.TextComponent.Builder builder = net.kyori.adventure.text.Component.text();
