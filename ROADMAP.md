@@ -8,8 +8,6 @@ In general, keeping update Minecraft version of mirai
 
 replace some patches with Gale's version
 
-Replace Async pathfinding and multithreaded tracker of Petal with the new Paper fork, Folia. Since the dev of Petal announced to discontinued maintain it.
-
 ## 0x1
 
 Keeping update the code of Lithium patches from upstream.
