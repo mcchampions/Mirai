@@ -20,10 +20,10 @@ index 5af15c85fab72034b97ac210ff775e0a8fa0be78..8661896bbde12aba3a17789797cbd2d5
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/dev/etil/mirai/MiraiCommand.java b/src/main/java/dev/etil/mirai/MiraiCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0fd7521a6dca8eaadf868acf617f5901b5cdba67
+index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0b673ed4f
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiCommand.java
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,78 @@
 +package dev.etil.mirai;
 +
 +import java.io.IOException;
@@ -63,10 +63,17 @@ index 0000000000000000000000000000000000000000..0fd7521a6dca8eaadf868acf617f5901
 +    @Override
 +    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 +        if (!testPermission(sender)) return true;
-+        String prefix = net.kyori.adventure.text.format.TextColor.color(0x12fff6) + "" + net.kyori.adventure.text.Component.text("Mirai » ", net.kyori.adventure.text.format.Style.style(net.kyori.adventure.text.format.TextDecoration.BOLD)) + net.kyori.adventure.text.format.TextColor.color(0xe8f9f9);
++        net.kyori.adventure.text.Component prefix = net.kyori.adventure.text.Component.text("Mirai » ")
++            .color(net.kyori.adventure.text.format.TextColor.color(0x12fff6))
++            .decoration(net.kyori.adventure.text.format.TextDecoration.BOLD, true);
 +
 +        if (args.length != 1) {
-+            sender.sendMessage(net.kyori.adventure.text.Component.text(prefix + "Usage: " + usageMessage));
++            sender.sendMessage(net.kyori.adventure.text.Component.text()
++                .append(prefix)
++                .color(net.kyori.adventure.text.format.TextColor.color(0xe8f9f9))
++                .append(net.kyori.adventure.text.Component.text("Usage: ")
++                .append(net.kyori.adventure.text.Component.text(usageMessage)))
++                .build());
 +            args = new String[]{"version"};
 +        }
 +
@@ -81,9 +88,15 @@ index 0000000000000000000000000000000000000000..0fd7521a6dca8eaadf868acf617f5901
 +            }
 +            console.server.reloadCount++;
 +
-+            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text(prefix + "Mirai configuration has been reloaded."));
++            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text()
++                .append(prefix)
++                .append(net.kyori.adventure.text.Component.text("Mirai configuration has been reloaded.", net.kyori.adventure.text.format.TextColor.color(0xe8f9f9)))
++                .build());
 +        } else if (args[0].equalsIgnoreCase("version")) {
-+            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text(prefix + "This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")"));
++            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text()
++                .append(prefix)
++                .append(net.kyori.adventure.text.Component.text("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.TextColor.color(0xe8f9f9)))
++                .build());
 +        }
 +
 +        return true;

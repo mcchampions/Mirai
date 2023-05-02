@@ -47,7 +47,7 @@ index 91a4efbca0c8356220148af17865ea20a3acd39a..4121a5f6d5f3b128cdf24a720569e0d3
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index bf970bf3356a914459c2d6db93537ce2d32c7e18..b498bc59b0dd996577ad0973cad760464307e446 100644
+index bf970bf3356a914459c2d6db93537ce2d32c7e18..cddf088ae9168d8aac323d9c70e3eb6cd545f9b3 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@
@@ -58,30 +58,37 @@ index bf970bf3356a914459c2d6db93537ce2d32c7e18..b498bc59b0dd996577ad0973cad76046
  import org.bukkit.command.Command;
  import org.bukkit.command.CommandSender;
  
-@@ -42,6 +40,10 @@ public class TicksPerSecondCommand extends Command
+@@ -42,6 +40,16 @@ public class TicksPerSecondCommand extends Command
          builder.append(net.kyori.adventure.text.Component.text("TPS from last 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD));
          builder.append(net.kyori.adventure.text.Component.join(net.kyori.adventure.text.JoinConfiguration.commas(true), tpsAvg));
          sender.sendMessage(builder.asComponent());
 +        // Yatopia start - Last tick time API
 +        java.time.Duration lastTickTime = org.bukkit.Bukkit.getLastTickTime();
-+        sender.sendMessage(net.kyori.adventure.text.Component.text("Last tick: " + TicksPerSecondCommand.formatTo( lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS ) + " (" + formatTo( lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS ) + ")", net.kyori.adventure.text.format.NamedTextColor.GOLD));
++        sender.sendMessage(net.kyori.adventure.text.Component.text()
++            .append(net.kyori.adventure.text.Component.text("Last tick: ", net.kyori.adventure.text.format.NamedTextColor.GOLD))
++            .append(TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS))
++            .append(net.kyori.adventure.text.Component.text(" (", net.kyori.adventure.text.format.NamedTextColor.GOLD))
++            .append(TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS))
++            .append(net.kyori.adventure.text.Component.text(")", net.kyori.adventure.text.format.NamedTextColor.GOLD))
++            .build());
 +        // Yatopia end
          if (args.length > 0 && args[0].equals("mem") && sender.hasPermission("bukkit.command.tpsmemory")) {
              sender.sendMessage(net.kyori.adventure.text.Component.text()
                  .append(net.kyori.adventure.text.Component.text("Current Memory Usage: ", net.kyori.adventure.text.format.NamedTextColor.GOLD))
-@@ -66,4 +68,15 @@ public class TicksPerSecondCommand extends Command
+@@ -66,4 +74,16 @@ public class TicksPerSecondCommand extends Command
          return net.kyori.adventure.text.Component.text(amount, color);
          // Paper end
      }
 +
 +    // Yatopia start - Last tick time API
-+    public static String formatTo(java.time.Duration duration, java.util.concurrent.TimeUnit unit) {
++    public static net.kyori.adventure.text.Component formatTo(java.time.Duration duration, java.util.concurrent.TimeUnit unit) {
 +        java.util.concurrent.TimeUnit nanosUnit = java.util.concurrent.TimeUnit.NANOSECONDS;
 +        long nanos = duration.toNanos();
 +        long toAskedUnit = unit.convert( nanos, nanosUnit );
 +        long ms = nanosUnit.toMillis( nanos );
 +        net.kyori.adventure.text.format.TextColor startingColor = ms < 40 ? net.kyori.adventure.text.format.NamedTextColor.GREEN : ( ms < 50 ) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED;
-+        return startingColor.toString() + toAskedUnit + net.kyori.adventure.text.format.NamedTextColor.GOLD + org.yatopiamc.yatopia.server.util.TimeUtils.getFriendlyName( unit );
++        return net.kyori.adventure.text.Component.text(toAskedUnit, startingColor)
++            .append(net.kyori.adventure.text.Component.text(org.yatopiamc.yatopia.server.util.TimeUtils.getFriendlyName(unit), net.kyori.adventure.text.format.NamedTextColor.GOLD));
 +    }
 +    // Yatopia end
  }

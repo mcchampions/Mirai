@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
-index 3ec32b46264cfff857b50129b5e0fa5584943ec6..76d7fa54d1e4fc272512c98da3d88e8b0b500e49 100644
+index 3ec32b46264cfff857b50129b5e0fa5584943ec6..058dcd15dea807469aeec4a85d637682c8c406f8 100644
 --- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 @@ -3,6 +3,8 @@ package org.bukkit.command.defaults;
@@ -25,7 +25,7 @@ index 3ec32b46264cfff857b50129b5e0fa5584943ec6..76d7fa54d1e4fc272512c98da3d88e8b
          if (!testPermission(sender)) return true;
 +        // Yatopia start - disable reload command
 +        if (Boolean.parseBoolean(System.getProperty("mirai.DisableReloadCommand", "true"))) {
-+            sender.sendMessage(net.kyori.adventure.text.Component.text( "Operation denied.", NamedTextColor.RED ));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("Operation denied.", NamedTextColor.RED ));
 +            sender.sendMessage(net.kyori.adventure.text.Component.text("Reload command SHOULD NEVER EVER EVER be used in whatever circumstances.", NamedTextColor.YELLOW));
 +            sender.sendMessage(net.kyori.adventure.text.Component.text("Mirai has intentionally disabled it in order to stop you using it, instead of restarting your server.", NamedTextColor.YELLOW));
 +            sender.sendMessage(net.kyori.adventure.text.Component.text("---------------------------------------------", NamedTextColor.GREEN));

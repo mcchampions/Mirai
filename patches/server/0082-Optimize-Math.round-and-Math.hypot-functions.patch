@@ -553,10 +553,10 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 828a604e18c537135994f9c66f54e4da7e904b5d..e0d167f2a061eb02e66422e77908f9a89448ffc7 100644
+index 57745e0e8211f3022832cc8c4eb028e3926e1074..f47fdd6fb66e0889f71fefbad3ecd32c15a66aa5 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -64,7 +64,7 @@ public class TicksPerSecondCommand extends Command
+@@ -70,7 +70,7 @@ public class TicksPerSecondCommand extends Command
      {
          // Paper
          net.kyori.adventure.text.format.TextColor color = ( ( tps > 18.0 ) ? net.kyori.adventure.text.format.NamedTextColor.GREEN : ( tps > 16.0 ) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED );
