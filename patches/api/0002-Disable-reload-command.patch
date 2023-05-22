@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
-index 3ec32b46264cfff857b50129b5e0fa5584943ec6..e6678639df52c3497606f3a0f6529fa8c3a663d6 100644
+index 3ec32b46264cfff857b50129b5e0fa5584943ec6..e783c46037cf560516928fe1c62e34657514a689 100644
 --- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 @@ -21,6 +21,17 @@ public class ReloadCommand extends BukkitCommand {
@@ -16,12 +16,12 @@ index 3ec32b46264cfff857b50129b5e0fa5584943ec6..e6678639df52c3497606f3a0f6529fa8
          if (!testPermission(sender)) return true;
 +        // Yatopia start - disable reload command
 +        if (Boolean.parseBoolean(System.getProperty("mirai.DisableReloadCommand", "true"))) {
-+            sender.sendMessage(ChatColor.RED + "Operation denied.");
-+            sender.sendMessage(ChatColor.YELLOW + "Reload command SHOULD NEVER EVER EVER be used in whatever circumstances.");
-+            sender.sendMessage(ChatColor.YELLOW + "Mirai has intentionally disabled it in order to stop you using it, instead of restarting your server.");
-+            sender.sendMessage(ChatColor.GREEN + "---------------------------------------------");
-+            sender.sendMessage(ChatColor.YELLOW + "RESTART YOUR SERVER AND NEVER USE /reload");
-+            sender.sendMessage(ChatColor.YELLOW + "For plugin developers: learn what a HOTSWAP AGENT is and stop using /reload");
++            sender.sendMessage(net.kyori.adventure.text.Component.text("Operation denied.", net.kyori.adventure.text.format.NamedTextColor.RED ));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("Reload command SHOULD NEVER EVER EVER be used in whatever circumstances.", net.kyori.adventure.text.format.NamedTextColor.YELLOW));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("Mirai has intentionally disabled it in order to stop you using it, instead of restarting your server.", net.kyori.adventure.text.format.NamedTextColor.YELLOW));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("---------------------------------------------", net.kyori.adventure.text.format.NamedTextColor.GREEN));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("RESTART YOUR SERVER AND NEVER USE /reload", net.kyori.adventure.text.format.NamedTextColor.YELLOW));
++            sender.sendMessage(net.kyori.adventure.text.Component.text("For plugin developers: learn what a HOTSWAP AGENT is and stop using /reload", net.kyori.adventure.text.format.NamedTextColor.YELLOW));
 +            return true;
 +        }
 +        // Yatopia end

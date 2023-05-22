@@ -218,7 +218,7 @@ index c34a69e8b67cdf907dca1b20d16680b4fdf2d487..fae3e8e41982d39298ab4e6c69edd668
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 7b1a83b6fc4cf9f9d241220d8e7923e9bcfc0798..90744d83679ce3f036f7eb75853c2230df309b37 100644
+index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfccdb6069da 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -1538,7 +1538,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -309,7 +309,7 @@ index 7b1a83b6fc4cf9f9d241220d8e7923e9bcfc0798..90744d83679ce3f036f7eb75853c2230
  
          //this.level.getProfiler().pop(); // Purpur
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 033654fc2b6c2ba11818edde0d8193cc6a6faba3..e2d731560d5f7a2cf302d09e9e80296ccc7bf2f3 100644
+index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063a6c5a768 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -1110,7 +1110,7 @@ public abstract class Player extends LivingEntity {
@@ -539,10 +539,10 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 98de143b19c37f5e5a85e1475fafa32dd018e765..29590e63333f0184b59ade1605370ee70f5d077d 100644
+index 23c6faf284722223feebaa0e07f68cb0c78f6897..f8664def0859974eec940206658b8e6287c815d6 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -66,7 +66,7 @@ public class TicksPerSecondCommand extends Command
+@@ -70,7 +70,7 @@ public class TicksPerSecondCommand extends Command
      {
          // Paper
          net.kyori.adventure.text.format.TextColor color = ( ( tps > 18.0 ) ? net.kyori.adventure.text.format.NamedTextColor.GREEN : ( tps > 16.0 ) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED );
