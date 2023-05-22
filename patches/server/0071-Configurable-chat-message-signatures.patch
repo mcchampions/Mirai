@@ -35,10 +35,10 @@ index e6cc2bab1fde2e8c1394772b99201ea8d7eb8057..e35686a816c22b92ed8d988dc68c440e
      public static final Codec<ServerStatus> CODEC = RecordCodecBuilder.create((instance) -> {
          return instance.group(ExtraCodecs.COMPONENT.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new);
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 7d7377c2b04754c4b023e32b7c9e195668ba8824..cd03c93750fdb83754c00db9d65d0c8dc37ef1d4 100644
+index e712a27fae8645314e822fd4408c41d544e09ef9..5a942369b08122855a2d5d4293b44e611e44efb6 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -678,6 +678,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -679,6 +679,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
@@ -47,10 +47,10 @@ index 7d7377c2b04754c4b023e32b7c9e195668ba8824..cd03c93750fdb83754c00db9d65d0c8d
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 03c4d663b14c3c154a7f2aa5fe117271f57e241a..b376e20d5e0ee6a43126096f3a87ab153459c0da 100644
+index ced1b1ffe1a956afdafc26f57dbde42cdeb29ea8..e9926cb9a9a673110abcfb5b76a85d6c52da93bd 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2234,10 +2234,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2235,10 +2235,37 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
@@ -89,10 +89,10 @@ index 03c4d663b14c3c154a7f2aa5fe117271f57e241a..b376e20d5e0ee6a43126096f3a87ab15
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 915737c1b4fa7a39bc9221472d3c93a9f2f1743e..be53a4bbae5cffd7ab6450785a8432ddbe40d05f 100644
+index 29dfe4a55760f2df226c7378a57345b1864a4216..f59d44c7fae0cd9327cb050ed82dbca458b7c9a1 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1474,6 +1474,7 @@ public abstract class PlayerList {
+@@ -1476,6 +1476,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public

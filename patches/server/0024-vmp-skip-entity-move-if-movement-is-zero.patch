@@ -8,10 +8,10 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3c10c719f6172161a2dcc6592a0a1492e9b3d7c1..03b08e145165d6e88e48b23fb7075c67c9c0eea7 100644
+index f31f4ecf8fb07f6cf01eea0aa14f5d454a4ce2a3..82beaa91eb228650fb7cfb30f9b903c432e3301e 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -299,6 +299,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -300,6 +300,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public float yRotO;
      public float xRotO;
      private AABB bb;
@@ -19,7 +19,7 @@ index 3c10c719f6172161a2dcc6592a0a1492e9b3d7c1..03b08e145165d6e88e48b23fb7075c67
      public boolean onGround;
      public boolean horizontalCollision;
      public boolean verticalCollision;
-@@ -1037,6 +1038,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1038,6 +1039,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -32,7 +32,7 @@ index 3c10c719f6172161a2dcc6592a0a1492e9b3d7c1..03b08e145165d6e88e48b23fb7075c67
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
          synchronized (this.posLock) {
-@@ -3898,6 +3905,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3899,6 +3906,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public final void setBoundingBox(AABB boundingBox) {

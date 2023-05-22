@@ -33,10 +33,10 @@ index 4428c0ea95570676935bcc7fafb7205fc40a79e1..5e5c4a1b8955a39457d0099886308c79
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5503ad6a93d331771a0e92c0da6adedf2ac81aff..7c1efc3b6045b2179139dd419e969569f1af9f6d 100644
+index bbfafb1400721251dfd2cac4dd8a31be2d682d4b..484b80779c396e831ce3e5a898c8f2580a2de301 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -442,6 +442,7 @@ public class SpigotWorldConfig
+@@ -446,6 +446,7 @@ public class SpigotWorldConfig
          this.hangingTickFrequency = this.getInt( "hanging-tick-frequency", 100 );
      }
  
@@ -44,7 +44,7 @@ index 5503ad6a93d331771a0e92c0da6adedf2ac81aff..7c1efc3b6045b2179139dd419e969569
      public int tileMaxTickTime;
      public int entityMaxTickTime;
      private void maxTickTimes()
-@@ -450,6 +451,7 @@ public class SpigotWorldConfig
+@@ -454,6 +455,7 @@ public class SpigotWorldConfig
          this.entityMaxTickTime = this.getInt("max-tick-time.entity", 50);
          this.log("Tile Max Tick Time: " + this.tileMaxTickTime + "ms Entity max Tick Time: " + this.entityMaxTickTime + "ms");
      }
