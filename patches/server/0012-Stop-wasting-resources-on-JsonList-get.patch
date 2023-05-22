@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 6d8dca5369b2499637d155410c7dc18099e4bc71..4745859402db27268436d6335371a6ea2c6c8ce1 100644
+index 136722455dd61c11ac46584c954d21d58c7879d9..1b4ef47017ef731ffd3213304c3aa345506a5fb9 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -713,13 +713,19 @@ public abstract class PlayerList {
+@@ -715,13 +715,19 @@ public abstract class PlayerList {
          if (getBans().isBanned(gameprofile) && (gameprofilebanentry = getBans().get(gameprofile)) != null) {
              // Paper end
  

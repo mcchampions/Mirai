@@ -113,7 +113,7 @@ index 01bdf134fc21220ab7ecca51f2dcd51c0b466bba..707d632da0cd5f249998714b63c75101
          public boolean useDimensionTypeForCustomSpawners = false;
          public boolean strictAdvancementDimensionCheck = false;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index ee430563b99e48cd722c2897e4729936457d3017..0e00e707bef509bc6e760eff9382b58db3ffbeca 100644
+index a33de97340f14219291c4175e9194914cdf441db..39a239e9acd636a9d46a8b84f2e5bd10a133514f 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -116,8 +116,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -233,9 +233,9 @@ index ee430563b99e48cd722c2897e4729936457d3017..0e00e707bef509bc6e760eff9382b58d
 +            map.put(EntityType.AREA_EFFECT_CLOUD, 8);
 +            // Mirai end
          });
+         public boolean flushRegionsOnSave = false;
      }
- 
-@@ -438,11 +452,22 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -439,11 +453,22 @@ public class WorldConfiguration extends ConfigurationPart {
      public TickRates tickRates;
  
      public class TickRates extends ConfigurationPart {
@@ -263,7 +263,7 @@ index ee430563b99e48cd722c2897e4729936457d3017..0e00e707bef509bc6e760eff9382b58d
      }
  
      @Setting(FeatureSeedsGeneration.FEATURE_SEEDS_KEY)
-@@ -450,7 +475,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -451,7 +476,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class FeatureSeeds extends ConfigurationPart.Post {
          @Setting(FeatureSeedsGeneration.GENERATE_KEY)
@@ -272,7 +272,7 @@ index ee430563b99e48cd722c2897e4729936457d3017..0e00e707bef509bc6e760eff9382b58d
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -464,9 +489,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -465,9 +490,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;
@@ -298,10 +298,10 @@ index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b16
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bce547b954 100644
+index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa9ca39695 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -146,14 +146,14 @@ public class SpigotWorldConfig
+@@ -148,14 +148,14 @@ public class SpigotWorldConfig
      public double itemMerge;
      private void itemMerge()
      {
@@ -318,7 +318,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
          this.log( "Experience Merge Radius: " + this.expMerge );
      }
  
-@@ -192,7 +192,7 @@ public class SpigotWorldConfig
+@@ -194,7 +194,7 @@ public class SpigotWorldConfig
      public byte mobSpawnRange;
      private void mobSpawnRange()
      {
@@ -327,7 +327,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
          this.log( "Mob Spawn Range: " + this.mobSpawnRange );
      }
  
-@@ -203,14 +203,14 @@ public class SpigotWorldConfig
+@@ -205,14 +205,14 @@ public class SpigotWorldConfig
          this.log( "Item Despawn Rate: " + this.itemDespawnRate );
      }
  
@@ -349,7 +349,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
      public int wakeUpInactiveAnimals = 4;
      public int wakeUpInactiveAnimalsEvery = 60*20;
      public int wakeUpInactiveAnimalsFor = 5*20;
-@@ -227,7 +227,7 @@ public class SpigotWorldConfig
+@@ -229,7 +229,7 @@ public class SpigotWorldConfig
      public int villagersWorkImmunityFor = 20;
      public boolean villagersActiveForPanic = true;
      // Paper end
@@ -358,7 +358,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
      public boolean ignoreSpectatorActivation = false;
      private void activationRange()
      {
-@@ -266,11 +266,11 @@ public class SpigotWorldConfig
+@@ -268,12 +268,13 @@ public class SpigotWorldConfig
          this.log( "Entity Activation Range: An " + this.animalActivationRange + " / Mo " + this.monsterActivationRange + " / Ra " + this.raiderActivationRange + " / Mi " + this.miscActivationRange + " / Tiv " + this.tickInactiveVillagers + " / Isa " + this.ignoreSpectatorActivation );
      }
  
@@ -366,16 +366,19 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
 -    public int animalTrackingRange = 48;
 -    public int monsterTrackingRange = 48;
 -    public int miscTrackingRange = 32;
+-    public int displayTrackingRange = 128;
 -    public int otherTrackingRange = 64;
 +    public int playerTrackingRange = 32; // Mirai - optimize default values for configs
 +    public int animalTrackingRange = 24; // Mirai - optimize default values for configs
 +    public int monsterTrackingRange = 24; // Mirai - optimize default values for configs
 +    public int miscTrackingRange = 16; // Mirai - optimize default values for configs
++    public int displayTrackingRange = 64; // Mirai - optimize default values for configs
 +    public int otherTrackingRange = 32; // Mirai - optimize default values for configs
++
      private void trackingRange()
      {
          this.playerTrackingRange = this.getInt( "entity-tracking-range.players", this.playerTrackingRange );
-@@ -288,13 +288,13 @@ public class SpigotWorldConfig
+@@ -292,13 +293,13 @@ public class SpigotWorldConfig
      private void hoppers()
      {
          // Set the tick delay between hopper item movements
@@ -392,7 +395,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
          this.hopperCanLoadChunks = this.getBoolean( "hopper-can-load-chunks", false );
          this.log( "Hopper Transfer: " + this.hopperTransfer + " Hopper Check: " + this.hopperCheck + " Hopper Amount: " + this.hopperAmount + " Hopper Can Load Chunks: " + this.hopperCanLoadChunks );
      }
-@@ -303,7 +303,7 @@ public class SpigotWorldConfig
+@@ -307,7 +308,7 @@ public class SpigotWorldConfig
      public int tridentDespawnRate;
      private void arrowDespawnRate()
      {
@@ -401,7 +404,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
          this.tridentDespawnRate = this.getInt( "trident-despawn-rate", this.arrowDespawnRate );
          this.log( "Arrow Despawn Rate: " + this.arrowDespawnRate + " Trident Respawn Rate:" + this.tridentDespawnRate );
      }
-@@ -318,14 +318,14 @@ public class SpigotWorldConfig
+@@ -322,14 +323,14 @@ public class SpigotWorldConfig
      public boolean nerfSpawnerMobs;
      private void nerfSpawnerMobs()
      {
@@ -418,7 +421,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
          this.log( "Allow Zombie Pigmen to spawn from portal blocks: " + this.enableZombiePigmenPortalSpawns );
      }
  
-@@ -338,7 +338,7 @@ public class SpigotWorldConfig
+@@ -342,7 +343,7 @@ public class SpigotWorldConfig
      public int witherSpawnSoundRadius;
      private void witherSpawnSoundRadius()
      {
@@ -427,7 +430,7 @@ index 7c1efc3b6045b2179139dd419e969569f1af9f6d..ec5cf650649c024f1b957d3f903915bc
      }
  
      public int endPortalSoundRadius;
-@@ -432,14 +432,14 @@ public class SpigotWorldConfig
+@@ -436,14 +437,14 @@ public class SpigotWorldConfig
          {
              this.set( "max-tnt-per-tick", 100 );
          }

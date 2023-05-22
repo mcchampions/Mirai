@@ -72,10 +72,10 @@ index 3c8c38727f2a098b0239992823b0222a926036bc..f8d70c2568848ee29a86d1b2e14c9c6a
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4121a5f6d5f3b128cdf24a720569e0d36e357636..bb70a39c879215dad049b4c5f6eb2aae150a3b75 100644
+index 8d11652902e07bce18e0622df5e12bba6ddfc4fd..3aa082f9fa9eef697369d6b6ce8e3f08e7008f37 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2699,6 +2699,7 @@ public final class CraftServer implements Server {
+@@ -2700,6 +2700,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {
@@ -84,7 +84,7 @@ index 4121a5f6d5f3b128cdf24a720569e0d36e357636..bb70a39c879215dad049b4c5f6eb2aae
                  net.minecraft.server.MinecraftServer.getServer().tps5.getAverage(),
                  net.minecraft.server.MinecraftServer.getServer().tps15.getAverage()
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index b498bc59b0dd996577ad0973cad760464307e446..828a604e18c537135994f9c66f54e4da7e904b5d 100644
+index cddf088ae9168d8aac323d9c70e3eb6cd545f9b3..57745e0e8211f3022832cc8c4eb028e3926e1074 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -37,7 +37,7 @@ public class TicksPerSecondCommand extends Command

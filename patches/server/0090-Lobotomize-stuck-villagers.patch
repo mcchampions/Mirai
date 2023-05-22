@@ -114,10 +114,10 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +    // Purpur end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
-index a1a8ac55e572156671e47317ba061855be79e5ac..ec3fb8865211bd7625103c37af7b96df37163a07 100644
+index 4e880409b06086568627f3e930159f1abb979984..48fb7302b54f8e7f5c424210b550c03d4d071ea9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
-@@ -222,4 +222,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
+@@ -223,4 +223,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
          getHandle().getGossips().gossips.clear();
      }
      // Paper end

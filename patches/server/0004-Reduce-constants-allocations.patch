@@ -238,10 +238,10 @@ index a2920b8a9eff77d9c5d1d7f70ad3abdacba8f0fa..f7f19e360d712211625ff28e92f83949
      protected CipherBase(Cipher cipher) {
          this.cipher = cipher;
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index fa1d325034dafdb9f1da546a6f9c5e88d2b67749..4fd711436d055c9ad757a0d649b3d2c2002413ee 100644
+index f9e10bf048929886db3c414038d2c7e9f84226a6..d6aea0f7d28019728f32f4258aded00ae47002bc 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
-@@ -315,7 +315,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -318,7 +318,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void setListener(PacketListener listener) {
@@ -290,7 +290,7 @@ index d5cb594f0b17ec9dc1a19cdb99bba553e70171be..cd65e89579965a176ba28ecb135fc7af
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index dda5e77f7d9fb2340d50997c0a17bc7f5e2bb961..8184b11a1fd33692b6ecc9189be078b64cf8bdbb 100644
+index 3ee5c3c17d450dce54e051dc53c9df44d9b3dc1b..49231af395627356b6add25855a5d7921dc1ae65 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -928,7 +928,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -312,10 +312,10 @@ index dda5e77f7d9fb2340d50997c0a17bc7f5e2bb961..8184b11a1fd33692b6ecc9189be078b6
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index cc7187c597337665d3cf3c3de4b53e3105b9e4c3..5804c5d75975c6ab75dc12452edcfb88c7ffb479 100644
+index 9d2d72fe48b69be2f6ebe74309673a3a4e51eae4..7365b36daff936ec5f9f9781fd6bb1bd0d929c49 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -403,7 +403,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -404,7 +404,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
@@ -324,7 +324,7 @@ index cc7187c597337665d3cf3c3de4b53e3105b9e4c3..5804c5d75975c6ab75dc12452edcfb88
              }
          } else {
              if (elapsedTime >= 15000L) { // 15 seconds
-@@ -875,13 +875,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -876,13 +876,13 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // PacketUtils.ensureRunningOnSameThread(packet, this, this.player.getLevel()); // Paper - run this async
          // CraftBukkit start
          if (this.chatSpamTickCount.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.tabSpamLimit && !this.server.getPlayerList().isOp(this.player.getGameProfile())) { // Paper start - split and make configurable
@@ -340,7 +340,7 @@ index cc7187c597337665d3cf3c3de4b53e3105b9e4c3..5804c5d75975c6ab75dc12452edcfb88
              return;
          }
          // Paper end
-@@ -3281,7 +3281,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3288,7 +3288,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -374,10 +374,10 @@ index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 4d837c1530a3031a4c2a5a39d87bd013d60e14a6..4a7044ba9f762b7cf260e0f1bec9663f24179d08 100644
+index 5c21de0d48fba88c3164b72e0eb624706b683fab..1504f3248e6e977314d4a2ad4ac32c4fff2b46cc 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -690,7 +690,7 @@ public abstract class PlayerList {
+@@ -692,7 +692,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -503,7 +503,7 @@ index 71a36cf9b976443cca9ab63cd0eb23253f638562..8d16113a91bcacc819571a6cfcabd346
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index a7533d18fe6148d7bfd3106b9cdcb6fa3347cf7c..54303a270a798d4768e9bdcad05b5859e21a1fff 100644
+index d81fcbadc5c0b3d4b54dde5d47a0f847d8ec6918..e42a179d4845fd320c0708a14dcaf0fc55002fda 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
 @@ -1008,7 +1008,7 @@ public final class ItemStack {
@@ -582,7 +582,7 @@ index 6aec1983a0236d6aa0507a2b3ad1c08b3330f0fc..c8bfd87e1aa8b0d9d13c7d2b74f450ee
          return slices.getChunkEntities();
      }
 diff --git a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-index ae90e86327957bb784e2d81694ee7eea288bb455..079e199bb54ddfb9307af0a57992b974788b98ad 100644
+index fb4382337fe83f7d00c2212a7a71e0ba5bdd51cc..f8c5301f9d2e2310b759c444064425f66b18d018 100644
 --- a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
 @@ -413,7 +413,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
