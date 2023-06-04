@@ -6,7 +6,7 @@ Subject: [PATCH] Optimize default values for configs
 // TODO - needs update
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index e0076044d0a29e33ee297fe6180a041436075297..519675eb8177dc6bd1f34c39bb82fae23a9d6f27 100644
+index db6f16fc3a146ba490c6c426e60fc4759f0ba1fc..7faaabe0cd1a7087b4d555238024c845371771d0 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -219,7 +219,7 @@ public class PufferfishConfig {
@@ -58,7 +58,7 @@ index e0076044d0a29e33ee297fe6180a041436075297..519675eb8177dc6bd1f34c39bb82fae2
  		setComment("entity_timeouts",
  				"These values define a entity's maximum lifespan. If an",
  				"entity is in this list and it has survived for longer than",
-@@ -310,7 +316,7 @@ public class PufferfishConfig {
+@@ -319,7 +325,7 @@ public class PufferfishConfig {
  	public static boolean disableOutOfOrderChat;
      private static void miscSettings() {
  		disableMethodProfiler = getBoolean("misc.disable-method-profiler", true);
