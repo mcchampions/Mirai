@@ -28,10 +28,10 @@ index c75568116166e23152e6e34307fbea4ef6d4c2f8..6f5d24e1ef7a033d88ec4e039b7bab24
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 27e671865712fae9fe81869805fa7ce8d825af21..8645e67973cb0e2dcfbad9f8a5d65be75a711304 100644
+index fc69e2b94618fde95b125eb8c527f10d3b7fa898..fc71d18476395ca85c8056ea68b78368cc76e355 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1211,7 +1211,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1212,7 +1212,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  }
  
                  this.tryCheckInsideBlocks();

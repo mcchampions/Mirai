@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index c555fa4d8156d2055160dae38eb35b16035490db..27e671865712fae9fe81869805fa7ce8d825af21 100644
+index 5351c2898b4861791d1e67fcdca27345a04564f7..fc69e2b94618fde95b125eb8c527f10d3b7fa898 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1905,12 +1905,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1906,12 +1906,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          }
      }
  
@@ -30,7 +30,7 @@ index c555fa4d8156d2055160dae38eb35b16035490db..27e671865712fae9fe81869805fa7ce8
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4535,6 +4541,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4536,6 +4542,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  
@@ -43,7 +43,7 @@ index c555fa4d8156d2055160dae38eb35b16035490db..27e671865712fae9fe81869805fa7ce8
      public final void setPosRaw(double x, double y, double z) {
          // Paper start
          this.setPosRaw(x, y, z, false);
-@@ -4833,16 +4845,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4834,16 +4846,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return true;
      }
  

@@ -406,10 +406,10 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 220690cbd6552b06626f4edf5c71bed5cf1f12c4..7c3ed0393354abb396083f15bd8dfae64808daf6 100644
+index 505a60605ff2282f2c460c81464d60a433f41eda..575cc0270bd6ad2ffbe51397b751dd9f20d52030 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -280,7 +280,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+@@ -291,7 +291,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      }
  
      protected static float lerpRotation(float prevRot, float newRot) {

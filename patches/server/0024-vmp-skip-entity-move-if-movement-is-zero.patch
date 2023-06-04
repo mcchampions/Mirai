@@ -8,7 +8,7 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index f31f4ecf8fb07f6cf01eea0aa14f5d454a4ce2a3..82beaa91eb228650fb7cfb30f9b903c432e3301e 100644
+index e71eca3ddbbeb3168dd73433b6d6ffe9f6755f77..64013bd531e3d4bb520715538e1164ba17e14a92 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -300,6 +300,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -19,7 +19,7 @@ index f31f4ecf8fb07f6cf01eea0aa14f5d454a4ce2a3..82beaa91eb228650fb7cfb30f9b903c4
      public boolean onGround;
      public boolean horizontalCollision;
      public boolean verticalCollision;
-@@ -1038,6 +1039,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1039,6 +1040,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -32,7 +32,7 @@ index f31f4ecf8fb07f6cf01eea0aa14f5d454a4ce2a3..82beaa91eb228650fb7cfb30f9b903c4
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
          synchronized (this.posLock) {
-@@ -3899,6 +3906,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3900,6 +3907,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public final void setBoundingBox(AABB boundingBox) {
