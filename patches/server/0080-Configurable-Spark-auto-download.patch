@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Dreeam <61569423+Dreeam-qwq@users.noreply.github.com>
+Date: Wed, 7 Jun 2023 04:54:55 +0800
+Subject: [PATCH] Configurable Spark auto download
+
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 01c9643948723eadca2d015b4ce9a6a41e5d817e..5ddefb9174fe1e2072ecf377f1f20494d06d80c9 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -229,4 +229,10 @@ public class MiraiConfig {
+             enableAsyncEntityTracker = temp;
+         }
+     }
++
++    public static boolean autoDownloadSpark;
++    private static void sparkDownloading() {
++        autoDownloadSpark = getBoolean("auto-download-spark", false,
++                "Whether or not download spark when server launched.");
++    }
+ }
+diff --git a/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java b/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
+index e35da199be67e04c34df6bc09afd8d8122cb0487..f99afc19674f8285535793bcdad8a6948510e8cb 100644
+--- a/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
++++ b/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
+@@ -102,7 +102,7 @@ public class PluginInitializerManager {
+         java.util.List<File> files = (java.util.List<File>) optionSet.valuesOf("add-plugin");
+         // Register plugins from the flag
+         io.papermc.paper.plugin.util.EntrypointUtil.registerProvidersFromSource(io.papermc.paper.plugin.provider.source.PluginFlagProviderSource.INSTANCE, files);
+-        io.papermc.paper.plugin.util.EntrypointUtil.registerProvidersFromSource(io.papermc.paper.plugin.provider.source.SparkProviderSource.INSTANCE, new File("cache", "spark.jar").toPath()); // Purpur
++        if (dev.etil.mirai.MiraiConfig.autoDownloadSpark) io.papermc.paper.plugin.util.EntrypointUtil.registerProvidersFromSource(io.papermc.paper.plugin.provider.source.SparkProviderSource.INSTANCE, new File("cache", "spark.jar").toPath()); // Purpur  // Mirai - Configurable Spark auto download
+     }
+ 
+     // This will be the end of me...
