@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: rafaelflromao <12960698+rafaelflromao@users.noreply.github.com>
+Date: Mon, 12 Jun 2023 06:01:40 +0100
+Subject: [PATCH] Sync event calls on async threads
+
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 01c9643948723eadca2d015b4ce9a6a41e5d817e..6351c34146a69e3ae0f74270927a2075f7d8f901 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -229,4 +229,17 @@ public class MiraiConfig {
+             enableAsyncEntityTracker = temp;
+         }
+     }
++
++    public static boolean enableSyncEventCallsOnAsyncThreads;
++    public static boolean enableSyncEventCallsOnAsyncThreadsInitialized;
++
++    private static void syncEventCallsOnAsyncThreads() {
++        boolean temp = getBoolean("enable-sync-event-calls-on-async-threads", true,
++            "Whether or not sync event calls on async threads should be enabled. (If async entity tracker is enabled, this is enabled.)",
++            "You may encounter issues with plugins.");
++        if (!enableSyncEventCallsOnAsyncThreadsInitialized) {
++            enableSyncEventCallsOnAsyncThreadsInitialized = true;
++            enableSyncEventCallsOnAsyncThreads = temp;
++        }
++    }
+ }
+diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+index d076b1a4429dcadb01bf2e1a5e09d500baef08d0..92d494894c3dd43fba888105711771c01f2f27a9 100644
+--- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
++++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+@@ -42,7 +42,7 @@ class PaperEventManager {
+             throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
+         } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
+             // Mirai start
+-            if(MiraiConfig.enableAsyncEntityTracker) {
++            if(MiraiConfig.enableAsyncEntityTracker || MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
+                 MinecraftServer.getServer().executeBlocking(event::callEvent);
+                 return;
+             } else {
