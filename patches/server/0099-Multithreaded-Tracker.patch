@@ -197,6 +197,35 @@ index 0000000000000000000000000000000000000000..613bd104762755395e86101decaf1cb7
 +
 +}
 \ No newline at end of file
+diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d076b1a4429dcadb01bf2e1a5e09d500baef08d0 100644
+--- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
++++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+@@ -4,6 +4,8 @@ import co.aikar.timings.TimedEventExecutor;
+ import com.destroystokyo.paper.event.server.ServerExceptionEvent;
+ import com.destroystokyo.paper.exception.ServerEventException;
+ import com.google.common.collect.Sets;
++import dev.etil.mirai.MiraiConfig;
++import net.minecraft.server.MinecraftServer;
+ import org.bukkit.Server;
+ import org.bukkit.Warning;
+ import org.bukkit.event.Event;
+@@ -39,7 +41,14 @@ class PaperEventManager {
+         if (event.isAsynchronous() && this.server.isPrimaryThread()) {
+             throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
+         } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
+-            throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
++            // Mirai start
++            if(MiraiConfig.enableAsyncEntityTracker) {
++                MinecraftServer.getServer().executeBlocking(event::callEvent);
++                return;
++            } else {
++                throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
++            }
++            // Mirai end
+         }
+ 
+         HandlerList handlers = event.getHandlers();
 diff --git a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java b/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
 index 0fd814f1d65c111266a2b20f86561839a4cef755..dc06747df171678c8531e1153c5fa9b80b70baed 100644
 --- a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
@@ -378,3 +407,16 @@ index cae6ef0c99c383907057a406355bec1ffb69426a..ce4f57363c2414c81452795ebf65be6b
              }
  
              set.clear();
+diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
+index 99c3729068df32b8d4ba6bcc6f8b1a866ac59297..f02dd96d5efe97864141d0659463adbaedd68a3c 100644
+--- a/src/main/java/net/minecraft/server/level/ServerLevel.java
++++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
+@@ -2505,7 +2505,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+ 
+     @Override
+     public LevelEntityGetter<Entity> getEntities() {
+-        org.spigotmc.AsyncCatcher.catchOp("Chunk getEntities call"); // Spigot
++        // org.spigotmc.AsyncCatcher.catchOp("Chunk getEntities call"); // Spigot // Mirai
+         return this.entityLookup; // Paper - rewrite chunk system
+     }
+ 
