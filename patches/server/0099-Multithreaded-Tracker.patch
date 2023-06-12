@@ -408,10 +408,10 @@ index cae6ef0c99c383907057a406355bec1ffb69426a..ce4f57363c2414c81452795ebf65be6b
  
              set.clear();
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 99c3729068df32b8d4ba6bcc6f8b1a866ac59297..f02dd96d5efe97864141d0659463adbaedd68a3c 100644
+index 5429b3c9a0d2ec74a5830f3aa55f61701eb47750..94302ba1665f29225c84aeaefb296a2a3ce4f225 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -2505,7 +2505,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2438,7 +2438,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {
