@@ -116,26 +116,8 @@ index 6f5d24e1ef7a033d88ec4e039b7bab24441cb0d0..9e1604f5a429d9964486f92eb841dc45
 +            "Whether or not Math.hypot should be replaced by a faster version.");
 +    }
  }
-diff --git a/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java b/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
-index e77972c4c264100ffdd824bfa2dac58dbbc6d678..ef62a82a959646d3df0c18100047fe45bc707eb8 100644
---- a/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
-+++ b/src/main/java/io/papermc/paper/chunk/PlayerChunkLoader.java
-@@ -387,11 +387,11 @@ public final class PlayerChunkLoader {
-     }
- 
-     protected long getTargetSendPerPlayerAddend() {
--        return GlobalConfiguration.get().chunkLoading.targetPlayerChunkSendRate <= 1.0 ? 0L : (long)Math.round(1.0e9 / GlobalConfiguration.get().chunkLoading.targetPlayerChunkSendRate);
-+        return GlobalConfiguration.get().chunkLoading.targetPlayerChunkSendRate <= 1.0 ? 0L : (long)carpetfixes.helpers.FastMath.round(1.0e9 / GlobalConfiguration.get().chunkLoading.targetPlayerChunkSendRate); // Mirai
-     }
- 
-     protected long getMaxSendAddend() {
--        return GlobalConfiguration.get().chunkLoading.globalMaxChunkSendRate <= 1.0 ? 0L : (long)Math.round(1.0e9 / GlobalConfiguration.get().chunkLoading.globalMaxChunkSendRate);
-+        return GlobalConfiguration.get().chunkLoading.globalMaxChunkSendRate <= 1.0 ? 0L : (long)carpetfixes.helpers.FastMath.round(1.0e9 / GlobalConfiguration.get().chunkLoading.globalMaxChunkSendRate); // Mirai
-     }
- 
-     public void onChunkPlayerTickReady(final int chunkX, final int chunkZ) {
 diff --git a/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java b/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java
-index 7784d72ddd6db00c674e22759c00c430222c4b85..0f180d11774f6dec2667b3a3f6a63d1127bac869 100644
+index 463c6d8d5b114816ed9065558285945817c30385..1872fc7c724a3c12d38b9bbac0d8871ad48454a8 100644
 --- a/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java
 +++ b/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java
 @@ -95,12 +95,12 @@ public final class FixLightCommand implements PaperSubcommand {
@@ -180,10 +162,10 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ab243baefcb46d5abb6e62b8ac25fc4f3e44cfe8..885412a86720d4ea9e29be8a3d799e519e79744d 100644
+index 1abec7f94a3e6705e5eab8fce2c49e56de2c1a8c..7886ab79300d063a632813937bc1ffe41e2b0519 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2833,7 +2833,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2824,7 +2824,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -206,7 +188,7 @@ index 88f10d729aa1e0a01790521821d691a0ecd373a2..45b2aa542969798a5a3b73af78de21cc
      // Paper end
  }
 diff --git a/src/main/java/net/minecraft/util/Mth.java b/src/main/java/net/minecraft/util/Mth.java
-index c34a69e8b67cdf907dca1b20d16680b4fdf2d487..fae3e8e41982d39298ab4e6c69edd66817170918 100644
+index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d72910fa17 100644
 --- a/src/main/java/net/minecraft/util/Mth.java
 +++ b/src/main/java/net/minecraft/util/Mth.java
 @@ -593,6 +593,7 @@ public class Mth {
@@ -218,10 +200,10 @@ index c34a69e8b67cdf907dca1b20d16680b4fdf2d487..fae3e8e41982d39298ab4e6c69edd668
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfccdb6069da 100644
+index e9a93a3396525d7793cf39e68f198e4586cfed07..73da13d2ef0198277bcf79e66c179144531a55ab 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1538,7 +1538,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1579,7 +1579,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              if (this instanceof ServerPlayer) {
                  CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, source, f1, amount, flag);
                  if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -230,7 +212,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                  }
              }
  
-@@ -2127,9 +2127,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2148,9 +2148,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -242,7 +224,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                      }
                  }
              }
-@@ -2241,9 +2241,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2262,9 +2262,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  float f3 = (float) -event.getDamage(DamageModifier.RESISTANCE);
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -254,7 +236,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                      }
                  }
              }
-@@ -2275,7 +2275,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2296,7 +2296,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              float f2 = absorptionModifier;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F && this instanceof net.minecraft.world.entity.player.Player) {
@@ -263,7 +245,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
              }
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
                  Entity entity = damagesource.getEntity();
-@@ -2283,7 +2283,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2304,7 +2304,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  if (entity instanceof ServerPlayer) {
                      ServerPlayer entityplayer = (ServerPlayer) entity;
  
@@ -272,7 +254,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                  }
              }
  
-@@ -2306,7 +2306,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2327,7 +2327,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                      // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                      ((net.minecraft.world.entity.player.Player) this).causeFoodExhaustion(damagesource.getFoodExhaustion(), org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.DAMAGED); // CraftBukkit - EntityExhaustionEvent
                      if (f < 3.4028235E37F) {
@@ -281,7 +263,7 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                      }
                  }
                  // CraftBukkit end
-@@ -2328,7 +2328,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2347,7 +2347,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                          CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, damagesource, originalDamage, f, true); // Paper - fix taken/dealt param order
                          f2 = (float) -event.getDamage(DamageModifier.BLOCKING);
                          if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -290,8 +272,8 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
                          }
                      }
  
-@@ -3101,13 +3101,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
-         //this.level.getProfiler().push("rangeChecks"); // Purpur
+@@ -3117,13 +3117,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
+         //this.level().getProfiler().push("rangeChecks"); // Purpur
  
          // Paper start - stop large pitch and yaw changes from crashing the server
 -        this.yRotO += Math.round((this.getYRot() - this.yRotO) / 360.0F) * 360.0F;
@@ -307,12 +289,12 @@ index 9aa0ff18d663324a75165790c1a0c39812fde629..d80f895a001a62de42f41f7bca4ccfcc
 +        this.yHeadRotO += carpetfixes.helpers.FastMath.round((this.yHeadRot - this.yHeadRotO) / 360.0F) * 360.0F; // Mirai
          // Paper end
  
-         //this.level.getProfiler().pop(); // Purpur
+         //this.level().getProfiler().pop(); // Purpur
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063a6c5a768 100644
+index eb4386503db45aa6cad8f4b56896da3f0f55bfdb..4b0aa4e2f4c92abbcd748c5ca1575a5a2458ba19 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1110,7 +1110,7 @@ public abstract class Player extends LivingEntity {
+@@ -1111,7 +1111,7 @@ public abstract class Player extends LivingEntity {
              float f2 = f1 - f;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -321,15 +303,15 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
              }
  
              if (f != 0.0F) {
-@@ -1120,7 +1120,7 @@ public abstract class Player extends LivingEntity {
-                 this.getCombatTracker().recordDamage(damagesource, f3, f);
+@@ -1119,7 +1119,7 @@ public abstract class Player extends LivingEntity {
+                 this.getCombatTracker().recordDamage(damagesource, f);
                  this.setHealth(this.getHealth() - f);
                  if (f < 3.4028235E37F) {
 -                    this.awardStat(Stats.DAMAGE_TAKEN, Math.round(f * 10.0F));
 +                    this.awardStat(Stats.DAMAGE_TAKEN, carpetfixes.helpers.FastMath.round(f * 10.0F)); // Mirai
                  }
  
-             }
+                 this.gameEvent(GameEvent.ENTITY_DAMAGE);
 @@ -1460,7 +1460,7 @@ public abstract class Player extends LivingEntity {
                          if (target instanceof LivingEntity) {
                              float f5 = f3 - ((LivingEntity) target).getHealth();
@@ -339,7 +321,7 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1724,29 +1724,29 @@ public abstract class Player extends LivingEntity {
+@@ -1727,29 +1727,29 @@ public abstract class Player extends LivingEntity {
              int i;
  
              if (this.isSwimming()) {
@@ -347,34 +329,34 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
 +                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
                  if (i > 0) {
                      this.awardStat(Stats.SWIM_ONE_CM, i);
-                     this.causeFoodExhaustion(level.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent // Spigot
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent // Spigot
                  }
              } else if (this.isEyeInFluid(FluidTags.WATER)) {
 -                i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
 +                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
                  if (i > 0) {
                      this.awardStat(Stats.WALK_UNDER_WATER_ONE_CM, i);
-                     this.causeFoodExhaustion(level.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent // Spigot
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent // Spigot
                  }
              } else if (this.isInWater()) {
 -                i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
 +                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F); // Mirai
                  if (i > 0) {
                      this.awardStat(Stats.WALK_ON_WATER_ONE_CM, i);
-                     this.causeFoodExhaustion(level.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent // Spigot
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent // Spigot
                  }
              } else if (this.onClimbable()) {
                  if (dy > 0.0D) {
 -                    this.awardStat(Stats.CLIMB_ONE_CM, (int) Math.round(dy * 100.0D));
 +                    this.awardStat(Stats.CLIMB_ONE_CM, (int) carpetfixes.helpers.FastMath.round(dy * 100.0D)); // Mirai
                  }
-             } else if (this.onGround) {
+             } else if (this.onGround()) {
 -                i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
 +                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F); // Mirai
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1760,10 +1760,10 @@ public abstract class Player extends LivingEntity {
+@@ -1763,10 +1763,10 @@ public abstract class Player extends LivingEntity {
                      }
                  }
              } else if (this.isFallFlying()) {
@@ -387,7 +369,7 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
                  if (i > 25) {
                      this.awardStat(Stats.FLY_ONE_CM, i);
                  }
-@@ -1774,7 +1774,7 @@ public abstract class Player extends LivingEntity {
+@@ -1777,7 +1777,7 @@ public abstract class Player extends LivingEntity {
  
      private void checkRidingStatistics(double dx, double dy, double dz) {
          if (this.isPassenger()) {
@@ -396,7 +378,7 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
  
              if (i > 0) {
                  Entity entity = this.getVehicle();
-@@ -1801,7 +1801,7 @@ public abstract class Player extends LivingEntity {
+@@ -1804,7 +1804,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {
@@ -405,11 +387,24 @@ index b9c29ec3d2a8e58cc13ea2cb0cce6a5c91788260..e2fe4508711b64dfecbd905f24d7b063
              }
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
+@@ -2022,10 +2022,10 @@ public abstract class Player extends LivingEntity {
+             // Purpur start
+             int toDrop;
+             try {
+-                toDrop = Math.round(((Number) scriptEngine.eval("let expLevel = " + experienceLevel + "; " +
++                toDrop = carpetfixes.helpers.FastMath.round(((Number) scriptEngine.eval("let expLevel = " + experienceLevel + "; " +
+                         "let expTotal = " + totalExperience + "; " +
+                         "let exp = " + experienceProgress + "; " +
+-                        level().purpurConfig.playerDeathExpDropEquation)).floatValue());
++                        level().purpurConfig.playerDeathExpDropEquation)).floatValue()); // Mirai
+             } catch (javax.script.ScriptException e) {
+                 e.printStackTrace();
+                 toDrop = experienceLevel * 7;
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 505a60605ff2282f2c460c81464d60a433f41eda..575cc0270bd6ad2ffbe51397b751dd9f20d52030 100644
+index ddc84a02fa0dd7201925aa329b8101c6468b7dc6..f47768a6dcddead5afabbee3636f1117ff6b8ece 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -291,7 +291,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+@@ -262,7 +262,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      }
  
      protected static float lerpRotation(float prevRot, float newRot) {
@@ -473,10 +468,10 @@ index 51a05900d02dc116ea215730713cd2cf2a4f1c23..eb4a7c41f902fa3d3b424c39eafcf0be
  
                  list.add(CompletableFuture.supplyAsync(() -> {
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java b/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java
-index 3152d995f87beca1e0243a7d594d352ec458b0ed..d4dbee946d292e0d01910cc4fd1c67cda8fd7dc8 100644
+index f451d993bd71e14ab086ed726394007ede68de78..e19386b4cb7845f165353e97741eca4677dad7b8 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/SurfaceSystem.java
-@@ -301,7 +301,7 @@ public class SurfaceSystem {
+@@ -300,7 +300,7 @@ public class SurfaceSystem {
      }
  
      protected BlockState getBand(int x, int y, int z) {
@@ -486,15 +481,15 @@ index 3152d995f87beca1e0243a7d594d352ec458b0ed..d4dbee946d292e0d01910cc4fd1c67cd
      }
  }
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/ScatteredOreFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/ScatteredOreFeature.java
-index 06f27fc8eda9ec160c54759ec95fdade19876d29..567d653469c964922dc5662e48c45dc289222bc2 100644
+index b07e0be0ced2fb5f1651dfae7a2477974ea3b32e..d8e6240cfae2dab56cb9119d2ed87bb4beacb0a9 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/ScatteredOreFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/ScatteredOreFeature.java
 @@ -46,6 +46,6 @@ public class ScatteredOreFeature extends Feature<OreConfiguration> {
      }
  
-     private int getRandomPlacementInOneAxisRelativeToOrigin(RandomSource randomSource, int spread) {
--        return Math.round((randomSource.nextFloat() - randomSource.nextFloat()) * (float)spread);
-+        return carpetfixes.helpers.FastMath.round((randomSource.nextFloat() - randomSource.nextFloat()) * (float)spread); // Mirai
+     private int getRandomPlacementInOneAxisRelativeToOrigin(RandomSource random, int spread) {
+-        return Math.round((random.nextFloat() - random.nextFloat()) * (float)spread);
++        return carpetfixes.helpers.FastMath.round((random.nextFloat() - random.nextFloat()) * (float)spread); // Mirai
      }
  }
 diff --git a/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java b/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java

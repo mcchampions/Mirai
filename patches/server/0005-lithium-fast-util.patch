@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/core/Direction.java b/src/main/java/net/minecraft/core/Direction.java
-index eaa620ad86abfb151b43f697973cbc731e2e5e92..28ecd137dd37759e7890d71635289c3f6e994b87 100644
+index defe5951938ce3a7b7f83017d4af36bb49ff5be0..66d583d7d6678110996377bddc1e81e50fe43372 100644
 --- a/src/main/java/net/minecraft/core/Direction.java
 +++ b/src/main/java/net/minecraft/core/Direction.java
-@@ -192,7 +192,7 @@ public enum Direction implements StringRepresentable {
+@@ -182,7 +182,7 @@ public enum Direction implements StringRepresentable {
      }
  
      public Direction getOpposite() {
@@ -19,7 +19,7 @@ index eaa620ad86abfb151b43f697973cbc731e2e5e92..28ecd137dd37759e7890d71635289c3f
      }
  
      public Direction getClockWise(Direction.Axis axis) {
-@@ -454,7 +454,7 @@ public enum Direction implements StringRepresentable {
+@@ -463,7 +463,7 @@ public enum Direction implements StringRepresentable {
      }
  
      public static Direction getRandom(RandomSource random) {

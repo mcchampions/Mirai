@@ -211,23 +211,23 @@ index 0fd814f1d65c111266a2b20f86561839a4cef755..dc06747df171678c8531e1153c5fa9b8
      protected final double maxFragFactor;
  
 diff --git a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-index 209c4f0b25470bff7278c0a8dcd30576900b9933..603eb6ca629796cfd00c831a509fb71ad0fba360 100644
+index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8bee6bf267 100644
 --- a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 +++ b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-@@ -35,7 +35,7 @@ public final class ChunkEntitySlices {
+@@ -36,7 +36,7 @@ public final class ChunkEntitySlices {
      protected final EntityCollectionBySection allEntities;
      protected final EntityCollectionBySection hardCollidingEntities;
      protected final Reference2ObjectOpenHashMap<Class<? extends Entity>, EntityCollectionBySection> entitiesByClass;
 -    protected final EntityList entities = new EntityList();
 +    public final EntityList entities = new EntityList();
  
-     public ChunkHolder.FullChunkStatus status;
+     public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index f22261a7192c05d40304d7ecd7b08c2469644426..23d9ad42a121dd5561453d0ee7b51f4129a0ab1b 100644
+index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c908324b53 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1252,8 +1252,35 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1249,8 +1249,35 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
@@ -263,7 +263,7 @@ index f22261a7192c05d40304d7ecd7b08c2469644426..23d9ad42a121dd5561453d0ee7b51f41
          //this.level.timings.tracker1.startTiming(); // Purpur
          try {
              for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -1510,11 +1537,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1428,11 +1455,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -278,7 +278,7 @@ index f22261a7192c05d40304d7ecd7b08c2469644426..23d9ad42a121dd5561453d0ee7b51f41
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -1526,7 +1553,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1444,7 +1471,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -287,7 +287,7 @@ index f22261a7192c05d40304d7ecd7b08c2469644426..23d9ad42a121dd5561453d0ee7b51f41
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1598,7 +1625,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1516,7 +1543,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void removePlayer(ServerPlayer player) {
@@ -296,7 +296,7 @@ index f22261a7192c05d40304d7ecd7b08c2469644426..23d9ad42a121dd5561453d0ee7b51f41
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1606,7 +1633,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1524,7 +1551,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
@@ -319,38 +319,38 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..c4d6d5be09c788bbc062c50d8547538e
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index f4714b65823c89f926fed3b97cd6f9dc14a418c9..c6ebeb51363e09b33b6787e9a035a53d597e8829 100644
+index 88d655b0c648299e77d42ac9a65be7e51030e945..285cb0772ffb3699c5330da3fa7a3ff6f606fec2 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -300,7 +300,11 @@ public class ServerEntity {
+@@ -292,7 +292,11 @@ public class ServerEntity {
  
      public void removePairing(ServerPlayer player) {
          this.entity.stopSeenByPlayer(player);
 -        player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}));
 +        // Mirai start - ensure main thread
-+        ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() ->
++        ((ServerLevel) this.entity.level()).chunkSource.chunkMap.runOnTrackerMainThread(() ->
 +            player.connection.send(new ClientboundRemoveEntitiesPacket(new int[]{this.entity.getId()}))
 +        );
 +        // Mirai end
      }
  
      public void addPairing(ServerPlayer player) {
-@@ -308,7 +312,7 @@ public class ServerEntity {
+@@ -300,7 +304,7 @@ public class ServerEntity {
  
          Objects.requireNonNull(list);
-         this.sendPairingData(list::add, player); // CraftBukkit - add player
+         this.sendPairingData(player, list::add);
 -        player.connection.send(new ClientboundBundlePacket(list));
-+        ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> player.connection.send(new ClientboundBundlePacket(list))); // Mirai - main thread
++        ((ServerLevel) this.entity.level()).chunkSource.chunkMap.runOnTrackerMainThread(() -> player.connection.send(new ClientboundBundlePacket(list))); // Mirai - main thread
          this.entity.startSeenByPlayer(player);
      }
  
-@@ -418,19 +422,29 @@ public class ServerEntity {
+@@ -399,19 +403,29 @@ public class ServerEntity {
  
          if (list != null) {
              this.trackedDataValues = datawatcher.getNonDefaultValues();
 -            this.broadcastAndSend(new ClientboundSetEntityDataPacket(this.entity.getId(), list));
 +            // Mirai start - sync
-+            ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() ->
++            ((ServerLevel) this.entity.level()).chunkSource.chunkMap.runOnTrackerMainThread(() ->
 +                this.broadcastAndSend(new ClientboundSetEntityDataPacket(this.entity.getId(), list))
 +            );
 +            // Mirai end
@@ -362,7 +362,7 @@ index f4714b65823c89f926fed3b97cd6f9dc14a418c9..c6ebeb51363e09b33b6787e9a035a53d
              if (!set.isEmpty()) {
 +                // Mirai start - sync
 +                final var copy = Lists.newArrayList(set);
-+                ((ServerLevel) this.entity.level).chunkSource.chunkMap.runOnTrackerMainThread(() -> {
++                ((ServerLevel) this.entity.level()).chunkSource.chunkMap.runOnTrackerMainThread(() -> {
                  // CraftBukkit start - Send scaled max health
                  if (this.entity instanceof ServerPlayer) {
 -                    ((ServerPlayer) this.entity).getBukkitEntity().injectScaledMaxHealth(set, false);

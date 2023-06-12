@@ -7,43 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5351c2898b4861791d1e67fcdca27345a04564f7..fc69e2b94618fde95b125eb8c527f10d3b7fa898 100644
+index 2024ca2a7db5440e9510ef4cfa3f8041d6530c2e..fbf2ed6b9ed3b45b5b3d372a19b83e56596bff6e 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1906,12 +1906,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-         }
-     }
- 
-+    // JettPack start - allow passing BlockPos to getLightLevelDependentMagicValue
-     /** @deprecated */
-     @Deprecated
-     public float getLightLevelDependentMagicValue() {
--        return this.level.hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level.getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())) : 0.0F;
-+        return this.level.getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ()));
-     }
- 
-+    public float getLightLevelDependentMagicValue(BlockPos pos) {
-+        return this.level.hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level.getLightLevelDependentMagicValue(pos) : 0.0F;
-+    }
-+    // JettPack end
-+
-     public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
-         this.absMoveTo(x, y, z);
-         this.setYRot(yaw % 360.0F);
-@@ -4536,6 +4542,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-     }
-     // Paper end - block invalid positions
- 
-+    // JettPack start
-+    public final int getPositionHashCode() {
-+        return this.position.hashCode();
-+    }
-+    // JettPack end
-+
-     public final void setPosRaw(double x, double y, double z) {
-         // Paper start
-         this.setPosRaw(x, y, z, false);
-@@ -4834,16 +4846,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -480,16 +480,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return true;
      }
  
@@ -54,7 +21,7 @@ index 5351c2898b4861791d1e67fcdca27345a04564f7..fc69e2b94618fde95b125eb8c527f10d
 +
      // Purpur start - copied from Mob
      public boolean isSunBurnTick() {
-         if (this.level.isDay() && !this.level.isClientSide) {
+         if (this.level().isDay() && !this.level().isClientSide) {
 -            float f = this.getLightLevelDependentMagicValue();
 -            BlockPos blockposition = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 +            // JettPack start - optimizations and cache eye blockpos
@@ -72,11 +39,44 @@ index 5351c2898b4861791d1e67fcdca27345a04564f7..fc69e2b94618fde95b125eb8c527f10d
 +
              boolean flag = this.isInWaterRainOrBubble() || this.isInPowderSnow || this.wasInPowderSnow;
  
--            if (f > 0.5F && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && this.level.canSeeSky(blockposition)) {
-+            if (!flag && this.level.canSeeSky(this.cached_eye_blockpos)) { // JettPack - move brightness checks up
+-            if (f > 0.5F && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && this.level().canSeeSky(blockposition)) {
++            if (!flag && this.level().canSeeSky(this.cached_eye_blockpos)) { // JettPack - move brightness checks up
                  return true;
              }
 +            // JettPack end
          }
  
          return false;
+@@ -2010,12 +2027,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+         }
+     }
+ 
++    // JettPack start - allow passing BlockPos to getLightLevelDependentMagicValue
+     /** @deprecated */
+     @Deprecated
+     public float getLightLevelDependentMagicValue() {
+-        return this.level().hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level().getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())) : 0.0F;
++        return this.level().getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ()));
+     }
+ 
++    public float getLightLevelDependentMagicValue(BlockPos pos) {
++        return this.level().hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level().getLightLevelDependentMagicValue(pos) : 0.0F;
++    }
++    // JettPack end
++
+     public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
+         this.absMoveTo(x, y, z);
+         this.setYRot(yaw % 360.0F);
+@@ -4602,6 +4625,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+     }
+     // Paper end - block invalid positions
+ 
++    // JettPack start
++    public final int getPositionHashCode() {
++        return this.position.hashCode();
++    }
++    // JettPack end
++
+     public final void setPosRaw(double x, double y, double z) {
+         // Paper start
+         this.setPosRaw(x, y, z, false);

@@ -22,10 +22,10 @@ index 293889cf1aab7fc512c4816ddf26d4f1d45ccd7d..83d7440db9dac15fce1d617bfb1d9d0b
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index b1f8ae0672ea2159f5bf94ba287719fe6656522e..c7e30c09b505dbbade227405ffb40202458f3af7 100644
+index 110ddf97721c6418e5d4eefcb4fa97f466170637..6714e97d7521e6292240aaed17fccc8917d5b588 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -207,6 +207,7 @@ public class ServerEntity {
+@@ -201,6 +201,7 @@ public class ServerEntity {
                          flag4 = true;
                          flag5 = true;
                      }
@@ -33,8 +33,8 @@ index b1f8ae0672ea2159f5bf94ba287719fe6656522e..c7e30c09b505dbbade227405ffb40202
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -281,6 +282,22 @@ public class ServerEntity {
-         }));
+@@ -273,6 +274,22 @@ public class ServerEntity {
+         });
      }
  
 +    // Purpur start

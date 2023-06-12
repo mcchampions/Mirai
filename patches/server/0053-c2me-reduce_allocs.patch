@@ -246,12 +246,12 @@ index f9ee7e23e69a36730c5585a2989cebdc6b2f3342..e84a8bf780dbdcbb5ee1b1260928dc2b
  
      public Stream<ConfiguredFeature<?, ?>> getFeatures() {
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/OreFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/OreFeature.java
-index 3c9275a115a0988223a61eb9d7cb59ef1da00350..01a424b490f1e4ec68301f6dc2564ac3b4b0bfe6 100644
+index 4be60b8d321d8f8cdd97deee16f4b42e428e57cf..1b3242bd8ce5443c622ee08050955cfe56133744 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/OreFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/OreFeature.java
 @@ -54,7 +54,7 @@ public class OreFeature extends Feature<OreConfiguration> {
  
-     protected boolean doPlace(WorldGenLevel world, RandomSource randomSource, OreConfiguration config, double startX, double endX, double startZ, double endZ, double startY, double endY, int x, int y, int z, int horizontalSize, int verticalSize) {
+     protected boolean doPlace(WorldGenLevel world, RandomSource random, OreConfiguration config, double startX, double endX, double startZ, double endZ, double startY, double endY, int x, int y, int z, int horizontalSize, int verticalSize) {
          int i = 0;
 -        BitSet bitSet = new BitSet(horizontalSize * verticalSize * horizontalSize);
 +        BitSet bitSet = com.ishland.c2me.opts.allocs.common.ObjectCachingUtils.getCachedOrNewBitSet(horizontalSize * verticalSize * horizontalSize); // Mirai - c2me: opts allocs

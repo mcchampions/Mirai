@@ -39,10 +39,10 @@ index 0000000000000000000000000000000000000000..7bd88761137b2a68c04fbaa920a9ea9c
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/Util.java b/src/main/java/net/minecraft/Util.java
-index 4c90a6ee734451fe404b2255d21090b669da1aa1..4651acc57f5d04a17b581c32c651dbff95bff9ca 100644
+index c60c73d9f998260f3abe6fe445255c6e7c38b0c3..c34d56a39193b543be83cd6008a09c0a1601be80 100644
 --- a/src/main/java/net/minecraft/Util.java
 +++ b/src/main/java/net/minecraft/Util.java
-@@ -74,6 +74,12 @@ import net.minecraft.util.TimeSource;
+@@ -75,6 +75,12 @@ import net.minecraft.util.TimeSource;
  import net.minecraft.util.datafix.DataFixers;
  import net.minecraft.world.level.block.state.properties.Property;
  import org.slf4j.Logger;
@@ -55,7 +55,7 @@ index 4c90a6ee734451fe404b2255d21090b669da1aa1..4651acc57f5d04a17b581c32c651dbff
  
  public class Util {
      static final Logger LOGGER = LogUtils.getLogger();
-@@ -165,7 +171,46 @@ public class Util {
+@@ -166,7 +172,46 @@ public class Util {
          if (i <= 0) {
              executorService = MoreExecutors.newDirectExecutorService();
          } else {

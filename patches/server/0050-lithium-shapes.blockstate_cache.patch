@@ -73,10 +73,10 @@ index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index ca8f1037515c2fe75359b4710f89bb421a5a6af6..67735a547a2db2ba163c769fc839870597fb7f3c 100644
+index dd7ab2d05e60dd8f6fd48d251a751d5aa7a4b747..2f19e664aab952dfcfd5d9d827d3512bccba86c8 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -62,6 +62,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
+@@ -61,6 +61,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
  import net.minecraft.world.phys.shapes.Shapes;
  import net.minecraft.world.phys.shapes.VoxelShape;
  import org.slf4j.Logger;
@@ -84,7 +84,7 @@ index ca8f1037515c2fe75359b4710f89bb421a5a6af6..67735a547a2db2ba163c769fc8398705
  
  // Purpur start
  import net.minecraft.nbt.CompoundTag;
-@@ -75,11 +76,12 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -74,11 +75,12 @@ public class Block extends BlockBehaviour implements ItemLike {
      private static final Logger LOGGER = LogUtils.getLogger();
      private final Holder.Reference<Block> builtInRegistryHolder;
      public static final IdMapper<BlockState> BLOCK_STATE_REGISTRY = new IdMapper<>();
@@ -102,7 +102,7 @@ index ca8f1037515c2fe75359b4710f89bb421a5a6af6..67735a547a2db2ba163c769fc8398705
      public static final int UPDATE_NEIGHBORS = 1;
      public static final int UPDATE_CLIENTS = 2;
      public static final int UPDATE_INVISIBLE = 4;
-@@ -290,7 +292,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -288,7 +290,7 @@ public class Block extends BlockBehaviour implements ItemLike {
      }
  
      public static boolean isShapeFullBlock(VoxelShape shape) {

@@ -48,7 +48,7 @@ index d1d2fc0c57523c1abf1e8bfec913c78927c3dafc..96a69a350c0cabf1a9c4d2a7585f97d4
      }
  
 diff --git a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
-index e6cc2bab1fde2e8c1394772b99201ea8d7eb8057..c9d8f00d97299033d6fd6a000ed82e96e84beb35 100644
+index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2fa48db03 100644
 --- a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
 +++ b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
 @@ -17,7 +17,7 @@ import net.minecraft.util.ExtraCodecs;
@@ -61,22 +61,22 @@ index e6cc2bab1fde2e8c1394772b99201ea8d7eb8057..c9d8f00d97299033d6fd6a000ed82e96
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index e712a27fae8645314e822fd4408c41d544e09ef9..5a942369b08122855a2d5d4293b44e611e44efb6 100644
+index 7803dee021618f37c769e102782cbf4fa93ef1cb..f97a8db866a49345b04136689fc2a01d958ba1f7 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -679,6 +679,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -675,6 +675,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return false; // Mirai - configurable chat message signatures
-         return this.getProperties().enforceSecureProfile && this.getProperties().onlineMode;
-     }
+         DedicatedServerProperties dedicatedserverproperties = this.getProperties();
  
+         return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index ff6fe85c9bd0302566c527b0ce0789bda1879e30..e307f881e32f31483145abffd47e16a194561455 100644
+index 72c38e028ee750c32e7e0c186eef6fcabfd5452d..7772dddb9d10b6d7769a7f4354823936bee4ce59 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2091,7 +2091,7 @@ public class ServerPlayer extends Player {
+@@ -2136,7 +2136,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -86,17 +86,17 @@ index ff6fe85c9bd0302566c527b0ce0789bda1879e30..e307f881e32f31483145abffd47e16a1
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index ced1b1ffe1a956afdafc26f57dbde42cdeb29ea8..3702ecef4558444ed4c7c5d160c3c4e62def1267 100644
+index 6953e3ddb4962f3ae714b0e2a5a45e3230a21a7d..70982b9d0b32f87fcc0d7ceddc7cef04d21aceee 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2235,10 +2235,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2233,10 +2233,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
 +            if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat) {
-+                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level.registryAccess())
++                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level().registryAccess())
 +                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
 +                        : Component.literal(chat.body().content())), false);
 +
@@ -122,10 +122,10 @@ index ced1b1ffe1a956afdafc26f57dbde42cdeb29ea8..3702ecef4558444ed4c7c5d160c3c4e6
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 3f3c7541abf76ba664105609dc67db0137449d79..0a4082a99a3e53373028e804e045d736562ff454 100644
+index 4165a6fd1a5cb391c42b1a8dec6ad80204259100..392101918f50719e1369df85b7fb60f0d7995d6e 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1476,6 +1476,7 @@ public abstract class PlayerList {
+@@ -1482,6 +1482,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public

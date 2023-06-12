@@ -1,4 +1,4 @@
-name: Build MiraiPurpur 1.19.4
+name: Build MiraiPurpur 1.20
 on: push
 jobs:
   build:
@@ -32,11 +32,11 @@ jobs:
         run: |
           ./gradlew -Dorg.gradle.jvmargs="-Dfile.encoding=UTF-8 -Dgraal.CompilerConfiguration=community -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.SpeculativeGuardMovement=true -Dgraal.WriteableCodeCache=true --add-modules jdk.incubator.vector" createReobfPaperclipJar --stacktrace --no-daemon
       - name: Release
-        if: github.ref_name == 'purpur/1.19.4'
+        if: github.ref_name == 'purpur/1.20'
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          title: "MiraiPurpur-1.19.4"
-          automatic_release_tag: "purpur-1.19.4"
+          title: "MiraiPurpur-1.20"
+          automatic_release_tag: "purpur-1.20"
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          files: build/libs/mirai-paperclip-1.19.4-R0.1-SNAPSHOT-reobf.jar
+          files: build/libs/mirai-paperclip-1.20-R0.1-SNAPSHOT-reobf.jar
           prerelease: false

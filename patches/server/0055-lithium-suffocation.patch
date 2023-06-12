@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index fc71d18476395ca85c8056ea68b78368cc76e355..4efd021b202d3b7b30974ef920e558a24d1d8b0e 100644
+index 3b212d17911f1e3e84c778920d72a6234519a122..3ce56669c026c4786218236933d759dfd09ed141 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2660,39 +2660,64 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2781,40 +2781,64 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return !this.isRemoved();
      }
  
@@ -26,6 +26,7 @@ index fc71d18476395ca85c8056ea68b78368cc76e355..4efd021b202d3b7b30974ef920e558a2
 -        } else {
 -            float f = this.dimensions.width * 0.8F;
 -            AABB axisalignedbb = AABB.ofSize(this.getEyePosition(), (double) f, 1.0E-6D, (double) f);
+-
 -
 -            BlockPos.MutableBlockPos blockposition = new BlockPos.MutableBlockPos();
 -            int minX = Mth.floor(axisalignedbb.minX);

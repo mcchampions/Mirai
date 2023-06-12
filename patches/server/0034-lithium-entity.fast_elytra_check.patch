@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index e86cba8541a28565c1a528966e1932b6a3882b18..fe0009639b8099680f7a20c9ea2be4f3ea9ed0d8 100644
+index a165c40a262fc47e939353e97f1537a8027ff556..f76d095fe0a07a2c463c6346af74a0d373600f9d 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3543,6 +3543,8 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3570,6 +3570,8 @@ public abstract class LivingEntity extends Entity implements Attackable {
      }
  
      private void updateFallFlying() {
@@ -18,4 +18,4 @@ index e86cba8541a28565c1a528966e1932b6a3882b18..fe0009639b8099680f7a20c9ea2be4f3
 +
          boolean flag = this.getSharedFlag(7);
  
-         if (flag && !this.onGround && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {
+         if (flag && !this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {

@@ -138,12 +138,12 @@ index 0000000000000000000000000000000000000000..493661ff3ac7247b68b7b02784b09b0e
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/core/BlockPos.java b/src/main/java/net/minecraft/core/BlockPos.java
-index ac335ec4f70830c7687ac4e0aa2a6cba9cb04ae1..ba66041bca1b17ea9349d5d13e3713a1897515de 100644
+index ec6b58dae525c81bbb1c0e2d96fbded6f00a45b5..772ffb60b1b1411c30588e9949749292aa18fb17 100644
 --- a/src/main/java/net/minecraft/core/BlockPos.java
 +++ b/src/main/java/net/minecraft/core/BlockPos.java
-@@ -18,6 +18,12 @@ import net.minecraft.world.phys.AABB;
- import net.minecraft.world.phys.Vec3;
+@@ -25,6 +25,12 @@ import net.minecraft.world.phys.Vec3;
  import org.apache.commons.lang3.Validate;
+ import org.apache.commons.lang3.tuple.Pair;
  import org.slf4j.Logger;
 +// JettPack start
 +import it.unimi.dsi.fastutil.longs.LongList;
@@ -154,7 +154,7 @@ index ac335ec4f70830c7687ac4e0aa2a6cba9cb04ae1..ba66041bca1b17ea9349d5d13e3713a1
  
  @Immutable
  public class BlockPos extends Vec3i {
-@@ -285,7 +291,18 @@ public class BlockPos extends Vec3i {
+@@ -298,7 +304,18 @@ public class BlockPos extends Vec3i {
          };
      }
  

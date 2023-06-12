@@ -7,13 +7,13 @@ Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/commands/CommandSourceStack.java b/src/main/java/net/minecraft/commands/CommandSourceStack.java
-index 941f3a0d50329658a9380500ef039d7f10a284e2..7b79c048be89000b24886679b4bfee2f2bb52a78 100644
+index 5737fe8c23b46b37cea86524613dd3c32f4ca9cf..9b969f6d5e3d0046b70e550916f9475c3e619703 100644
 --- a/src/main/java/net/minecraft/commands/CommandSourceStack.java
 +++ b/src/main/java/net/minecraft/commands/CommandSourceStack.java
-@@ -61,7 +61,7 @@ public class CommandSourceStack implements SharedSuggestionProvider, com.destroy
-     private final Vec2 rotation;
+@@ -64,7 +64,7 @@ public class CommandSourceStack implements SharedSuggestionProvider, com.destroy
      private final CommandSigningContext signingContext;
      private final TaskChainer chatMessageChainer;
+     private final IntConsumer returnValueConsumer;
 -    public java.util.Map<Thread, CommandNode> currentCommand = new java.util.concurrent.ConcurrentHashMap<>(); // CraftBukkit // Paper
 +    public final java.util.Map<Thread, CommandNode> currentCommand = new java.util.concurrent.ConcurrentHashMap<>(); // CraftBukkit // Paper // Patina - make a field final
      public boolean bypassSelectorPermissions = false; // Paper

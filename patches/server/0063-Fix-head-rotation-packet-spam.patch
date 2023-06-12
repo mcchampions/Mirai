@@ -7,19 +7,19 @@ Original code by Electroid, licensed under GPL v3
 You can find the original code on https://github.com/Electroid/SportPaper
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index c7e30c09b505dbbade227405ffb40202458f3af7..f4714b65823c89f926fed3b97cd6f9dc14a418c9 100644
+index 6714e97d7521e6292240aaed17fccc8917d5b588..88d655b0c648299e77d42ac9a65be7e51030e945 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -377,8 +377,10 @@ public class ServerEntity {
+@@ -369,8 +369,10 @@ public class ServerEntity {
          }
  
          // CraftBukkit start - Fix for nonsensical head yaw
 -        this.yHeadRotp = Mth.floor(this.entity.getYHeadRot() * 256.0F / 360.0F);
--        consumer.accept(new ClientboundRotateHeadPacket(this.entity, (byte) this.yHeadRotp));
+-        sender.accept(new ClientboundRotateHeadPacket(this.entity, (byte) this.yHeadRotp));
 +        if (this.entity instanceof LivingEntity) { // SportPaper - Fix head rotation packet spam
 +            this.yHeadRotp = Mth.floor(this.entity.getYHeadRot() * 256.0F / 360.0F);
-+            consumer.accept(new ClientboundRotateHeadPacket(this.entity, (byte) this.yHeadRotp));
++            sender.accept(new ClientboundRotateHeadPacket(this.entity, (byte) this.yHeadRotp));
 +        }
          // CraftBukkit end
  
-         if (this.entity instanceof LivingEntity) {
+         if (!this.entity.getPassengers().isEmpty()) {

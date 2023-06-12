@@ -5,19 +5,19 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 9c01005751c0088f560f96401cdfdebbbda4e7ec..ab7a76270fd62a8623a2c8d0f9cae496935dadd8 100644
+index 59b94c7a3ca821c90adea832f97ece8a32f65034..008b55c10c7a5b84804c491c45d8cc124e1256cf 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -7,7 +7,7 @@ plugins {
- }
+@@ -8,7 +8,7 @@ plugins {
  
  dependencies {
--    implementation(project(":purpur-api")) // Purpur
-+    implementation(project(":mirai-api")) // Purpur // Mirai
-     implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") // Purpur
-     // Paper start
-     implementation("org.jline:jline-terminal-jansi:3.21.0")
-@@ -81,7 +81,7 @@ tasks.jar {
+     // Purpur start
+-    implementation(project(":purpur-api")) // Pufferfish
++    implementation(project(":mirai-api")) // Pufferfish // Mirai
+     implementation("io.papermc.paper:paper-mojangapi:${project.version}") {
+         exclude("io.papermc.paper", "paper-api")
+     }
+@@ -70,7 +70,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -368,10 +368,10 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index beb05039926e1fb7a656dfcd0c503f82db67fc46..f4bea1fc4a52f25e9eb3673b81476b661849de3e 100644
+index 77b84d49ab7c9d64dc44df5310dca789e4f2cb63..627f3dd6cab0503df7b682693d0930f1f8efc4c5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -930,7 +930,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -926,7 +926,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          shutdownThread = Thread.currentThread();
          org.spigotmc.WatchdogThread.doStop(); // Paper
          if (!isSameThread()) {
@@ -381,7 +381,7 @@ index beb05039926e1fb7a656dfcd0c503f82db67fc46..f4bea1fc4a52f25e9eb3673b81476b66
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3310828edcabd2c24e3200dcb89d4e8ebd82cf16..f8db22d8a2ddd87b634166aaeb210dddb692d79a 100644
+index 06ded97822e9a51bf6aea377e59013a0717664e3..820449ce42a7911ffccbc2b18199a68b2597f7c6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -262,7 +262,7 @@ import javax.annotation.Nullable; // Paper
@@ -394,7 +394,7 @@ index 3310828edcabd2c24e3200dcb89d4e8ebd82cf16..f8db22d8a2ddd87b634166aaeb210ddd
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1bf9a11abf7884a421374cbca5ccc18480717b79..a52d6d314fb9b590422e44adb855a85b5c41ce0f 100644
+index 09c39f72fe1e8e6967f415dfd0d7aea8e50d0379..442c68ae324af46d705bdbb7d1f594edb6ac0cec 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -472,7 +472,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
@@ -444,7 +444,7 @@ index 99597258e8e88cd9e2c901c4ac3ff7faeeabee2b..1e6a999812495e370d7253ad1d746328
      }
  }
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
-index be8b44daa0141151c973917a774aa07721647ed1..6dc43f61412a65de51908eef9ffc0a41f5ba8558 100644
+index 06fa43b469aea15dc64ce1866d08843327a34965..82be41fc0d40f148e1fa8c3bd8980a918071adf4 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 @@ -229,7 +229,7 @@ public class PurpurConfig {
@@ -457,7 +457,7 @@ index be8b44daa0141151c973917a774aa07721647ed1..6dc43f61412a65de51908eef9ffc0a41
          serverModName = getString("settings.server-mod-name", serverModName);
      }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index a810bfd3b8d6bd4d8f2ef8797e4281ae4fe8a67f..0820e3f57ba5befec3ebe64f44cd157303bc31a9 100644
+index 0801dea155048ac5383295f4fef9bd597b678535..6d2f4de6e80376c7ddfa134ae1a21a94060b39c3 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -155,14 +155,14 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
