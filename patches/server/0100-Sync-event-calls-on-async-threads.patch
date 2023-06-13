@@ -27,7 +27,7 @@ index 8c1d445544bcfc885fb19bc11dfce6643f58d19c..bcaa51420bb998fda92eaeae506ea213
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index d076b1a4429dcadb01bf2e1a5e09d500baef08d0..92d494894c3dd43fba888105711771c01f2f27a9 100644
+index d95f88a6ea90ecb0a5b08e74d34ebea765018513..28b1504582f7e778671f60acb3a4864376dac1d0 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 @@ -42,7 +42,7 @@ class PaperEventManager {
@@ -36,6 +36,6 @@ index d076b1a4429dcadb01bf2e1a5e09d500baef08d0..92d494894c3dd43fba888105711771c0
              // Mirai start
 -            if(MiraiConfig.enableAsyncEntityTracker) {
 +            if(MiraiConfig.enableAsyncEntityTracker || MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
-                 MinecraftServer.getServer().executeBlocking(event::callEvent);
+                 MinecraftServer.getServer().scheduleOnMain(event::callEvent);
                  return;
              } else {
