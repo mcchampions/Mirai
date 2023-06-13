@@ -198,7 +198,7 @@ index 0000000000000000000000000000000000000000..613bd104762755395e86101decaf1cb7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d076b1a4429dcadb01bf2e1a5e09d500baef08d0 100644
+index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d95f88a6ea90ecb0a5b08e74d34ebea765018513 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 @@ -4,6 +4,8 @@ import co.aikar.timings.TimedEventExecutor;
@@ -217,7 +217,7 @@ index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d076b1a4429dcadb01bf2e1a5e09d500
 -            throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
 +            // Mirai start
 +            if(MiraiConfig.enableAsyncEntityTracker) {
-+                MinecraftServer.getServer().executeBlocking(event::callEvent);
++                MinecraftServer.getServer().scheduleOnMain(event::callEvent);
 +                return;
 +            } else {
 +                throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
