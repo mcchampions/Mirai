@@ -303,7 +303,7 @@ index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c9
          private final int range;
          SectionPos lastSectionPos;
 -        public final Set<ServerPlayerConnection> seenBy = new ReferenceOpenHashSet<>(); // Paper - optimise map impl
-+        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()); // Paper - optimise map impl // Mirai - sync
++        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ObjectSet.of(((ServerPlayerConnection) it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()))); // Paper - optimise map impl // Mirai - sync
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
