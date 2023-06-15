@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 627f3dd6cab0503df7b682693d0930f1f8efc4c5..9e0d4fa5360e3a33f516cc77a627b4cf69c4964f 100644
+index 4086b6ffcbb21163616107fbaf7825505e9c4c27..14289ce3e2287f3ca5cfa36b81d1f7d363804ae8 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1110,6 +1110,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1108,6 +1108,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
@@ -18,7 +18,7 @@ index 627f3dd6cab0503df7b682693d0930f1f8efc4c5..9e0d4fa5360e3a33f516cc77a627b4cf
  
      protected void runServer() {
          try {
-@@ -1189,7 +1190,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1187,7 +1188,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTime += 50L;
                  //this.startMetricsRecordingTick(); // Purpur
                  //this.profiler.push("tick"); // Purpur
@@ -29,10 +29,10 @@ index 627f3dd6cab0503df7b682693d0930f1f8efc4c5..9e0d4fa5360e3a33f516cc77a627b4cf
                  this.mayHaveDelayedTasks = true;
                      // Purpur start - tps catchup
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 820449ce42a7911ffccbc2b18199a68b2597f7c6..ade3996074267e11df2ddea59e7cb0b064df371d 100644
+index 525cac7ac64210fa975d73a100e80d4af3286ad6..3f0fe251d08d7e82c27e98b3e8587aeadc078638 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3049,7 +3049,6 @@ public final class CraftServer implements Server {
+@@ -3066,7 +3066,6 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -40,7 +40,7 @@ index 820449ce42a7911ffccbc2b18199a68b2597f7c6..ade3996074267e11df2ddea59e7cb0b0
      // Paper end
  
      // Purpur start
-@@ -3063,4 +3062,11 @@ public final class CraftServer implements Server {
+@@ -3080,4 +3079,11 @@ public final class CraftServer implements Server {
          return getServer().lagging;
      }
      // Purpur end

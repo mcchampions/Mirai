@@ -5,7 +5,7 @@
   <h4>Mirai is ❗under heavy development❗ and contributions are welcome!</h4>
   <h5><b>This project is experimental, its usage in production environment is discouraged if you are not ready to face possible bugs.</b></h5>
 
-  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-purpur120.yml?branch=purpur%2F1.20&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/purpur-1.20)
+  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-purpur1201.yml?branch=purpur%2F1.20.1&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/purpur-1.20.1)
   [![Discord](https://img.shields.io/discord/928402257605701683?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/DdH6Yfu9gM)
 </div>
 
@@ -26,7 +26,7 @@
 
 ## Downloads
 The latest successful build can be downloaded here:
-[mirai-paperclip-1.20-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/purpur-1.20)
+[mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/purpur-1.20.1)
 
 **Please note Java >= 17 is required, and Java >=19 is recommended.**
 

@@ -73,7 +73,7 @@ index 7803dee021618f37c769e102782cbf4fa93ef1cb..f97a8db866a49345b04136689fc2a01d
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 72c38e028ee750c32e7e0c186eef6fcabfd5452d..7772dddb9d10b6d7769a7f4354823936bee4ce59 100644
+index dfab8e8dd890c36ea6f7632e035afda451ada42c..c296de9e11965edea8bb8703ff9f6f5fcab48960 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -2136,7 +2136,7 @@ public class ServerPlayer extends Player {
@@ -86,19 +86,19 @@ index 72c38e028ee750c32e7e0c186eef6fcabfd5452d..7772dddb9d10b6d7769a7f4354823936
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 6953e3ddb4962f3ae714b0e2a5a45e3230a21a7d..70982b9d0b32f87fcc0d7ceddc7cef04d21aceee 100644
+index 34a17d41c4235db6715d98fa9dfb958f24293e2a..53fe0fb4bae093efc05c24ed905a196fdc3e53d2 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2233,10 +2233,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2236,10 +2236,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
 +            if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat) {
-+                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level().registryAccess())
++                packet = new ClientboundSystemChatPacket(PaperAdventure.asAdventure(chat.chatType().resolve(this.player.level().registryAccess())
 +                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
-+                        : Component.literal(chat.body().content())), false);
++                        : Component.literal(chat.body().content()))), false);
 +
 +
 +                this.send(packet);
@@ -122,7 +122,7 @@ index 6953e3ddb4962f3ae714b0e2a5a45e3230a21a7d..70982b9d0b32f87fcc0d7ceddc7cef04
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 4165a6fd1a5cb391c42b1a8dec6ad80204259100..392101918f50719e1369df85b7fb60f0d7995d6e 100644
+index 685efe30041c7cecb78dd76f6046acb91d52a72f..43f00905772ae46307a5e7d6e7e5476930bafa37 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1482,6 +1482,7 @@ public abstract class PlayerList {
