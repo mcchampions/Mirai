@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: rafaelflromao <12960698+rafaelflromao@users.noreply.github.com>
+Date: Thu, 15 Jun 2023 07:43:49 +0100
+Subject: [PATCH] fixup! Multithreaded Tracker
+
+
+diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
+index 44aa77bd89e81cb22990aa99488f42415082e2e5..51b1e39ed3472a79e8aa10b6ff9dff74457c075d 100644
+--- a/src/main/java/net/minecraft/server/level/ChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
+@@ -1459,7 +1459,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         public final Entity entity; // Mirai -> public
+         private final int range;
+         SectionPos lastSectionPos;
+-        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ObjectSet.of(((ServerPlayerConnection) it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()))); // Paper - optimise map impl // Mirai - sync
++        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()); // Paper - optimise map impl // Mirai - sync
+ 
+         public TrackedEntity(Entity entity, int i, int j, boolean flag) {
+             this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
+@@ -1513,14 +1513,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcast(Packet<?> packet) {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
+-
++            // Mirai start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) {
+                 serverplayerconnection.send(packet);
+             }
+-
++            // Mirai end
+         }
+ 
+         public void broadcastAndSend(Packet<?> packet) {
+@@ -1532,14 +1529,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcastRemoved() {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
+-
++            // Miria start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) { // Mirai - avoid NPE
+                 this.serverEntity.removePairing(serverplayerconnection.getPlayer());
+             }
+-
++            // Mirai end
+         }
+ 
+         public void removePlayer(ServerPlayer player) {
