@@ -253,7 +253,7 @@ index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8b
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c908324b53 100644
+index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..51b1e39ed3472a79e8aa10b6ff9dff74457c075d 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1249,8 +1249,35 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -303,7 +303,7 @@ index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c9
          private final int range;
          SectionPos lastSectionPos;
 -        public final Set<ServerPlayerConnection> seenBy = new ReferenceOpenHashSet<>(); // Paper - optimise map impl
-+        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ObjectSet.of(((ServerPlayerConnection) it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()))); // Paper - optimise map impl // Mirai - sync
++        public final Set<ServerPlayerConnection> seenBy = it.unimi.dsi.fastutil.objects.ReferenceSets.synchronize(new ReferenceOpenHashSet<>()); // Paper - optimise map impl // Mirai - sync
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
@@ -316,7 +316,39 @@ index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c9
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1516,7 +1543,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1486,14 +1513,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcast(Packet<?> packet) {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
+-
++            // Mirai start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) {
+                 serverplayerconnection.send(packet);
+             }
+-
++            // Mirai end
+         }
+ 
+         public void broadcastAndSend(Packet<?> packet) {
+@@ -1505,18 +1529,15 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcastRemoved() {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
+-
++            // Miria start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) { // Mirai - avoid NPE
+                 this.serverEntity.removePairing(serverplayerconnection.getPlayer());
+             }
+-
++            // Mirai end
          }
  
          public void removePlayer(ServerPlayer player) {
@@ -325,7 +357,7 @@ index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..c422c38476360609588c5912f970b6c9
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1524,7 +1551,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1524,7 +1545,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
