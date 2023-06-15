@@ -6,7 +6,7 @@ Subject: [PATCH] Optimize default values for configs
 // TODO - needs update
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index db6f16fc3a146ba490c6c426e60fc4759f0ba1fc..7faaabe0cd1a7087b4d555238024c845371771d0 100644
+index 6755008dc43bf96c1507ce2ae6a066a1b75df760..51e4396bdaae628f994f0d3623f68af2e28ba874 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -219,7 +219,7 @@ public class PufferfishConfig {
@@ -68,7 +68,7 @@ index db6f16fc3a146ba490c6c426e60fc4759f0ba1fc..7faaabe0cd1a7087b4d555238024c845
      }
  
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 01bdf134fc21220ab7ecca51f2dcd51c0b466bba..707d632da0cd5f249998714b63c7510107bf3cb0 100644
+index 95d92cc6c01c3f72a24c9372dbf385a14465053e..8dea84ec9f3e9ae7ad9e85e4eb71538c42e00b95 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -52,10 +52,10 @@ public class GlobalConfiguration extends ConfigurationPart {
@@ -84,23 +84,7 @@ index 01bdf134fc21220ab7ecca51f2dcd51c0b466bba..707d632da0cd5f249998714b63c75101
          public boolean serverNamePrivacy = false;
          public List<String> hiddenConfigEntries = List.of(
              "database",
-@@ -131,13 +131,13 @@ public class GlobalConfiguration extends ConfigurationPart {
- 
-     public class ChunkLoading extends ConfigurationPart {
-         public int minLoadRadius = 2;
--        public int maxConcurrentSends = 2;
-+        public int maxConcurrentSends = 4; // Mirai - optimize default values for configs
-         public boolean autoconfigSendDistance = true;
-         public double targetPlayerChunkSendRate = 100.0;
-         public double globalMaxChunkSendRate = -1.0;
-         public boolean enableFrustumPriority = false;
-         public double globalMaxChunkLoadRate = -1.0;
--        public double playerMaxConcurrentLoads = 20.0;
-+        public double playerMaxConcurrentLoads = 25.0; // Mirai - optimize default values for configs
-         public double globalMaxConcurrentLoads = 500.0;
-         public double playerMaxChunkLoadRate = -1.0;
-     }
-@@ -291,9 +291,9 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -275,9 +275,9 @@ public class GlobalConfiguration extends ConfigurationPart {
          public boolean fixEntityPositionDesync = true;
          public boolean loadPermissionsYmlBeforePlugins = true;
          @Constraints.Min(4)
@@ -298,10 +282,10 @@ index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b16
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa9ca39695 100644
+index f3db9c2f3b17a9f0f3cdaa16f115b7192d74c5eb..71f8d5b66cb977c0cb060053fd9e3c42a7fba8b4 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -148,14 +148,14 @@ public class SpigotWorldConfig
+@@ -150,14 +150,14 @@ public class SpigotWorldConfig
      public double itemMerge;
      private void itemMerge()
      {
@@ -318,7 +302,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
          this.log( "Experience Merge Radius: " + this.expMerge );
      }
  
-@@ -194,7 +194,7 @@ public class SpigotWorldConfig
+@@ -196,7 +196,7 @@ public class SpigotWorldConfig
      public byte mobSpawnRange;
      private void mobSpawnRange()
      {
@@ -327,7 +311,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
          this.log( "Mob Spawn Range: " + this.mobSpawnRange );
      }
  
-@@ -205,14 +205,14 @@ public class SpigotWorldConfig
+@@ -207,14 +207,14 @@ public class SpigotWorldConfig
          this.log( "Item Despawn Rate: " + this.itemDespawnRate );
      }
  
@@ -349,7 +333,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
      public int wakeUpInactiveAnimals = 4;
      public int wakeUpInactiveAnimalsEvery = 60*20;
      public int wakeUpInactiveAnimalsFor = 5*20;
-@@ -229,7 +229,7 @@ public class SpigotWorldConfig
+@@ -231,7 +231,7 @@ public class SpigotWorldConfig
      public int villagersWorkImmunityFor = 20;
      public boolean villagersActiveForPanic = true;
      // Paper end
@@ -358,7 +342,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
      public boolean ignoreSpectatorActivation = false;
      private void activationRange()
      {
-@@ -268,12 +268,13 @@ public class SpigotWorldConfig
+@@ -270,12 +270,13 @@ public class SpigotWorldConfig
          this.log( "Entity Activation Range: An " + this.animalActivationRange + " / Mo " + this.monsterActivationRange + " / Ra " + this.raiderActivationRange + " / Mi " + this.miscActivationRange + " / Tiv " + this.tickInactiveVillagers + " / Isa " + this.ignoreSpectatorActivation );
      }
  
@@ -378,7 +362,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
      private void trackingRange()
      {
          this.playerTrackingRange = this.getInt( "entity-tracking-range.players", this.playerTrackingRange );
-@@ -292,13 +293,13 @@ public class SpigotWorldConfig
+@@ -294,13 +295,13 @@ public class SpigotWorldConfig
      private void hoppers()
      {
          // Set the tick delay between hopper item movements
@@ -395,7 +379,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
          this.hopperCanLoadChunks = this.getBoolean( "hopper-can-load-chunks", false );
          this.log( "Hopper Transfer: " + this.hopperTransfer + " Hopper Check: " + this.hopperCheck + " Hopper Amount: " + this.hopperAmount + " Hopper Can Load Chunks: " + this.hopperCanLoadChunks );
      }
-@@ -307,7 +308,7 @@ public class SpigotWorldConfig
+@@ -309,7 +310,7 @@ public class SpigotWorldConfig
      public int tridentDespawnRate;
      private void arrowDespawnRate()
      {
@@ -404,7 +388,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
          this.tridentDespawnRate = this.getInt( "trident-despawn-rate", this.arrowDespawnRate );
          this.log( "Arrow Despawn Rate: " + this.arrowDespawnRate + " Trident Respawn Rate:" + this.tridentDespawnRate );
      }
-@@ -322,14 +323,14 @@ public class SpigotWorldConfig
+@@ -324,14 +325,14 @@ public class SpigotWorldConfig
      public boolean nerfSpawnerMobs;
      private void nerfSpawnerMobs()
      {
@@ -421,7 +405,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
          this.log( "Allow Zombie Pigmen to spawn from portal blocks: " + this.enableZombiePigmenPortalSpawns );
      }
  
-@@ -342,7 +343,7 @@ public class SpigotWorldConfig
+@@ -344,7 +345,7 @@ public class SpigotWorldConfig
      public int witherSpawnSoundRadius;
      private void witherSpawnSoundRadius()
      {
@@ -430,7 +414,7 @@ index 484b80779c396e831ce3e5a898c8f2580a2de301..a3741e1f0a74120c33d150d8ecdc40aa
      }
  
      public int endPortalSoundRadius;
-@@ -436,14 +437,14 @@ public class SpigotWorldConfig
+@@ -438,14 +439,14 @@ public class SpigotWorldConfig
          {
              this.set( "max-tnt-per-tick", 100 );
          }

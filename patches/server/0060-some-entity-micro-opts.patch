@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b1b08589ba1e562a715652eb0f7eb305ef172231..da65d06d6d916a6a26ea8048e05a0e5db466cc7b 100644
+index 80de5fcd41561d4841ebba84f1ae3ab2e82bb271..73393416a54818c2f2e3e1d0c267ae5a930476a4 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1903,12 +1903,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2023,12 +2023,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          }
      }
  
@@ -18,19 +18,19 @@ index b1b08589ba1e562a715652eb0f7eb305ef172231..da65d06d6d916a6a26ea8048e05a0e5d
      /** @deprecated */
      @Deprecated
      public float getLightLevelDependentMagicValue() {
--        return this.level.hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level.getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())) : 0.0F;
-+        return this.level.getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ()));
+-        return this.level().hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level().getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())) : 0.0F;
++        return this.level().getLightLevelDependentMagicValue(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ()));
      }
  
 +    public float getLightLevelDependentMagicValue(BlockPos pos) {
-+        return this.level.hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level.getLightLevelDependentMagicValue(pos) : 0.0F;
++        return this.level().hasChunkAt(this.getBlockX(), this.getBlockZ()) ? this.level().getLightLevelDependentMagicValue(pos) : 0.0F;
 +    }
 +    // JettPack end
 +
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4488,6 +4494,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4622,6 +4628,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  
@@ -44,10 +44,10 @@ index b1b08589ba1e562a715652eb0f7eb305ef172231..da65d06d6d916a6a26ea8048e05a0e5d
          // Paper start
          this.setPosRaw(x, y, z, false);
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 2a74279e401358dac7c2426b902e0b939365791d..722e6db89a442a0ed61abc3d638cf96124dcc936 100644
+index ffd8bea0107280c236bbbdf1601de8752fb6b908..2cc7774cb670e5fb6ce082294f79616ec82ca908 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -1699,15 +1699,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1701,15 +1701,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
  
      }
  
@@ -56,7 +56,7 @@ index 2a74279e401358dac7c2426b902e0b939365791d..722e6db89a442a0ed61abc3d638cf961
 +    private int cached_position_hashcode;
 +    // JettPack end
      public boolean isSunBurnTick() {
-         if (this.level.isDay() && !this.level.isClientSide) {
+         if (this.level().isDay() && !this.level().isClientSide) {
 -            float f = this.getLightLevelDependentMagicValue();
 -            BlockPos blockposition = BlockPos.containing(this.getX(), this.getEyeY(), this.getZ());
 +            // JettPack start - optimizations and cache eye blockpos
@@ -74,8 +74,8 @@ index 2a74279e401358dac7c2426b902e0b939365791d..722e6db89a442a0ed61abc3d638cf961
 +
              boolean flag = this.isInWaterRainOrBubble() || this.isInPowderSnow || this.wasInPowderSnow;
  
--            if (f > 0.5F && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && this.level.canSeeSky(blockposition)) {
-+            if (!flag && this.level.canSeeSky(this.cached_eye_blockpos)) { // JettPack - move brightness checks up
+-            if (f > 0.5F && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && this.level().canSeeSky(blockposition)) {
++            if (!flag && this.level().canSeeSky(this.cached_eye_blockpos)) { // JettPack - move brightness checks up
                  return true;
              }
 +            // JettPack end

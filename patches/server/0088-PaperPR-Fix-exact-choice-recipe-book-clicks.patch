@@ -87,19 +87,19 @@ index 574ebb3a2fcd0e4e426a8a7ee88d722ed3b9c3f5..92e548af2bb7b2f67802dae9a7bf8b83
      }
  
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index 54303a270a798d4768e9bdcad05b5859e21a1fff..30825ebe2c2eb5d234efad28bf115b2e29e577c5 100644
+index d128f2b6e9fd18a73facac6e0ccecd67db6e6e3e..12bd9b13044095c147fefb6a56f717669c776bdb 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -111,6 +111,7 @@ import org.bukkit.event.world.StructureGrowEvent;
+@@ -113,6 +113,7 @@ import org.bukkit.event.world.StructureGrowEvent;
  
  public final class ItemStack {
  
 +    public boolean isExactRecipeIngredient = false; // Paper
      public static final Codec<ItemStack> CODEC = RecordCodecBuilder.create((instance) -> {
-         return instance.group(BuiltInRegistries.ITEM.byNameCodec().fieldOf("id").forGetter((itemstack) -> {
-             return itemstack.item;
+         return instance.group(BuiltInRegistries.ITEM.byNameCodec().fieldOf("id").forGetter(ItemStack::getItem), Codec.INT.fieldOf("Count").forGetter(ItemStack::getCount), CompoundTag.CODEC.optionalFieldOf("tag").forGetter((itemstack) -> {
+             return Optional.ofNullable(itemstack.getTag());
 diff --git a/src/main/java/net/minecraft/world/item/crafting/Ingredient.java b/src/main/java/net/minecraft/world/item/crafting/Ingredient.java
-index 8d4aca59bd7518179520f4d4fb7137778e232d90..4c332f88eb62c8dd9af670d38a475f4e87e494ef 100644
+index cd7ea0c16f9ddcb84b5d7e8a2533e6e84f3879c7..3c7f7ccf60cab35b87511d4673b82434a40c478d 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/Ingredient.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/Ingredient.java
 @@ -50,7 +50,11 @@ public final class Ingredient implements Predicate<ItemStack> {

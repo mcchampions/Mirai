@@ -23,10 +23,10 @@ index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..9379fd91df73ac482064a89462764dac
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index cd65e89579965a176ba28ecb135fc7af76fb84cf..1253a2f67b9627b52510f0957092bbaf3b60d0b0 100644
+index 8b9fa5c8f3c503cacf1c7d99f4bc6eef1f7af5cb..1fc5e90c8788b6a11893efa92508c5aa258cb1de 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -207,6 +207,7 @@ public class ServerEntity {
+@@ -203,6 +203,7 @@ public class ServerEntity {
                          flag4 = true;
                          flag5 = true;
                      }
@@ -34,8 +34,8 @@ index cd65e89579965a176ba28ecb135fc7af76fb84cf..1253a2f67b9627b52510f0957092bbaf
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -281,6 +282,22 @@ public class ServerEntity {
-         }));
+@@ -275,6 +276,22 @@ public class ServerEntity {
+         });
      }
  
 +    // Purpur start

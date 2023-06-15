@@ -203,7 +203,7 @@ index 0000000000000000000000000000000000000000..16debe176798f316c122e8e7aef2b50e
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/util/BitStorage.java b/src/main/java/net/minecraft/util/BitStorage.java
-index 106610ccc74b70b557b01c61262d56c4f1147acf..fc986f02290fbe20246022072944980f35dd200c 100644
+index 8bafd5fd7499ba4a04bf706cfd1e156073716e21..83e77cfc9dbbe2ac8e7d05e2016fc620817d313a 100644
 --- a/src/main/java/net/minecraft/util/BitStorage.java
 +++ b/src/main/java/net/minecraft/util/BitStorage.java
 @@ -1,6 +1,7 @@
@@ -222,7 +222,7 @@ index 106610ccc74b70b557b01c61262d56c4f1147acf..fc986f02290fbe20246022072944980f
 +    <T> void compact(Palette<T> srcPalette, Palette<T> dstPalette, short[] out); // JettPack - lithium: chunk.serialization
  }
 diff --git a/src/main/java/net/minecraft/util/SimpleBitStorage.java b/src/main/java/net/minecraft/util/SimpleBitStorage.java
-index 36e33923bf48e56c743ed043bcbc66bc32f0422f..0272dee738e86e066108f5cc3729136335d8197e 100644
+index e4d0d7e8fc58b8f9f614d74a141e452166e0364c..f83e5567e60b4bafcd42673eccab23139cbaf05c 100644
 --- a/src/main/java/net/minecraft/util/SimpleBitStorage.java
 +++ b/src/main/java/net/minecraft/util/SimpleBitStorage.java
 @@ -2,6 +2,7 @@ package net.minecraft.util;
@@ -279,7 +279,7 @@ index 36e33923bf48e56c743ed043bcbc66bc32f0422f..0272dee738e86e066108f5cc37291363
 +    // JettPack end
  }
 diff --git a/src/main/java/net/minecraft/util/ZeroBitStorage.java b/src/main/java/net/minecraft/util/ZeroBitStorage.java
-index 97c744508cc535418eba65fa722859c81c22d647..a2ea0a2864b9c4f847f1a14ffc0900e67c18f9ee 100644
+index 16976e78afd226f144b29db5a0aa38112a71d78b..27349eb3df3c8a74c5089c3327504a77bec21785 100644
 --- a/src/main/java/net/minecraft/util/ZeroBitStorage.java
 +++ b/src/main/java/net/minecraft/util/ZeroBitStorage.java
 @@ -2,6 +2,7 @@ package net.minecraft.util;
@@ -309,7 +309,7 @@ index acae3eb30e0689048937f479dc3070f0688abdad..9c2b79655f2c63a208c7087d5d897db0
      int onResize(int newBits, T object);
  }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
-index 7c770d131d39da6900fdd22df36707d5f43e8cd0..34e98db58044d87c8264c977e16dd17a36182501 100644
+index 7f5547dc31aa53b2863f4c09f598fa88e7fe2afd..d51450a3962f4bfc4c3c32831dece8d0d1f86c63 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -22,8 +22,23 @@ import net.minecraft.util.Mth;
@@ -336,7 +336,7 @@ index 7c770d131d39da6900fdd22df36707d5f43e8cd0..34e98db58044d87c8264c977e16dd17a
      private static final int MIN_PALETTE_BITS = 0;
      private final PaletteResize<T> dummyPaletteResize = (newSize, added) -> {
          return 0;
-@@ -303,30 +318,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -301,30 +316,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
      public synchronized PalettedContainerRO.PackedData<T> pack(IdMap<T> idList, PalettedContainer.Strategy paletteProvider) { // Paper - synchronize
          this.acquire();
  
@@ -408,7 +408,7 @@ index 7c770d131d39da6900fdd22df36707d5f43e8cd0..34e98db58044d87c8264c977e16dd17a
      }
  
      private static <T> void swapPalette(int[] is, IntUnaryOperator applier) {
-@@ -366,17 +405,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -364,17 +403,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(PalettedContainer.CountConsumer<T> counter) {

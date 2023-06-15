@@ -7,14 +7,14 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/commands/GiveCommand.java b/src/main/java/net/minecraft/server/commands/GiveCommand.java
-index ee7d29d85c8b024c9b23cba8ecd4192aa7e8aa7b..e50d8c5f6c4f2aa672732d1d42c4995c9b377530 100644
+index d601d287e94a59ff93b8a83a44dac02544d211df..ffa40e12d6750b982828cee38ccaeb14c7ab0ff5 100644
 --- a/src/main/java/net/minecraft/server/commands/GiveCommand.java
 +++ b/src/main/java/net/minecraft/server/commands/GiveCommand.java
-@@ -58,6 +58,7 @@ public class GiveCommand {
-                     boolean flag = entityplayer.getInventory().add(itemstack);
+@@ -59,6 +59,7 @@ public class GiveCommand {
+                     boolean flag = entityplayer.getInventory().add(itemstack1);
                      ItemEntity entityitem;
  
 +                    if (true) { continue; } // EMC - never drop items
-                     if (flag && itemstack.isEmpty()) {
-                         itemstack.setCount(1);
-                         entityitem = entityplayer.drop(itemstack, false, false, false); // SPIGOT-2942: Add boolean to call event
+                     if (flag && itemstack1.isEmpty()) {
+                         itemstack1.setCount(1);
+                         entityitem = entityplayer.drop(itemstack1, false, false, false); // SPIGOT-2942: Add boolean to call event

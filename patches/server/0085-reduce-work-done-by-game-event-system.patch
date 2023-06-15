@@ -11,29 +11,29 @@ You can find the original code on https://github.com/Bloom-host/Petal
 2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index 902f2b39104bf059849228829bfe93b6dbc757d4..088bc38bfe82532a9ec80a96de8178dee21d07d6 100644
+index a606aed406551f4d3cc0bf09d6e231d87fe00f53..33fb9bee0eebaa6b176367d4b620cf9dba788d3f 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-@@ -85,6 +85,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
- 
-     }
+@@ -126,6 +126,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
+             world.playSound((Player) null, pos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + random.nextFloat() * 0.4F);
+         }
  
 +    // petal start
 +    @Override
 +    public boolean listensToEvent(GameEvent gameEvent, GameEvent.Context context) {
-+        return !this.isRemoved() && gameEvent == GameEvent.ENTITY_DIE && context.sourceEntity() instanceof LivingEntity;
++        return gameEvent == GameEvent.ENTITY_DIE && context.sourceEntity() instanceof LivingEntity;
 +    }
 +    // petal end
 +
-     public static void serverTick(Level world, BlockPos pos, BlockState state, SculkCatalystBlockEntity blockEntity) {
-         org.bukkit.craftbukkit.event.CraftEventFactory.sourceBlockOverride = blockEntity.getBlockPos(); // CraftBukkit - SPIGOT-7068: Add source block override, not the most elegant way but better than passing down a BlockPosition up to five methods deep.
-         blockEntity.sculkSpreader.updateCursors(world, pos, world.getRandom(), true);
+         private void tryAwardItSpreadsAdvancement(Level world, LivingEntity deadEntity) {
+             LivingEntity entityliving1 = deadEntity.getLastHurtByMob();
+ 
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 13594b96cc8f451723c3598ef302ccee8e01bcac..1519c511ee5bfac5eed939812c7952824b398fd0 100644
+index 3eeb1f0eac76efe9b7c24f6d5787018c7842d07a..cf76b4bbace7236b0d012f5fe222fd53389441fe 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -84,7 +84,19 @@ public class LevelChunk extends ChunkAccess {
-     private Supplier<ChunkHolder.FullChunkStatus> fullStatus;
+@@ -81,7 +81,19 @@ public class LevelChunk extends ChunkAccess {
+     private Supplier<FullChunkStatus> fullStatus;
      @Nullable
      private LevelChunk.PostLoadProcessor postLoad;
 -    private final Int2ObjectMap<GameEventListenerRegistry> gameEventListenerRegistrySections;
@@ -53,21 +53,21 @@ index 13594b96cc8f451723c3598ef302ccee8e01bcac..1519c511ee5bfac5eed939812c795282
      private final LevelChunkTicks<Block> blockTicks;
      private final LevelChunkTicks<Fluid> fluidTicks;
  
-@@ -113,7 +125,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -109,7 +121,7 @@ public class LevelChunk extends ChunkAccess {
+         // Paper end - rewrite light engine
          this.tickersInLevel = Maps.newHashMap();
-         this.clientLightReady = false;
          this.level = (ServerLevel) world; // CraftBukkit - type
 -        this.gameEventListenerRegistrySections = new Int2ObjectOpenHashMap();
 +        this.gameEventListenerRegistrySections = new GameEventListenerRegistry[getGameEventSectionLength(this.getSectionsCount())]; // petal
          Heightmap.Types[] aheightmap_type = Heightmap.Types.values();
          int j = aheightmap_type.length;
  
-@@ -440,9 +452,23 @@ public class LevelChunk extends ChunkAccess {
+@@ -400,9 +412,23 @@ public class LevelChunk extends ChunkAccess {
          if (world instanceof ServerLevel) {
              ServerLevel worldserver = (ServerLevel) world;
  
 -            return (GameEventListenerRegistry) this.gameEventListenerRegistrySections.computeIfAbsent(ySectionCoord, (j) -> {
--                return new EuclideanGameEventListenerRegistry(worldserver);
+-                return new EuclideanGameEventListenerRegistry(worldserver, ySectionCoord, this::removeGameEventListenerRegistry);
 -            });
 +            // petal start
 +            int sectionIndex = getGameEventSectionIndex(this.getSectionIndexFromSectionY(ySectionCoord));
@@ -81,7 +81,7 @@ index 13594b96cc8f451723c3598ef302ccee8e01bcac..1519c511ee5bfac5eed939812c795282
 +            var dispatcher = this.gameEventListenerRegistrySections[sectionIndex];
 +
 +            if (dispatcher == null) {
-+                dispatcher = this.gameEventListenerRegistrySections[sectionIndex] = new EuclideanGameEventListenerRegistry(worldserver);
++                dispatcher = this.gameEventListenerRegistrySections[sectionIndex] = new EuclideanGameEventListenerRegistry(worldserver, ySectionCoord, this::removeGameEventListenerRegistry);
 +            }
 +
 +            return dispatcher;
@@ -89,17 +89,17 @@ index 13594b96cc8f451723c3598ef302ccee8e01bcac..1519c511ee5bfac5eed939812c795282
          } else {
              return super.getListenerRegistry(ySectionCoord);
          }
-@@ -806,7 +832,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -781,7 +807,7 @@ public class LevelChunk extends ChunkAccess {
+     }
  
-                 gameeventlistenerregistry.unregister(gameeventlistener);
-                 if (gameeventlistenerregistry.isEmpty()) {
--                    this.gameEventListenerRegistrySections.remove(i);
-+                    this.gameEventListenerRegistrySections[getGameEventSectionIndex(this.getSectionIndexFromSectionY(i))] = null; // petal
-                 }
-             }
-         }
+     private void removeGameEventListenerRegistry(int ySectionCoord) {
+-        this.gameEventListenerRegistrySections.remove(ySectionCoord);
++        this.gameEventListenerRegistrySections[getGameEventSectionIndex(this.getSectionIndexFromSectionY(ySectionCoord))] = null; // petal
+     }
+ 
+     private void removeBlockEntityTicker(BlockPos pos) {
 diff --git a/src/main/java/net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry.java b/src/main/java/net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry.java
-index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb78148b739 100644
+index 48132c44ddc147eea0f751c1fc568388730104c5..554d5ece52692885d6a9700054aac67dd44e0549 100644
 --- a/src/main/java/net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry.java
 +++ b/src/main/java/net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry.java
 @@ -12,8 +12,8 @@ import net.minecraft.world.phys.Vec3;
@@ -112,8 +112,8 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
 +    //private final List<GameEventListener> listenersToAdd = Lists.newArrayList(); // petal
      private boolean processing;
      private final ServerLevel level;
- 
-@@ -29,7 +29,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
+     private final int sectionY;
+@@ -33,7 +33,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
      @Override
      public void register(GameEventListener listener) {
          if (this.processing) {
@@ -122,7 +122,7 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
          } else {
              this.listeners.add(listener);
          }
-@@ -40,7 +40,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
+@@ -44,7 +44,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
      @Override
      public void unregister(GameEventListener listener) {
          if (this.processing) {
@@ -131,7 +131,7 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
          } else {
              this.listeners.remove(listener);
          }
-@@ -57,7 +57,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
+@@ -65,7 +65,7 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
  
              while(iterator.hasNext()) {
                  GameEventListener gameEventListener = iterator.next();
@@ -140,7 +140,7 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
                      iterator.remove();
                  } else {
                      Optional<Vec3> optional = getPostableListenerPosition(this.level, pos, gameEventListener);
-@@ -71,6 +71,8 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
+@@ -79,6 +79,8 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
              this.processing = false;
          }
  
@@ -149,7 +149,7 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
          if (!this.listenersToAdd.isEmpty()) {
              this.listeners.addAll(this.listenersToAdd);
              this.listenersToAdd.clear();
-@@ -80,6 +82,8 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
+@@ -88,6 +90,8 @@ public class EuclideanGameEventListenerRegistry implements GameEventListenerRegi
              this.listeners.removeAll(this.listenersToRemove);
              this.listenersToRemove.clear();
          }
@@ -159,7 +159,7 @@ index 878a42695ecedf0c3f2e6310e3ce44c6b6c36858..60af07d95f170b3903177f882c429eb7
          return bl;
      }
 diff --git a/src/main/java/net/minecraft/world/level/gameevent/GameEventListener.java b/src/main/java/net/minecraft/world/level/gameevent/GameEventListener.java
-index a6689c03777c2b4b79dcafcae5d70c949519cd8e..ce16e9993cebe8f1c82459a76b07fb8131f50a22 100644
+index a4148dd326b10b0eb2bc7884691d79dcda60e010..af9994c54d075f4d17d23551a366e381319c4d0c 100644
 --- a/src/main/java/net/minecraft/world/level/gameevent/GameEventListener.java
 +++ b/src/main/java/net/minecraft/world/level/gameevent/GameEventListener.java
 @@ -10,6 +10,12 @@ public interface GameEventListener {
@@ -175,21 +175,3 @@ index a6689c03777c2b4b79dcafcae5d70c949519cd8e..ce16e9993cebe8f1c82459a76b07fb81
      default GameEventListener.DeliveryMode getDeliveryMode() {
          return GameEventListener.DeliveryMode.UNSPECIFIED;
      }
-diff --git a/src/main/java/net/minecraft/world/level/gameevent/vibrations/VibrationListener.java b/src/main/java/net/minecraft/world/level/gameevent/vibrations/VibrationListener.java
-index 103e12ec589dcbe6dbad7432b50e0644c3a37b1b..c90a827ca260d5f010c699488cba0dd00f9e97e4 100644
---- a/src/main/java/net/minecraft/world/level/gameevent/vibrations/VibrationListener.java
-+++ b/src/main/java/net/minecraft/world/level/gameevent/vibrations/VibrationListener.java
-@@ -228,6 +228,13 @@ public class VibrationListener implements GameEventListener {
-         return true;
-     }
- 
-+    // petal start
-+    @Override
-+    public boolean listensToEvent(GameEvent gameEvent, GameEvent.Context context) {
-+        return this.currentVibration == null && gameEvent.is(this.config.getListenableEvents());
-+    }
-+    // petal end
-+
-     public interface VibrationListenerConfig {
- 
-         default TagKey<GameEvent> getListenableEvents() {

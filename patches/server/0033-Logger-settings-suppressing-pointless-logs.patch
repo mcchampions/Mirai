@@ -36,7 +36,7 @@ index 432ba1293419dea0903e31043f68f5ad45ed0c2d..bb19a14b0f1afc20e92f7ca0efaf3b45
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index 26888ebd38280de92e41dd8006d2b24e874afe26..0968b99450d6cfad7af8bfcc731f620d88248179 100644
+index acc49f66bf34e2507d0ee6fec0a56b11bfc68f46..47e55cef56c2e92b41c26ad97dcb74488d6405ac 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -147,7 +147,7 @@ public class PlayerAdvancements {
@@ -62,10 +62,10 @@ index 877498729c66de9aa6a27c9148f7494d7895615c..b0c8cea531fc9872875781235b615021
              hasSetFarWarned = true;
              if (this.getServer() != null && this.getServer().isDebugging()) {
 diff --git a/src/main/java/net/minecraft/stats/ServerRecipeBook.java b/src/main/java/net/minecraft/stats/ServerRecipeBook.java
-index d13ed3069e944d138442ea440ac3eaf8d44c18d3..ce0a08ac0d24f2ebf822837751ebb6d615ba7fe7 100644
+index ea29e07a105f3ba6a878bdccf36e7eaf66280280..6ae2d81c4c37b4b9716d062d58a1498f231bfa9c 100644
 --- a/src/main/java/net/minecraft/stats/ServerRecipeBook.java
 +++ b/src/main/java/net/minecraft/stats/ServerRecipeBook.java
-@@ -122,7 +122,7 @@ public class ServerRecipeBook extends RecipeBook {
+@@ -125,7 +125,7 @@ public class ServerRecipeBook extends RecipeBook {
                  Optional<? extends Recipe<?>> optional = recipeManager.byKey(minecraftkey);
  
                  if (!optional.isPresent()) {
@@ -75,7 +75,7 @@ index d13ed3069e944d138442ea440ac3eaf8d44c18d3..ce0a08ac0d24f2ebf822837751ebb6d6
                      handler.accept((Recipe) optional.get());
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
-index 110503062b3043cffa082a1cda6b8d57152869aa..3f9bc54595c4f148b1a9af01d25375aa1f61f8b6 100644
+index 2677e21d8239bf0361a3bc5c9a50c328e54d70f6..9af8122404f9a8f56f40c3eecae7bc6ad45ea92c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 +++ b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 @@ -256,7 +256,7 @@ public final class CraftLegacy {

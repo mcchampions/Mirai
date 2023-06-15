@@ -5,11 +5,11 @@ Subject: [PATCH] Skip cloning loot parameters
 
 
 diff --git a/src/main/java/net/minecraft/advancements/Advancement.java b/src/main/java/net/minecraft/advancements/Advancement.java
-index 31ef13a708db2e4a664b30090a562eb6e4597bab..ac0761d537ea41581cbb7f19a4561f463e34b12b 100644
+index 81359be381fc9bcb56a9cc83e70a6afa6e838c6a..4a3e86d9b99ba26467c81ddc66f709cdbfd6d55f 100644
 --- a/src/main/java/net/minecraft/advancements/Advancement.java
 +++ b/src/main/java/net/minecraft/advancements/Advancement.java
-@@ -45,7 +45,7 @@ public class Advancement {
-     public Advancement(ResourceLocation id, @Nullable Advancement parent, @Nullable DisplayInfo display, AdvancementRewards rewards, Map<String, Criterion> criteria, String[][] requirements) {
+@@ -46,7 +46,7 @@ public class Advancement {
+     public Advancement(ResourceLocation id, @Nullable Advancement parent, @Nullable DisplayInfo display, AdvancementRewards rewards, Map<String, Criterion> criteria, String[][] requirements, boolean sendsTelemetryEvent) {
          this.id = id;
          this.display = display;
 -        this.criteria = ImmutableMap.copyOf(criteria);

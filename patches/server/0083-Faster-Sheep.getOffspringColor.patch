@@ -7,10 +7,10 @@ Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Sheep.java b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-index fb3777e158065a6ce306a2a6e66bec053da2aeb4..13e0d2289e1424a16eb52e525a602ec9a58edef2 100644
+index c0e89262c596fbdd0bb3c3f76baccb17a1bb5fcd..d761673d4ad90c6beae61c910e62f70bc6721b83 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-@@ -391,21 +391,56 @@ public class Sheep extends Animal implements Shearable {
+@@ -392,21 +392,56 @@ public class Sheep extends Animal implements Shearable {
          return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
      }
  
@@ -60,23 +60,23 @@ index fb3777e158065a6ce306a2a6e66bec053da2aeb4..13e0d2289e1424a16eb52e525a602ec9
 -        DyeColor enumcolor = ((Sheep) firstParent).getColor();
 -        DyeColor enumcolor1 = ((Sheep) secondParent).getColor();
 -        CraftingContainer inventorycrafting = Sheep.makeContainer(enumcolor, enumcolor1);
--        Optional<Item> optional = this.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventorycrafting, this.level).map((recipecrafting) -> { // CraftBukkit - decompile error
--            return recipecrafting.assemble(inventorycrafting, this.level.registryAccess());
+-        Optional<Item> optional = this.level().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventorycrafting, this.level()).map((recipecrafting) -> { // CraftBukkit - decompile error
+-            return recipecrafting.assemble(inventorycrafting, this.level().registryAccess());
 -        }).map(ItemStack::getItem);
 -
 -        Objects.requireNonNull(DyeItem.class);
 -        optional = optional.filter(DyeItem.class::isInstance);
 -        Objects.requireNonNull(DyeItem.class);
 -        return (DyeColor) optional.map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> {
--            return this.level.random.nextBoolean() ? enumcolor : enumcolor1;
+-            return this.level().random.nextBoolean() ? enumcolor : enumcolor1;
 -        });
 +        DyeColor firstColor = ((Sheep)firstParent).getColor();
 +        DyeColor secondColor = ((Sheep)secondParent).getColor();
 +        DyeColor col = properDye(firstColor,secondColor);
-+        if (col == null) col = this.level.random.nextBoolean() ? firstColor : secondColor;
++        if (col == null) col = this.level().random.nextBoolean() ? firstColor : secondColor;
 +        return col;
      }
 +    // Mirai end
  
      private static CraftingContainer makeContainer(DyeColor firstColor, DyeColor secondColor) {
-         CraftingContainer inventorycrafting = new CraftingContainer(new AbstractContainerMenu((MenuType) null, -1) {
+         TransientCraftingContainer transientcraftingcontainer = new TransientCraftingContainer(new AbstractContainerMenu((MenuType) null, -1) {

@@ -10,10 +10,10 @@ this patch is focused around the sensors used for ai
 delete the line of sight cache less often and use a faster nearby comparison
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index a1a7434fbcfd379cc6df85bb4e90b6057b5c55af..993ea5c96206ae4489fac349aeb5fe225259be03 100644
+index 0463e702beb54d356cbbdc9a037374ed35fec644..d741cd747e0efb8c69561b0f32e40528f6387a8f 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1007,12 +1007,14 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1025,12 +1025,14 @@ public abstract class LivingEntity extends Entity implements Attackable {
          }
  
          if (entity != null) {
@@ -31,19 +31,19 @@ index a1a7434fbcfd379cc6df85bb4e90b6057b5c55af..993ea5c96206ae4489fac349aeb5fe22
  
          return d0;
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 722e6db89a442a0ed61abc3d638cf96124dcc936..e22f10b43499e432b8a013d0e6c63652d1ad4a3e 100644
+index 2cc7774cb670e5fb6ce082294f79616ec82ca908..ca9001ab92751024bf093fbf8b8cbc278eedf670 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -902,10 +902,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -905,10 +905,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
              return;
          }
          // Paper end
-+        int i = this.level.getServer().getTickCount() + this.getId(); // petal - move up
-         this.level.getProfiler().push("sensing");
++        int i = this.level().getServer().getTickCount() + this.getId(); // petal - move up
+         this.level().getProfiler().push("sensing");
 -        this.sensing.tick();
 +        if (i % 10 == 0) this.sensing.tick(); // petal - only refresh line of sight cache every half second
-         this.level.getProfiler().pop();
--        int i = this.level.getServer().getTickCount() + this.getId();
+         this.level().getProfiler().pop();
+-        int i = this.level().getServer().getTickCount() + this.getId();
  
          if (i % 2 != 0 && this.tickCount > 1) {
-             this.level.getProfiler().push("targetSelector");
+             this.level().getProfiler().push("targetSelector");

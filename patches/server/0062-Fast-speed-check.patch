@@ -28,26 +28,26 @@ index 6266ae81a2b7f89da1bee07340b6b1c1e5c975ec..de02cb80c88a7b7b4a3206a37ccf1027
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index da65d06d6d916a6a26ea8048e05a0e5db466cc7b..bfad3dd23d67fc70e71169e59a37e0489348c7a5 100644
+index 73393416a54818c2f2e3e1d0c267ae5a930476a4..85a624536fb0d4d83309cd78a5ea0f599424310d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1209,7 +1209,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1258,7 +1258,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  }
  
                  this.tryCheckInsideBlocks();
--                float f2 = this.getBlockSpeedFactor();
+-                float f = this.getBlockSpeedFactor();
 +                // NFT-Worlds start
-+                float f2;
++                float f;
 +                if (dev.etil.mirai.MiraiConfig.fastSpeedCheck) {
 +                    if (this.getDeltaMovement().x == 0 && this.getDeltaMovement().z == 0) {
-+                        f2 = 1;
++                        f = 1;
 +                    } else {
-+                        f2 = this.getBlockSpeedFactor();
++                        f = this.getBlockSpeedFactor();
 +                    }
 +                } else {
-+                    f2 = this.getBlockSpeedFactor();
++                    f = this.getBlockSpeedFactor();
 +                }
 +                // NFT-Worlds stop
  
-                 this.setDeltaMovement(this.getDeltaMovement().multiply((double) f2, 1.0D, (double) f2));
+                 this.setDeltaMovement(this.getDeltaMovement().multiply((double) f, 1.0D, (double) f));
                  // Paper start - remove expensive streams from here

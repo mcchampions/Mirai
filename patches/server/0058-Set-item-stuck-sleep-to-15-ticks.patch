@@ -7,15 +7,15 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 453f0f7042bdf204db73be139aa36f211c5455e7..d75c21e01ed02274b40f83e2bdfea4b7673a27b8 100644
+index 63f8f2dfc2afddcf3c4960d60e65cb8e29507223..cbfc15a8062bdc88c1accea828cefa83ed3845b6 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -149,7 +149,7 @@ public class ItemEntity extends Entity implements TraceableEntity {
  
-             if (this.level.isClientSide) {
+             if (this.level().isClientSide) {
                  this.noPhysics = false;
 -            } else {
 +            } else if (!this.onGround || this.noPhysics || this.tickCount % 15 == 0) { // Mirai
-                 this.noPhysics = !this.level.noCollision(this, this.getBoundingBox().deflate(1.0E-7D));
+                 this.noPhysics = !this.level().noCollision(this, this.getBoundingBox().deflate(1.0E-7D));
                  if (this.noPhysics) {
                      this.moveTowardsClosestSpace(this.getX(), (this.getBoundingBox().minY + this.getBoundingBox().maxY) / 2.0D, this.getZ());

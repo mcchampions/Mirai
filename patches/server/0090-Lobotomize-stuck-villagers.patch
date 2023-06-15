@@ -25,10 +25,10 @@ index e0eae8b46fa1177214f2ed833f2b40e0bf407211..3186a8f4fad751cffef318b5ad1bd716
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f653574a51f134 100644
+index c4ddf2661bca728d504918171295e10e307b18b4..03626bdfebdda9ad9f74d8d8a560fead1917abed 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-@@ -139,6 +139,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -140,6 +140,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
      }, MemoryModuleType.MEETING_POINT, (entityvillager, holder) -> {
          return holder.is(PoiTypes.MEETING);
      });
@@ -37,10 +37,14 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
  
      public long nextGolemPanic = -1; // Pufferfish
  
-@@ -250,12 +252,27 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
-     protected void customServerAiStep() { mobTick(false); }
-     protected void mobTick(boolean inactive) {
-         this.level.getProfiler().push("villagerBrain");
+@@ -253,14 +255,29 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+         // Paper start
+         this.customServerAiStep(false);
+     }
+-    protected void customServerAiStep(final boolean inactive) {
++    protected void customServerAiStep(boolean inactive) {
+         // Paper end
+         this.level().getProfiler().push("villagerBrain");
 +        // Purpur start
 +        if (dev.etil.mirai.MiraiConfig.villagerLobotomizeEnabled) {
 +            // treat as inactive if lobotomized
@@ -51,10 +55,9 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +        }
 +        // Purpur end
          // Pufferfish start
-         if (!inactive) {
-             if (this.behaviorTick++ % this.activatedPriority == 0) // Pufferfish
-             this.getBrain().tick((ServerLevel) this.level, this); // Paper
-          }
+         if (!inactive && this.behaviorTick++ % this.activatedPriority == 0) {
+             this.getBrain().tick((ServerLevel) this.level(), this); // Paper
+         }
          // Pufferfish end
 +        // Purpur start
 +        else if (this.isLobotomized && shouldRestock()) {
@@ -62,10 +65,10 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +            restock();
 +        }
 +        // Purpur end
-         this.level.getProfiler().pop();
+         this.level().getProfiler().pop();
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
-@@ -1076,4 +1093,47 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -1083,4 +1100,47 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
  
          return optional.isPresent() ? worldTime - (Long) optional.get() < 24000L : false;
      }
@@ -77,7 +80,7 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +            // check half as often if not lobotomized for the last 3+ consecutive checks
 +            interval *= 2;
 +        }
-+        if ((this.level.getGameTime()) % interval == 0) {
++        if ((this.level().getGameTime()) % interval == 0) {
 +            // offset Y for short blocks like dirt_path/farmland TODO: check that it works
 +            this.isLobotomized = !canTravelFrom(this.getBlockPosBelowThatAffectsMyMovement());
 +
@@ -95,7 +98,7 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +    }
 +
 +    private boolean canTravelTo(BlockPos pos) {
-+        net.minecraft.world.level.block.state.BlockState state = this.level.getBlockStateIfLoaded(pos);
++        net.minecraft.world.level.block.state.BlockState state = this.level().getBlockStateIfLoaded(pos);
 +        if (state == null) {
 +            // chunk not loaded
 +            return false;
@@ -107,17 +110,17 @@ index 5402a084ef5fe0b3cfea897a90cffade1eff5b66..23e285f396b84333e048121195f65357
 +            // bottom block is too tall to get over
 +            return false;
 +        }
-+        net.minecraft.world.level.block.Block top = level.getBlockState(pos.above()).getBlock();
++        net.minecraft.world.level.block.Block top = level().getBlockState(pos.above()).getBlock();
 +        // only if both blocks have no collision
 +        return !bottom.hasCollision && !top.hasCollision;
 +    }
 +    // Purpur end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
-index 4e880409b06086568627f3e930159f1abb979984..48fb7302b54f8e7f5c424210b550c03d4d071ea9 100644
+index f21c715ea109164efa755cddb35ef656a9859759..0c9154d1d3c1534a25c08c75fab102b68958fab9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
-@@ -223,4 +223,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
+@@ -222,4 +222,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
          getHandle().getGossips().gossips.clear();
      }
      // Paper end

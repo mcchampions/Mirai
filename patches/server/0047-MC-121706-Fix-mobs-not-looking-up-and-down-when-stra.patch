@@ -7,12 +7,12 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
-index 6558b0d4bea99948fdc2b51751f3cfdc239d4b67..d85dabebbbbe213e791b8a3be3c6df05b959e40c 100644
+index 87fb10096fc9dade33c663234b1cecc34d3d77bb..874c7b29a261b1b5ad6e86ca219ff935870aecb0 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/RangedBowAttackGoal.java
-@@ -111,9 +111,9 @@ public class RangedBowAttackGoal<T extends Monster & RangedAttackMob> extends Go
+@@ -119,9 +119,9 @@ public class RangedBowAttackGoal<T extends Monster & RangedAttackMob> extends Go
+                 }
  
-                 this.mob.getMoveControl().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
                  this.mob.lookAt(livingEntity, 30.0F, 30.0F);
 -            } else {
 +            } //else { // Purpur - fix MC-121706

@@ -7,10 +7,10 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 3ce4dbf4eed442d89d6bbc8e4c6a000172041da5..364d899f4fba65f0ecae522c7dde4f1ef8ee632e 100644
+index d304f01766bba9b3e9fcd30a7ae4730fd7188875..68c9846097ec460ab214fcea85fa7b45d943abb3 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -998,7 +998,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1010,7 +1010,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          return this.anyPlayerCloseEnoughForSpawning(this.getUpdatingChunkIfPresent(chunkcoordintpair.toLong()), chunkcoordintpair, reducedRange);
      }
  
@@ -20,7 +20,7 @@ index 3ce4dbf4eed442d89d6bbc8e4c6a000172041da5..364d899f4fba65f0ecae522c7dde4f1e
          // tested and confirmed via System.nanoTime()
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> playersInRange = reducedRange ? playerchunk.playersInMobSpawnRange : playerchunk.playersInChunkTickRange;
 diff --git a/src/main/java/net/minecraft/world/entity/ai/goal/EatBlockGoal.java b/src/main/java/net/minecraft/world/entity/ai/goal/EatBlockGoal.java
-index 80aa539f7c6a6ee44338de084cdcdf5fb4ef996a..9c2c2b3557f4a70c6c965f159a57682e1827d1ad 100644
+index abf796c3369da6b73c8587dfc05f56d0b8933fde..81123f672c7a355405bb21e1f4303ade0ce3dd23 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/goal/EatBlockGoal.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/goal/EatBlockGoal.java
 @@ -31,6 +31,12 @@ public class EatBlockGoal extends Goal {
@@ -28,8 +28,8 @@ index 80aa539f7c6a6ee44338de084cdcdf5fb4ef996a..9c2c2b3557f4a70c6c965f159a57682e
      @Override
      public boolean canUse() {
 +        // Purpur start
-+        net.minecraft.world.level.chunk.LevelChunk chunk = this.mob.level.getChunkIfLoaded(this.mob.blockPosition);
-+        if (chunk == null || chunk.playerChunk == null || !((net.minecraft.server.level.ServerLevel) this.mob.level).getChunkSource().chunkMap.anyPlayerCloseEnoughForSpawning(chunk.playerChunk, this.mob.chunkPosition(), false)) {
++        net.minecraft.world.level.chunk.LevelChunk chunk = this.mob.level().getChunkIfLoaded(this.mob.blockPosition);
++        if (chunk == null || chunk.playerChunk == null || !((net.minecraft.server.level.ServerLevel) this.mob.level()).getChunkSource().chunkMap.anyPlayerCloseEnoughForSpawning(chunk.playerChunk, this.mob.chunkPosition(), false)) {
 +            return false;
 +        }
 +        // Purpur end

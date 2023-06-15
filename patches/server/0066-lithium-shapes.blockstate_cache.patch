@@ -73,10 +73,10 @@ index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index acb5706df245d4aa1c6b247745c99116e2e5b221..ebb3808fbaaec82283db0839335b5efca28d4881 100644
+index 1743b92f9cc985e1aa29f7c5daf857cf324d1d6d..be6666b9dde4958ea02791f67f048d5dbcbb3162 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -62,17 +62,19 @@ import net.minecraft.world.phys.shapes.BooleanOp;
+@@ -61,17 +61,19 @@ import net.minecraft.world.phys.shapes.BooleanOp;
  import net.minecraft.world.phys.shapes.Shapes;
  import net.minecraft.world.phys.shapes.VoxelShape;
  import org.slf4j.Logger;
@@ -101,7 +101,7 @@ index acb5706df245d4aa1c6b247745c99116e2e5b221..ebb3808fbaaec82283db0839335b5efc
      public static final int UPDATE_NEIGHBORS = 1;
      public static final int UPDATE_CLIENTS = 2;
      public static final int UPDATE_INVISIBLE = 4;
-@@ -279,7 +281,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -277,7 +279,7 @@ public class Block extends BlockBehaviour implements ItemLike {
      }
  
      public static boolean isShapeFullBlock(VoxelShape shape) {

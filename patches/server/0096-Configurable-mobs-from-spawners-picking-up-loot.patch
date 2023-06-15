@@ -25,38 +25,38 @@ index 3186a8f4fad751cffef318b5ad1bd716d7c045cb..c2c905a4ee31f0d1418a89326e4877df
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
-index f2094c52196b45adfd51d8aebcc4c46b779b0925..187334db2a2e39dd9571174e6d85b593c2b6aa5d 100644
+index 9ca1e9d95e62929c0015d5ca2c2f9c70e421842e..0e91d23e8369dbb6ff5600c93200c7aba2b115b6 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 @@ -159,7 +159,13 @@ public abstract class AbstractSkeleton extends Monster implements RangedAttackMo
          this.populateDefaultEquipmentSlots(randomsource, difficulty);
          this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
          this.reassessWeaponGoal();
--        this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
+-        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
 +        // Mirai start
 +        if (dev.etil.mirai.MiraiConfig.skeletonPickupLoot && spawnReason == MobSpawnType.SPAWNER) {
 +            this.setCanPickUpLoot(false);
 +        } else {
-+            this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
++            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
 +        }
 +        // Mirai end
          if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
              LocalDate localdate = LocalDate.now();
              int i = localdate.get(ChronoField.DAY_OF_MONTH);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-index 9976205537cfe228735687f1e9c52c74ac025690..588dc1aa4e9a7dd8cb1e38cdd1ecb3da77f08cee 100644
+index 3f8c1d1d3c408fc4f15c4b5680bc22c86f104a9d..1c986aecca018980825f0614d707bc50fd88f2a7 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 @@ -519,7 +519,13 @@ public class Zombie extends Monster {
          Object object = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
          float f = difficulty.getSpecialMultiplier();
  
--        this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
+-        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
 +        // Mirai start
 +        if (dev.etil.mirai.MiraiConfig.zombiePickupLoot && spawnReason == MobSpawnType.SPAWNER) {
 +            this.setCanPickUpLoot(false);
 +        } else {
-+            this.setCanPickUpLoot(this.level.paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
++            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
 +        }
 +        // Mirai end
          if (object == null) {

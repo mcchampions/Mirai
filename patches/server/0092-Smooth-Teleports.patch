@@ -7,7 +7,7 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 1eedc1de385d6355ce9624923216678c423aee5e..0c1b3003c266f944fab979143f09f1b32cc2c98d 100644
+index 391a5ceae62bf69149965a2549101b8f39e83ade..1e49b5287e004a3ca0017573296555a9ccef5cef 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -277,6 +277,7 @@ public class ServerPlayer extends Player {
@@ -16,20 +16,20 @@ index 1eedc1de385d6355ce9624923216678c423aee5e..0c1b3003c266f944fab979143f09f1b3
      public org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - there are a lot of changes to do if we change all methods leading to the event
 +    public boolean smoothWorldTeleport; // Slice
  
-     public ServerPlayer(MinecraftServer server, ServerLevel world, GameProfile profile) {
-         super(world, world.getSharedSpawnPos(), world.getSharedSpawnAngle(), profile);
+     private final java.util.concurrent.atomic.AtomicReference<io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances> viewDistances = new java.util.concurrent.atomic.AtomicReference<>(new io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances(-1, -1, -1));
+     public io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.PlayerChunkLoaderData chunkLoader;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e8a02b13bceea76d968185ab8412cec3095d9344..e90e809691b8240843e96e737834e24b9984f720 100644
+index b525b5c03bd5a27ecf1348d17157890c11b7a8bd..8c0cb087c3f793990a2c11669ba896ad50358f95 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -923,12 +923,12 @@ public abstract class PlayerList {
+@@ -930,12 +930,12 @@ public abstract class PlayerList {
          int i = flag ? 1 : 0;
          // CraftBukkit start
          LevelData worlddata = worldserver1.getLevelData();
--        entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation()));
-+        if (!entityplayer.smoothWorldTeleport) entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation())); // Slice
-         entityplayer1.connection.send(new ClientboundSetChunkCacheRadiusPacket(worldserver1.getChunkSource().chunkMap.playerChunkManager.getTargetSendDistance())); // Spigot // Paper - replace old player chunk management
-         entityplayer1.connection.send(new ClientboundSetSimulationDistancePacket(worldserver1.getChunkSource().chunkMap.playerChunkManager.getTargetTickViewDistance())); // Spigot // Paper - replace old player chunk management
+-        entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation(), entityplayer1.getPortalCooldown()));
++        if (!entityplayer.smoothWorldTeleport) entityplayer1.connection.send(new ClientboundRespawnPacket(worldserver1.dimensionTypeId(), worldserver1.dimension(), BiomeManager.obfuscateSeed(worldserver1.getSeed()), entityplayer1.gameMode.getGameModeForPlayer(), entityplayer1.gameMode.getPreviousGameModeForPlayer(), worldserver1.isDebug(), worldserver1.isFlat(), (byte) i, entityplayer1.getLastDeathLocation(), entityplayer1.getPortalCooldown())); // Slice
+         entityplayer1.connection.send(new ClientboundSetChunkCacheRadiusPacket(worldserver1.getWorld().getSendViewDistance())); // Spigot // Paper - replace old player chunk management
+         entityplayer1.connection.send(new ClientboundSetSimulationDistancePacket(worldserver1.getWorld().getSimulationDistance())); // Spigot // Paper - replace old player chunk management
          entityplayer1.spawnIn(worldserver1);
          entityplayer1.unsetRemoved();
 -        entityplayer1.connection.teleport(CraftLocation.toBukkit(entityplayer1.position(), worldserver1.getWorld(), entityplayer1.getYRot(), entityplayer1.getXRot()));
@@ -38,10 +38,10 @@ index e8a02b13bceea76d968185ab8412cec3095d9344..e90e809691b8240843e96e737834e24b
  
          // entityplayer1.connection.teleport(entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 3f498543cf0476ff1b184788d93f13b70c476c16..02a675ac819decbf6d68645f05f9aed2d20d362f 100644
+index 03bb444705916ffe0b9eb4b7496524dc3459ebe0..4c81e4dbd58125210db39f2c5933adb2aad15d4a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1261,6 +1261,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1226,6 +1226,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          // Paper end
      }
  

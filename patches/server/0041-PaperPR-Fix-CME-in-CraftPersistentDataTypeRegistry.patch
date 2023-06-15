@@ -7,10 +7,10 @@ Original code by PaperMC, licensed under GPL v3
 You can find the original code on https://github.com/PaperMC/Paper/pull/8425
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
-index 355c9f79fd3132848a00eacde951d1e1bfa92737..f39b6d8eae3533d2795036e863566f61ebce53ea 100644
+index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..0ded00f53121c4c6df0f306ae34e60172579136e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
 +++ b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
-@@ -93,6 +93,15 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -90,6 +90,15 @@ public final class CraftPersistentDataTypeRegistry {
      }
  
      private final Map<Class, TagAdapter> adapters = new HashMap<>();
@@ -26,7 +26,7 @@ index 355c9f79fd3132848a00eacde951d1e1bfa92737..f39b6d8eae3533d2795036e863566f61
  
      /**
       * Creates a suitable adapter instance for the primitive class type
-@@ -212,7 +221,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -209,7 +218,7 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> Tag wrap(Class<T> type, T value) {
@@ -35,7 +35,7 @@ index 355c9f79fd3132848a00eacde951d1e1bfa92737..f39b6d8eae3533d2795036e863566f61
      }
  
      /**
-@@ -228,7 +237,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -225,7 +234,7 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> boolean isInstanceOf(Class<T> type, Tag base) {
@@ -44,12 +44,16 @@ index 355c9f79fd3132848a00eacde951d1e1bfa92737..f39b6d8eae3533d2795036e863566f61
      }
  
      /**
-@@ -249,7 +258,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -246,8 +255,10 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> T extract(Class<T> type, Tag tag) throws ClassCastException, IllegalArgumentException {
 -        TagAdapter adapter = this.adapters.computeIfAbsent(type, CREATE_ADAPTER);
+-        Preconditions.checkArgument(adapter.isInstance(tag), "The found tag instance (%s) cannot store %s", tag.getClass().getSimpleName(), type.getSimpleName());
 +        TagAdapter adapter = getAdapter(type); // Paper - Fix CME
-         if (!adapter.isInstance(tag)) {
-             throw new IllegalArgumentException(String.format("`The found tag instance cannot store %s as it is a %s", type.getSimpleName(), tag.getClass().getSimpleName()));
-         }
++        if (!adapter.isInstance(tag)) {
++            throw new IllegalArgumentException(String.format("`The found tag instance cannot store %s as it is a %s", type.getSimpleName(), tag.getClass().getSimpleName()));
++        }
+ 
+         Object foundValue = adapter.extract(tag);
+         Preconditions.checkArgument(type.isInstance(foundValue), "The found object is of the type %s. Expected type %s", foundValue.getClass().getSimpleName(), type.getSimpleName());
