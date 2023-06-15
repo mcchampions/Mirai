@@ -1073,7 +1073,7 @@ index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..36e448c36f4d4cf2acb89d5a378d8830
              return false;
          } else if (o.nodes.size() != this.nodes.size()) {
 diff --git a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
-index a8af51a25b0f99c3a64d9150fdfcd6b818aa7581..b0f2314adc69a573f0959dceac755207f694eff8 100644
+index a8af51a25b0f99c3a64d9150fdfcd6b818aa7581..2148e30ebfa69f7957dffce3c9d7f60e66d65bb9 100644
 --- a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -25,36 +25,75 @@ public class PathFinder {
@@ -1146,8 +1146,8 @@ index a8af51a25b0f99c3a64d9150fdfcd6b818aa7581..b0f2314adc69a573f0959dceac755207
 -        //profiler.push("find_path"); // Purpur
 -        //profiler.markForCharting(MetricCategory.PATH_FINDING); // Purpur
 +        // readd the profiler code for sync
-+        profiler.push("find_path");
-+        profiler.markForCharting(MetricCategory.PATH_FINDING);
++        // profiler.push("find_path");
++        // profiler.markForCharting(MetricCategory.PATH_FINDING);
 +
 +        try {
 +            return this.processPath(this.nodeEvaluator, startNode, positions, followRange, distance, rangeMultiplier);

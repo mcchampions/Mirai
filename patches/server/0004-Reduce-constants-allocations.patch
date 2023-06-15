@@ -238,10 +238,10 @@ index a2920b8a9eff77d9c5d1d7f70ad3abdacba8f0fa..f7f19e360d712211625ff28e92f83949
      protected CipherBase(Cipher cipher) {
          this.cipher = cipher;
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index 671335841800002143ce20ee4c4e2051ade2825f..eb12555dade6a1c53c28ebed6f766553aebd2126 100644
+index b5cba37b65558c7cb0e82136a1822c0f88143053..90f8e32143831a9dc7f304f4a9203588c206d394 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
-@@ -316,7 +316,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -322,7 +322,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void setListener(PacketListener listener) {
@@ -312,7 +312,7 @@ index 653e469c726e6e44b93452e0cac2448e3816b3c8..d0374f11026e4a33cb05db4b2ed63a57
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 9dfc12ccf53f5b4d4432bd89449b09504f3a2285..5e293f789443fb7c5f79495338a285cafd3e3a5f 100644
+index 9b2d2f5e45cf26ddd9897db5cfec23634e5d6cb3..799171c6d20c97bf6ebd695b806f19913a36ec88 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -434,7 +434,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -358,7 +358,7 @@ index f719f8aafe7c75e2ef8fcb05f556a8d6bd94b9a0..c6aef636c656e89ce2fac6419203d054
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 725149019d69f3350b7235391092b1fbe2cd9dfb..9626c3904c175e92382eb6b8d359b66a74eebec2 100644
+index fb3a59fda3d4f5b2bca665b5665df2a355c61a15..03be4b54f883fed507635abd54720e55d1b7a7d0 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -701,7 +701,7 @@ public abstract class PlayerList {
@@ -421,10 +421,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index b534b786ca1209652d13a1c6a77c03a9282946a2..a165c40a262fc47e939353e97f1537a8027ff556 100644
+index 6299dbd9ac756cbae7892628d67b56bd2fe3dbad..ae03b151691b4ec5d8ef75337ecb467836d23aca 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3152,7 +3152,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3155,7 +3155,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -664,10 +664,10 @@ index 6827979a5b270ced53b46ecb9eff548727dadb81..4b42ae96bc786d2a9d57086ae8d1f5ca
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java b/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
-index 049d750d3af991dd14ac8cf644330404e74b2151..2f69484a8970f78c11f8fbb187e7a9f8f0fb994d 100644
+index bbacf58740f3faea0d555e4012fe2b15fb46ed50..92516f73134b4932bbe1f27b739f98f2aaf94d3c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
-@@ -166,7 +166,7 @@ public final class WeakCollection<T> implements Collection<T> {
+@@ -164,7 +164,7 @@ public final class WeakCollection<T> implements Collection<T> {
  
      @Override
      public Object[] toArray() {

@@ -7,7 +7,7 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/org/bukkit/scoreboard/Team.java b/src/main/java/org/bukkit/scoreboard/Team.java
-index 0f1c08092577a7d66fdc1ea8b645ea67e0d9c6cf..f1b3d05901a4fe32366699280f44147a9cda2873 100644
+index 0f1c08092577a7d66fdc1ea8b645ea67e0d9c6cf..fe40d101a82a8350726a6b0e79cd16c4f8299a61 100644
 --- a/src/main/java/org/bukkit/scoreboard/Team.java
 +++ b/src/main/java/org/bukkit/scoreboard/Team.java
 @@ -532,6 +532,24 @@ public interface Team {
@@ -25,11 +25,11 @@ index 0f1c08092577a7d66fdc1ea8b645ea67e0d9c6cf..f1b3d05901a4fe32366699280f44147a
 +     * @param options A Paired list of options
 +     * @throws IllegalStateException
 +     */
-+    void teamOptions(net.kyori.adventure.text.Component displayName,
-+                     net.kyori.adventure.text.Component prefix,
-+                     net.kyori.adventure.text.Component suffix,
-+                     net.kyori.adventure.text.format.NamedTextColor color,
-+                     java.util.List<org.apache.commons.lang3.tuple.Pair<Option, OptionStatus>> options) throws IllegalStateException;
++    void teamOptions(@Nullable net.kyori.adventure.text.Component displayName,
++                     @Nullable net.kyori.adventure.text.Component prefix,
++                     @Nullable net.kyori.adventure.text.Component suffix,
++                     @Nullable net.kyori.adventure.text.format.NamedTextColor color,
++                     @NotNull java.util.List<org.apache.commons.lang3.tuple.Pair<Option, OptionStatus>> options) throws IllegalStateException;
 +    //Slice end
 +
      /**

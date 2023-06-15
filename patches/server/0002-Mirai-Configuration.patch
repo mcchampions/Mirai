@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 008b55c10c7a5b84804c491c45d8cc124e1256cf..14a70028d663c1d3196b43bf6f32479473f68650 100644
+index ec6aaa29e2fab190bc7fde8b0a5c3d12eb92404c..a4fee45ba040b6d5f7c4c2611d92340fab7427fb 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -50,6 +50,13 @@ dependencies {
+@@ -51,6 +51,13 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-connector-basic:1.9.10")
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.9.10")
  
