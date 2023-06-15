@@ -7,10 +7,10 @@ Original code by PaperMC, licensed under GPL v3
 You can find the original code on https://github.com/PaperMC/Paper/pull/8425
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
-index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..139d4f79204cfdd86a39138e0081f3d792d93bbe 100644
+index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..08df05c03a11ce21706def78a9117fce4e503509 100644
 --- a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
 +++ b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
-@@ -90,6 +90,17 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -90,6 +90,15 @@ public final class CraftPersistentDataTypeRegistry {
      }
  
      private final Map<Class, TagAdapter> adapters = new HashMap<>();
@@ -26,7 +26,7 @@ index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..139d4f79204cfdd86a39138e0081f3d7
  
      /**
       * Creates a suitable adapter instance for the primitive class type
-@@ -209,7 +220,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -209,7 +218,7 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> Tag wrap(Class<T> type, T value) {
@@ -35,7 +35,7 @@ index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..139d4f79204cfdd86a39138e0081f3d7
      }
  
      /**
-@@ -225,7 +236,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -225,7 +234,7 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> boolean isInstanceOf(Class<T> type, Tag base) {
@@ -44,7 +44,7 @@ index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..139d4f79204cfdd86a39138e0081f3d7
      }
  
      /**
-@@ -246,7 +257,7 @@ public final class CraftPersistentDataTypeRegistry {
+@@ -246,7 +255,7 @@ public final class CraftPersistentDataTypeRegistry {
       * type was found
       */
      public <T> T extract(Class<T> type, Tag tag) throws ClassCastException, IllegalArgumentException {
