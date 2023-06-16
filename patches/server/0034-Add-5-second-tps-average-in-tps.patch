@@ -30,7 +30,7 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9fc71574184508f4ee5af847b26fb981539c60c5..b4dcc2072db2d439369f44ebf0bc82bfbf23240a 100644
+index 129d10f3ae41cd7e7383a0105d8afa293b015873..f0ee90f5a462c0acee7894d4566bb71c1bff266e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -303,7 +303,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
@@ -72,7 +72,7 @@ index 9fc71574184508f4ee5af847b26fb981539c60c5..b4dcc2072db2d439369f44ebf0bc82bf
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 43a724c97069b4609962e161fe075ca7a55761cc..86b7f896b75045477b4d7f2e6f905f583d6b52e1 100644
+index 9628960b4f50de58bb774c3171a33c8fcac664f8..a9ef24717a29b81dd5f4498e808a6befd8d6065b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2735,6 +2735,7 @@ public final class CraftServer implements Server {
@@ -84,7 +84,7 @@ index 43a724c97069b4609962e161fe075ca7a55761cc..86b7f896b75045477b4d7f2e6f905f58
                  net.minecraft.server.MinecraftServer.getServer().tps5.getAverage(),
                  net.minecraft.server.MinecraftServer.getServer().tps15.getAverage()
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index cddf088ae9168d8aac323d9c70e3eb6cd545f9b3..57745e0e8211f3022832cc8c4eb028e3926e1074 100644
+index c12e3f31606ae2fbf294ab8ab1b46f72122ce466..821e57932a8e93209060436318d01c6c7f074f5b 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -37,7 +37,7 @@ public class TicksPerSecondCommand extends Command
@@ -95,4 +95,4 @@ index cddf088ae9168d8aac323d9c70e3eb6cd545f9b3..57745e0e8211f3022832cc8c4eb028e3
 +        builder.append(net.kyori.adventure.text.Component.text("TPS from last 5s, 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD)); // Purpur
          builder.append(net.kyori.adventure.text.Component.join(net.kyori.adventure.text.JoinConfiguration.commas(true), tpsAvg));
          sender.sendMessage(builder.asComponent());
-         // Yatopia start - Last tick time API
+         // Yatopia start - Last tick duration API

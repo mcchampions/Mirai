@@ -7,14 +7,14 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9b2cade95831a3367f6b0075a171af41925fe037..c9f3a8a6b24da080d133e566c36b48b2c6f7dd2f 100644
+index 9b2cade95831a3367f6b0075a171af41925fe037..796e7289e5fe05df5625b409e694315fd57194c7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1096,6 +1096,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
-+    public static java.time.Duration lastTickTime = java.time.Duration.ZERO; // Yatopia
++    public static java.time.Duration lastTickDuration = java.time.Duration.ZERO; // Yatopia
  
      protected void runServer() {
          try {
@@ -24,12 +24,12 @@ index 9b2cade95831a3367f6b0075a171af41925fe037..c9f3a8a6b24da080d133e566c36b48b2
                  this.profiler.push("tick");
 +                long tickStart = System.nanoTime(); // Yatopia
                  this.tickServer(this::haveTime);
-+                lastTickTime = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
++                lastTickDuration = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTime = Math.max(Util.getMillis() + 50L, this.nextTickTime);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 139f86ffd958b0225e5b3ba69cb9a980dafdf25d..43a724c97069b4609962e161fe075ca7a55761cc 100644
+index 139f86ffd958b0225e5b3ba69cb9a980dafdf25d..9628960b4f50de58bb774c3171a33c8fcac664f8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2992,6 +2992,12 @@ public final class CraftServer implements Server {
@@ -41,13 +41,13 @@ index 139f86ffd958b0225e5b3ba69cb9a980dafdf25d..43a724c97069b4609962e161fe075ca7
 +
 +    // Yatopia start
 +    @Override
-+    public java.time.Duration getLastTickTime() {
-+        return net.minecraft.server.MinecraftServer.lastTickTime;
++    public java.time.Duration getLastTickDuration() {
++        return net.minecraft.server.MinecraftServer.lastTickDuration;
 +    }
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index bf970bf3356a914459c2d6db93537ce2d32c7e18..cddf088ae9168d8aac323d9c70e3eb6cd545f9b3 100644
+index bf970bf3356a914459c2d6db93537ce2d32c7e18..c12e3f31606ae2fbf294ab8ab1b46f72122ce466 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@
@@ -62,13 +62,13 @@ index bf970bf3356a914459c2d6db93537ce2d32c7e18..cddf088ae9168d8aac323d9c70e3eb6c
          builder.append(net.kyori.adventure.text.Component.text("TPS from last 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD));
          builder.append(net.kyori.adventure.text.Component.join(net.kyori.adventure.text.JoinConfiguration.commas(true), tpsAvg));
          sender.sendMessage(builder.asComponent());
-+        // Yatopia start - Last tick time API
-+        java.time.Duration lastTickTime = org.bukkit.Bukkit.getLastTickTime();
++        // Yatopia start - Last tick duration API
++        java.time.Duration lastTickDuration = org.bukkit.Bukkit.getLastTickDuration();
 +        sender.sendMessage(net.kyori.adventure.text.Component.text()
 +            .append(net.kyori.adventure.text.Component.text("Last tick: ", net.kyori.adventure.text.format.NamedTextColor.GOLD))
-+            .append(TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.MILLISECONDS))
++            .append(TicksPerSecondCommand.formatTo(lastTickDuration, java.util.concurrent.TimeUnit.MILLISECONDS))
 +            .append(net.kyori.adventure.text.Component.text(" (", net.kyori.adventure.text.format.NamedTextColor.GOLD))
-+            .append(TicksPerSecondCommand.formatTo(lastTickTime, java.util.concurrent.TimeUnit.NANOSECONDS))
++            .append(TicksPerSecondCommand.formatTo(lastTickDuration, java.util.concurrent.TimeUnit.NANOSECONDS))
 +            .append(net.kyori.adventure.text.Component.text(")", net.kyori.adventure.text.format.NamedTextColor.GOLD))
 +            .build());
 +        // Yatopia end
@@ -80,7 +80,7 @@ index bf970bf3356a914459c2d6db93537ce2d32c7e18..cddf088ae9168d8aac323d9c70e3eb6c
          // Paper end
      }
 +
-+    // Yatopia start - Last tick time API
++    // Yatopia start - Last tick duration API
 +    public static net.kyori.adventure.text.Component formatTo(java.time.Duration duration, java.util.concurrent.TimeUnit unit) {
 +        java.util.concurrent.TimeUnit nanosUnit = java.util.concurrent.TimeUnit.NANOSECONDS;
 +        long nanos = duration.toNanos();
