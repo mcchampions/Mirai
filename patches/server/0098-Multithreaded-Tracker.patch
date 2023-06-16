@@ -253,7 +253,7 @@ index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8b
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 971ec6e14427bd9f648fb1167dd6b29a60e92ede..f389de0feef9eb6df2c042daa80b4310e2187912 100644
+index 971ec6e14427bd9f648fb1167dd6b29a60e92ede..e743f87658d1d40f1c6f11998f5a651e8163b2a5 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1249,8 +1249,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -317,7 +317,39 @@ index 971ec6e14427bd9f648fb1167dd6b29a60e92ede..f389de0feef9eb6df2c042daa80b4310
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1516,7 +1544,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1486,14 +1514,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcast(Packet<?> packet) {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
++            // Mirai start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) {
+ 
+                 serverplayerconnection.send(packet);
+             }
+-
++            // Mirai end
+         }
+ 
+         public void broadcastAndSend(Packet<?> packet) {
+@@ -1505,18 +1531,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         }
+ 
+         public void broadcastRemoved() {
+-            Iterator iterator = this.seenBy.iterator();
+-
+-            while (iterator.hasNext()) {
+-                ServerPlayerConnection serverplayerconnection = (ServerPlayerConnection) iterator.next();
++            // Miria start - avoid NPE
++            for (ServerPlayerConnection serverplayerconnection : this.seenBy.toArray(new ServerPlayerConnection[0])) {
+ 
+                 this.serverEntity.removePairing(serverplayerconnection.getPlayer());
+             }
+-
++            // Mirai end
          }
  
          public void removePlayer(ServerPlayer player) {
@@ -326,7 +358,7 @@ index 971ec6e14427bd9f648fb1167dd6b29a60e92ede..f389de0feef9eb6df2c042daa80b4310
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1524,7 +1552,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1524,7 +1548,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {

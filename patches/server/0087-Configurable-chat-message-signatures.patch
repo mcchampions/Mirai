@@ -86,7 +86,7 @@ index abdfcc4ab4edfd6ca9386261a8532650273d739c..391a5ceae62bf69149965a2549101b8f
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 19c24ff2160b27b6961fd1a6368fa62409e066b1..50b01411e36918522de0367df69787e3af5b0e0e 100644
+index 19c24ff2160b27b6961fd1a6368fa62409e066b1..cb108560fec65db275e5f221ddab7a121d730793 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2161,10 +2161,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -96,9 +96,9 @@ index 19c24ff2160b27b6961fd1a6368fa62409e066b1..50b01411e36918522de0367df69787e3
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
 +            if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerChatPacket chat) {
-+                packet = new ClientboundSystemChatPacket(chat.chatType().resolve(this.player.level().registryAccess())
++                packet = new ClientboundSystemChatPacket(PaperAdventure.asAdventure(chat.chatType().resolve(this.player.level().registryAccess())
 +                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
-+                        : Component.literal(chat.body().content())), false);
++                        : Component.literal(chat.body().content()))), false);
 +
 +
 +                this.send(packet);

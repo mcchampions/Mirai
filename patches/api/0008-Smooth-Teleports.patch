@@ -7,7 +7,7 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 4ee0eb177f6b5765a9d7263576bb36c8a8366979..f3c2066ead648bffb141ad79a61dfa913140ff89 100644
+index 4ee0eb177f6b5765a9d7263576bb36c8a8366979..f5173de1814c9214fba908805687bad3d83a97c2 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -2969,6 +2969,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
@@ -24,7 +24,7 @@ index 4ee0eb177f6b5765a9d7263576bb36c8a8366979..f3c2066ead648bffb141ad79a61dfa91
 +     */
 +    // Slice start
 +    @org.jetbrains.annotations.ApiStatus.Experimental
-+    void teleportWithoutRespawn(Location location);
++    void teleportWithoutRespawn(@NotNull Location location);
 +    // Slice end
 +
      // Paper start - Teleport API
