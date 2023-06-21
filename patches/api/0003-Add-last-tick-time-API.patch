@@ -8,7 +8,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 7d759a4725dbea992f078b6c1a60d9822bb268a3..51d039b0fb959580dc745d5c7a5b16b5dee699d8 100644
+index e26e0c6bc3d8e735f489cdcd0a5b93d6688c2c5f..2e8815f690ae69e07a9cf3609bfbfe12d2fd3949 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -2468,6 +2468,16 @@ public final class Bukkit {
@@ -20,8 +20,8 @@ index 7d759a4725dbea992f078b6c1a60d9822bb268a3..51d039b0fb959580dc745d5c7a5b16b5
 +    public static long getLastTickMs() {
 +        return server.getLastTickMs();
 +    }
-+    @NotNull public static java.time.Duration getLastTickTime() {
-+        return server.getLastTickTime();
++    @NotNull public static java.time.Duration getLastTickDuration() {
++        return server.getLastTickDuration();
 +    }
 +    // Yatopia end
 +
@@ -29,7 +29,7 @@ index 7d759a4725dbea992f078b6c1a60d9822bb268a3..51d039b0fb959580dc745d5c7a5b16b5
       * Returns the {@link com.destroystokyo.paper.entity.ai.MobGoals} manager
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 194a084d4f322621ff9d3ee9b94ae2f6886ed435..93f24f79338cd2c7f9a2da80769cdd8488dcaeab 100644
+index c7065253fc36112aaa1436139fb9f446f490c139..01350666f6315c272ba88db4c210cb0a2a7e5524 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -2173,6 +2173,26 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
@@ -38,22 +38,22 @@ index 194a084d4f322621ff9d3ee9b94ae2f6886ed435..93f24f79338cd2c7f9a2da80769cdd84
  
 +    // Yatopia start
 +    /**
-+     * Returns the time the last tick took in milliseconds.
++     * Returns the duration the last tick took in milliseconds.
 +     *
-+     * @return long time value
++     * @return long duration value
 +     * @deprecated newer method with java's Duration and a possibility to convert it from millis to something else
 +     */
 +    @Deprecated
 +    default long getLastTickMs() {
-+        return getLastTickTime().toMillis();
++        return getLastTickDuration().toMillis();
 +    }
 +    /**
-+     * Returns the time in {@link java.time.Duration} the last tick took.
++     * Returns the duration in {@link java.time.Duration} the last tick took.
 +     *
 +     * @return duration
 +     */
 +    @NotNull
-+    java.time.Duration getLastTickTime();
++    java.time.Duration getLastTickDuration();
 +    // Yatopia end
 +
      /**
