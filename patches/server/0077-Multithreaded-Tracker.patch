@@ -253,7 +253,7 @@ index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8b
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 928f5f2a4b3b781a87c3922991d2ef06052c61ba..51b1e39ed3472a79e8aa10b6ff9dff74457c075d 100644
+index 1f3554b35c1d065f56d5e4e0d2b4c18e3f35e63b..fdfe035548d1b6dc2a55081a4a300d0511e56add 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1249,8 +1249,35 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -380,10 +380,10 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..c4d6d5be09c788bbc062c50d8547538e
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 88d655b0c648299e77d42ac9a65be7e51030e945..285cb0772ffb3699c5330da3fa7a3ff6f606fec2 100644
+index 2297a8d75ef843f32ec03621d7bc8576f9d841fc..cc3f33d9194de90e6297359e6a669110085674e9 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -292,7 +292,11 @@ public class ServerEntity {
+@@ -294,7 +294,11 @@ public class ServerEntity {
  
      public void removePairing(ServerPlayer player) {
          this.entity.stopSeenByPlayer(player);
@@ -396,7 +396,7 @@ index 88d655b0c648299e77d42ac9a65be7e51030e945..285cb0772ffb3699c5330da3fa7a3ff6
      }
  
      public void addPairing(ServerPlayer player) {
-@@ -300,7 +304,7 @@ public class ServerEntity {
+@@ -302,7 +306,7 @@ public class ServerEntity {
  
          Objects.requireNonNull(list);
          this.sendPairingData(player, list::add);
@@ -405,7 +405,7 @@ index 88d655b0c648299e77d42ac9a65be7e51030e945..285cb0772ffb3699c5330da3fa7a3ff6
          this.entity.startSeenByPlayer(player);
      }
  
-@@ -399,19 +403,29 @@ public class ServerEntity {
+@@ -401,19 +405,29 @@ public class ServerEntity {
  
          if (list != null) {
              this.trackedDataValues = datawatcher.getNonDefaultValues();
@@ -439,10 +439,10 @@ index 88d655b0c648299e77d42ac9a65be7e51030e945..285cb0772ffb3699c5330da3fa7a3ff6
  
              set.clear();
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 059360470f0976bcc9270c4e0097aad24d4b4568..a07c44d148fde24b31da684735ff8290808b76ac 100644
+index 9284aae79bc082d2b863cfb431972d7b31ef9b47..53720d661c885046e1bc9cb715066f0e6f3565bf 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -2631,7 +2631,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2647,7 +2647,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {

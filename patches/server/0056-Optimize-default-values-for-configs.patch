@@ -220,7 +220,7 @@ index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b16
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index f3db9c2f3b17a9f0f3cdaa16f115b7192d74c5eb..71f8d5b66cb977c0cb060053fd9e3c42a7fba8b4 100644
+index 2f1c566c6236dfda251155733a5b370c704e5a14..cab7a4bb6d1fccdab128833a935db055542b1e8b 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -150,14 +150,14 @@ public class SpigotWorldConfig
@@ -352,7 +352,7 @@ index f3db9c2f3b17a9f0f3cdaa16f115b7192d74c5eb..71f8d5b66cb977c0cb060053fd9e3c42
      }
  
      public int endPortalSoundRadius;
-@@ -438,14 +439,14 @@ public class SpigotWorldConfig
+@@ -440,14 +441,14 @@ public class SpigotWorldConfig
          {
              this.set( "max-tnt-per-tick", 100 );
          }

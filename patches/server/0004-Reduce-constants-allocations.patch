@@ -277,10 +277,10 @@ index dae36c6452ccd57a436dd918547b64d59957ab0a..3586ecbf649fad6dddc7980244628b65
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 923cf196ad556efb2aea759bc9f6f33da106af93..110ddf97721c6418e5d4eefcb4fa97f466170637 100644
+index 1a4658db86e89d57b0a52923773a0983ff60989c..06be0146d59c1c493be53df8588cccc5777e9152 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -330,7 +330,7 @@ public class ServerEntity {
+@@ -332,7 +332,7 @@ public class ServerEntity {
  
          if (this.entity instanceof LivingEntity) {
              List<Pair<EquipmentSlot, ItemStack>> list = Lists.newArrayList();
@@ -290,10 +290,10 @@ index 923cf196ad556efb2aea759bc9f6f33da106af93..110ddf97721c6418e5d4eefcb4fa97f4
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 653e469c726e6e44b93452e0cac2448e3816b3c8..d0374f11026e4a33cb05db4b2ed63a57e7cc5861 100644
+index 221d1d0e1b4b46de6ebca5faac09bbda875fae17..851406e01abd20a592423163db0120c7b79fd517 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1103,7 +1103,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1119,7 +1119,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                      BlockPos blockposition2 = blockposition.set(j + randomX, randomY, k + randomZ);
                      BlockState iblockdata = com.destroystokyo.paper.util.maplist.IBlockDataList.getBlockDataFromRaw(raw);
  
@@ -302,7 +302,7 @@ index 653e469c726e6e44b93452e0cac2448e3816b3c8..d0374f11026e4a33cb05db4b2ed63a57
                      // We drop the fluid tick since LAVA is ALREADY TICKED by the above method (See LiquidBlock).
                      // TODO CHECK ON UPDATE (ping the Canadian)
                  }
-@@ -1376,7 +1376,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1392,7 +1392,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      public static List<Entity> getCurrentlyTickingEntities() {
          Entity ticking = currentlyTickingEntity.get();
@@ -312,7 +312,7 @@ index 653e469c726e6e44b93452e0cac2448e3816b3c8..d0374f11026e4a33cb05db4b2ed63a57
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 9b2d2f5e45cf26ddd9897db5cfec23634e5d6cb3..799171c6d20c97bf6ebd695b806f19913a36ec88 100644
+index 754063cc43d8adca0f70d76d8a75ec820c62cae6..699c4a0545995c51ea4a57e69b240d55bc27b580 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -434,7 +434,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -358,10 +358,10 @@ index f719f8aafe7c75e2ef8fcb05f556a8d6bd94b9a0..c6aef636c656e89ce2fac6419203d054
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index fb3a59fda3d4f5b2bca665b5665df2a355c61a15..03be4b54f883fed507635abd54720e55d1b7a7d0 100644
+index ebcdf6aee72b817b9bbba8f8d580eae1876fc6e5..c119424102aef9b403fc149320f110090ecc4051 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -701,7 +701,7 @@ public abstract class PlayerList {
+@@ -702,7 +702,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -421,10 +421,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 6299dbd9ac756cbae7892628d67b56bd2fe3dbad..ae03b151691b4ec5d8ef75337ecb467836d23aca 100644
+index 0bd2d45e336a26b3831f16590b419ddb22f7fa57..6cb64701ec6c574f4e4d4147d813983c1c8a1aca 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3155,7 +3155,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3177,7 +3177,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -434,10 +434,10 @@ index 6299dbd9ac756cbae7892628d67b56bd2fe3dbad..ae03b151691b4ec5d8ef75337ecb4678
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 3162c27ee305f5280a326b953288c846d0b6cae0..57071af27e804b887b1142be67180e2c0be87cc9 100644
+index 19d9d3a9f634631e2ec5a6fa7f2cd9dd18f62f89..92f038fbca81309e8be821a2acccadd20260b19e 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -1100,7 +1100,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1106,7 +1106,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
      @Override
      protected void dropCustomDeathLoot(DamageSource source, int lootingMultiplier, boolean allowDrops) {
          super.dropCustomDeathLoot(source, lootingMultiplier, allowDrops);
@@ -446,7 +446,7 @@ index 3162c27ee305f5280a326b953288c846d0b6cae0..57071af27e804b887b1142be67180e2c
          int j = aenumitemslot.length;
  
          for (int k = 0; k < j; ++k) {
-@@ -1162,7 +1162,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1168,7 +1168,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
              }
  
              boolean flag = true;
@@ -455,7 +455,7 @@ index 3162c27ee305f5280a326b953288c846d0b6cae0..57071af27e804b887b1142be67180e2c
              int j = aenumitemslot.length;
  
              for (int k = 0; k < j; ++k) {
-@@ -1255,7 +1255,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1261,7 +1261,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
          float f = localDifficulty.getSpecialMultiplier();
  
          this.enchantSpawnedWeapon(random, f);
@@ -464,7 +464,7 @@ index 3162c27ee305f5280a326b953288c846d0b6cae0..57071af27e804b887b1142be67180e2c
          int i = aenumitemslot.length;
  
          for (int j = 0; j < i; ++j) {
-@@ -1475,7 +1475,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1481,7 +1481,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
                  t0.setInvulnerable(this.isInvulnerable());
                  if (flag) {
                      t0.setCanPickUpLoot(this.canPickUpLoot());
@@ -553,10 +553,10 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 5287a6fe5742bdfe179fe669ee1f1edfbbd0fae6..2e59dd9b529fc63896d1ff98232f65fd5165eb27 100644
+index fdd55ac3720d44e3d246e05fe9a07b5f73bed0e8..ddee30a67e160e65fe57c0505f1d8c20e3b348a7 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1470,7 +1470,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1573,7 +1573,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public org.bukkit.entity.Entity[] getChunkEntities(int chunkX, int chunkZ) {
          io.papermc.paper.world.ChunkEntitySlices slices = ((ServerLevel)this).getEntityLookup().getChunk(chunkX, chunkZ);
          if (slices == null) {

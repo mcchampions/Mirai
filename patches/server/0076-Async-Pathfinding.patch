@@ -439,10 +439,10 @@ index 0000000000000000000000000000000000000000..763bd0fec45fff471dea3186d3e785d7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index d4c91e0a0c64fcb7f1145de3f30134cb1f1f8ee6..158297c00a1bfd38321ae15f5134c26ab0597bf1 100644
+index fe502445a77afe7e3807afae48d7bf03f370e290..c4975b5b1e6558944b99c8a66017cd0b8b064045 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-@@ -67,27 +67,59 @@ public class AcquirePoi {
+@@ -68,27 +68,59 @@ public class AcquirePoi {
                          io.papermc.paper.util.PoiAccess.findNearestPoiPositions(poiManager, poiPredicate, predicate2, entity.blockPosition(), 48, 48*48, PoiManager.Occupancy.HAS_SPACE, false, 5, poiposes);
                          Set<Pair<Holder<PoiType>, BlockPos>> set = new java.util.HashSet<>(poiposes);
                          // Paper end - optimise POI access
@@ -995,10 +995,10 @@ index 2677e7899aa98fc04070f5bbbc40da6117d89efa..97aa77f49ff4694df1d1acedb9a4d371
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index 21f0554ae9281ddd088cf36c79bb005e18473a7f..e49221559dbb4a04bc8ffec10622e9c800eb37d5 100644
+index dc1e8bcd8049d79c0e383ccd6a5697f79a3a2ebd..d14f26f2e89573bf73c31aa8658919522ef9ab1e 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-@@ -430,6 +430,14 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -432,6 +432,14 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
      }
  
      static class FrogPathNavigation extends AmphibiousPathNavigation {
@@ -1013,7 +1013,7 @@ index 21f0554ae9281ddd088cf36c79bb005e18473a7f..e49221559dbb4a04bc8ffec10622e9c8
          FrogPathNavigation(Frog frog, Level world) {
              super(frog, world);
          }
-@@ -443,7 +451,13 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -445,7 +453,13 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
          protected PathFinder createPathFinder(int range) {
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
              this.nodeEvaluator.setCanPassDoors(true);
