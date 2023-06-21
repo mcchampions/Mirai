@@ -312,7 +312,7 @@ index eac31c3fcc9161711328588ac852fcae1116d8ef..a1d6871803e0e4cec569761335ca38d3
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 29dbd3a902c2d620b9da191d0bcd9f6e9108034a..455515ce617b68c9ade86f4dacf54ac50f7bcad6 100644
+index 309a3e42ec48a1a7684b62ea372bfa984df6a0fb..8ca0784212d3923c8ea077b02aa32256849b7276 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -404,7 +404,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -358,10 +358,10 @@ index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 8547e7ff2f1f5b7701fb0f3c3010c14601a5f83e..d55b8d371c72ff502f3a7db67f8d2fd81d004051 100644
+index fff7ad7a45f310783ac96b44575ad3db13d537fa..9f18b2b7aa193c46058bf09ede5424bce7259879 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -699,7 +699,7 @@ public abstract class PlayerList {
+@@ -700,7 +700,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -421,7 +421,7 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index eccd61f5401ecb2ef0b460337a3284d1844bd85f..a9a23228e201c4d324c6c960ecaf411d4769f880 100644
+index 33befdab713753d14bfe0e79e96dd925dad331c2..04fa91bf03bef5f9f5682213ac8ab8156aa07342 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3112,7 +3112,7 @@ public abstract class LivingEntity extends Entity implements Attackable {

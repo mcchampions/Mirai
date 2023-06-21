@@ -19,10 +19,10 @@ index 391a5ceae62bf69149965a2549101b8f39e83ade..1e49b5287e004a3ca0017573296555a9
      private final java.util.concurrent.atomic.AtomicReference<io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances> viewDistances = new java.util.concurrent.atomic.AtomicReference<>(new io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances(-1, -1, -1));
      public io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.PlayerChunkLoaderData chunkLoader;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index b525b5c03bd5a27ecf1348d17157890c11b7a8bd..8c0cb087c3f793990a2c11669ba896ad50358f95 100644
+index 752295f6e42aa030fc6fcb02255838f48ab66efb..49a0e84bea2a854c28cec1760b72250cce954c76 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -930,12 +930,12 @@ public abstract class PlayerList {
+@@ -931,12 +931,12 @@ public abstract class PlayerList {
          int i = flag ? 1 : 0;
          // CraftBukkit start
          LevelData worlddata = worldserver1.getLevelData();
@@ -38,10 +38,10 @@ index b525b5c03bd5a27ecf1348d17157890c11b7a8bd..8c0cb087c3f793990a2c11669ba896ad
  
          // entityplayer1.connection.teleport(entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 03bb444705916ffe0b9eb4b7496524dc3459ebe0..4c81e4dbd58125210db39f2c5933adb2aad15d4a 100644
+index 59c00045ec903a635966f16cf33e5b4110262953..e34f06f3d730932abbc7b9aada6139a4a06b170d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1226,6 +1226,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1239,6 +1239,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          // Paper end
      }
  

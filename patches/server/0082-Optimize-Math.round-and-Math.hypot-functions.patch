@@ -176,10 +176,10 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b4dcc2072db2d439369f44ebf0bc82bfbf23240a..300e2afc3cc0c9ab5730ccc6a6bea3fd3f034898 100644
+index 1f63f2adbf790a83e730aac64f52d612d4cfec41..de6b2f5cc01e2752003593f53b4be3321c9f04bb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2798,7 +2798,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2810,7 +2810,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -214,7 +214,7 @@ index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d7
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 60fe5e0bcf5c10c2bddda1d7f7cf728bf1b7a634..0463e702beb54d356cbbdc9a037374ed35fec644 100644
+index 8b8e7037fbf401f5011203b32caa07f719cdb97d..fc71eaeb40581a0bc4b02fea9ab835bfaadd430f 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -1551,7 +1551,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -454,10 +454,10 @@ index 81376e725151f723dad8a7b5c1a4bd597e60294e..5a33c98d29e1a76e5239dab166514ab9
  
          i = Mth.clamp(i, 0, 15);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-index 51a05900d02dc116ea215730713cd2cf2a4f1c23..eb4a7c41f902fa3d3b424c39eafcf0be068478d6 100644
+index f8cd23fb6ea7909b8f30bd21d3f2c7bcc483ef21..e2263c812a6470f96058b63f19e59983de285011 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-@@ -233,8 +233,8 @@ public class ChunkGeneratorStructureState {
+@@ -236,8 +236,8 @@ public class ChunkGeneratorStructureState {
  
              for (int j1 = 0; j1 < j; ++j1) {
                  double d1 = (double) (4 * i + i * i1 * 6) + (randomsource.nextDouble() - 0.5D) * (double) i * 2.5D;
@@ -535,7 +535,7 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 57745e0e8211f3022832cc8c4eb028e3926e1074..f47fdd6fb66e0889f71fefbad3ecd32c15a66aa5 100644
+index 821e57932a8e93209060436318d01c6c7f074f5b..6cbe3ef6cf7433382d20592e866d74604b77a625 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -70,7 +70,7 @@ public class TicksPerSecondCommand extends Command
