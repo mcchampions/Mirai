@@ -238,10 +238,10 @@ index a2920b8a9eff77d9c5d1d7f70ad3abdacba8f0fa..f7f19e360d712211625ff28e92f83949
      protected CipherBase(Cipher cipher) {
          this.cipher = cipher;
 diff --git a/src/main/java/net/minecraft/network/Connection.java b/src/main/java/net/minecraft/network/Connection.java
-index 1b634b303105a0f8424e1e40b7c39f9938232d95..cec9df2dd5f5584ac9e489ed0a0cd76c7aee1213 100644
+index cf20f0983fc25b26cf92b9d3a28746b1909fc56b..c50acb190814ce254a824ed99c395266f82692f6 100644
 --- a/src/main/java/net/minecraft/network/Connection.java
 +++ b/src/main/java/net/minecraft/network/Connection.java
-@@ -322,7 +322,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -325,7 +325,7 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void setListener(PacketListener listener) {
@@ -277,7 +277,7 @@ index dae36c6452ccd57a436dd918547b64d59957ab0a..3586ecbf649fad6dddc7980244628b65
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index e921b6db8905a8676a45e36564d877075afb081f..8b9fa5c8f3c503cacf1c7d99f4bc6eef1f7af5cb 100644
+index 4c5f90fdb534d8aeb7dd077a13b1ebed016e4947..4f2616694e8a3a085279f4beabfe0b0ea35e96f0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -332,7 +332,7 @@ public class ServerEntity {
