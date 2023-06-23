@@ -1,6 +1,6 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 M9月17日 00:00:00 2001
 From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
-Date: Sat, 24 Oct 2020 21:03:53 -0500
+Date: Sat, 2020年10月24日 21:03:53 -0500
 Subject: [PATCH] Smarter statistics ticking
 
 Original code by YatopiaMC, licensed under MIT
@@ -17,7 +17,7 @@ index 58152160d609d0e9d105153aeb166a56a7955603..ab2aafa24d7e9da3812e4a517cebdb82
  
          this.moveCloak();
          if (!this.level().isClientSide) {
--            this.foodData.tick(this);
+             this.foodData.tick(this);
 -            this.awardStat(Stats.PLAY_TIME);
 -            this.awardStat(Stats.TOTAL_WORLD_TIME);
 -            if (this.isAlive()) {
