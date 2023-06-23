@@ -4,6 +4,25 @@ Date: Wed, 20 Jul 2022 22:07:01 +0200
 Subject: [PATCH] Mirai Configuration
 
 
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 4405b07013848f9b1b9db480d01893be0e26b5a0..df8e9dda5f88a79e7d5e2fd931d8f9f3464d240e 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -49,10 +49,12 @@ dependencies {
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
+ 
+     // Pufferfish start
+-    implementation("org.yaml:snakeyaml:1.32")
+-    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
++    // Mirai start
++    implementation("org.yaml:snakeyaml:2.0")
++    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
+         exclude(group="org.yaml", module="snakeyaml")
+     }
++    // Mirai end
+     // Pufferfish end
+     implementation("com.github.technove:Flare:34637f3f87") // Pufferfish - flare
+ 
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
 index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..54d8fe961f5a28b8230e726f86ebf1910e4c94bf 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
