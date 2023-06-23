@@ -5,23 +5,20 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 27b8928c50f5613f9afd8feef6f1d829bb6f79fc..724ee67a4c6c2e9222834cfebc7c8620da9b1b12 100644
+index 27b8928c50f5613f9afd8feef6f1d829bb6f79fc..32db536169b3bf32cccc0418d79572c6ecac9a88 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -59,6 +59,13 @@ dependencies {
+@@ -53,8 +53,8 @@ dependencies {
+     implementation("dev.omega24:upnp4j:1.0") // Purpur
+ 
+     // Pufferfish start
+-    implementation("org.yaml:snakeyaml:1.32")
+-    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
++    implementation("org.yaml:snakeyaml:2.0")
++    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
+         exclude(group="org.yaml", module="snakeyaml")
      }
      // Pufferfish end
- 
-+    // Pufferfish start
-+    implementation("org.yaml:snakeyaml:2.0")
-+    implementation("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
-+        exclude(group = "org.yaml", module = "snakeyaml")
-+    }
-+    // Pufferfish end
-+
-     testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("junit:junit:4.13.2")
-     testImplementation("org.hamcrest:hamcrest-library:1.3")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
 index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..91886b59dc8e97f93b9b1f004781e4b8076595b0 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
