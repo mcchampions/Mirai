@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Dreeam <61569423+Dreeam-qwq@users.noreply.github.com>
+Date: Fri, 23 Jun 2023 14:06:00 +0800
+Subject: [PATCH] Fix Simple-YAML dependency
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 724ee67a4c6c2e9222834cfebc7c8620da9b1b12..0e36ff801f56f4623ec3a33fd470fc08141dad6b 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -54,7 +54,7 @@ dependencies {
+ 
+     // Pufferfish start
+     implementation("org.yaml:snakeyaml:1.32")
+-    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
++    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
+         exclude(group="org.yaml", module="snakeyaml")
+     }
+     // Pufferfish end
