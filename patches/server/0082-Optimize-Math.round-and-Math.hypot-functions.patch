@@ -305,10 +305,10 @@ index 8b8e7037fbf401f5011203b32caa07f719cdb97d..fc71eaeb40581a0bc4b02fea9ab835bf
  
          this.level().getProfiler().pop();
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814d8df9635 100644
+index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a22500e62 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1071,7 +1071,7 @@ public abstract class Player extends LivingEntity {
+@@ -1072,7 +1072,7 @@ public abstract class Player extends LivingEntity {
              float f2 = f1 - f;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -317,7 +317,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
              }
  
              if (f != 0.0F) {
-@@ -1079,7 +1079,7 @@ public abstract class Player extends LivingEntity {
+@@ -1080,7 +1080,7 @@ public abstract class Player extends LivingEntity {
                  this.getCombatTracker().recordDamage(damagesource, f);
                  this.setHealth(this.getHealth() - f);
                  if (f < 3.4028235E37F) {
@@ -326,7 +326,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
                  }
  
                  this.gameEvent(GameEvent.ENTITY_DAMAGE);
-@@ -1420,7 +1420,7 @@ public abstract class Player extends LivingEntity {
+@@ -1421,7 +1421,7 @@ public abstract class Player extends LivingEntity {
                          if (target instanceof LivingEntity) {
                              float f5 = f3 - ((LivingEntity) target).getHealth();
  
@@ -335,7 +335,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1687,29 +1687,29 @@ public abstract class Player extends LivingEntity {
+@@ -1688,29 +1688,29 @@ public abstract class Player extends LivingEntity {
              int i;
  
              if (this.isSwimming()) {
@@ -370,7 +370,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1723,10 +1723,10 @@ public abstract class Player extends LivingEntity {
+@@ -1724,10 +1724,10 @@ public abstract class Player extends LivingEntity {
                      }
                  }
              } else if (this.isFallFlying()) {
@@ -383,7 +383,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
                  if (i > 25) {
                      this.awardStat(Stats.FLY_ONE_CM, i);
                  }
-@@ -1737,7 +1737,7 @@ public abstract class Player extends LivingEntity {
+@@ -1738,7 +1738,7 @@ public abstract class Player extends LivingEntity {
  
      private void checkRidingStatistics(double dx, double dy, double dz) {
          if (this.isPassenger()) {
@@ -392,7 +392,7 @@ index 003ad2a5bc879d759d3ee2497fd5bcb3e1c2b75f..3cedaa91357080e5d24849f475653814
  
              if (i > 0) {
                  Entity entity = this.getVehicle();
-@@ -1764,7 +1764,7 @@ public abstract class Player extends LivingEntity {
+@@ -1765,7 +1765,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {

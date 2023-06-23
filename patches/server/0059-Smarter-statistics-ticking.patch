@@ -1,6 +1,6 @@
-From 0000000000000000000000000000000000000000 M9月17日 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
-Date: Sat, 2020年10月24日 21:03:53 -0500
+Date: Sat, 24 Oct 2020 21:03:53 -0500
 Subject: [PATCH] Smarter statistics ticking
 
 Original code by YatopiaMC, licensed under MIT
@@ -10,11 +10,10 @@ In vanilla, statistics that count time spent for an action (i.e. time played or 
 With an interval of 20, this patch saves roughly 3ms per tick on a server w/ 80 players online.
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 58152160d609d0e9d105153aeb166a56a7955603..ab2aafa24d7e9da3812e4a517cebdb82d97cd726 100644
+index 58152160d609d0e9d105153aeb166a56a7955603..af95910f27e655b74a18dedc010f651a0130c194 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -281,20 +281,21 @@ public abstract class Player extends LivingEntity {
- 
+@@ -282,19 +282,21 @@ public abstract class Player extends LivingEntity {
          this.moveCloak();
          if (!this.level().isClientSide) {
              this.foodData.tick(this);
