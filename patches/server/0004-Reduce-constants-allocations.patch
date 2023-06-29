@@ -334,10 +334,10 @@ index 309a3e42ec48a1a7684b62ea372bfa984df6a0fb..8ca0784212d3923c8ea077b02aa32256
          }
          // Paper start
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a345d7407 100644
+index 878001928327d92423d5f7f6d5ce8772d6fa477f..eabf540b476a41639d691a2b7ae2d67d63506f5f 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -236,8 +236,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+@@ -237,8 +237,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
  
      @Override
      public void handleHello(ServerboundHelloPacket packet) {
@@ -348,7 +348,7 @@ index 2ff578e4a953ffcf5176815ba8e3f06f73499989..a01617bc33ba5f0cdb69759a1489589a
          // Paper start - validate usernames
          if (io.papermc.paper.configuration.GlobalConfiguration.get().proxies.isProxyOnlineMode() && io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings.performUsernameValidation) {
              if (!this.iKnowThisMayNotBeTheBestIdeaButPleaseDisableUsernameValidation && !validateUsername(packet.name())) {
-@@ -296,7 +296,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+@@ -297,7 +297,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
  
      @Override
      public void handleKey(ServerboundKeyPacket packet) {

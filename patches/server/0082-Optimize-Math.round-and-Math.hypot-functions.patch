@@ -176,10 +176,10 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1f63f2adbf790a83e730aac64f52d612d4cfec41..de6b2f5cc01e2752003593f53b4be3321c9f04bb 100644
+index b02f15a069ed0aeeac10b66181dc36261ac63520..2aee3ab7d5eb3ae0bbfc84da053d823f4aa3b09f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2810,7 +2810,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2812,7 +2812,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;

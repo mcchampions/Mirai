@@ -6,7 +6,7 @@ Subject: [PATCH] Optimize default values for configs
 // TODO - needs update
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6755008dc43bf96c1507ce2ae6a066a1b75df760..51e4396bdaae628f994f0d3623f68af2e28ba874 100644
+index 7b091c1258c3f33933ec30a15d963e9d5f069ba7..f5b4a9207a2d8d973ff3c3fcd227b42ca74c7ca5 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -219,7 +219,7 @@ public class PufferfishConfig {
@@ -58,12 +58,14 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..51e4396bdaae628f994f0d3623f68af2
  		setComment("entity_timeouts",
  				"These values define a entity's maximum lifespan. If an",
  				"entity is in this list and it has survived for longer than",
-@@ -319,7 +325,7 @@ public class PufferfishConfig {
- 	public static boolean disableOutOfOrderChat;
+@@ -320,8 +326,8 @@ public class PufferfishConfig {
+ 	public static boolean suppressNullIdDisconnections;
      private static void miscSettings() {
  		disableMethodProfiler = getBoolean("misc.disable-method-profiler", true);
 -		disableOutOfOrderChat = getBoolean("misc.disable-out-of-order-chat", false);
+-		suppressNullIdDisconnections = getBoolean("misc.suppress-null-id-disconnections", false);
 +		disableOutOfOrderChat = getBoolean("misc.disable-out-of-order-chat", true); // Mirai - optimize default values for configs
++		suppressNullIdDisconnections = getBoolean("misc.suppress-null-id-disconnections", true); // Mirai - optimize default values for configs
          setComment("misc", "Settings for things that don't belong elsewhere");
      }
  
