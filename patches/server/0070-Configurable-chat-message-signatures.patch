@@ -73,10 +73,10 @@ index f4e15e8d9db4c9fd1a19909b0574080942ae8027..feb6f43de55ce0141d1b39e252a3f2cb
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index dfab8e8dd890c36ea6f7632e035afda451ada42c..c296de9e11965edea8bb8703ff9f6f5fcab48960 100644
+index 61e704c3489b2877967b5d38b008bcba50e966f2..2d66d9668efc9750484ab0a622e5264e604c64ea 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2136,7 +2136,7 @@ public class ServerPlayer extends Player {
+@@ -2138,7 +2138,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
