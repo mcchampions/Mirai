@@ -11,8 +11,8 @@ jobs:
       - name: Set up JDK (GraalVM)
         uses: graalvm/setup-graalvm@main
         with:
-          version: latest
-          java-version: 17
+          version: main
+          java-version: 20
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull Gradle Cache
         uses: actions/cache@v3
