@@ -277,7 +277,7 @@ index dae36c6452ccd57a436dd918547b64d59957ab0a..3586ecbf649fad6dddc7980244628b65
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 1a4658db86e89d57b0a52923773a0983ff60989c..06be0146d59c1c493be53df8588cccc5777e9152 100644
+index 9131605467df6277f2a036f41f3a2c35d092fdfc..6fcb37ed2d12dbddc158120794d41ed235f7bc78 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -332,7 +332,7 @@ public class ServerEntity {
@@ -334,10 +334,10 @@ index 754063cc43d8adca0f70d76d8a75ec820c62cae6..699c4a0545995c51ea4a57e69b240d55
          }
          // Paper start
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index f719f8aafe7c75e2ef8fcb05f556a8d6bd94b9a0..c6aef636c656e89ce2fac6419203d054cbf95e64 100644
+index 01d5fa265fb2818465b5a71a2e2efeec751a7a05..795c905fd67d4677bdfea5259116f4ba21f56b23 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -238,8 +238,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+@@ -239,8 +239,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
  
      @Override
      public void handleHello(ServerboundHelloPacket packet) {
@@ -348,7 +348,7 @@ index f719f8aafe7c75e2ef8fcb05f556a8d6bd94b9a0..c6aef636c656e89ce2fac6419203d054
          // Paper start - validate usernames
          if (io.papermc.paper.configuration.GlobalConfiguration.get().proxies.isProxyOnlineMode() && io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings.performUsernameValidation) {
              if (!this.iKnowThisMayNotBeTheBestIdeaButPleaseDisableUsernameValidation && !validateUsername(packet.name())) {
-@@ -298,7 +298,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
+@@ -299,7 +299,7 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
  
      @Override
      public void handleKey(ServerboundKeyPacket packet) {

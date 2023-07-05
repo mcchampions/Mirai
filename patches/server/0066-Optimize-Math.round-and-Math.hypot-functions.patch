@@ -162,10 +162,10 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2d977fa1ebe9b7f56ec8c504b3ea4e78733f4bda..063545e1a80a3d9ab12752782fde962bab80bc60 100644
+index 1b7cf355f4740ffc3edd369869b26e93005ba3a1..0ad08cc9c7ee9753d5e70f773c076918241f29ae 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2841,7 +2841,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2843,7 +2843,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -534,7 +534,7 @@ index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9e
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 23c6faf284722223feebaa0e07f68cb0c78f6897..f8664def0859974eec940206658b8e6287c815d6 100644
+index edce32ccd3417bef0a21b1b8412f46996dfa3c4b..06da53a8ead1b916e76c63f5ae591098a59a0ca2 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -70,7 +70,7 @@ public class TicksPerSecondCommand extends Command
