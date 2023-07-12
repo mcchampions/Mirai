@@ -73,10 +73,10 @@ index 13b191851347eebb9dc74f77e8f2491a8049a7a6..b521d87b6b8e973286c5a29b0e2f70d1
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 727b070b7da7e96c0e1b2c7ade9da1df9afcdaed..f60f72fd8dc1d2a329c35bff92d66818707a627a 100644
+index abdfcc4ab4edfd6ca9386261a8532650273d739c..391a5ceae62bf69149965a2549101b8f39e83ade 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2077,7 +2077,7 @@ public class ServerPlayer extends Player {
+@@ -2075,7 +2075,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -86,7 +86,7 @@ index 727b070b7da7e96c0e1b2c7ade9da1df9afcdaed..f60f72fd8dc1d2a329c35bff92d66818
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index cfc8921a6651c1207edd1e19c32aaeada6989a6f..744acc9b074627c312ada6fc09127dfd9f9efc73 100644
+index 66ba372994665e1c7d8994fbf6dc9ff951f679e8..1d3001bb24e04763b3f7035bd709442afcec7135 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2162,10 +2162,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic

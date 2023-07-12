@@ -8,10 +8,10 @@ Original code by Akarin-project, licensed under GPL v3
 You can find the original code on https://github.com/Akarin-project/Akarin
 
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
-index 109e08e098a6c1ca1ba3dc2a9a293eaf9d5d7cb7..26c35cc4f40af6cd1465ab2da89624e160a2d096 100644
+index c246a62f5673aa563e9a69a247b376839db1859e..eb7ec9bcc7308ed3316858097371e0619f6c9799 100644
 --- a/src/main/java/net/minecraft/server/players/StoredUserList.java
 +++ b/src/main/java/net/minecraft/server/players/StoredUserList.java
-@@ -151,6 +151,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -146,6 +146,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
      }
  
      public void save() throws IOException {
@@ -19,7 +19,7 @@ index 109e08e098a6c1ca1ba3dc2a9a293eaf9d5d7cb7..26c35cc4f40af6cd1465ab2da89624e1
          this.removeExpired(); // Paper - remove expired values before saving
          JsonArray jsonarray = new JsonArray();
          // Yatopia start - Stop wasting resources on JsonList#get
-@@ -169,6 +170,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -164,6 +165,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
              jsonarray.add(obj);
          }
          // Yatopia end
@@ -27,7 +27,7 @@ index 109e08e098a6c1ca1ba3dc2a9a293eaf9d5d7cb7..26c35cc4f40af6cd1465ab2da89624e1
          BufferedWriter bufferedwriter = Files.newWriter(this.file, StandardCharsets.UTF_8);
  
          try {
-@@ -188,6 +190,11 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -183,6 +185,11 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
          if (bufferedwriter != null) {
              bufferedwriter.close();
          }

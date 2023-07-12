@@ -11,7 +11,7 @@ You can find the original code on https://github.com/Bloom-host/Petal
 2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index a606aed406551f4d3cc0bf09d6e231d87fe00f53..33fb9bee0eebaa6b176367d4b620cf9dba788d3f 100644
+index 8b2a02f85085c91c51b61760de967a859bf5e4de..c80923ce03ab96f73189120698aa588b33956c10 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 @@ -126,6 +126,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi

@@ -277,7 +277,7 @@ index dae36c6452ccd57a436dd918547b64d59957ab0a..3586ecbf649fad6dddc7980244628b65
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 4c5f90fdb534d8aeb7dd077a13b1ebed016e4947..4f2616694e8a3a085279f4beabfe0b0ea35e96f0 100644
+index 37c10d6a392d0400a7024bdd5214eb5e83aa3e82..b80618e751668dd8d6cc174ed527c6239086156e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -332,7 +332,7 @@ public class ServerEntity {
@@ -312,7 +312,7 @@ index eac31c3fcc9161711328588ac852fcae1116d8ef..a1d6871803e0e4cec569761335ca38d3
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 309a3e42ec48a1a7684b62ea372bfa984df6a0fb..8ca0784212d3923c8ea077b02aa32256849b7276 100644
+index 85d6635da9e7cb896d5d507dd9f8fb5d092a740e..3702a4f2a79f5adb12c2fdf0e7a69a3343979c69 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -404,7 +404,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -371,10 +371,10 @@ index fff7ad7a45f310783ac96b44575ad3db13d537fa..9f18b2b7aa193c46058bf09ede5424bc
  
          // Instead of kicking then returning, we need to store the kick reason
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
-index 4fd709a550bf8da1e996894a1ca6b91206c31e9e..63c0fe30ff035b6b5c1b4b35d3ad6c649d94e421 100644
+index 9e8112fbc40a1d89c0f73ea4452e0fa1bb459bf4..b2893b21f79f84002a518252f76ce28b801a94c3 100644
 --- a/src/main/java/net/minecraft/server/players/StoredUserList.java
 +++ b/src/main/java/net/minecraft/server/players/StoredUserList.java
-@@ -95,7 +95,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -96,7 +96,7 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
      }
  
      public String[] getUserList() {
@@ -382,7 +382,7 @@ index 4fd709a550bf8da1e996894a1ca6b91206c31e9e..63c0fe30ff035b6b5c1b4b35d3ad6c64
 +        return (String[]) this.map.keySet().toArray(me.titaniumtown.Constants.EMPTY_string_arr); // JettPack
      }
  
-     // CraftBukkit start
+     public boolean isEmpty() {
 diff --git a/src/main/java/net/minecraft/util/MemoryReserve.java b/src/main/java/net/minecraft/util/MemoryReserve.java
 index 0ee04fe6ff6a4d09754f326526ae04fe7226bab2..58217ddb1d63f3bb628cc40e5cc0959657a17938 100644
 --- a/src/main/java/net/minecraft/util/MemoryReserve.java
@@ -421,10 +421,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 33befdab713753d14bfe0e79e96dd925dad331c2..04fa91bf03bef5f9f5682213ac8ab8156aa07342 100644
+index e9a31314424d9db911cd9806741222397c3072d7..1b5f0422ecbe838ebbce50a9623b15c23d0dd724 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3112,7 +3112,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3102,7 +3102,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -487,10 +487,10 @@ index 25ed5571b24e590bc95056020d84496492b53298..3505230bf10963dff3b19e77c7649a76
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index adb7220be617d6d9f2cdd7fbe4fa2dd24cc7d142..d128f2b6e9fd18a73facac6e0ccecd67db6e6e3e 100644
+index ae9b821d71d2868ba4eb3c73558fdcd6caf264e3..e889ad0a6092086a9bfabd4bd5eca1abc0374cdf 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1014,7 +1014,7 @@ public final class ItemStack {
+@@ -1015,7 +1015,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {
@@ -566,10 +566,10 @@ index 30d8ec75203adc677e5fb91d9538baf52a0684ad..035af8a5cd9ba80038071d01c4a190f2
          return slices.getChunkEntities();
      }
 diff --git a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-index 87153b5576fed05103183a9860d804c2c8cfbe1c..0443a9dde69325f5d00c6fde0d954b8cf1938564 100644
+index 10d3912ef043eefdf89105332e29b0d2bf4a5539..c90a416a308936236624db85902e9e2141cd7f76 100644
 --- a/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/ComposterBlock.java
-@@ -416,7 +416,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -415,7 +415,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -578,7 +578,7 @@ index 87153b5576fed05103183a9860d804c2c8cfbe1c..0443a9dde69325f5d00c6fde0d954b8c
          }
  
          @Override
-@@ -465,7 +465,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -464,7 +464,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {
@@ -587,7 +587,7 @@ index 87153b5576fed05103183a9860d804c2c8cfbe1c..0443a9dde69325f5d00c6fde0d954b8c
          }
  
          @Override
-@@ -507,7 +507,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
+@@ -506,7 +506,7 @@ public class ComposterBlock extends Block implements WorldlyContainerHolder {
  
          @Override
          public int[] getSlotsForFace(Direction side) {

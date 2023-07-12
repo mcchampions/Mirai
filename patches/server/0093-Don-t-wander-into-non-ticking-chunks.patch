@@ -30,14 +30,14 @@ index 216929c838446c3c14d9b9906ffa625ef35fcbc8..0592610305a3f21ce40f7dd500a591ec
              } else {
                  this.wantedX = vec3.x;
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Squid.java b/src/main/java/net/minecraft/world/entity/animal/Squid.java
-index b72006c4b2342ca9d9a81f54f89fa6d979c33c85..d8a9504101109b64c60d522676684fabdf9f79de 100644
+index f60c4cd0543fd5d50fa7e2c1a9e8381227adb540..0d6b4971e73cc1cc5ff54fa48d5ef18b14f8db89 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Squid.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Squid.java
-@@ -138,6 +138,7 @@ public class Squid extends WaterAnimal {
+@@ -135,6 +135,7 @@ public class Squid extends WaterAnimal {
              }
  
              if (!this.level().isClientSide) {
 +                if ((tx != 0 || ty != 0 || tz != 0) && !((ServerLevel) this.level()).isPositionEntityTicking(BlockPos.containing(position().add(tx, ty, tz)))) tx = ty = tz = 0; // MultiPaper - don't allow squids to wander into non-ticking chunks
-                 this.setDeltaMovement((double) (this.tx * this.speed), (double) (this.ty * this.speed), (double) (this.tz * this.speed));
+                 this.setDeltaMovement((double)(this.tx * this.speed), (double)(this.ty * this.speed), (double)(this.tz * this.speed));
              }
  

@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 0eda3609798d868eb0c0195a63447edaf67efdd0..60fe5e0bcf5c10c2bddda1d7f7cf728bf1b7a634 100644
+index 4277bcaeac69bd2257c877e7e5768867203d2cd2..bb5fba359e0b4162de5ba0799e3dbf3a9abe8e6d 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -583,11 +583,11 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -582,11 +582,11 @@ public abstract class LivingEntity extends Entity implements Attackable {
      }
  
      protected void tryAddFrost() {
@@ -24,7 +24,7 @@ index 0eda3609798d868eb0c0195a63447edaf67efdd0..60fe5e0bcf5c10c2bddda1d7f7cf728b
  
                  if (attributemodifiable == null) {
                      return;
-@@ -597,7 +597,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -596,7 +596,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  attributemodifiable.addTransientModifier(new AttributeModifier(LivingEntity.SPEED_MODIFIER_POWDER_SNOW_UUID, "Powder snow slow", (double) f, AttributeModifier.Operation.ADDITION));
              }
