@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 7d8fb5273fe8c844411835c369e94884831c1e24..254773b0ac7b9ff03142d9970aee7fb49c9161ad 100644
+index 70841ca2854d4eafc8714bc7c6363e4e375e6f81..dcf811fba4f83e54cc64abc2956dfc16acd134d8 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -53,10 +53,12 @@ dependencies {
+@@ -61,10 +61,12 @@ dependencies {
      implementation("dev.omega24:upnp4j:1.0") // Purpur
  
      // Pufferfish start

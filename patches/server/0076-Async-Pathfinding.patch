@@ -973,10 +973,10 @@ index 8db20db72cd51046213625fac46c35854c59ec5d..39b95ecb2b9dd313d2e58ee98349af0d
      }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Bee.java b/src/main/java/net/minecraft/world/entity/animal/Bee.java
-index 2677e7899aa98fc04070f5bbbc40da6117d89efa..97aa77f49ff4694df1d1acedb9a4d371cd32bbc7 100644
+index 6c04c8e7776b2830ac368229da834532e8ce163e..8ad6fd6f2c793e8acb61e37a0d51ead03c7f4432 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Bee.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Bee.java
-@@ -1143,7 +1143,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
+@@ -1147,7 +1147,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
                          } else {
                              Bee.this.pathfindRandomlyTowards(Bee.this.hivePos);
                          }
@@ -985,7 +985,7 @@ index 2677e7899aa98fc04070f5bbbc40da6117d89efa..97aa77f49ff4694df1d1acedb9a4d371
                          boolean flag = this.pathfindDirectlyTowards(Bee.this.hivePos);
  
                          if (!flag) {
-@@ -1205,7 +1205,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
+@@ -1209,7 +1209,7 @@ public class Bee extends Animal implements NeutralMob, FlyingAnimal {
              } else {
                  Path pathentity = Bee.this.navigation.getPath();
  

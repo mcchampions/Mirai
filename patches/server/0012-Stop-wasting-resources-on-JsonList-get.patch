@@ -37,10 +37,10 @@ index 9d923db38fae0925c982d5cd8a654a59869076fb..9ab08663132887b217505e5afbf2e3b9
              //ichatmutablecomponent = Component.translatable("multiplayer.disconnect.not_whitelisted"); // Paper
              //event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(org.spigotmc.SpigotConfig.whitelistMessage)); // Spigot // Paper - Adventure - moved to isWhitelisted
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
-index 63c0fe30ff035b6b5c1b4b35d3ad6c649d94e421..109e08e098a6c1ca1ba3dc2a9a293eaf9d5d7cb7 100644
+index b2893b21f79f84002a518252f76ce28b801a94c3..c246a62f5673aa563e9a69a247b376839db1859e 100644
 --- a/src/main/java/net/minecraft/server/players/StoredUserList.java
 +++ b/src/main/java/net/minecraft/server/players/StoredUserList.java
-@@ -73,9 +73,12 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -74,9 +74,12 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
          // Paper start
          // this.g();
          // return (V) this.d.get(this.a(k0)); // CraftBukkit - fix decompile error
@@ -55,7 +55,7 @@ index 63c0fe30ff035b6b5c1b4b35d3ad6c649d94e421..109e08e098a6c1ca1ba3dc2a9a293eaf
          // Paper end
      }
  
-@@ -150,7 +153,8 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -145,7 +148,8 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
      public void save() throws IOException {
          this.removeExpired(); // Paper - remove expired values before saving
          JsonArray jsonarray = new JsonArray();
@@ -65,7 +65,7 @@ index 63c0fe30ff035b6b5c1b4b35d3ad6c649d94e421..109e08e098a6c1ca1ba3dc2a9a293eaf
              JsonObject jsonobject = new JsonObject();
  
              Objects.requireNonNull(jsonlistentry);
-@@ -158,7 +162,13 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -153,7 +157,13 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
          });
  
          Objects.requireNonNull(jsonarray);

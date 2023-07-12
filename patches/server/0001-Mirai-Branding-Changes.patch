@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 2c5ef872dd62a1ee427d6fd0e70be10a0afcdedd..27b8928c50f5613f9afd8feef6f1d829bb6f79fc 100644
+index 240394b1d9dd1449674a299aa73fa155be2d3d82..70841ca2854d4eafc8714bc7c6363e4e375e6f81 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -8,7 +8,7 @@ plugins {
+@@ -14,7 +14,7 @@ val alsoShade: Configuration by configurations.creating
  
  dependencies {
      // Purpur start
@@ -17,7 +17,7 @@ index 2c5ef872dd62a1ee427d6fd0e70be10a0afcdedd..27b8928c50f5613f9afd8feef6f1d829
      implementation("io.papermc.paper:paper-mojangapi:${project.version}") {
          exclude("io.papermc.paper", "paper-api")
      }
-@@ -87,7 +87,7 @@ tasks.jar {
+@@ -95,7 +95,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -368,7 +368,7 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1143e2e76ef896ecf54fa0296c66815b6f856740..cd2f04e96ea4ee7ebf9df7f2c3f114c40a82b6bd 100644
+index 6afdf37406d7dae04a7fec94e0c39d5136521730..dc9c4e35f516d3f193397da68792fd08701397da 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -926,7 +926,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -381,10 +381,10 @@ index 1143e2e76ef896ecf54fa0296c66815b6f856740..cd2f04e96ea4ee7ebf9df7f2c3f114c4
                  this.getRunningThread().stop();
                  try {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index da88daa4f5458c9e98cd1f4925745ed7c9242c6a..ad98e8c9e2394c3d10541c5230d84254bb223a20 100644
+index 81aee45085a29ceb8e36d7948432e2ca688978c0..62b47a2271e0792b76a699168a4daaf096ba4e30 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -261,7 +261,7 @@ import javax.annotation.Nullable; // Paper
+@@ -264,7 +264,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -444,7 +444,7 @@ index 99597258e8e88cd9e2c901c4ac3ff7faeeabee2b..1e6a999812495e370d7253ad1d746328
      }
  }
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
-index 06fa43b469aea15dc64ce1866d08843327a34965..82be41fc0d40f148e1fa8c3bd8980a918071adf4 100644
+index b974b59d421cf97bc9547ea75fe4643d89639bc1..a6265b0a299e84f8ce215ad1e585f2c545205bd6 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 @@ -229,7 +229,7 @@ public class PurpurConfig {

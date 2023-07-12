@@ -380,7 +380,7 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..c4d6d5be09c788bbc062c50d8547538e
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 2297a8d75ef843f32ec03621d7bc8576f9d841fc..cc3f33d9194de90e6297359e6a669110085674e9 100644
+index 8bd60f622084ad46aded5e94aeb286c5358e3ebe..3cef01442dc1f2b31a8f2dbc76f9e7c911735455 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -294,7 +294,11 @@ public class ServerEntity {
@@ -405,7 +405,7 @@ index 2297a8d75ef843f32ec03621d7bc8576f9d841fc..cc3f33d9194de90e6297359e6a669110
          this.entity.startSeenByPlayer(player);
      }
  
-@@ -401,19 +405,29 @@ public class ServerEntity {
+@@ -394,19 +398,29 @@ public class ServerEntity {
  
          if (list != null) {
              this.trackedDataValues = datawatcher.getNonDefaultValues();
