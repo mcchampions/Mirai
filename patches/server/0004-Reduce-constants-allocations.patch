@@ -553,10 +553,10 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 30d8ec75203adc677e5fb91d9538baf52a0684ad..035af8a5cd9ba80038071d01c4a190f231a5248d 100644
+index d8d4a1ca2eb062af8b2de4ab44503983587cdd77..822ab38a37d91c2d2c88f0c85dce13f917895193 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1527,7 +1527,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1528,7 +1528,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public org.bukkit.entity.Entity[] getChunkEntities(int chunkX, int chunkZ) {
          io.papermc.paper.world.ChunkEntitySlices slices = ((ServerLevel)this).getEntityLookup().getChunk(chunkX, chunkZ);
          if (slices == null) {
