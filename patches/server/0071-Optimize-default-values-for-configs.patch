@@ -70,7 +70,7 @@ index 7b091c1258c3f33933ec30a15d963e9d5f069ba7..f5b4a9207a2d8d973ff3c3fcd227b42c
      }
  
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 95d92cc6c01c3f72a24c9372dbf385a14465053e..8dea84ec9f3e9ae7ad9e85e4eb71538c42e00b95 100644
+index e332e123d84fb528ffce40b409f184d0ad9619a0..65f32afb93d2fc0e6e801dcc8905b2db669df600 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -52,10 +52,10 @@ public class GlobalConfiguration extends ConfigurationPart {
@@ -86,7 +86,7 @@ index 95d92cc6c01c3f72a24c9372dbf385a14465053e..8dea84ec9f3e9ae7ad9e85e4eb71538c
          public boolean serverNamePrivacy = false;
          public List<String> hiddenConfigEntries = List.of(
              "database",
-@@ -275,9 +275,9 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -283,9 +283,9 @@ public class GlobalConfiguration extends ConfigurationPart {
          public boolean fixEntityPositionDesync = true;
          public boolean loadPermissionsYmlBeforePlugins = true;
          @Constraints.Min(4)

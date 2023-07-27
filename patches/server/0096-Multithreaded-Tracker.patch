@@ -240,7 +240,7 @@ index 0fd814f1d65c111266a2b20f86561839a4cef755..dc06747df171678c8531e1153c5fa9b8
      protected final double maxFragFactor;
  
 diff --git a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8bee6bf267 100644
+index 1e380c5ab6902495a610839e4f95b4176157bece..24d1962d42fc29e3f8710a36e7c86328a1411996 100644
 --- a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 +++ b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 @@ -36,7 +36,7 @@ public final class ChunkEntitySlices {
@@ -253,7 +253,7 @@ index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8b
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 971ec6e14427bd9f648fb1167dd6b29a60e92ede..e743f87658d1d40f1c6f11998f5a651e8163b2a5 100644
+index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682f0dd9a11 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1249,8 +1249,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider

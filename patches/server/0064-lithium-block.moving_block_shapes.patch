@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
-index 221c5d080d55326e458c1182823d6b49224ef498..6491fe817a0998910caa2d5aa4ebd7b8ced9ecda 100644
+index 1ef87580574919796dbba707f44a413ee5c5781b..5b032ebca4d38a8006899c11ac767989218a1aa1 100644
 --- a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 @@ -55,6 +55,74 @@ public class PistonMovingBlockEntity extends BlockEntity {
