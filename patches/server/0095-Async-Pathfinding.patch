@@ -789,10 +789,10 @@ index acd0b946cab86eb173e713535194d3a9347c7d48..df19e6b52fb616f37cbe8154674a5fe7
                  Vec3 vec3 = this.path.getNextEntityPos(this.mob);
                  if (this.mob.getBlockX() == Mth.floor(vec3.x) && this.mob.getBlockY() == Mth.floor(vec3.y) && this.mob.getBlockZ() == Mth.floor(vec3.z)) {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
-index 71934af2dc4d209a9fbccfd36b5f2815ec196892..358b6862e88ee5c3d76f24c916dbffb6b5ed54bd 100644
+index 71934af2dc4d209a9fbccfd36b5f2815ec196892..48e3ecf6b5d7c684d29918fe321253be66c218fb 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
-@@ -15,6 +15,15 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+@@ -15,6 +15,16 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
  import net.minecraft.world.phys.Vec3;
  
  public class GroundPathNavigation extends PathNavigation {
@@ -801,6 +801,7 @@ index 71934af2dc4d209a9fbccfd36b5f2815ec196892..358b6862e88ee5c3d76f24c916dbffb6
 +    private static final dev.etil.mirai.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +        var nodeEvaluator = new WalkNodeEvaluator();
 +        nodeEvaluator.setCanPassDoors(true);
++        nodeEvaluator.setCanFloat(true); // Kaiiju - petal - async path processing
 +        return nodeEvaluator;
 +    };
 +    // Mirai end
@@ -808,7 +809,7 @@ index 71934af2dc4d209a9fbccfd36b5f2815ec196892..358b6862e88ee5c3d76f24c916dbffb6
      private boolean avoidSun;
  
      public GroundPathNavigation(Mob entity, Level world) {
-@@ -25,7 +34,13 @@ public class GroundPathNavigation extends PathNavigation {
+@@ -25,7 +35,13 @@ public class GroundPathNavigation extends PathNavigation {
      protected PathFinder createPathFinder(int range) {
          this.nodeEvaluator = new WalkNodeEvaluator();
          this.nodeEvaluator.setCanPassDoors(true);
