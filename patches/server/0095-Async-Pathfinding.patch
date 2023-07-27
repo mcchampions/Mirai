@@ -789,7 +789,7 @@ index acd0b946cab86eb173e713535194d3a9347c7d48..df19e6b52fb616f37cbe8154674a5fe7
                  Vec3 vec3 = this.path.getNextEntityPos(this.mob);
                  if (this.mob.getBlockX() == Mth.floor(vec3.x) && this.mob.getBlockY() == Mth.floor(vec3.y) && this.mob.getBlockZ() == Mth.floor(vec3.z)) {
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
-index 71934af2dc4d209a9fbccfd36b5f2815ec196892..48e3ecf6b5d7c684d29918fe321253be66c218fb 100644
+index 71934af2dc4d209a9fbccfd36b5f2815ec196892..39a48eb437ec0a21e5cd90558f8fdf66e681540b 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/GroundPathNavigation.java
 @@ -15,6 +15,16 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -801,7 +801,7 @@ index 71934af2dc4d209a9fbccfd36b5f2815ec196892..48e3ecf6b5d7c684d29918fe321253be
 +    private static final dev.etil.mirai.path.NodeEvaluatorGenerator nodeEvaluatorGenerator = () -> {
 +        var nodeEvaluator = new WalkNodeEvaluator();
 +        nodeEvaluator.setCanPassDoors(true);
-+        nodeEvaluator.setCanFloat(true); // Kaiiju - petal - async path processing
++        nodeEvaluator.setCanFloat(true); // Kaiiju - petal async path processing - fix mob on water
 +        return nodeEvaluator;
 +    };
 +    // Mirai end
