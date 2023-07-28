@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 13d09195613db6979b8aa80378ad09aec217f927..df04c598f3a0d591bd93cf389f4d5da54b9e9a86 100644
+index cadd8d61d5cbc8bcbf420db9c7eeadcc7570b7ef..40dc5e49447dca31010ab6a41d26b1ce3d4ce19d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2828,40 +2828,64 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2827,40 +2827,64 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return !this.isRemoved();
      }
  

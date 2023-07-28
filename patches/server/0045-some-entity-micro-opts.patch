@@ -7,7 +7,7 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e196dc566fceb89e4509309d27e8866ef385f9a5..782f1c6795104aa5fa2472fac751bf3bbab730a7 100644
+index 5b5632f22e3a8db03d35475c7bcaf81f5303438d..ab177ecd2dc0adf0104736730cc0a8680a83cfc4 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -498,16 +498,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -47,7 +47,7 @@ index e196dc566fceb89e4509309d27e8866ef385f9a5..782f1c6795104aa5fa2472fac751bf3b
          }
  
          return false;
-@@ -2057,12 +2074,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2056,12 +2073,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          }
      }
  
@@ -67,7 +67,7 @@ index e196dc566fceb89e4509309d27e8866ef385f9a5..782f1c6795104aa5fa2472fac751bf3b
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4684,6 +4707,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4683,6 +4706,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  
