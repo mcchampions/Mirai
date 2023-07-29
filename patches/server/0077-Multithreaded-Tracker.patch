@@ -16,7 +16,7 @@ Some things are too unsafe to run off the main thread so we don't attempt to do
 that. This multithreaded tracker remains accurate, non-breaking and fast.
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 6f5be20f8a6b5b2c42e3175aa7a2f1e736898c73..01c9643948723eadca2d015b4ce9a6a41e5d817e 100644
+index 6f5be20f8a6b5b2c42e3175aa7a2f1e736898c73..971e3594900c6e9e036c010f76778da8faeaec77 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -217,4 +217,16 @@ public class MiraiConfig {
@@ -27,7 +27,7 @@ index 6f5be20f8a6b5b2c42e3175aa7a2f1e736898c73..01c9643948723eadca2d015b4ce9a6a4
 +    public static boolean enableAsyncEntityTracker;
 +    public static boolean enableAsyncEntityTrackerInitialized;
 +    private static void asyncEntityTracker() {
-+        boolean temp = getBoolean("enable-async-entity-tracker", true,
++        boolean temp = getBoolean("enable-async-entity-tracker", false,
 +            "Whether or not async entity tracking should be enabled.",
 +            "You may encounter issues with NPCs.");
 +        if (!enableAsyncEntityTrackerInitialized) {
@@ -240,7 +240,7 @@ index 0fd814f1d65c111266a2b20f86561839a4cef755..dc06747df171678c8531e1153c5fa9b8
      protected final double maxFragFactor;
  
 diff --git a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
-index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8bee6bf267 100644
+index 1e380c5ab6902495a610839e4f95b4176157bece..24d1962d42fc29e3f8710a36e7c86328a1411996 100644
 --- a/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 +++ b/src/main/java/io/papermc/paper/world/ChunkEntitySlices.java
 @@ -36,7 +36,7 @@ public final class ChunkEntitySlices {
@@ -253,7 +253,7 @@ index acac46984ba07b2a27aab32b3dc88b9c7b6a9895..2f1e2a38c84a850123f022367b86fa8b
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 1f3554b35c1d065f56d5e4e0d2b4c18e3f35e63b..fdfe035548d1b6dc2a55081a4a300d0511e56add 100644
+index ad75d16eda58ab1457838fdc89b01b3153e97a1d..b3b0a797a83d5c71645a07e1763f7b44a82c0355 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1249,8 +1249,35 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
