@@ -11,7 +11,7 @@ jobs:
       - name: Set up JDK (GraalVM)
         uses: graalvm/setup-graalvm@main
         with:
-          java-version: 20
+          java-version: 17
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull Gradle Cache
         uses: actions/cache@v3
@@ -37,5 +37,5 @@ jobs:
           title: "Mirai-1.20.1"
           automatic_release_tag: "1.20.1"
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          files: build/libs/mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar
+          files: build/libs/Mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar
           prerelease: false
