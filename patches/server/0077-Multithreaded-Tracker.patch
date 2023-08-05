@@ -16,12 +16,12 @@ Some things are too unsafe to run off the main thread so we don't attempt to do
 that. This multithreaded tracker remains accurate, non-breaking and fast.
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 6f5be20f8a6b5b2c42e3175aa7a2f1e736898c73..971e3594900c6e9e036c010f76778da8faeaec77 100644
+index b1f858a26515baa8ad2694e3588c3b990788643b..9ae2ccd8138831a06640140a7eea80b162bc6dd9 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -217,4 +217,16 @@ public class MiraiConfig {
-             enableAsyncPathfinding = temp;
-         }
+@@ -224,4 +224,16 @@ public class MiraiConfig {
+         else
+             Bukkit.getLogger().log(Level.INFO, "Using " + asyncPathfindingMaxThreads + " threads for Async Pathfinding");
      }
 +
 +    public static boolean enableAsyncEntityTracker;

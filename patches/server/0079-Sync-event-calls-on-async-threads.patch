@@ -5,10 +5,10 @@ Subject: [PATCH] Sync event calls on async threads
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 01c9643948723eadca2d015b4ce9a6a41e5d817e..6351c34146a69e3ae0f74270927a2075f7d8f901 100644
+index 9ae2ccd8138831a06640140a7eea80b162bc6dd9..25db52067a91e9b3b304ee0a6c7e68aedc6dbaf9 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -229,4 +229,17 @@ public class MiraiConfig {
+@@ -236,4 +236,17 @@ public class MiraiConfig {
              enableAsyncEntityTracker = temp;
          }
      }
