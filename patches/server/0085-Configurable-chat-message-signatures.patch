@@ -21,6 +21,19 @@ index 5560b7f4c4e43e82111e5531e4d57377b5f0d0ab..e0eae8b46fa1177214f2ed833f2b40e0
 +            "'secure chat', such as offline-mode servers.");
 +    }
  }
+diff --git a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
+index 774fb97912f766589f3548f659618ad554e0503f..eaee74abf64390ef8a65aa6fcd96c43cb03c8cd4 100644
+--- a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
++++ b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
+@@ -353,7 +353,7 @@ public final class ChatProcessor {
+ 
+         private void sendToServer(final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
+             final PlayerChatMessage toConsoleMessage = msgFunction == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(msgFunction.apply(ChatProcessor.this.server.console));
+-            ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : "Not Secure");
++            ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : (dev.etil.mirai.MiraiConfig.chatMessageSignatures ? null : "Not Secure")); // Mirai start - configurable chat message signatures
+         }
+     }
+ 
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java b/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java
 index b8c1f3b9afddc87d56541c8af63cffecfcdd2653..c482b8f57e350c465568d13a846381849a0f5ec9 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java
@@ -122,9 +135,18 @@ index 440b24ed5d7b70db962d6f4e30961bcef6be8e5b..e90f3e457365192c294bd2129cd69ac2
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e03372fab5027042349d6e8a992b8b6d2cdd95c8..752295f6e42aa030fc6fcb02255838f48ab66efb 100644
+index e03372fab5027042349d6e8a992b8b6d2cdd95c8..400cc5219f3833d86e5eafd636b046dc9a333b14 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
+@@ -1414,7 +1414,7 @@ public abstract class PlayerList {
+         // Paper end
+         boolean flag = this.verifyChatTrusted(message);
+ 
+-        this.server.logChatMessage((unsignedFunction == null ? message.decoratedContent() : unsignedFunction.apply(this.server.console)), params, flag ? null : "Not Secure"); // Paper
++        this.server.logChatMessage((unsignedFunction == null ? message.decoratedContent() : unsignedFunction.apply(this.server.console)), params, flag ? null : (dev.etil.mirai.MiraiConfig.chatMessageSignatures ? null : "Not Secure")); // Paper // Mirai start - configurable chat message signatures
+         OutgoingChatMessage outgoingchatmessage = OutgoingChatMessage.create(message);
+         boolean flag1 = false;
+ 
 @@ -1443,6 +1443,7 @@ public abstract class PlayerList {
      }
  
