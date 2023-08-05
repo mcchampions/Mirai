@@ -21,6 +21,19 @@ index 9e1604f5a429d9964486f92eb841dc45e7296746..38cb85492aeb7c84d1dcfe8647ead4c9
 +            "'secure chat', such as offline-mode servers.");
 +    }
  }
+diff --git a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
+index 774fb97912f766589f3548f659618ad554e0503f..eaee74abf64390ef8a65aa6fcd96c43cb03c8cd4 100644
+--- a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
++++ b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
+@@ -353,7 +353,7 @@ public final class ChatProcessor {
+ 
+         private void sendToServer(final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
+             final PlayerChatMessage toConsoleMessage = msgFunction == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(msgFunction.apply(ChatProcessor.this.server.console));
+-            ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : "Not Secure");
++            ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : (dev.etil.mirai.MiraiConfig.chatMessageSignatures ? null : "Not Secure")); // Mirai start - configurable chat message signatures
+         }
+     }
+ 
 diff --git a/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java b/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java
 index b8c1f3b9afddc87d56541c8af63cffecfcdd2653..c482b8f57e350c465568d13a846381849a0f5ec9 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/ServerboundChatCommandPacket.java
@@ -86,7 +99,7 @@ index 61e704c3489b2877967b5d38b008bcba50e966f2..2d66d9668efc9750484ab0a622e5264e
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 1c6cfc28e9980ccf1184244de7759f1fb940037a..dcfcad63457a2ae161bf3e363a69d66311e8058e 100644
+index c6e1c94594247a25d41a76525855616273628f2e..46a6f57cb8560963d323effb5faa1f2133b796aa 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2238,10 +2238,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -122,9 +135,18 @@ index 1c6cfc28e9980ccf1184244de7759f1fb940037a..dcfcad63457a2ae161bf3e363a69d663
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 9ab08663132887b217505e5afbf2e3b9f9bd9be6..1b52a0ef277945313968dbd9ecb75c4c8907e48a 100644
+index 9ab08663132887b217505e5afbf2e3b9f9bd9be6..c02db71631fe852b0d6945f05af83e03ae0d3a4c 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
+@@ -1454,7 +1454,7 @@ public abstract class PlayerList {
+         // Paper end
+         boolean flag = this.verifyChatTrusted(message);
+ 
+-        this.server.logChatMessage((unsignedFunction == null ? message.decoratedContent() : unsignedFunction.apply(this.server.console)), params, flag ? null : "Not Secure"); // Paper
++        this.server.logChatMessage((unsignedFunction == null ? message.decoratedContent() : unsignedFunction.apply(this.server.console)), params, flag ? null : (dev.etil.mirai.MiraiConfig.chatMessageSignatures ? null : "Not Secure")); // Paper // Mirai start - configurable chat message signatures
+         OutgoingChatMessage outgoingchatmessage = OutgoingChatMessage.create(message);
+         boolean flag1 = false;
+ 
 @@ -1483,6 +1483,7 @@ public abstract class PlayerList {
      }
  
