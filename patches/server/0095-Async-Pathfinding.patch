@@ -521,14 +521,14 @@ index 0000000000000000000000000000000000000000..71fb306d267227a587224ca653db7446
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index ca9001ab92751024bf093fbf8b8cbc278eedf670..5180cad4979403ed715f7507b6cddf6d232e7c3e 100644
+index ca9001ab92751024bf093fbf8b8cbc278eedf670..d28f27f41a2547bf3315226c2a3dfea654c97513 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
 @@ -288,6 +288,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
      @Nullable
      @Override
      public LivingEntity getTarget() {
-+        // if (!io.papermc.paper.util.TickThread.isTickThreadFor(this)) return this.target; // Mirai - for the async path processor // Mirai - Don't need this
++        //if (Thread.currentThread().getName().contains("petal-path-processor")) return this.target; // Mirai - Don't reset target when async pathfinding! // Mirai - Don't need this
          return this.target;
      }
  
@@ -601,7 +601,7 @@ index fe502445a77afe7e3807afae48d7bf03f370e290..fdb2a5c637ad5dc2be01406515ef1ef8
                          return true;
                      }
 diff --git a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
-index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012dbff2525 100644
+index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..3eaaf2a2abcf2b55193a8cf3b7ad8598495f84c9 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/behavior/MoveToTargetSink.java
 @@ -21,6 +21,7 @@ public class MoveToTargetSink extends Behavior<Mob> {
@@ -612,19 +612,19 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
      @Nullable
      private BlockPos lastTargetPos;
      private float speedModifier;
-@@ -42,7 +43,10 @@ public class MoveToTargetSink extends Behavior<Mob> {
+@@ -42,9 +43,10 @@ public class MoveToTargetSink extends Behavior<Mob> {
              Brain<?> brain = entity.getBrain();
              WalkTarget walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET).get();
              boolean bl = this.reachedTarget(entity, walkTarget);
 -            if (!bl && this.tryComputePath(entity, walkTarget, world.getGameTime())) {
-+            // Mirai start - petal - async path processing means we can't know if the path is reachable here
-+            if (dev.etil.mirai.MiraiConfig.asyncPathfinding && !bl) return true;
-+            else if (!dev.etil.mirai.MiraiConfig.asyncPathfinding && !bl && this.tryComputePath(entity, walkTarget, world.getGameTime())) {
-+            // Mirai end
++            if (!dev.etil.mirai.MiraiConfig.asyncPathfinding && !bl && this.tryComputePath(entity, walkTarget, world.getGameTime())) { // Mirai - petal - async path processing means we can't know if the path is reachable here
                  this.lastTargetPos = walkTarget.getTarget().currentBlockPosition();
                  return true;
++            } else if (dev.etil.mirai.MiraiConfig.asyncPathfinding && !bl) { return true; // Mirai - async pathfinding
              } else {
-@@ -58,6 +62,7 @@ public class MoveToTargetSink extends Behavior<Mob> {
+                 brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+                 if (bl) {
+@@ -58,6 +60,7 @@ public class MoveToTargetSink extends Behavior<Mob> {
  
      @Override
      protected boolean canStillUse(ServerLevel world, Mob entity, long time) {
@@ -632,7 +632,7 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
          if (this.path != null && this.lastTargetPos != null) {
              Optional<WalkTarget> optional = entity.getBrain().getMemory(MemoryModuleType.WALK_TARGET);
              boolean bl = optional.map(MoveToTargetSink::isWalkTargetSpectator).orElse(false);
-@@ -82,12 +87,74 @@ public class MoveToTargetSink extends Behavior<Mob> {
+@@ -82,12 +85,68 @@ public class MoveToTargetSink extends Behavior<Mob> {
  
      @Override
      protected void start(ServerLevel serverLevel, Mob mob, long l) {
@@ -671,22 +671,16 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
 +                if (!canReach) {
 +                    Optional<WalkTarget> walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET);
 +
-+                    if (walkTarget.isPresent()) {
-+                        BlockPos blockPos = walkTarget.get().getTarget().currentBlockPosition();
-+                        Vec3 vec3 = DefaultRandomPos.getPosTowards((PathfinderMob)mob, 10, 7, Vec3.atBottomCenterOf(blockPos), (float)Math.PI / 2F);
-+                        if (vec3 != null) {
-+                            // try recalculating the path using a random position
-+                            this.path = mob.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
-+                            this.finishedProcessing = false;
-+                            return;
-+                        }
++                    if (!walkTarget.isPresent()) return;
++
++                    BlockPos blockPos = walkTarget.get().getTarget().currentBlockPosition();
++                    Vec3 vec3 = DefaultRandomPos.getPosTowards((PathfinderMob) mob, 10, 7, Vec3.atBottomCenterOf(blockPos), (float) Math.PI / 2F);
++                    if (vec3 != null) {
++                        // try recalculating the path using a random position
++                        this.path = mob.getNavigation().createPath(vec3.x, vec3.y, vec3.z, 0);
++                        this.finishedProcessing = false;
++                        return;
 +                    }
-+
-+                    // we failed, erase and move on
-+                    brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-+                    this.path = null;
-+
-+                    return;
 +                }
 +
 +                mob.getBrain().setMemory(MemoryModuleType.PATH, this.path);
@@ -697,7 +691,7 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
 +            Brain<?> brain = mob.getBrain();
 +
 +            if (path != null && this.lastTargetPos != null && brain.hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
-+                WalkTarget walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET).get();
++                WalkTarget walkTarget = brain.getMemory(MemoryModuleType.WALK_TARGET).get(); // we know isPresent = true
 +                if (walkTarget.getTarget().currentBlockPosition().distSqr(this.lastTargetPos) > 4.0D) {
 +                    this.start(serverLevel, mob, l);
 +                }
@@ -707,7 +701,7 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
          Path path = mob.getNavigation().getPath();
          Brain<?> brain = mob.getBrain();
          if (this.path != path) {
-@@ -103,7 +170,23 @@ public class MoveToTargetSink extends Behavior<Mob> {
+@@ -103,7 +162,23 @@ public class MoveToTargetSink extends Behavior<Mob> {
              }
  
          }
@@ -719,7 +713,7 @@ index 1ab77f3518d1df30f66ae44d7d4fa69e5b32d93a..703b46dd6649f9732b9fc906bf6c6012
 +    private Path computePath(Mob entity, WalkTarget walkTarget) {
 +        BlockPos blockPos = walkTarget.getTarget().currentBlockPosition();
 +        // don't pathfind outside region
-+        if (!io.papermc.paper.util.TickThread.isTickThreadFor((ServerLevel) entity.level(), blockPos)) return null;
++        //if (!io.papermc.paper.util.TickThread.isTickThreadFor((ServerLevel) entity.level(), blockPos)) return null; // Mirai - Don't need this
 +        this.speedModifier = walkTarget.getSpeedModifier();
 +        Brain<?> brain = entity.getBrain();
 +        if (this.reachedTarget(entity, walkTarget)) {
@@ -1249,21 +1243,20 @@ index 71db8bd6885377d55cfc571fccc21df6d8a57b54..672634951d6cb07efb00be4c7a25de24
                      @Override
                      protected float distance(Node a, Node b) {
 diff --git a/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java b/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
-index b51155ad12515b2d0dd0f202580b9f455c114d9a..d1b6da284300cc66e90ecdde6c65101a7241111e 100644
+index b51155ad12515b2d0dd0f202580b9f455c114d9a..ca48b63ea727368cb8879e98f2449a6f0dde60d5 100644
 --- a/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
-@@ -242,8 +242,14 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
+@@ -242,8 +242,13 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
  
      @Override
      public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-+        try { // Mirai - async pathfinding - lol i hate that
++        //if (Thread.currentThread().getName().contains("petal-path-processor")) return Shapes.block(); // Mirai - async pathfinding - we cannot get block entities // Mirai - Don't need this
          BlockEntity blockEntity = world.getBlockEntity(pos);
          return blockEntity instanceof ShulkerBoxBlockEntity ? Shapes.create(((ShulkerBoxBlockEntity)blockEntity).getBoundingBox(state)) : Shapes.block();
-+        // Mirai start - async pathfinding - workaround
-+        } catch (NullPointerException e) {
-+            return Shapes.block();
-+        }
-+        // Mirai end
++        // Mirai start - async pathfinding - workaround // Mirai - Don't need this
++        //} catch (NullPointerException e) {
++        //    return Shapes.block();
++        //}
      }
  
      @Override
@@ -1298,7 +1291,7 @@ index 2a335f277bd0e4b8ad0f60d8226eb8aaa80a871f..d8879cdcdc2f5695285f22ba0ff61ca8
              return false;
          } else if (o.nodes.size() != this.nodes.size()) {
 diff --git a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
-index d23481453717f715124156b5d83f6448f720d049..9c8c4671abd5590b6fab59cf20cfe2e013aed20d 100644
+index d23481453717f715124156b5d83f6448f720d049..33f6cafd4b1335bf750793aa99f9e5c111275e35 100644
 --- a/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 +++ b/src/main/java/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -6,11 +6,12 @@ import com.google.common.collect.Sets;
@@ -1317,7 +1310,7 @@ index d23481453717f715124156b5d83f6448f720d049..9c8c4671abd5590b6fab59cf20cfe2e0
  import net.minecraft.core.BlockPos;
  import net.minecraft.util.profiling.ProfilerFiller;
  import net.minecraft.util.profiling.metrics.MetricCategory;
-@@ -24,37 +25,77 @@ public class PathFinder {
+@@ -24,37 +25,80 @@ public class PathFinder {
      public final NodeEvaluator nodeEvaluator;
      private static final boolean DEBUG = false;
      private final BinaryHeap openSet = new BinaryHeap();
@@ -1391,9 +1384,12 @@ index d23481453717f715124156b5d83f6448f720d049..9c8c4671abd5590b6fab59cf20cfe2e0
      private Path findPath(ProfilerFiller profiler, Node startNode, List<Map.Entry<Target, BlockPos>> positions, float followRange, int distance, float rangeMultiplier) {
          profiler.push("find_path");
          profiler.markForCharting(MetricCategory.PATH_FINDING);
-+    // Mirai start - petal - split pathfinding into the original sync method for compat and processing for delaying
++        // Mirai start - petal - split pathfinding into the original sync method for compat and processing for delaying
 +        try {
 +            return this.processPath(this.nodeEvaluator, startNode, positions, followRange, distance, rangeMultiplier);
++        } catch (Exception e) {
++            e.printStackTrace();
++            return null;
 +        } finally {
 +            this.nodeEvaluator.done();
 +        }
@@ -1404,7 +1400,7 @@ index d23481453717f715124156b5d83f6448f720d049..9c8c4671abd5590b6fab59cf20cfe2e0
          // Set<Target> set = positions.keySet();
          startNode.g = 0.0F;
          startNode.h = this.getBestH(startNode, positions); // Paper - optimize collection
-@@ -91,7 +132,7 @@ public class PathFinder {
+@@ -91,7 +135,7 @@ public class PathFinder {
              }
  
              if (!(node.distanceTo(startNode) >= followRange)) {
@@ -1413,7 +1409,7 @@ index d23481453717f715124156b5d83f6448f720d049..9c8c4671abd5590b6fab59cf20cfe2e0
  
                  for(int l = 0; l < k; ++l) {
                      Node node2 = this.neighbors[l];
-@@ -123,6 +164,7 @@ public class PathFinder {
+@@ -123,6 +167,7 @@ public class PathFinder {
              if (best == null || comparator.compare(path, best) < 0)
                  best = path;
          }
