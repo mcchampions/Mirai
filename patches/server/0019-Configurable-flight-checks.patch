@@ -26,10 +26,10 @@ index 5f3ba184fae5170425cfdbd95150ed00c3f3433b..293889cf1aab7fc512c4816ddf26d4f1
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index cdf844985238e64621eaba6f1bf5500353ac3e40..e6333c9564e9e6aab7fc0e05d45fa9790a63e87b 100644
+index 8e9c0b986596c75c6f0c714e0f0f0ba47b9ba65b..1e77060c1aec4fdd9822dfd6396743544711a404 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -376,7 +376,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -378,7 +378,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          ++this.tickCount;
          this.knownMovePacketCount = this.receivedMovePacketCount;
          if (this.clientIsFloating && !this.player.isSleeping() && !this.player.isPassenger() && !this.player.isDeadOrDying()) {
@@ -38,7 +38,7 @@ index cdf844985238e64621eaba6f1bf5500353ac3e40..e6333c9564e9e6aab7fc0e05d45fa979
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked for floating too long!", this.player.getName().getString());
                  this.disconnect(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.flyingPlayer, org.bukkit.event.player.PlayerKickEvent.Cause.FLYING_PLAYER); // Paper - use configurable kick message & kick event cause
                  return;
-@@ -395,7 +395,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -397,7 +397,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
              this.vehicleLastGoodY = this.lastVehicle.getY();
              this.vehicleLastGoodZ = this.lastVehicle.getZ();
              if (this.clientVehicleIsFloating && this.player.getRootVehicle().getControllingPassenger() == this.player) {
