@@ -86,7 +86,7 @@ index 13b191851347eebb9dc74f77e8f2491a8049a7a6..b521d87b6b8e973286c5a29b0e2f70d1
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index abdfcc4ab4edfd6ca9386261a8532650273d739c..391a5ceae62bf69149965a2549101b8f39e83ade 100644
+index 16a0b48bc96438879cdef7d6ed93b16d9e68e4dd..7e5030d3a10a0e9c24e9afa47907d8dad56bb7bc 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -2075,7 +2075,7 @@ public class ServerPlayer extends Player {
@@ -99,10 +99,10 @@ index abdfcc4ab4edfd6ca9386261a8532650273d739c..391a5ceae62bf69149965a2549101b8f
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 440b24ed5d7b70db962d6f4e30961bcef6be8e5b..e90f3e457365192c294bd2129cd69ac2ae78383c 100644
+index cb743c157cba8ee67087636968c20df4c4a6174b..44266af5c974b85e1e933e385d9ffc80d72dc655 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2162,10 +2162,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2205,10 +2205,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void send(Packet<?> packet) {
@@ -135,7 +135,7 @@ index 440b24ed5d7b70db962d6f4e30961bcef6be8e5b..e90f3e457365192c294bd2129cd69ac2
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e03372fab5027042349d6e8a992b8b6d2cdd95c8..400cc5219f3833d86e5eafd636b046dc9a333b14 100644
+index 8daecca8007a22806a5f411bb45319d56398c974..1af0cc311526aabe8744e8493d5e6bc8a2b74a06 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1414,7 +1414,7 @@ public abstract class PlayerList {
