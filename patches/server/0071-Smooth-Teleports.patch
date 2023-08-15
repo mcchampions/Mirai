@@ -38,10 +38,10 @@ index b3142442edc7ab257709caa8a98da653ea769018..acad1b7b80017a3315ae8d36efa6f8d8
  
          // entityplayer1.connection.teleport(entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index cdbbdb3f5a8b43811c564d1444a2b102add3ba72..79cff6c2be763b4b4d05895f7d0bc536e77b6a3b 100644
+index 8f7d6be9634f115159a216f818f12060244e70e2..b77abee35204190356e10dae09def201f0104c62 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1252,6 +1252,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1251,6 +1251,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          // Paper end
      }
  
