@@ -5,13 +5,13 @@
   <h4>Mirai is ❗under heavy development❗ and contributions are welcome!</h4>
   <h5><b>This project is experimental, its usage in production environment is discouraged if you are not ready to face possible bugs.</b></h5>
 
-  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-1201.yml?branch=ver%2F1.20.1&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.20.1)
+  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-leaves1201.yml?branch=leaves%2F1.20.1&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/leaves-1.20.1)
   [![Discord](https://img.shields.io/discord/928402257605701683?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/DdH6Yfu9gM)
 </div>
 
 ## Features
 
-- **Fork of [Pufferfish](https://github.com/pufferfish-gg/Pufferfish)** for the best performance.
+- **Fork of [Leaves](https://github.com/LeavesMC/Leaves)** for the best performance.
 - **Contains [Lithium](https://github.com/CaffeineMC/lithium-fabric) patches** which respect Vanilla parity.
 - **Efficient redstone** relying on [Alternate Current](https://github.com/SpaceWalkerRS/alternate-current), up to 4 times faster than Eigencraft's algorithm.
 - **(WIP) Implements [C2ME](https://github.com/RelativityMC/C2ME-fabric)** to improve chunk generation speed, I/O and loading.
@@ -26,7 +26,7 @@
 
 ## Downloads
 The latest successful build can be downloaded here:
-[mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.20.1)
+[mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/leaves-1.20.1)
 
 **Please note Java >= 17 is required, and Java >=19 is recommended.**
 

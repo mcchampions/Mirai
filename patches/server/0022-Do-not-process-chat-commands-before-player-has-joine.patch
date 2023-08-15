@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: chickeneer <emcchickeneer@gmail.com>
+Date: Tue, 3 Aug 2021 10:39:44 -0500
+Subject: [PATCH] Do not process chat/commands before player has joined
+
+Original code by Starlis, licensed under GPL v3
+You can find the original code on https://github.com/starlis/empirecraft
+
+diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+index 5e6983848c9fb054786574ad2b61de740c068301..73ed77c925e115070b6ebe26f4e4b9dce4ca28b2 100644
+--- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -2408,9 +2408,10 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+         if (!top.leavesmc.leaves.LeavesConfig.disableCheckOutOfOrderCommand && !this.updateChatOrder(timestamp)) { // Leaves - disable check to support Velocity
+             ServerGamePacketListenerImpl.LOGGER.warn("{} sent out-of-order chat: '{}': {} > {}", this.player.getName().getString(), message, this.lastChatTimeStamp.get().getEpochSecond(), timestamp.getEpochSecond()); // Paper
+             this.server.scheduleOnMain(() -> { // Paper - push to main
+-            this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
++                this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
+             }); // Paper - push to main
+             return Optional.empty();
++        } else if (player.joining) { return Optional.empty(); // EMC - do not handle chat messages before they joined
+         } else {
+             Optional<LastSeenMessages> optional = this.unpackAndApplyLastSeen(acknowledgment);
+ 

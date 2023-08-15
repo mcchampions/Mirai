@@ -1,0 +1,77 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <blake.galbreath@gmail.com>
+Date: Fri, 11 Oct 2019 00:17:39 -0500
+Subject: [PATCH] Alternative Keepalive Handling
+
+// TODO - uses Gale's version
+Original code by PurpurMC, licensed under MIT
+You can find the original code on https://github.com/PurpurMC/Purpur
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..4c00c3e3690f20592e504660d7e60457d2ab8aa6 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -153,4 +153,10 @@ public class MiraiConfig {
+                                 "Whether or not vanilla anticheat should check for passengers flying.");
+     }
+ 
+-}
+\ No newline at end of file
++    public static boolean useAlternateKeepAlive;
++    private static void alternateKeepAlive() {
++        useAlternateKeepAlive = getBoolean("use-alternate-keepalive", true,
++                                    "Whether or not server should use an alternative keepalive algorithm.",
++                                    "This can drastically reduce players timeouts due to a bad connection.");
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+index 73ed77c925e115070b6ebe26f4e4b9dce4ca28b2..a333d9d741fa096fcab23fede32ddf1890719646 100644
+--- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -267,6 +267,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+     private long keepAliveTime = Util.getMillis();
+     private boolean keepAlivePending;
+     private long keepAliveChallenge;
++    private it.unimi.dsi.fastutil.longs.LongList keepAlives = new it.unimi.dsi.fastutil.longs.LongArrayList(); // Purpur
+     // CraftBukkit start - multithreaded fields
+     private final AtomicInteger chatSpamTickCount = new AtomicInteger();
+     private final java.util.concurrent.atomic.AtomicInteger tabSpamLimiter = new java.util.concurrent.atomic.AtomicInteger(); // Paper - configurable tab spam limits
+@@ -413,6 +414,21 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+         long currentTime = Util.getMillis();
+         long elapsedTime = currentTime - this.keepAliveTime;
+ 
++        // Purpur start
++        if (dev.etil.mirai.MiraiConfig.useAlternateKeepAlive) {
++            if (elapsedTime >= 1000L) { // 1 second
++                if (!processedDisconnect && keepAlives.size() > KEEPALIVE_LIMIT) {
++                    LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName());
++                    disconnect(Component.translatable("disconnect.timeout"), org.bukkit.event.player.PlayerKickEvent.Cause.TIMEOUT);
++                } else {
++                    keepAliveTime = currentTime; // hijack this field for 1 second intervals
++                    keepAlives.add(currentTime); // currentTime is ID
++                    send(new ClientboundKeepAlivePacket(currentTime));
++                }
++            }
++        } else
++        // Purpur end
++
+         if (this.keepAlivePending) {
+             if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
+                 ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
+@@ -3563,6 +3579,16 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+ 
+     @Override
+     public void handleKeepAlive(ServerboundKeepAlivePacket packet) {
++        // Purpur start
++        if (dev.etil.mirai.MiraiConfig.useAlternateKeepAlive) {
++            long id = packet.getId();
++            if (keepAlives.size() > 0 && keepAlives.contains(id)) {
++                int ping = (int) (Util.getMillis() - id);
++                player.latency = (player.latency * 3 + ping) / 4;
++                keepAlives.clear(); // we got a valid response, lets roll with it and forget the rest
++            }
++        } else
++        // Purpur end
+         //PacketUtils.ensureRunningOnSameThread(packet, this, this.player.serverLevel()); // CraftBukkit // Paper - This shouldn't be on the main thread
+         if (this.keepAlivePending && packet.getId() == this.keepAliveChallenge) {
+             int i = (int) (Util.getMillis() - this.keepAliveTime);

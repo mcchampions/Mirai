@@ -1,0 +1,133 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <Blake.Galbreath@GMail.com>
+Date: Thu, 3 Dec 2020 17:56:18 -0600
+Subject: [PATCH] Lobotomize stuck villagers
+
+Original code by PurpurMC, licensed under MIT
+You can find the original code on https://github.com/PurpurMC/Purpur
+
+diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
+index 71d91f668b72d75c2b234c76e3c26969725a6516..c4702791761ce1b49cfbbe47384411a7c5d5dd9f 100644
+--- a/src/main/java/dev/etil/mirai/MiraiConfig.java
++++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
+@@ -219,4 +219,13 @@ public class MiraiConfig {
+         optimizedHypot = getBoolean("optimize-math-hypot", true,
+             "Whether or not Math.hypot should be replaced by a faster version.");
+     }
++
++    public static boolean villagerLobotomizeEnabled;
++    public static int villagerLobotomizeCheckInterval;
++    private static void lobotomizing() {
++        villagerLobotomizeEnabled = getBoolean("villager.lobotomize.enabled", false,
++            "Whether or not villagers should be lobotomized when",
++            "standing on a 1x1 block while being stuck.");
++        villagerLobotomizeCheckInterval = getInt("villager.lobotomize.check-interval", 100);
++    }
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
+index 3e36b1f0d8f18de7afe7a1db6cf3a695b7d7a58c..88fa74ae3390b2b3b5a62ac99c5fe7491a96ece1 100644
+--- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
++++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
+@@ -140,6 +140,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+     }, MemoryModuleType.MEETING_POINT, (entityvillager, holder) -> {
+         return holder.is(PoiTypes.MEETING);
+     });
++    private boolean isLobotomized = false; public boolean isLobotomized() { return this.isLobotomized; } // Purpur
++    private int notLobotomizedCount = 0; // Purpur
+ 
+     public Villager(EntityType<? extends Villager> entityType, Level world) {
+         this(entityType, world, VillagerType.PLAINS);
+@@ -250,10 +252,27 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+         // Paper start
+         this.customServerAiStep(false);
+     }
+-    protected void customServerAiStep(final boolean inactive) {
++    protected void customServerAiStep(boolean inactive) {
+         // Paper end
+         this.level().getProfiler().push("villagerBrain");
+-        if (!inactive) this.getBrain().tick((ServerLevel) this.level(), this); // Paper
++        // Purpur start
++        if (dev.etil.mirai.MiraiConfig.villagerLobotomizeEnabled) {
++            // treat as inactive if lobotomized
++            inactive = inactive || checkLobotomized();
++        } else {
++            // clean up state for API
++            this.isLobotomized = false;
++        }
++        // Purpur end
++        if (!inactive) {
++            this.getBrain().tick((ServerLevel) this.level(), this); // Paper
++        }
++        // Purpur start
++        else if (this.isLobotomized && shouldRestock()) {
++            // make sure we restock if needed when lobotomized
++            restock();
++        }
++        // Purpur end
+         this.level().getProfiler().pop();
+         if (this.assignProfessionWhenSpawned) {
+             this.assignProfessionWhenSpawned = false;
+@@ -1092,4 +1111,47 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+         return super.changeDimension(destination);
+     }
+     // Leaves end - fixes a memory leak when villagers get moved to another world
++
++    // Purpur start
++    private boolean checkLobotomized() {
++        int interval = dev.etil.mirai.MiraiConfig.villagerLobotomizeCheckInterval;
++        if (this.notLobotomizedCount > 3) {
++            // check half as often if not lobotomized for the last 3+ consecutive checks
++            interval *= 2;
++        }
++        if ((this.level().getGameTime()) % interval == 0) {
++            // offset Y for short blocks like dirt_path/farmland TODO: check that it works
++            this.isLobotomized = !canTravelFrom(this.getBlockPosBelowThatAffectsMyMovement());
++
++            if (this.isLobotomized) {
++                this.notLobotomizedCount = 0;
++            } else {
++                this.notLobotomizedCount++;
++            }
++        }
++        return this.isLobotomized;
++    }
++
++    private boolean canTravelFrom(BlockPos pos) {
++        return canTravelTo(pos.east()) || canTravelTo(pos.west()) || canTravelTo(pos.north()) || canTravelTo(pos.south());
++    }
++
++    private boolean canTravelTo(BlockPos pos) {
++        net.minecraft.world.level.block.state.BlockState state = this.level().getBlockStateIfLoaded(pos);
++        if (state == null) {
++            // chunk not loaded
++            return false;
++        }
++        net.minecraft.world.level.block.Block bottom = state.getBlock();
++        if (bottom instanceof net.minecraft.world.level.block.FenceBlock ||
++                bottom instanceof net.minecraft.world.level.block.FenceGateBlock ||
++                bottom instanceof net.minecraft.world.level.block.WallBlock) {
++            // bottom block is too tall to get over
++            return false;
++        }
++        net.minecraft.world.level.block.Block top = level().getBlockState(pos.above()).getBlock();
++        // only if both blocks have no collision
++        return !bottom.hasCollision && !top.hasCollision;
++    }
++    // Purpur end
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
+index f21c715ea109164efa755cddb35ef656a9859759..0c9154d1d3c1534a25c08c75fab102b68958fab9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
+@@ -222,4 +222,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
+         getHandle().getGossips().gossips.clear();
+     }
+     // Paper end
++
++    // Purpur start
++    @Override
++    public boolean isLobotomized() {
++        return getHandle().isLobotomized();
++    }
++    // Purpur end
+ }

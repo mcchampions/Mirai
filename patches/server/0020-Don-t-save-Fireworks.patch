@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Sat, 28 Dec 2013 21:25:06 -0500
+Subject: [PATCH] Don't save Fireworks
+
+Original code by Starlis, licensed under GPL v3
+You can find the original code on https://github.com/starlis/empirecraft
+
+diff --git a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
+index 288910fb168ddc5d3a61971778b8038a56772fa8..5f558514a43f3d98ddb75a8487a959402d96da23 100644
+--- a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
++++ b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
+@@ -357,4 +357,11 @@ public class FireworkRocketEntity extends Projectile implements ItemSupplier {
+     public boolean isAttackable() {
+         return false;
+     }
++
++    // EMC start
++    @Override
++    public boolean shouldBeSaved() {
++        return false;
++    }
++    // EMC end
+ }

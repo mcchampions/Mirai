@@ -5,63 +5,62 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 1c1dd088187f5700e3e4b7ec3b4b6c0acd5c119a..57fe2049c0f4fa0264b818fa6e269296d14b1ef2 100644
+index 3f3e60ecbd24c1c40ebbdaec7402192e111f5407..d1d4e0de2f06eb2838c3630306e150c50eaed70b 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -13,9 +13,9 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
+@@ -13,7 +13,7 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
  val alsoShade: Configuration by configurations.creating
  
  dependencies {
--    implementation(project(":pufferfish-api")) // Pufferfish // Paper
-+    implementation(project(":mirai-api")) // Mirai // Pufferfish // Paper
-     // Pufferfish start
--    implementation("io.papermc.paper:paper-mojangapi:1.19.2-R0.1-SNAPSHOT") {
-+    implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") {
-         exclude("io.papermc.paper", "paper-api")
-     }
-     // Pufferfish end
-@@ -92,7 +92,7 @@ tasks.jar {
+-	implementation(project(":leaves-api")) // Leaves
++	implementation(project(":mirai-api")) // Mirai // Leaves
+ 	// Leaves start
+ 	implementation("io.papermc.paper:paper-mojangapi:1.20.1-R0.1-SNAPSHOT") {
+ 		exclude("io.papermc.paper", "paper-api")
+@@ -87,7 +87,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
--            "Implementation-Version" to "git-Pufferfish-$implementationVersion", // Pufferfish
-+            "Implementation-Version" to "git-Mirai-$implementationVersion", // Pufferfish // Mirai
+-            "Implementation-Version" to "git-Leaves-$implementationVersion",
++            "Implementation-Version" to "git-Mirai-$implementationVersion", // Leaves // Mirai
              "Implementation-Vendor" to date, // Paper
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 692c962193cf9fcc6801fc93f3220bdc673d527b..bc1fdf3661d3edc7f1edab64fe94151760cb578c 100644
+index 9ce4d3d96d2d5fbde1f0af599209c6c55038fb58..de71bd525439da6b411d653d58fad9e91e944b06 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
-@@ -593,7 +593,7 @@ public class Metrics {
-             boolean logFailedRequests = config.getBoolean("logFailedRequests", false);
+@@ -594,7 +594,7 @@ public class Metrics {
              // Only start Metrics, if it's enabled in the config
              if (config.getBoolean("enabled", true)) {
--                Metrics metrics = new Metrics("Pufferfish", serverUUID, logFailedRequests, Bukkit.getLogger()); // Pufferfish
-+                Metrics metrics = new Metrics("Mirai", serverUUID, logFailedRequests, Bukkit.getLogger()); // Pufferfish // Mirai
+                 // Leaves start - we have our own bstats page
+-                Metrics metrics = new Metrics("Leaves", serverUUID, logFailedRequests, Bukkit.getLogger());
++                Metrics metrics = new Metrics("Mirai", serverUUID, logFailedRequests, Bukkit.getLogger()); // Mirai
  
                  metrics.addCustomChart(new Metrics.SimplePie("minecraft_version", () -> {
                      String minecraftVersion = Bukkit.getVersion();
-@@ -607,11 +607,11 @@ public class Metrics {
-                 final String implVersion = org.bukkit.craftbukkit.Main.class.getPackage().getImplementationVersion();
-                 if (implVersion != null) {
-                     final String buildOrHash = implVersion.substring(implVersion.lastIndexOf('-') + 1);
--                    paperVersion = "git-Pufferfish-%s-%s".formatted(Bukkit.getServer().getMinecraftVersion(), buildOrHash); // Pufferfish
+@@ -617,6 +617,15 @@ public class Metrics {
+ 
+                 metrics.addCustomChart(new Metrics.SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
+                 metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : "offline"));
++                final String paperVersion;
++                final String implVersion = org.bukkit.craftbukkit.Main.class.getPackage().getImplementationVersion();
++                if (implVersion != null) {
++                    final String buildOrHash = implVersion.substring(implVersion.lastIndexOf('-') + 1);
 +                    paperVersion = "git-Mirai-%s-%s".formatted(Bukkit.getServer().getMinecraftVersion(), buildOrHash); // Pufferfish // Mirai
-                 } else {
-                     paperVersion = "unknown";
-                 }
--                metrics.addCustomChart(new Metrics.SimplePie("pufferfish_version", () -> paperVersion)); // Pufferfish
++                } else {
++                    paperVersion = "unknown";
++                }
 +                metrics.addCustomChart(new Metrics.SimplePie("mirai_version", () -> paperVersion)); // Pufferfish // Mirai
  
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
 deleted file mode 100644
-index 9d687da5bdf398bb3f6c84cdf1249a7213d09f2e..0000000000000000000000000000000000000000
+index 658f32456530cf8f291851da2789c8c3c3de6d27..0000000000000000000000000000000000000000
 --- a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
 +++ /dev/null
-@@ -1,149 +0,0 @@
+@@ -1,150 +0,0 @@
 -package com.destroystokyo.paper;
 -
 -import com.destroystokyo.paper.util.VersionFetcher;
@@ -84,7 +83,7 @@ index 9d687da5bdf398bb3f6c84cdf1249a7213d09f2e..00000000000000000000000000000000
 -public class PaperVersionFetcher implements VersionFetcher {
 -    private static final java.util.regex.Pattern VER_PATTERN = java.util.regex.Pattern.compile("^([0-9\\.]*)\\-.*R"); // R is an anchor, will always give '-R' at end
 -    private static final String GITHUB_BRANCH_NAME = "master";
--    private static final String DOWNLOAD_PAGE = "https://papermc.io/downloads/paper";
+-    private static final String DOWNLOAD_PAGE = "https://leavesmc.top/downloads/leaves"; // Leaves - change
 -    private static @Nullable String mcVer;
 -
 -    @Override
@@ -95,8 +94,10 @@ index 9d687da5bdf398bb3f6c84cdf1249a7213d09f2e..00000000000000000000000000000000
 -    @Nonnull
 -    @Override
 -    public Component getVersionMessage(@Nonnull String serverVersion) {
--        String[] parts = serverVersion.substring("git-Paper-".length()).split("[-\\s]");
--        final Component updateMessage = getUpdateStatusMessage("PaperMC/Paper", GITHUB_BRANCH_NAME, parts[0]);
+-        // Leaves start - we dont have jenkins setup
+-        String[] parts = serverVersion.substring("git-Leaves-".length()).split("[-\\s]");
+-        final Component updateMessage = getUpdateStatusMessage("LeavesMC/Leaves", GITHUB_BRANCH_NAME, parts[0]);
+-        // Leaves end - we dont have jenkins setup
 -        final Component history = getHistory();
 -
 -        return history != null ? TextComponent.ofChildren(updateMessage, Component.newline(), history) : updateMessage;
@@ -120,14 +121,12 @@ index 9d687da5bdf398bb3f6c84cdf1249a7213d09f2e..00000000000000000000000000000000
 -
 -    private static Component getUpdateStatusMessage(@Nonnull String repo, @Nonnull String branch, @Nonnull String versionInfo) {
 -        int distance;
--        try {
--            int jenkinsBuild = Integer.parseInt(versionInfo);
--            distance = fetchDistanceFromSiteApi(jenkinsBuild, getMinecraftVersion());
--        } catch (NumberFormatException ignored) {
--            versionInfo = versionInfo.replace("\"", "");
--            distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
--        }
 -
+-		// Leaves start - we dont have jenkins setup
+-        versionInfo = versionInfo.replace("\"", "");
+-        distance = fetchDistanceFromGitHub(repo, branch, versionInfo);
+-		// Leaves end - we dont have jenkins setup
+-       
 -        switch (distance) {
 -            case -1:
 -                return Component.text("Error obtaining version information", NamedTextColor.YELLOW);
@@ -137,11 +136,12 @@ index 9d687da5bdf398bb3f6c84cdf1249a7213d09f2e..00000000000000000000000000000000
 -                return Component.text("Unknown version", NamedTextColor.YELLOW);
 -            default:
 -                return Component.text("You are " + distance + " version(s) behind", NamedTextColor.YELLOW)
--                        .append(Component.newline())
--                        .append(Component.text("Download the new version at: ")
--                                .append(Component.text(DOWNLOAD_PAGE, NamedTextColor.GOLD)
--                                        .hoverEvent(Component.text("Click to open", NamedTextColor.WHITE))
--                                        .clickEvent(ClickEvent.openUrl(DOWNLOAD_PAGE))));
+-                    .append(Component.newline())
+-                    .append(Component.text("Download the new version at: ")
+-                        .append(Component.text(DOWNLOAD_PAGE, NamedTextColor.GOLD)
+-                            .hoverEvent(Component.text("Click to open", NamedTextColor.WHITE))
+-                            .clickEvent(ClickEvent.openUrl(DOWNLOAD_PAGE))));
+-
 -        }
 -    }
 -
@@ -368,10 +368,10 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7ca6c81afc99d42d2f39b4b6d7f5e8a18b58fba3..e837c8f80e35fe766565def37cbb6ace86d24da2 100644
+index 75a73d5797dd9655b646de00435d750c5fc63f68..118fb7ac6be0c18b52877bd23c11a6fd661356b7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -923,7 +923,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -926,7 +926,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          shutdownThread = Thread.currentThread();
          org.spigotmc.WatchdogThread.doStop(); // Paper
          if (!isSameThread()) {
@@ -380,43 +380,43 @@ index 7ca6c81afc99d42d2f39b4b6d7f5e8a18b58fba3..e837c8f80e35fe766565def37cbb6ace
              while (this.getRunningThread().isAlive()) {
                  this.getRunningThread().stop();
                  try {
-@@ -1695,7 +1695,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1718,7 +1718,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
--        return "Pufferfish"; // Pufferfish - Pufferfish > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "Mirai"; // Mirai - Mirai > // Pufferfish - Pufferfish > // Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+-        return "Leaves"; // Leaves - Leaves > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "Mirai"; // Mirai - Mirai > // Leaves - Leaves > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
      }
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a774e6af15993a97a231d45b676e26fb1128f05f..8c40ef108793e2515b388fc8b76a0b8de74da384 100644
+index 6bd1ef55b2d171025132ccb158fe51638267f28c..fac511f02c28fa01a82f9a2bd01ab0d03336aef9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -265,7 +265,7 @@ import javax.annotation.Nullable; // Paper
+@@ -267,7 +267,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
--    private final String serverName = "Pufferfish"; // Paper // Pufferfish
-+    private final String serverName = "Mirai"; // Paper // Pufferfish // Mirai
+-    private final String serverName = "Leaves"; // Leaves // Paper
++    private final String serverName = "Mirai"; // Paper // Leaves // Mirai
      private final String serverVersion;
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 1adf1ab6af94b561dc8cbbd3e5746e0bb2a11d41..ae2de0c1fc985cd66ab7c62420bbb2c37c0d49cd 100644
+index 83cef5ec27c31f133a23cd27349f722799c786ea..ae2de0c1fc985cd66ab7c62420bbb2c37c0d49cd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 @@ -470,7 +470,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
--        return new gg.pufferfish.pufferfish.PufferfishVersionFetcher(); // Pufferfish
+-        return new com.destroystokyo.paper.PaperVersionFetcher();
 +        return new dev.etil.mirai.MiraiVersionFetcher(); // Mirai
      }
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 80553face9c70c2a3d897681e7761df85b22d464..fdfb304a860a1c5bda8fa6a9a5fc6e65cd1e6df4 100644
+index ca166161ef919c559de9cc02bdf435cbfcc972df..4743e80fa70edb34d7d6f657633619268723d5a3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -8,22 +8,27 @@ import java.util.logging.Logger;
@@ -430,8 +430,8 @@ index 80553face9c70c2a3d897681e7761df85b22d464..fdfb304a860a1c5bda8fa6a9a5fc6e65
 +    static {
 +        bukkitVersion = "Unknown-Version";
  
--        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/gg.pufferfish.pufferfish/pufferfish-api/pom.properties"); // Pufferfish
-+        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/dev.etil.mirai/mirai-api/pom.properties"); // Pufferfish // Mirai
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/top.leavesmc.leaves/leaves-api/pom.properties"); // Leaves
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/dev.etil.mirai/mirai-api/pom.properties"); // Leaves // Mirai
          Properties properties = new Properties();
  
          if (stream != null) {
@@ -453,24 +453,24 @@ index 80553face9c70c2a3d897681e7761df85b22d464..fdfb304a860a1c5bda8fa6a9a5fc6e65
      }
  }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 98fba0288be9ed2cb18ffba5cf81148157dd4fcf..9ed048cd8f2bb90b65d2bdef422c63a85c18aed0 100644
+index a803b08d7d1995c263d05eda23dfe4552acae08d..b987ac59b48a442a54481920d1ef3f9317224673 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -155,14 +155,14 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
                  if (isLongTimeout) {
                  // Paper end
                  log.log( Level.SEVERE, "------------------------------" );
--                log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Paper bug." ); // Paper
-+                log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Mirai bug." ); // Paper // Mirai
+-                log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Leaves bug." ); // Paper // Leaves
++                log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Mirai bug." ); // Paper // Leaves // Mirai
                  log.log( Level.SEVERE, "If you see a plugin in the Server thread dump below, then please report it to that author" );
                  log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
                  log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
                  log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
--                log.log( Level.SEVERE, "If you are unsure or still think this is a Paper bug, please report this to https://github.com/PaperMC/Paper/issues" );
-+                log.log( Level.SEVERE, "If you are unsure or still think this is a Mirai bug, please report this to https://github.com/etil2jz/Mirai/issues" ); // Mirai
+-                log.log( Level.SEVERE, "If you are unsure or still think this is a Leaves bug, please report this to https://github.com/LeavesMC/Leaves/issues" ); // Leaves
++                log.log( Level.SEVERE, "If you are unsure or still think this is a Leaves bug, please report this to https://github.com/etil2jz/Mirai/issues" ); // Leaves // Mirai
                  log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
--                log.log( Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion() );
-+                log.log( Level.SEVERE, "Mirai version: " + Bukkit.getServer().getVersion() ); // Mirai
+-                log.log( Level.SEVERE, "Leaves version: " + Bukkit.getServer().getVersion() ); // Leaves
++                log.log( Level.SEVERE, "Mirai version: " + Bukkit.getServer().getVersion() ); // Leaves // Mirai
                  //
                  if ( net.minecraft.world.level.Level.lastPhysicsProblem != null )
                  {
@@ -478,14 +478,14 @@ index 98fba0288be9ed2cb18ffba5cf81148157dd4fcf..9ed048cd8f2bb90b65d2bdef422c63a8
                  // Paper end
                  } else
                  {
--                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---");
-+                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO MIRAI - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---"); // Mirai
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO LEAVES - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---"); // Leaves
++                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO MIRAI - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---"); // Leaves // Mirai
                      log.log(Level.SEVERE, "The server has not responded for " + (currentTime - lastTick) / 1000 + " seconds! Creating thread dump");
                  }
                  // Paper end - Different message for short timeout
                  log.log( Level.SEVERE, "------------------------------" );
--                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):" ); // Paper
-+                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Mirai!):" ); // Paper // Mirai
+-                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Leaves!):" ); // Paper // Leaevs
++                log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Mirai!):" ); // Paper // Leaevs // Mirai
                  io.papermc.paper.chunk.system.scheduling.ChunkTaskScheduler.dumpAllChunkLoadInfo(isLongTimeout); // Paper // Paper - rewrite chunk system
                  this.dumpTickingInfo(); // Paper - log detailed tick information
                  WatchdogThread.dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
@@ -493,8 +493,8 @@ index 98fba0288be9ed2cb18ffba5cf81148157dd4fcf..9ed048cd8f2bb90b65d2bdef422c63a8
                      WatchdogThread.dumpThread( thread, log );
                  }
                  } else {
--                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
-+                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO MIRAI - THIS IS NOT A BUG OR A CRASH ---"); // Mirai
+-                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO LEAVES - THIS IS NOT A BUG OR A CRASH ---"); // Leaves
++                    log.log(Level.SEVERE, "--- DO NOT REPORT THIS TO MIRAI - THIS IS NOT A BUG OR A CRASH ---"); // Leaves // Mirai
                  }
  
                  log.log( Level.SEVERE, "------------------------------" );
