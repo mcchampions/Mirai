@@ -26,7 +26,8 @@
 
 ## Downloads
 The latest successful build can be downloaded here:
-[mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/leaves-1.20.1)
+
+[miraileaves-1.20.1.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/leaves-1.20.1)
 
 **Please note Java >= 17 is required, and Java >=19 is recommended.**
 
