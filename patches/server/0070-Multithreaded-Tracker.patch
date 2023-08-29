@@ -198,10 +198,10 @@ index 0000000000000000000000000000000000000000..613bd104762755395e86101decaf1cb7
 +}
 \ No newline at end of file
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d076b1a4429dcadb01bf2e1a5e09d500baef08d0 100644
+index a1c9726d25479b5326fe2fa2b0f5a98d6b2da4c5..0681c720046db860b840c6f7dcdc9655bed9b7f5 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -4,6 +4,8 @@ import co.aikar.timings.TimedEventExecutor;
+@@ -3,6 +3,8 @@ package io.papermc.paper.plugin.manager;
  import com.destroystokyo.paper.event.server.ServerExceptionEvent;
  import com.destroystokyo.paper.exception.ServerEventException;
  import com.google.common.collect.Sets;
@@ -210,7 +210,7 @@ index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d076b1a4429dcadb01bf2e1a5e09d500
  import org.bukkit.Server;
  import org.bukkit.Warning;
  import org.bukkit.event.Event;
-@@ -39,7 +41,14 @@ class PaperEventManager {
+@@ -38,7 +40,14 @@ class PaperEventManager {
          if (event.isAsynchronous() && this.server.isPrimaryThread()) {
              throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
          } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
@@ -253,10 +253,10 @@ index 59403aa7b77adab763c60f3f7805c802a94dcd41..cfa0deacc0c005ef54c746e09423e490
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd0409d645 100644
+index 5887bca09af6c5a8b4d05258016309d5a96a7fc4..02462fe39ae56b12cb80a61ad8918c69717daec3 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1250,8 +1250,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1242,8 +1242,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
@@ -290,10 +290,10 @@ index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd
 +        }
 +        // Mirai end
 +
-         this.level.timings.tracker1.startTiming();
-         try {
-             for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -1429,11 +1457,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         for (TrackedEntity tracker : this.entityMap.values()) {
+             // update tracker entry
+             tracker.updatePlayers(tracker.entity.getPlayersInTrackRange());
+@@ -1407,11 +1435,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -308,7 +308,7 @@ index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -1445,7 +1473,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1423,7 +1451,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -317,7 +317,7 @@ index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1487,14 +1515,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1465,14 +1493,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcast(Packet<?> packet) {
@@ -335,7 +335,7 @@ index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd
          }
  
          public void broadcastAndSend(Packet<?> packet) {
-@@ -1506,18 +1532,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1484,18 +1510,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcastRemoved() {
@@ -358,7 +358,7 @@ index 136cd6152ea1107bb471b0abfe7f5682357ada44..afb54afb8f55ae09e47b49b3999c55dd
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1525,7 +1549,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1503,7 +1527,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
@@ -440,10 +440,10 @@ index 21619aa9b039d59a14522ea872c6fe49023ad055..5475668e4df177eac24ec19af0abb266
  
              set.clear();
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index dbf0ebdf6895e1c48dc88df0fcddff886677a950..c53ee2cc823d50f39011fe8003b26e6a3afb1abf 100644
+index 5ead57720267a6ff02e03e1b9cc8c63f06c1b1a4..e49b3717d75faf1d8e97b5455cac46b86a6b4a1e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -2589,7 +2589,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2550,7 +2550,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {

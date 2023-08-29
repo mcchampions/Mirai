@@ -7,10 +7,10 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
-index c1bd06fbc2c5683888f7264c35c25feb31b00d67..a5f212e6ae3abb486a9a11f5ccacc2a43e117c82 100644
+index 8c13b0ff5a34a66df0e087320e7bb6542fbf89fd..293aee7374494d91cbc0b25f785cc7615e147f9f 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
-@@ -179,6 +179,7 @@ public class TheEndGatewayBlockEntity extends TheEndPortalBlockEntity {
+@@ -178,6 +178,7 @@ public class TheEndGatewayBlockEntity extends TheEndPortalBlockEntity {
  
      public static void teleportEntity(Level world, BlockPos pos, BlockState state, Entity entity, TheEndGatewayBlockEntity blockEntity) {
          if (world instanceof ServerLevel && !blockEntity.isCoolingDown()) {

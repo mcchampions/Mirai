@@ -23,10 +23,10 @@ index c32bddbaa352392e07b82e794d73dd92745af00e..6b9865127a0c03a7e59549a1fd9b03c6
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index ba81f99c65a1a36a1d03161a382c94be7c8d7c53..548aff8ee9092a7c9e4edb183e7b948dc432cc82 100644
+index 521934e443f06b68153e7bb0bf3d36007b686387..6f07f42d43e5a64ca50e11f0d96bb61468820900 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -1251,6 +1251,7 @@ public class ServerPlayer extends Player {
+@@ -1252,6 +1252,7 @@ public class ServerPlayer extends Player {
                  playerlist.sendPlayerPermissionLevel(this);
                  worldserver1.removePlayerImmediately(this, Entity.RemovalReason.CHANGED_DIMENSION);
                  this.unsetRemoved();
@@ -35,10 +35,10 @@ index ba81f99c65a1a36a1d03161a382c94be7c8d7c53..548aff8ee9092a7c9e4edb183e7b948d
                  // CraftBukkit end
                  this.setServerLevel(worldserver);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a8eb0643a1c6f3db4453c8f86b106572bb06ddfd..75bca7e4394ccfa9e23952ffd73766a1431bd40e 100644
+index 6ac903998abeb4432ecebe4b7f977f9322b78803..88b5242e9e5257225705368efccab58d1f6cac92 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3047,12 +3047,15 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3049,12 +3049,15 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return Vec3.directionFromRotation(this.getRotationVector());
      }
  

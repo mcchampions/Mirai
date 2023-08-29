@@ -3,7 +3,6 @@ From: William Blake Galbreath <blake.galbreath@gmail.com>
 Date: Fri, 11 Oct 2019 00:17:39 -0500
 Subject: [PATCH] Alternative Keepalive Handling
 
-// TODO - uses Gale's version
 Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
@@ -25,7 +24,7 @@ index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..4c00c3e3690f20592e504660d7e60457
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 73ed77c925e115070b6ebe26f4e4b9dce4ca28b2..a333d9d741fa096fcab23fede32ddf1890719646 100644
+index a7bf16e06f5915225c2a7dbd55bd12c6290376d0..ac5f4f809a5827c5ecf51aea08bf67a2c09d072b 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -267,6 +267,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -58,7 +57,7 @@ index 73ed77c925e115070b6ebe26f4e4b9dce4ca28b2..a333d9d741fa096fcab23fede32ddf18
          if (this.keepAlivePending) {
              if (!this.processedDisconnect && elapsedTime >= KEEPALIVE_LIMIT) { // check keepalive limit, don't fire if already disconnected
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName()); // more info
-@@ -3563,6 +3579,16 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3572,6 +3588,16 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      @Override
      public void handleKeepAlive(ServerboundKeepAlivePacket packet) {

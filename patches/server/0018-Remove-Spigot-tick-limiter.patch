@@ -7,12 +7,12 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index e442c22f81ab6c805466d2a9b9a5f29a1f38c3df..9e012b7eeb2788c340d02b25841e5047f4b912b3 100644
+index e657d16403d19f079f4f38b8e822cf517fd8b96b..961b87a4fa0ebdde7824d4e985a3f24dd196b88d 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -181,8 +181,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -170,8 +170,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+     public final com.destroystokyo.paper.antixray.ChunkPacketBlockController chunkPacketBlockController; // Paper - Anti-Xray
  	public final top.leavesmc.leaves.LeavesConfig.WorldConfig leavesConfig; // Leaves - World Config
-     public final co.aikar.timings.WorldTimingsHandler timings; // Paper
      public static BlockPos lastPhysicsProblem; // Spigot
 -    private org.spigotmc.TickLimiter entityLimiter;
 -    private org.spigotmc.TickLimiter tileLimiter;
@@ -21,9 +21,9 @@ index e442c22f81ab6c805466d2a9b9a5f29a1f38c3df..9e012b7eeb2788c340d02b25841e5047
      private int tileTickPosition;
      public final Map<Explosion.CacheKey, Float> explosionDensityCache = new HashMap<>(); // Paper - Optimize explosions
      public java.util.ArrayDeque<net.minecraft.world.level.block.RedstoneTorchBlock.Toggle> redstoneUpdateInfos; // Paper - Move from Map in BlockRedstoneTorch to here
-@@ -369,8 +369,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -357,8 +357,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+         });
          // CraftBukkit end
-         timings = new co.aikar.timings.WorldTimingsHandler(this); // Paper - code below can generate new world and access timings
          this.keepSpawnInMemory = this.paperConfig().spawn.keepSpawnLoaded; // Paper
 -        this.entityLimiter = new org.spigotmc.TickLimiter(spigotConfig.entityMaxTickTime);
 -        this.tileLimiter = new org.spigotmc.TickLimiter(spigotConfig.tileMaxTickTime);

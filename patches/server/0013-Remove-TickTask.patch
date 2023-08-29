@@ -7,19 +7,19 @@ Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 3c30c13770bde622ef538b48168a476a095f4d52..a5622524ed60a583a76122f551e0a7214c6bf84d 100644
+index 2f52e671efd0c0a0e6c540d40de1fbd909205a0a..8e2305be474d7fbafde10c121aa24991637672ab 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -195,7 +195,7 @@ import org.bukkit.event.server.ServerLoadEvent;
+@@ -184,7 +184,7 @@ import org.bukkit.event.server.ServerLoadEvent;
  
- import co.aikar.timings.MinecraftTimings; // Paper
+ import top.leavesmc.leaves.util.TickStatus; // Leaves - tick command
  
 -public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTask> implements CommandSource, AutoCloseable {
 +public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnable> implements CommandSource, AutoCloseable { // Patina
  
      private static MinecraftServer SERVER; // Paper
      public static final Logger LOGGER = LogUtils.getLogger();
-@@ -1307,19 +1307,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1316,19 +1316,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      @Override
@@ -43,7 +43,7 @@ index 3c30c13770bde622ef538b48168a476a095f4d52..a5622524ed60a583a76122f551e0a721
  
      @Override
      public boolean pollTask() {
-@@ -1351,10 +1353,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1360,10 +1362,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
      }
  
@@ -57,10 +57,10 @@ index 3c30c13770bde622ef538b48168a476a095f4d52..a5622524ed60a583a76122f551e0a721
      private Optional<ServerStatus.Favicon> loadStatusIcon() {
          Optional<Path> optional = Optional.of(this.getFile("server-icon.png").toPath()).filter((path) -> {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index d9da306d2675201beedddd43dcef18b31a2fa0e0..e989831bbd159268505661f2064a12f8f3b2a46f 100644
+index 93ed1e1d871f0405e764215f30e953633a9bd7bb..2417401155c60d710d1a7fa20184c3270b7fe716 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -921,10 +921,12 @@ public class ServerChunkCache extends ChunkSource {
+@@ -920,10 +920,12 @@ public class ServerChunkCache extends ChunkSource {
              return runnable;
          }
  

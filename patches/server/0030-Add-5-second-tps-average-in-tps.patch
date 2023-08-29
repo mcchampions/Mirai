@@ -3,7 +3,6 @@ From: William Blake Galbreath <blake.galbreath@gmail.com>
 Date: Sun, 28 Jul 2019 01:27:37 -0500
 Subject: [PATCH] Add 5 second tps average in /tps
 
-// TODO - uses Gale's version
 Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
@@ -30,10 +29,10 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a5622524ed60a583a76122f551e0a7214c6bf84d..db25654390fc387993b0dbdd992a3d87d11ba4eb 100644
+index 8e2305be474d7fbafde10c121aa24991637672ab..baae0a3d5aa31f26fb678fea4ef372de111faea1 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -304,7 +304,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -293,7 +293,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      public static final int TPS = 20;
      public static final int TICK_TIME = 1000000000 / MinecraftServer.TPS;
      private static final int SAMPLE_INTERVAL = 20; // Paper
@@ -42,7 +41,7 @@ index a5622524ed60a583a76122f551e0a7214c6bf84d..db25654390fc387993b0dbdd992a3d87
      // Spigot end
      public final io.papermc.paper.configuration.PaperConfigurations paperConfigurations;
      public static long currentTickLong = 0L; // Paper
-@@ -1052,6 +1052,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1040,6 +1040,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      private static final long MAX_CATCHUP_BUFFER = TICK_TIME * TPS * 60L;
      private long lastTick = 0;
      private long catchupTime = 0;
@@ -50,32 +49,32 @@ index a5622524ed60a583a76122f551e0a7214c6bf84d..db25654390fc387993b0dbdd992a3d87
      public final RollingAverage tps1 = new RollingAverage(60);
      public final RollingAverage tps5 = new RollingAverage(60 * 5);
      public final RollingAverage tps15 = new RollingAverage(60 * 15);
-@@ -1155,13 +1156,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
-                 {
-                     final long diff = curTime - tickSection;
-                     java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);
-+                    tps5s.add(currentTps, diff); // Purpur
-                     tps1.add(currentTps, diff);
-                     tps5.add(currentTps, diff);
-                     tps15.add(currentTps, diff);
-                     // Backwards compat with bad plugins
--                    this.recentTps[0] = tps1.getAverage();
--                    this.recentTps[1] = tps5.getAverage();
--                    this.recentTps[2] = tps15.getAverage();
-+                    // Purpur start
-+                    this.recentTps[0] = tps5s.getAverage();
-+                    this.recentTps[1] = tps1.getAverage();
-+                    this.recentTps[2] = tps5.getAverage();
-+                    this.recentTps[3] = tps15.getAverage();
-+                    // Purpur end
-                     // Paper end
-                     tickSection = curTime;
-                 }
+@@ -1144,13 +1145,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+                     if (++MinecraftServer.currentTick % MinecraftServer.SAMPLE_INTERVAL == 0) {
+                         final long diff = curTime - tickSection;
+                         java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);
++                        tps5s.add(currentTps, diff); // Purpur
+                         tps1.add(currentTps, diff);
+                         tps5.add(currentTps, diff);
+                         tps15.add(currentTps, diff);
+                         // Backwards compat with bad plugins
+-                        this.recentTps[0] = tps1.getAverage();
+-                        this.recentTps[1] = tps5.getAverage();
+-                        this.recentTps[2] = tps15.getAverage();
++                        // Purpur start
++                        this.recentTps[0] = tps5s.getAverage();
++                        this.recentTps[1] = tps1.getAverage();
++                        this.recentTps[2] = tps5.getAverage();
++                        this.recentTps[3] = tps15.getAverage();
++                        // Purpur end
+                         // Paper end
+                         tickSection = curTime;
+                     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f100f3f1e8e4807f03e2f8388d5de5e6cffa1766..7b57d45003ff2bab2abb4d9db261c261a003506a 100644
+index 01136259cf494e954e7e497571ce1b6f6d28593b..f5e598f291aa755253715234b66f952ae24578fb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2891,6 +2891,7 @@ public final class CraftServer implements Server {
+@@ -2921,6 +2921,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {

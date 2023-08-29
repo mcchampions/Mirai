@@ -7,15 +7,11 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 5e6983848c9fb054786574ad2b61de740c068301..73ed77c925e115070b6ebe26f4e4b9dce4ca28b2 100644
+index a4c6878bd0a2ec8f5aa11d7fb9a74061b4f495f3..a7bf16e06f5915225c2a7dbd55bd12c6290376d0 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2408,9 +2408,10 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
-         if (!top.leavesmc.leaves.LeavesConfig.disableCheckOutOfOrderCommand && !this.updateChatOrder(timestamp)) { // Leaves - disable check to support Velocity
-             ServerGamePacketListenerImpl.LOGGER.warn("{} sent out-of-order chat: '{}': {} > {}", this.player.getName().getString(), message, this.lastChatTimeStamp.get().getEpochSecond(), timestamp.getEpochSecond()); // Paper
-             this.server.scheduleOnMain(() -> { // Paper - push to main
--            this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
-+                this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
+@@ -2423,6 +2423,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+             this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
              }); // Paper - push to main
              return Optional.empty();
 +        } else if (player.joining) { return Optional.empty(); // EMC - do not handle chat messages before they joined

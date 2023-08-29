@@ -1,21 +1,21 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: 2No2Name <2No2Name@web.de>
-Date: Sun, 9 Jan 2022 06:03:28 +0100
-Subject: [PATCH] lithium: entity.fast_hand_swing
+Date: Sat, 8 Jan 2022 04:32:41 +0100
+Subject: [PATCH] lithium: entity.fast_elytra_check
 
 Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 5512548bcbf3a1768d572e10190f0d379682cf58..5aa56289f6e7d30cdcda2c4af9c654eeebad743a 100644
+index 1a705a4d8c0cdac6c21bf338f88e57570b142fc9..8d80b91fd1fc61d78e02a98542c6eabda68703a2 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -2496,6 +2496,8 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3484,6 +3484,8 @@ public abstract class LivingEntity extends Entity implements Attackable {
      }
  
-     protected void updateSwingTime() {
-+        if (!this.swinging && this.swingTime == 0) return; // Mirai
+     private void updateFallFlying() {
++        if (!this.isFallFlying()) return; // Mirai
 +
-         int i = this.getCurrentSwingDuration();
+         boolean flag = this.getSharedFlag(7);
  
-         if (this.swinging) {
+         if (flag && !this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {

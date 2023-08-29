@@ -11,7 +11,7 @@ You can find the original code on https://github.com/Bloom-host/Petal
 2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index 8b2a02f85085c91c51b61760de967a859bf5e4de..c80923ce03ab96f73189120698aa588b33956c10 100644
+index c429990e83304951ac995556d0424479f7e83c64..8f287e12146bd7fda597746e45dff07d4abf26c8 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 @@ -126,6 +126,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
@@ -29,7 +29,7 @@ index 8b2a02f85085c91c51b61760de967a859bf5e4de..c80923ce03ab96f73189120698aa588b
              LivingEntity entityliving1 = deadEntity.getLastHurtByMob();
  
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 2c3ca05644bc97d505e8ca92e7a5f48670fd8b66..d376c8c56cf8bdae6dd6884e8f06aac35fd3d0da 100644
+index e34e6fa60cedb925e2cb6f3a031d4157a9633eb5..49e8432b295be7cafbb0c576b05f1bf6d8f011b0 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -81,7 +81,19 @@ public class LevelChunk extends ChunkAccess {

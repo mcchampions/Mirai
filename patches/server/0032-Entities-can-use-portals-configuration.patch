@@ -22,10 +22,10 @@ index 6b9865127a0c03a7e59549a1fd9b03c699ff56c0..d337022a8d576efc7e9595dd581a0aa7
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 75bca7e4394ccfa9e23952ffd73766a1431bd40e..067c82bc737fd2265e8c959da10ad35a806a453d 100644
+index 88b5242e9e5257225705368efccab58d1f6cac92..5e08b054e471f302ca27f48dcec73c2fcd87dc56 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3052,7 +3052,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3054,7 +3054,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          if (this.isOnPortalCooldown()) {
              if (!(dev.etil.mirai.MiraiConfig.playerFixStuckPortal && this instanceof Player && !pos.equals(portalPos))) // Purpur
              this.setPortalCooldown();
@@ -34,7 +34,7 @@ index 75bca7e4394ccfa9e23952ffd73766a1431bd40e..067c82bc737fd2265e8c959da10ad35a
              if (!this.level().isClientSide && !pos.equals(this.portalEntrancePos)) {
                  this.portalEntrancePos = pos.immutable();
                  portalPos = BlockPos.ZERO; // Purpur
-@@ -3754,7 +3754,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3756,7 +3756,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean canChangeDimensions() {

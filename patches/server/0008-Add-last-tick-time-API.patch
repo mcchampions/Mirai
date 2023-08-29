@@ -7,32 +7,38 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 118fb7ac6be0c18b52877bd23c11a6fd661356b7..3c30c13770bde622ef538b48168a476a095f4d52 100644
+index 7a7721f6138ae4428bb022cc87624e74c7ac3c99..2f52e671efd0c0a0e6c540d40de1fbd909205a0a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1101,6 +1101,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1089,6 +1089,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
-     public static boolean skipTickWait = false; // Leaves - tick command - warp
+     public static TickStatus tickStatus = TickStatus.NORMAL; // Leaves - tick command
 +    public static java.time.Duration lastTickDuration = java.time.Duration.ZERO; // Yatopia
  
      protected void runServer() {
          try {
-@@ -1176,7 +1177,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1167,6 +1168,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTime += 50L;
                  this.startMetricsRecordingTick();
                  this.profiler.push("tick");
 +                long tickStart = System.nanoTime(); // Yatopia
-                 this.tickServer(this::haveTime);
+                 // Leaves start - tick command
+                 if (tickStatus == TickStatus.FREEZE) {
+                     this.tickFreeze();
+@@ -1174,6 +1176,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+                     this.tickServer(this::haveTime);
+                 }
+                 // Leaves end - tick command
 +                lastTickDuration = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTime = Math.max(Util.getMillis() + 50L, this.nextTickTime);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fac511f02c28fa01a82f9a2bd01ab0d03336aef9..f100f3f1e8e4807f03e2f8388d5de5e6cffa1766 100644
+index 98148874f411f484791695a3e3f5ddf43638fcf2..01136259cf494e954e7e497571ce1b6f6d28593b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3156,7 +3156,6 @@ public final class CraftServer implements Server {
+@@ -3186,7 +3186,6 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -40,7 +46,7 @@ index fac511f02c28fa01a82f9a2bd01ab0d03336aef9..f100f3f1e8e4807f03e2f8388d5de5e6
      // Paper end
  
      // Leaves start - Bot API
-@@ -3172,4 +3171,11 @@ public final class CraftServer implements Server {
+@@ -3202,4 +3201,11 @@ public final class CraftServer implements Server {
          return photographerManager;
      }
      // Leaves end - replay mod api

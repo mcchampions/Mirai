@@ -7,7 +7,7 @@ Original code by MultiPaper, licensed under GPL v3
 You can find the original code on https://github.com/MultiPaper/MultiPaper
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7b57d45003ff2bab2abb4d9db261c261a003506a..dfd7b3860a8e55f02b305d786dadebbb7670477d 100644
+index f5e598f291aa755253715234b66f952ae24578fb..565a1895e57012bb1990cf24d745ee285c477ee9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -44,6 +44,8 @@ import java.util.logging.Level;

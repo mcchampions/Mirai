@@ -3,7 +3,6 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Wed, 29 Jun 2022 02:17:00 +0200
 Subject: [PATCH] Optimize `Math.round` and `Math.hypot` functions
 
-// TODO - needs to add more `Math.hypot` opt
 Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
@@ -116,43 +115,6 @@ index 63f96a5583979510e2eea2a1b88dcb738513e2f3..71d91f668b72d75c2b234c76e3c26969
 +            "Whether or not Math.hypot should be replaced by a faster version.");
 +    }
  }
-diff --git a/src/main/java/gg/pufferfish/pufferfish/flare/collectors/TPSCollector.java b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/TPSCollector.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..633a6e313174244cf13ed89b53893ea5900e2828
---- /dev/null
-+++ b/src/main/java/gg/pufferfish/pufferfish/flare/collectors/TPSCollector.java
-@@ -0,0 +1,31 @@
-+package gg.pufferfish.pufferfish.flare.collectors;
-+
-+import co.technove.flare.live.CollectorData;
-+import co.technove.flare.live.LiveCollector;
-+import co.technove.flare.live.formatter.SuffixFormatter;
-+import gg.pufferfish.pufferfish.flare.CustomCategories;
-+import net.minecraft.server.MinecraftServer;
-+import org.bukkit.Bukkit;
-+
-+import java.time.Duration;
-+import java.util.Arrays;
-+
-+public class TPSCollector extends LiveCollector {
-+    private static final CollectorData TPS = new CollectorData("airplane:tps", "TPS", "Ticks per second, or how fast the server updates. For a smooth server this should be a constant 20TPS.", SuffixFormatter.of("TPS"), CustomCategories.MC_PERF);
-+    private static final CollectorData MSPT = new CollectorData("airplane:mspt", "MSPT", "Milliseconds per tick, which can show how well your server is performing. This value should always be under 50mspt.", SuffixFormatter.of("mspt"), CustomCategories.MC_PERF);
-+
-+    public TPSCollector() {
-+        super(TPS, MSPT);
-+
-+        this.interval = Duration.ofSeconds(5);
-+    }
-+
-+    @Override
-+    public void run() {
-+        long[] times = MinecraftServer.getServer().tickTimes5s.getTimes();
-+        double mspt = ((double) Arrays.stream(times).sum() / (double) times.length) * 1.0E-6D;
-+
-+        this.report(TPS, Math.min(20D, carpetfixes.helpers.FastMath.round(Bukkit.getServer().getTPS()[0] * 100d) / 100d)); // Mirai
-+        this.report(MSPT, (double) carpetfixes.helpers.FastMath.round(mspt * 100d) / 100d); // Mirai
-+    }
-+}
 diff --git a/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java b/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java
 index 463c6d8d5b114816ed9065558285945817c30385..1872fc7c724a3c12d38b9bbac0d8871ad48454a8 100644
 --- a/src/main/java/io/papermc/paper/command/subcommands/FixLightCommand.java
@@ -199,18 +161,18 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index db25654390fc387993b0dbdd992a3d87d11ba4eb..51fba7d5d7865b0408240c15a15a29b67cf4f477 100644
+index baae0a3d5aa31f26fb678fea4ef372de111faea1..8f5ff69d6042c4b4c71960a8084d19c7e7edea7c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2839,7 +2839,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
-                     }
+@@ -2826,7 +2826,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+                 }
  
-                     double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
--                    long extraSleep = (long)Math.round(overuseCount*CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME);
-+                    long extraSleep = (long)carpetfixes.helpers.FastMath.round(overuseCount*CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME); // Mirai
+                 double overuseCount = (double) overuse / (double) MAX_CHUNK_EXEC_TIME;
+-                long extraSleep = (long) Math.round(overuseCount * CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME);
++                long extraSleep = (long) carpetfixes.helpers.FastMath.round(overuseCount * CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME); // Mirai
  
-                     lastMidTickExecute = currTime + extraSleep;
-                     return;
+                 lastMidTickExecute = currTime + extraSleep;
+                 return;
 diff --git a/src/main/java/net/minecraft/server/gui/StatsComponent.java b/src/main/java/net/minecraft/server/gui/StatsComponent.java
 index 88f10d729aa1e0a01790521821d691a0ecd373a2..45b2aa542969798a5a3b73af78de21ccc57bcca1 100644
 --- a/src/main/java/net/minecraft/server/gui/StatsComponent.java
@@ -237,10 +199,10 @@ index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d7
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fde664343f 100644
+index eff44de8bc801e7f0b4c42296075dfbb8cb6a6a1..e81ed6a8c84479d9fde7bdedd83c71237be352ab 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1542,7 +1542,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1541,7 +1541,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              if (this instanceof ServerPlayer) {
                  CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, source, f1, amount, flag);
                  if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -249,7 +211,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                  }
              }
  
-@@ -2116,9 +2116,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2115,9 +2115,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -261,7 +223,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                      }
                  }
              }
-@@ -2230,9 +2230,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2229,9 +2229,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  float f3 = (float) -event.getDamage(DamageModifier.RESISTANCE);
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -273,7 +235,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                      }
                  }
              }
-@@ -2264,7 +2264,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2263,7 +2263,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              float f2 = absorptionModifier;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F && this instanceof net.minecraft.world.entity.player.Player) {
@@ -282,7 +244,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
              }
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
                  Entity entity = damagesource.getEntity();
-@@ -2272,7 +2272,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2271,7 +2271,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  if (entity instanceof ServerPlayer) {
                      ServerPlayer entityplayer = (ServerPlayer) entity;
  
@@ -291,7 +253,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                  }
              }
  
-@@ -2281,7 +2281,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2280,7 +2280,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                      // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                      ((net.minecraft.world.entity.player.Player) this).causeFoodExhaustion(damagesource.getFoodExhaustion(), org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.DAMAGED); // CraftBukkit - EntityExhaustionEvent
                      if (f < 3.4028235E37F) {
@@ -300,7 +262,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                      }
                  }
                  // CraftBukkit end
-@@ -2301,7 +2301,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2300,7 +2300,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                          CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, damagesource, originalDamage, f, true); // Paper - fix taken/dealt param order
                          f2 = (float) -event.getDamage(DamageModifier.BLOCKING);
                          if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -309,7 +271,7 @@ index 5aa56289f6e7d30cdcda2c4af9c654eeebad743a..e6b81a2b5994487fe5aa4145af2198fd
                          }
                      }
  
-@@ -3070,13 +3070,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3069,13 +3069,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
          this.level().getProfiler().push("rangeChecks");
  
          // Paper start - stop large pitch and yaw changes from crashing the server

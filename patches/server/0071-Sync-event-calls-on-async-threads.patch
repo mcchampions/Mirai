@@ -27,10 +27,10 @@ index 3614e8c9f63584fc8e2478c03cee05ad5d7201f3..1197c9323b86f29d98cf195eb91a0750
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index d076b1a4429dcadb01bf2e1a5e09d500baef08d0..92d494894c3dd43fba888105711771c01f2f27a9 100644
+index 0681c720046db860b840c6f7dcdc9655bed9b7f5..04269adfdd0065f1bf00a6570a2cc9b36dc673b6 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -42,7 +42,7 @@ class PaperEventManager {
+@@ -41,7 +41,7 @@ class PaperEventManager {
              throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
          } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
              // Mirai start
