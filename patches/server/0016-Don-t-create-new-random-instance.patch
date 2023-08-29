@@ -3,15 +3,14 @@ From: foss-mc <69294560+foss-mc@users.noreply.github.com>
 Date: Thu, 1 Jul 2021 12:17:44 +0000
 Subject: [PATCH] Don't create new random instance
 
-// TODO - uses Gale's version
 Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 9d46536f80b5b3e6641fd377c02166a431edfd77..a223553120e622be8fba79adad2924a4ab042ab0 100644
+index b382da838acc04a1c5d89064b4fa43bcdd38ae71..3397d9d742dd188950500cf4872eef6c0a249521 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -440,7 +440,7 @@ public class ServerPlayer extends Player {
+@@ -441,7 +441,7 @@ public class ServerPlayer extends Player {
              long l = k * k;
              int i1 = l > 2147483647L ? Integer.MAX_VALUE : (int) l;
              int j1 = this.getCoprime(i1);
@@ -20,7 +19,7 @@ index 9d46536f80b5b3e6641fd377c02166a431edfd77..a223553120e622be8fba79adad2924a4
  
              for (int l1 = 0; l1 < i1; ++l1) {
                  int i2 = (k1 + j1 * l1) % i1;
-@@ -477,7 +477,7 @@ public class ServerPlayer extends Player {
+@@ -478,7 +478,7 @@ public class ServerPlayer extends Player {
              long l = k * k;
              int i1 = l > 2147483647L ? Integer.MAX_VALUE : (int) l;
              int j1 = this.getCoprime(i1);

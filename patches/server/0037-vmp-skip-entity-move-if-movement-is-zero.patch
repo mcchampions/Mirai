@@ -3,12 +3,11 @@ From: ishland <ishlandmc@yeah.net>
 Date: Sun, 12 Dec 2021 17:19:00 -0500
 Subject: [PATCH] vmp: skip entity move if movement is zero
 
-// TODO - uses Gale's version
 Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index bac4aec61de34e693f23cae0db5ac003bf1d1172..d590872e9e8e6a7b495ea7148e06213682bbb563 100644
+index 1442e2ec8cee8ef5238a521c99173fa7defaa78e..8c3d19f0ab928380a2f9ecabf14029db071133e4 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -314,6 +314,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -19,7 +18,7 @@ index bac4aec61de34e693f23cae0db5ac003bf1d1172..d590872e9e8e6a7b495ea7148e062136
      public boolean onGround;
      public boolean horizontalCollision;
      public boolean verticalCollision;
-@@ -1100,6 +1101,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1102,6 +1103,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -32,7 +31,7 @@ index bac4aec61de34e693f23cae0db5ac003bf1d1172..d590872e9e8e6a7b495ea7148e062136
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
          synchronized (this.posLock) {
-@@ -4002,6 +4009,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4004,6 +4011,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public final void setBoundingBox(AABB boundingBox) {

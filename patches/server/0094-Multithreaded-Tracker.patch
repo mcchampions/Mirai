@@ -253,10 +253,10 @@ index 1e380c5ab6902495a610839e4f95b4176157bece..24d1962d42fc29e3f8710a36e7c86328
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682f0dd9a11 100644
+index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f353b2ec2 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1249,8 +1249,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1268,8 +1268,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
@@ -293,7 +293,7 @@ index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682
          this.level.timings.tracker1.startTiming();
          try {
              for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -1428,11 +1456,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1447,11 +1475,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -308,7 +308,7 @@ index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -1444,7 +1472,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1463,7 +1491,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -317,7 +317,7 @@ index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1486,14 +1514,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1505,14 +1533,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcast(Packet<?> packet) {
@@ -335,7 +335,7 @@ index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682
          }
  
          public void broadcastAndSend(Packet<?> packet) {
-@@ -1505,18 +1531,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1524,18 +1550,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcastRemoved() {
@@ -358,7 +358,7 @@ index 1b92773a5dd742523b412592edba70d44c10d575..7330b5c345df642dc65417cc78df8682
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1524,7 +1548,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1543,7 +1567,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
@@ -381,7 +381,7 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..c4d6d5be09c788bbc062c50d8547538e
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 4269e06ee2deee8eeec8fde8e0c9215eca883d5b..698148b1c82d0f4e62d40ef192c20d6e17332117 100644
+index c82fb99fd47cc243e7e4e673377139370cb12085..f594ebd4c980f9e1ac98cbcdbfc3cc9c77e7167e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -294,7 +294,11 @@ public class ServerEntity {

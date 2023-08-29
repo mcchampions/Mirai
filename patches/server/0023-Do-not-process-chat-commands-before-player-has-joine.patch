@@ -7,15 +7,11 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 161f890ce8b29b3cf202b64ea6fb9103e72be865..f875f6e79354fe979154539166a526b175ae482a 100644
+index 8cc8faeadb93800c487a79a8bebfc76002817f27..21c6dde6f60b53f93132a14ac90d2b3274300876 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2377,9 +2377,10 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
-         if (!this.updateChatOrder(timestamp)) {
-             ServerGamePacketListenerImpl.LOGGER.warn("{} sent out-of-order chat: '{}': {} > {}", this.player.getName().getString(), message, this.lastChatTimeStamp.get().getEpochSecond(), timestamp.getEpochSecond()); // Paper
-             this.server.scheduleOnMain(() -> { // Paper - push to main
--            this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
-+                this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
+@@ -2392,6 +2392,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+             this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event ca
              }); // Paper - push to main
              return Optional.empty();
 +        } else if (player.joining) { return Optional.empty(); // EMC - do not handle chat messages before they joined

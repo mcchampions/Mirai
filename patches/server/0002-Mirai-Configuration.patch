@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 9c0dfacfd4d65bef88ace90a4a10a74f0f8f12b4..8945313e5681b1919945ebc2f65f4bdcf3716cc6 100644
+index df9438c45b127d3a28f3c0d30bc819399298a9ed..4a277b7fe8213149a8c5def25c50bffaf5624d22 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -57,10 +57,12 @@ dependencies {
@@ -15,7 +15,7 @@ index 9c0dfacfd4d65bef88ace90a4a10a74f0f8f12b4..8945313e5681b1919945ebc2f65f4bdc
 -    implementation("org.yaml:snakeyaml:1.32")
 -    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
 +    // Mirai start
-+    implementation("org.yaml:snakeyaml:2.0")
++    implementation("org.yaml:snakeyaml:2.1")
 +    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
          exclude(group="org.yaml", module="snakeyaml")
      }

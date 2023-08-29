@@ -3,7 +3,6 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Wed, 29 Jun 2022 02:17:00 +0200
 Subject: [PATCH] Optimize `Math.round` and `Math.hypot` functions
 
-// TODO - needs to add more `Math.hypot` opt
 Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
@@ -176,7 +175,7 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b02f15a069ed0aeeac10b66181dc36261ac63520..2aee3ab7d5eb3ae0bbfc84da053d823f4aa3b09f 100644
+index 76256719b29541feac4c272c84ac70c73ccc153d..7eb4e7b5a278f23438c1caf9b16503946ae9ccaa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -2812,7 +2812,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab

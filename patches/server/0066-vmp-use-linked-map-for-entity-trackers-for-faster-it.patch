@@ -7,7 +7,7 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 68ac88b150ae5fa5e18958a5e2a83b00a26258ae..1b92773a5dd742523b412592edba70d44c10d575 100644
+index 3770ced0b227f7eea1f04d6afd5c14331f6a1480..04d53753a646e2286776af0d8b0ea6bec339457a 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -116,6 +116,7 @@ import org.bukkit.entity.Player;

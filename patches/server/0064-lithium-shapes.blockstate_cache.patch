@@ -73,7 +73,7 @@ index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 1743b92f9cc985e1aa29f7c5daf857cf324d1d6d..be6666b9dde4958ea02791f67f048d5dbcbb3162 100644
+index 3ef481092b9d1c91e8edcbaee71d141a289a73be..0aa18451e7ab16f7166578474b4394b684ff1e77 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -61,17 +61,19 @@ import net.minecraft.world.phys.shapes.BooleanOp;
