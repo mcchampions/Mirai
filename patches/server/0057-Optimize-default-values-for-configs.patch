@@ -6,10 +6,10 @@ Subject: [PATCH] Optimize default values for configs
 // TODO - needs update
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index d7f541d94941a341a70dfac025a3d3601dd1aca8..f8e554017522454a4b97ff1aaf3394eab714c059 100644
+index 019d3bbd78fb0b06861979d223915fedb6c99442..6893d8fa4e0f7e83dedc2beb11f5416932446dfc 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-@@ -50,9 +50,10 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -89,9 +89,10 @@ public class GlobalConfiguration extends ConfigurationPart {
      public Timings timings;
  
      public class Timings extends ConfigurationPart.Post {
@@ -22,23 +22,20 @@ index d7f541d94941a341a70dfac025a3d3601dd1aca8..f8e554017522454a4b97ff1aaf3394ea
          public boolean serverNamePrivacy = false;
          public List<String> hiddenConfigEntries = List.of(
              "database",
-@@ -272,9 +273,9 @@ public class GlobalConfiguration extends ConfigurationPart {
-         public boolean fixEntityPositionDesync = true;
-         public boolean loadPermissionsYmlBeforePlugins = true;
+@@ -313,7 +314,7 @@ public class GlobalConfiguration extends ConfigurationPart {
          @Constraints.Min(4)
--        public int regionFileCacheSize = 256;
-+        public int regionFileCacheSize = 512; // Mirai - optimize default values for configs
+         public int regionFileCacheSize = 256;
          @Comment("See https://luckformula.emc.gs")
 -        public boolean useAlternativeLuckFormula = false;
 +        public boolean useAlternativeLuckFormula = true; // Mirai - optimize default values for configs
-         public boolean lagCompensateBlockBreaking = true;
          public boolean useDimensionTypeForCustomSpawners = false;
          public boolean strictAdvancementDimensionCheck = false;
+     }
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a46da3d7ef 100644
+index da7c899fbab162ee197a0593f455ebd9c5286d3c..41094db9d61b24ef15106bec43e3dc3e314b124d 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-@@ -117,8 +117,8 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -120,8 +120,8 @@ public class WorldConfiguration extends ConfigurationPart {
          public ArmorStands armorStands;
  
          public class ArmorStands extends ConfigurationPart {
@@ -49,7 +46,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
          }
  
          public Markers markers;
-@@ -209,7 +209,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -219,7 +219,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
          public class Behavior extends ConfigurationPart {
              public boolean disableChestCatDetection = false;
@@ -58,7 +55,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
              public int experienceMergeMaxValue = -1;
              public boolean shouldRemoveDragon = false;
              public boolean zombiesTargetTurtleEggs = true;
-@@ -256,7 +256,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -266,7 +266,7 @@ public class WorldConfiguration extends ConfigurationPart {
              public int playerInsomniaStartTicks = 72000;
              public int phantomsSpawnAttemptMinSeconds = 60;
              public int phantomsSpawnAttemptMaxSeconds = 119;
@@ -67,7 +64,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
              public double zombieVillagerInfectionChance = -1.0;
              public MobsCanAlwaysPickUpLoot mobsCanAlwaysPickUpLoot;
  
-@@ -266,7 +266,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -276,7 +276,7 @@ public class WorldConfiguration extends ConfigurationPart {
              }
  
              public boolean disablePlayerCrits = false;
@@ -76,7 +73,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
              public PillagerPatrols pillagerPatrols;
  
              public class PillagerPatrols extends ConfigurationPart {
-@@ -325,7 +325,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -371,7 +371,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Environment extends ConfigurationPart {
          public boolean disableThunder = false;
          public boolean disableIceAndSnow = false;
@@ -85,7 +82,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
          public boolean disableExplosionKnockback = false;
          public boolean generateFlatBedrock = false;
          public FrostedIce frostedIce;
-@@ -371,7 +371,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -417,7 +417,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Maps extends ConfigurationPart {
          public int itemFrameCursorLimit = 128;
@@ -94,7 +91,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
      }
  
      public Fixes fixes;
-@@ -397,7 +397,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -443,7 +443,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Hopper extends ConfigurationPart {
          public boolean cooldownWhenFull = true;
          public boolean disableMoveEvent = false;
@@ -103,7 +100,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
      }
  
      public Collisions collisions;
-@@ -405,9 +405,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -451,9 +451,9 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Collisions extends ConfigurationPart {
          public boolean onlyPlayersCollide = false;
          public boolean allowVehicleCollisions = true;
@@ -115,7 +112,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
          public boolean allowPlayerCrammingDamage = false;
      }
  
-@@ -415,18 +415,32 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -461,18 +461,32 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Chunks extends ConfigurationPart {
          public AutosavePeriod autoSaveInterval = AutosavePeriod.def();
@@ -157,7 +154,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
          });
          public boolean flushRegionsOnSave = false;
      }
-@@ -441,11 +455,22 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -487,11 +501,22 @@ public class WorldConfiguration extends ConfigurationPart {
      public TickRates tickRates;
  
      public class TickRates extends ConfigurationPart {
@@ -185,7 +182,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
      }
  
      @Setting(FeatureSeedsGeneration.FEATURE_SEEDS_KEY)
-@@ -453,7 +478,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -499,7 +524,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class FeatureSeeds extends ConfigurationPart.Post {
          @Setting(FeatureSeedsGeneration.GENERATE_KEY)
@@ -194,7 +191,7 @@ index d47c57afafc01e25b965f1844938b2516a7bd031..a18f6406819a1f60e2c25581020c05a4
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -467,9 +492,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -513,9 +538,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;

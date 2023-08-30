@@ -277,7 +277,7 @@ index dae36c6452ccd57a436dd918547b64d59957ab0a..3586ecbf649fad6dddc7980244628b65
          OptionSpec<Integer> optionspec11 = optionparser.accepts("port").withRequiredArg().ofType(Integer.class).defaultsTo(-1, new Integer[0]);
          OptionSpec<String> optionspec12 = optionparser.accepts("serverId").withRequiredArg();
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 52429c3f20d643eb6e1568cbe39df0e8310ec9df..9a176c6bd2ed1035cd340a0a2174ae03253eb4d9 100644
+index fb11b020d52988360562db23d8568e5ef37e21c8..441198f4faf8929d8d37926fc790cd3893c36085 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -332,7 +332,7 @@ public class ServerEntity {
@@ -312,7 +312,7 @@ index 221d1d0e1b4b46de6ebca5faac09bbda875fae17..851406e01abd20a592423163db0120c7
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index ac70ab790f73e35fd5ec880f5a884da935d8cd7b..8e9c0b986596c75c6f0c714e0f0f0ba47b9ba65b 100644
+index 9cc3ab8cd3f7ab7f8fbf4d9d14f25ea0bd757eec..66d34244db7d82e46743722ba817a1765f4ad0a8 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -436,7 +436,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -358,10 +358,10 @@ index 01d5fa265fb2818465b5a71a2e2efeec751a7a05..795c905fd67d4677bdfea5259116f4ba
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 19b14045b07d0f374129059fc572b7f345973c5d..92085c896ff3f91631bc5849f33fbc069a1ed2dc 100644
+index 824f31b68b38f2f8642fb9d59a123cfdaffbb7b2..ecf67a978aac5620ee3167cb9f37341fd05902ca 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -702,7 +702,7 @@ public abstract class PlayerList {
+@@ -710,7 +710,7 @@ public abstract class PlayerList {
          while (iterator.hasNext()) {
              entityplayer = (ServerPlayer) iterator.next();
              this.save(entityplayer); // CraftBukkit - Force the player's inventory to be saved
@@ -421,10 +421,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 0b08cf7b26731ffd6f3909342f4e3a92fe0c813e..1b2acd42264522a7409898b3787646bc64fdf6de 100644
+index 4cd04661b39a7055f5767a3dff88f9a3e197d810..06b117c0e3e0adcf4f86c89fcddce4da8bc1b706 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3167,7 +3167,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3172,7 +3172,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -500,10 +500,10 @@ index 7e68596e28db88213e9352f798c5a4ce37cc5656..b9743317d8f8fc5b452fea5bd2f47094
              k = aenumitemslot.length;
  
 diff --git a/src/main/java/net/minecraft/world/item/crafting/ShapedRecipe.java b/src/main/java/net/minecraft/world/item/crafting/ShapedRecipe.java
-index 9c1285e31d947f92e0b00149e342e793898e0d7c..ed0129909f6e23fb8c3c455c1349bb98462e53a2 100644
+index 6693dd51440da3f0fc338c4e2cb67d3222eed182..48308e6036eaf4caee3b0bb6c7952f388be0ee42 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/ShapedRecipe.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/ShapedRecipe.java
-@@ -262,7 +262,7 @@ public class ShapedRecipe implements CraftingRecipe {
+@@ -263,7 +263,7 @@ public class ShapedRecipe extends io.papermc.paper.inventory.recipe.RecipeBookEx
          }
  
          if (pattern.length == l) {
