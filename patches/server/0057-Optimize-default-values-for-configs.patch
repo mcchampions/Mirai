@@ -6,7 +6,7 @@ Subject: [PATCH] Optimize default values for configs
 // TODO - needs update
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
-index 019d3bbd78fb0b06861979d223915fedb6c99442..6893d8fa4e0f7e83dedc2beb11f5416932446dfc 100644
+index 019d3bbd78fb0b06861979d223915fedb6c99442..6845f8ca61cde2c8b87c133afe6001d53bff49b5 100644
 --- a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 @@ -89,9 +89,10 @@ public class GlobalConfiguration extends ConfigurationPart {
@@ -22,9 +22,12 @@ index 019d3bbd78fb0b06861979d223915fedb6c99442..6893d8fa4e0f7e83dedc2beb11f54169
          public boolean serverNamePrivacy = false;
          public List<String> hiddenConfigEntries = List.of(
              "database",
-@@ -313,7 +314,7 @@ public class GlobalConfiguration extends ConfigurationPart {
+@@ -311,9 +312,9 @@ public class GlobalConfiguration extends ConfigurationPart {
+         public boolean fixEntityPositionDesync = true;
+         public boolean loadPermissionsYmlBeforePlugins = true;
          @Constraints.Min(4)
-         public int regionFileCacheSize = 256;
+-        public int regionFileCacheSize = 256;
++        public int regionFileCacheSize = 512; // Mirai - optimize default values for configs
          @Comment("See https://luckformula.emc.gs")
 -        public boolean useAlternativeLuckFormula = false;
 +        public boolean useAlternativeLuckFormula = true; // Mirai - optimize default values for configs
