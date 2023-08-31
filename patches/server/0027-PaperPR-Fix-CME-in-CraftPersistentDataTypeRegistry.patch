@@ -7,13 +7,13 @@ Original code by PaperMC, licensed under GPL v3
 You can find the original code on https://github.com/PaperMC/Paper/pull/8425
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
-index 579d7510f1a2a4de3d3b1aa921ef8462e8780d39..08df05c03a11ce21706def78a9117fce4e503509 100644
+index b851581103c72c9a9eb2b3cdd783fca1ee34bed3..bba1fd311904f3f0a8b50e5bf596a909a15b8233 100644
 --- a/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
 +++ b/src/main/java/org/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry.java
 @@ -90,6 +90,15 @@ public final class CraftPersistentDataTypeRegistry {
      }
  
-     private final Map<Class, TagAdapter> adapters = new HashMap<>();
+     private final Map<Class, TagAdapter> adapters = new java.util.concurrent.ConcurrentHashMap<>(); // Paper - Replace HashMap with ConcurrentHashMap to avoid CME
 +    // Paper start - Fix CME
 +    private TagAdapter getAdapter(Class type) {
 +        TagAdapter adapter = this.adapters.get(type);
