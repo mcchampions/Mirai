@@ -7,7 +7,7 @@ Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bc6ce0731b4db20c2913a2cac3ec19813ee76620..1f3bd9b69186fbd9cd38af724694e4ccce942e3b 100644
+index 03c74d95b6fb3804be9d7f1d9030025b678b9704..9207a8014e83e2d3f9f880f96fe21f766702819c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -194,7 +194,7 @@ import org.bukkit.event.server.ServerLoadEvent;
@@ -19,7 +19,7 @@ index bc6ce0731b4db20c2913a2cac3ec19813ee76620..1f3bd9b69186fbd9cd38af724694e4cc
  
      private static MinecraftServer SERVER; // Paper
      public static final Logger LOGGER = LogUtils.getLogger();
-@@ -1295,19 +1295,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1294,19 +1294,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      @Override
@@ -43,7 +43,7 @@ index bc6ce0731b4db20c2913a2cac3ec19813ee76620..1f3bd9b69186fbd9cd38af724694e4cc
  
      @Override
      public boolean pollTask() {
-@@ -1339,10 +1341,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1338,10 +1340,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
      }
  

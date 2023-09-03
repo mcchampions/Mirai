@@ -29,10 +29,10 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1f3bd9b69186fbd9cd38af724694e4ccce942e3b..76256719b29541feac4c272c84ac70c73ccc153d 100644
+index 9207a8014e83e2d3f9f880f96fe21f766702819c..2763d27cd589dab39b24771d04826b1a3f98eb84 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -303,7 +303,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -302,7 +302,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      public static final int TPS = 20;
      public static final int TICK_TIME = 1000000000 / MinecraftServer.TPS;
      private static final int SAMPLE_INTERVAL = 20; // Paper
@@ -41,7 +41,7 @@ index 1f3bd9b69186fbd9cd38af724694e4ccce942e3b..76256719b29541feac4c272c84ac70c7
      // Spigot end
      public final io.papermc.paper.configuration.PaperConfigurations paperConfigurations;
      public static long currentTickLong = 0L; // Paper
-@@ -1048,6 +1048,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1047,6 +1047,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      private static final long MAX_CATCHUP_BUFFER = TICK_TIME * TPS * 60L;
      private long lastTick = 0;
      private long catchupTime = 0;
@@ -49,7 +49,7 @@ index 1f3bd9b69186fbd9cd38af724694e4ccce942e3b..76256719b29541feac4c272c84ac70c7
      public final RollingAverage tps1 = new RollingAverage(60);
      public final RollingAverage tps5 = new RollingAverage(60 * 5);
      public final RollingAverage tps15 = new RollingAverage(60 * 15);
-@@ -1149,13 +1150,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1148,13 +1149,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                  {
                      final long diff = curTime - tickSection;
                      java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);

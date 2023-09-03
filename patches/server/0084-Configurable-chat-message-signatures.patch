@@ -74,10 +74,10 @@ index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 13b191851347eebb9dc74f77e8f2491a8049a7a6..b521d87b6b8e973286c5a29b0e2f70d1dfa47b6b 100644
+index 9925622fed8bfb376bf9312ee5199fa5a90d083f..d8116647f37cf54d7cca2e8e0b9025c6baf58826 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -642,6 +642,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -641,6 +641,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {

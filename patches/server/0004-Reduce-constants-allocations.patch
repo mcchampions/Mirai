@@ -420,10 +420,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index e9a31314424d9db911cd9806741222397c3072d7..1b5f0422ecbe838ebbce50a9623b15c23d0dd724 100644
+index e07140ef2f4c5b0019550eb3100c724699e7a05c..68392433b24bf4457a965ad9b042c234c591727a 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3102,7 +3102,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3106,7 +3106,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;

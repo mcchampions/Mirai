@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4ae904bff01aee247d2cacb4871a39e9ca5db714..bc6ce0731b4db20c2913a2cac3ec19813ee76620 100644
+index 4cedfae378517ce994ff0c2338f8430568b926d5..03c74d95b6fb3804be9d7f1d9030025b678b9704 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1096,6 +1096,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1095,6 +1095,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
@@ -18,7 +18,7 @@ index 4ae904bff01aee247d2cacb4871a39e9ca5db714..bc6ce0731b4db20c2913a2cac3ec1981
  
      protected void runServer() {
          try {
-@@ -1170,7 +1171,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1169,7 +1170,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTime += 50L;
                  this.startMetricsRecordingTick();
                  this.profiler.push("tick");
