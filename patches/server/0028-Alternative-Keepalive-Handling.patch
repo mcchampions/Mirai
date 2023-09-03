@@ -24,7 +24,7 @@ index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..4c00c3e3690f20592e504660d7e60457
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a7bf16e06f5915225c2a7dbd55bd12c6290376d0..ac5f4f809a5827c5ecf51aea08bf67a2c09d072b 100644
+index a7bf16e06f5915225c2a7dbd55bd12c6290376d0..d9fbf5af7bb7cea1d81ede11915615f0769e66f0 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -267,6 +267,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -42,7 +42,7 @@ index a7bf16e06f5915225c2a7dbd55bd12c6290376d0..ac5f4f809a5827c5ecf51aea08bf67a2
 +        // Purpur start
 +        if (dev.etil.mirai.MiraiConfig.useAlternateKeepAlive) {
 +            if (elapsedTime >= 1000L) { // 1 second
-+                if (!processedDisconnect && keepAlives.size() > KEEPALIVE_LIMIT) {
++                if (!processedDisconnect && keepAlives.size() * 1000L >= KEEPALIVE_LIMIT) {
 +                    LOGGER.warn("{} was kicked due to keepalive timeout!", this.player.getScoreboardName());
 +                    disconnect(Component.translatable("disconnect.timeout"), org.bukkit.event.player.PlayerKickEvent.Cause.TIMEOUT);
 +                } else {
