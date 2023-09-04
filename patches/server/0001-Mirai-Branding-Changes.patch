@@ -226,7 +226,7 @@ index 3cb56595822799926a8141e60a42f5d1edfc6de5..6db7517011ac94532751a88db951d28d
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf1118fe6454
+index 0000000000000000000000000000000000000000..91bdb316b7f04f005b30da34e13b6f19b718d5c4
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 @@ -0,0 +1,136 @@
@@ -263,7 +263,7 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +    private static final HttpClient client = HttpClient.newHttpClient();
 +
 +    private static final URI JENKINS_URI = URI.create("https://ci.codemc.io/job/etil2jz/job/Mirai-1.19/lastSuccessfulBuild/buildNumber");
-+    private static final String GITHUB_FORMAT = "https://api.github.com/repos/etil2jz/Mirai/compare/ver/1.19.1...%s";
++    private static final String GITHUB_FORMAT = "https://api.github.com/repos/Dreeam-qwq/Mirai/compare/purpur/1.20.1...%s";
 +
 +    private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers
 +            .mapping(
@@ -366,7 +366,6 @@ index 0000000000000000000000000000000000000000..7be6bb03891e0831ad72e581900fdf11
 +        return Component.text("Previous version: " + oldVersion, NamedTextColor.GRAY, TextDecoration.ITALIC);
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index e6ddf69ade7ae51640569150f7db10d1afa63691..df1054126366f7fef886465d5455c7555f9c2e73 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java

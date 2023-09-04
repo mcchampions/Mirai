@@ -3,7 +3,6 @@ From: foss-mc <69294560+foss-mc@users.noreply.github.com>
 Date: Thu, 1 Jul 2021 12:17:44 +0000
 Subject: [PATCH] Don't create new random instance
 
-// TODO - uses Gale's version
 Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 

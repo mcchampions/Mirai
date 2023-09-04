@@ -3,7 +3,6 @@ From: Simon Gardling <titaniumtown@gmail.com>
 Date: Tue, 9 Nov 2021 16:53:39 -0500
 Subject: [PATCH] Reduce constants allocations
 
-// TODO - uses Gale's version
 Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
@@ -421,10 +420,10 @@ index 97ff19efa0b3943ccb7a6e02cba6ed2fea61adac..b794840ab8f062d3f4f086baeb70cd3f
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 4cd04661b39a7055f5767a3dff88f9a3e197d810..06b117c0e3e0adcf4f86c89fcddce4da8bc1b706 100644
+index b84e921d539e300b60b8735cb4f1087d32fa2d41..f6ae27a361cffabebdc1b8644ef994b37bd4727d 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3172,7 +3172,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3171,7 +3171,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;

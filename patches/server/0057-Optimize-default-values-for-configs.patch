@@ -3,7 +3,6 @@ From: etil2jz <81570777+etil2jz@users.noreply.github.com>
 Date: Sun, 8 May 2022 13:13:02 +0200
 Subject: [PATCH] Optimize default values for configs
 
-// TODO - needs update
 
 diff --git a/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java b/src/main/java/io/papermc/paper/configuration/GlobalConfiguration.java
 index 019d3bbd78fb0b06861979d223915fedb6c99442..6845f8ca61cde2c8b87c133afe6001d53bff49b5 100644
@@ -35,7 +34,7 @@ index 019d3bbd78fb0b06861979d223915fedb6c99442..6845f8ca61cde2c8b87c133afe6001d5
          public boolean strictAdvancementDimensionCheck = false;
      }
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index da7c899fbab162ee197a0593f455ebd9c5286d3c..41094db9d61b24ef15106bec43e3dc3e314b124d 100644
+index da7c899fbab162ee197a0593f455ebd9c5286d3c..ff1da162892c83253532448e08140ec03b07ce0d 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -120,8 +120,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -67,15 +66,6 @@ index da7c899fbab162ee197a0593f455ebd9c5286d3c..41094db9d61b24ef15106bec43e3dc3e
              public double zombieVillagerInfectionChance = -1.0;
              public MobsCanAlwaysPickUpLoot mobsCanAlwaysPickUpLoot;
  
-@@ -276,7 +276,7 @@ public class WorldConfiguration extends ConfigurationPart {
-             }
- 
-             public boolean disablePlayerCrits = false;
--            public boolean nerfPigmenFromNetherPortals = false;
-+            public boolean nerfPigmenFromNetherPortals = true; // Mirai - optimize default values for configs
-             public PillagerPatrols pillagerPatrols;
- 
-             public class PillagerPatrols extends ConfigurationPart {
 @@ -371,7 +371,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Environment extends ConfigurationPart {
          public boolean disableThunder = false;

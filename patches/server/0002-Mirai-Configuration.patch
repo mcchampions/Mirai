@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 70841ca2854d4eafc8714bc7c6363e4e375e6f81..dcf811fba4f83e54cc64abc2956dfc16acd134d8 100644
+index 53e2e36b4778e11889b1eec5069aedcb3063dbf8..9449c8ce795faf20ede06e1c4514c7f038955c13 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -61,10 +61,12 @@ dependencies {
@@ -15,7 +15,7 @@ index 70841ca2854d4eafc8714bc7c6363e4e375e6f81..dcf811fba4f83e54cc64abc2956dfc16
 -    implementation("org.yaml:snakeyaml:1.32")
 -    implementation ("com.github.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
 +    // Mirai start
-+    implementation("org.yaml:snakeyaml:2.0")
++    implementation("org.yaml:snakeyaml:2.1")
 +    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
          exclude(group="org.yaml", module="snakeyaml")
      }
@@ -263,7 +263,7 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 12124d6fbc0406bb62bd95a0f7bab68afa43377c..f4e15e8d9db4c9fd1a19909b0574080942ae8027 100644
+index 2a70abb9e0af502885593df1e732887cd9d2ce4d..034883a2bfbf34b05846e632f19dadce3f1ed961 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -234,7 +234,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
