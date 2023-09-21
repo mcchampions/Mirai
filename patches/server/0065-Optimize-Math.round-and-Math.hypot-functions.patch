@@ -199,7 +199,7 @@ index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d7
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 7593846b6ac76c0f8511a7fb4d91dd286f280a2d..dfc2eacd4d8d8a127b9895f2d186923a7b034e33 100644
+index ba8bbed34a19d96c5b19b7195096baefb0af2baf..5f0fb5a051d8da23f680e3551c8d76691dc50d7c 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -1581,7 +1581,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -400,10 +400,10 @@ index eb4386503db45aa6cad8f4b56896da3f0f55bfdb..4b0aa4e2f4c92abbcd748c5ca1575a5a
                  e.printStackTrace();
                  toDrop = experienceLevel * 7;
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 134b5758e5c6335a52ffb2703c3fa98dc792948e..963a84ff36ad89990c5dcd162931af132cf9a9b7 100644
+index b0a559dfefac693bda8692a30fbaa5ac8062ef27..62a3bda9ba6b9bbc96a42b85c0661072eb2e3895 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -292,7 +292,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+@@ -299,7 +299,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      }
  
      protected static float lerpRotation(float prevRot, float newRot) {
