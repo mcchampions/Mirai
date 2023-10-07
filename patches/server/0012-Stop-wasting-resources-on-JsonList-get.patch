@@ -7,28 +7,22 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e0f6d44dba6d216439baf000b8db5d9932f5498d..a4feb6400e345098e5419fb24322775bfe4d2fac 100644
+index 0a9dbca9847c048b3bf5e67146df2d49d2341903..7926ad7e1815c35f4ac4a56cb87f41266316a01b 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -733,13 +733,19 @@ public abstract class PlayerList {
+@@ -720,6 +720,8 @@ public abstract class PlayerList {
          if (getBans().isBanned(gameprofile) && (gameprofilebanentry = getBans().get(gameprofile)) != null) {
              // Paper end
  
--            ichatmutablecomponent = Component.translatable("multiplayer.disconnect.banned.reason", gameprofilebanentry.getReason());
--            if (gameprofilebanentry.getExpires() != null) {
--                ichatmutablecomponent.append((Component) Component.translatable("multiplayer.disconnect.banned.expiration", PlayerList.BAN_DATE_FORMAT.format(gameprofilebanentry.getExpires())));
--            }
 +            // Yatopia start - Stop wasting resources on JsonList#get
 +            if (!gameprofilebanentry.hasExpired()) {
-+                ichatmutablecomponent = Component.translatable("multiplayer.disconnect.banned.reason", gameprofilebanentry.getReason());
-+                if (gameprofilebanentry.getExpires() != null) {
-+                    ichatmutablecomponent.append((Component) Component.translatable("multiplayer.disconnect.banned.expiration", PlayerList.BAN_DATE_FORMAT.format(gameprofilebanentry.getExpires())));
-+                }
+             ichatmutablecomponent = Component.translatable("multiplayer.disconnect.banned.reason", gameprofilebanentry.getReason());
+             if (gameprofilebanentry.getExpires() != null) {
+                 ichatmutablecomponent.append((Component) Component.translatable("multiplayer.disconnect.banned.expiration", PlayerList.BAN_DATE_FORMAT.format(gameprofilebanentry.getExpires())));
+@@ -727,6 +729,10 @@ public abstract class PlayerList {
  
--            // return chatmessage;
--            event.disallow(PlayerLoginEvent.Result.KICK_BANNED, PaperAdventure.asAdventure(ichatmutablecomponent)); // Paper - Adventure
-+                // return chatmessage;
-+                event.disallow(PlayerLoginEvent.Result.KICK_BANNED, PaperAdventure.asAdventure(ichatmutablecomponent)); // Paper - Adventure
+             // return chatmessage;
+             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, io.papermc.paper.adventure.PaperAdventure.asAdventure(ichatmutablecomponent)); // Paper - Adventure
 +            } else {
 +                getBans().remove(gameprofile);
 +            }
@@ -37,7 +31,7 @@ index e0f6d44dba6d216439baf000b8db5d9932f5498d..a4feb6400e345098e5419fb24322775b
              //ichatmutablecomponent = Component.translatable("multiplayer.disconnect.not_whitelisted"); // Paper
              //event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(org.spigotmc.SpigotConfig.whitelistMessage)); // Spigot // Paper - Adventure - moved to isWhitelisted
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
-index b2893b21f79f84002a518252f76ce28b801a94c3..c246a62f5673aa563e9a69a247b376839db1859e 100644
+index c9671a76142dd900957f365d1e3fb910c0a3fb9a..37ac9b04e875f373fdb1d83b31b6da1ee823a603 100644
 --- a/src/main/java/net/minecraft/server/players/StoredUserList.java
 +++ b/src/main/java/net/minecraft/server/players/StoredUserList.java
 @@ -74,9 +74,12 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {

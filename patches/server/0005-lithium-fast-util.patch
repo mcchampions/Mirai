@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/core/Direction.java b/src/main/java/net/minecraft/core/Direction.java
-index defe5951938ce3a7b7f83017d4af36bb49ff5be0..66d583d7d6678110996377bddc1e81e50fe43372 100644
+index b805e57d5a67d77d226cd8154e970050e2e8ef4a..4cbe84a009b4e2597176c470a606c586d5a75879 100644
 --- a/src/main/java/net/minecraft/core/Direction.java
 +++ b/src/main/java/net/minecraft/core/Direction.java
-@@ -182,7 +182,7 @@ public enum Direction implements StringRepresentable {
+@@ -197,7 +197,7 @@ public enum Direction implements StringRepresentable {
      }
  
      public Direction getOpposite() {
@@ -19,7 +19,7 @@ index defe5951938ce3a7b7f83017d4af36bb49ff5be0..66d583d7d6678110996377bddc1e81e5
      }
  
      public Direction getClockWise(Direction.Axis axis) {
-@@ -463,7 +463,7 @@ public enum Direction implements StringRepresentable {
+@@ -478,7 +478,7 @@ public enum Direction implements StringRepresentable {
      }
  
      public static Direction getRandom(RandomSource random) {
@@ -29,7 +29,7 @@ index defe5951938ce3a7b7f83017d4af36bb49ff5be0..66d583d7d6678110996377bddc1e81e5
  
      public static Direction getNearest(double x, double y, double z) {
 diff --git a/src/main/java/net/minecraft/world/phys/AABB.java b/src/main/java/net/minecraft/world/phys/AABB.java
-index 5b98d42b5d6bc07265fbb017e51a6281c148436a..2e4d12bb4dfc4ac7fec5c09b59e7f59bb8a6ea75 100644
+index 5c70aa2ce1a9e89c8c271201b6755ea1325058ac..61aba78dcdadde403a68878443bd75645ff433ba 100644
 --- a/src/main/java/net/minecraft/world/phys/AABB.java
 +++ b/src/main/java/net/minecraft/world/phys/AABB.java
 @@ -16,6 +16,15 @@ public class AABB {

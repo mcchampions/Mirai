@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/GameRules.java b/src/main/java/net/minecraft/world/level/GameRules.java
-index 6fa00d9239546aa82b9e92e25a33103868084c38..d33f1b047e1f1366a0ab2c5887c32800b8be636c 100644
+index 6639902efb85b4f49f26ba5f90556fb871ef8a0e..64e540548f556e27be2fbaedcbbf7fe561ded7bd 100644
 --- a/src/main/java/net/minecraft/world/level/GameRules.java
 +++ b/src/main/java/net/minecraft/world/level/GameRules.java
 @@ -27,6 +27,7 @@ import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -18,7 +18,7 @@ index 6fa00d9239546aa82b9e92e25a33103868084c38..d33f1b047e1f1366a0ab2c5887c32800
  
  public class GameRules {
  
-@@ -120,14 +121,16 @@ public class GameRules {
+@@ -130,14 +131,16 @@ public class GameRules {
  
      public GameRules() {
          // Paper start - use this to ensure gameruleArray is initialized

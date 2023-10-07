@@ -1,10 +1,10 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Gegy <gegy1000@gmail.com>
-Date: Fri, 21 Jan 2022 10:19:06 -0500
-Subject: [PATCH] lithium: shapes.blockstate_cache
+From: ishland <ishlandmc@yeah.net>
+Date: Sat, 12 Mar 2022 16:03:35 +0100
+Subject: [PATCH] vmp: use linked map for entity trackers for faster iteration
 
-Original code by CaffeineMC, licensed under LGPL v3
-You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
+Original code by RelativityMC, licensed under MIT
+You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/collections/Object2BooleanCacheTable.java b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/Object2BooleanCacheTable.java
 new file mode 100644
@@ -72,8 +72,30 @@ index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c
 +    }
 +}
 \ No newline at end of file
+diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
+index 28fbcd84146445dd0630aeea7c753da2f1a97c49..e426f91a700c6efd9c314ac067b77382abb642a3 100644
+--- a/src/main/java/net/minecraft/server/level/ChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
+@@ -106,6 +106,8 @@ import org.bukkit.craftbukkit.generator.CustomChunkGenerator;
+ import org.bukkit.entity.Player;
+ // CraftBukkit end
+ 
++import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap; // Mirai - vmp: use linked map for entity trackers for faster iteration
++
+ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider {
+ 
+     private static final byte CHUNK_TYPE_REPLACEABLE = -1;
+@@ -214,7 +216,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+         // Paper - rewrite chunk system
+         this.tickingGenerated = new AtomicInteger();
+         this.playerMap = new PlayerMap();
+-        this.entityMap = new Int2ObjectOpenHashMap();
++        this.entityMap = new Int2ObjectLinkedOpenHashMap<>(); // Mirai - vmp: use linked map for entity trackers for faster iteration
+         this.chunkTypeCache = new Long2ByteOpenHashMap();
+         this.chunkSaveCooldowns = new Long2LongOpenHashMap();
+         this.unloadQueue = Queues.newConcurrentLinkedQueue();
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index dd7ab2d05e60dd8f6fd48d251a751d5aa7a4b747..2f19e664aab952dfcfd5d9d827d3512bccba86c8 100644
+index 69d4a3029b5e3ffcfd8ccb637f432ad1cd74997b..dfe9721b233dab6fb045776bde4ddfc60e246cfc 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -61,6 +61,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
@@ -84,30 +106,3 @@ index dd7ab2d05e60dd8f6fd48d251a751d5aa7a4b747..2f19e664aab952dfcfd5d9d827d3512b
  
  // Purpur start
  import net.minecraft.nbt.CompoundTag;
-@@ -74,11 +75,12 @@ public class Block extends BlockBehaviour implements ItemLike {
-     private static final Logger LOGGER = LogUtils.getLogger();
-     private final Holder.Reference<Block> builtInRegistryHolder;
-     public static final IdMapper<BlockState> BLOCK_STATE_REGISTRY = new IdMapper<>();
--    private static final LoadingCache<VoxelShape, Boolean> SHAPE_FULL_BLOCK_CACHE = CacheBuilder.newBuilder().maximumSize(512L).weakKeys().build(new CacheLoader<VoxelShape, Boolean>() {
--        public Boolean load(VoxelShape voxelshape) {
--            return !Shapes.joinIsNotEmpty(Shapes.block(), voxelshape, BooleanOp.NOT_SAME);
--        }
--    });
-+    // JettPack start - lithium: shapes.blockstate_cache
-+    private static final Object2BooleanCacheTable<VoxelShape> FULL_CUBE_CACHE = new Object2BooleanCacheTable<>(
-+            512,
-+            shape -> !Shapes.joinIsNotEmpty(Shapes.block(), shape, BooleanOp.NOT_SAME)
-+    );
-+    // JettPack end
-     public static final int UPDATE_NEIGHBORS = 1;
-     public static final int UPDATE_CLIENTS = 2;
-     public static final int UPDATE_INVISIBLE = 4;
-@@ -288,7 +290,7 @@ public class Block extends BlockBehaviour implements ItemLike {
-     }
- 
-     public static boolean isShapeFullBlock(VoxelShape shape) {
--        return (Boolean) Block.SHAPE_FULL_BLOCK_CACHE.getUnchecked(shape);
-+        return FULL_CUBE_CACHE.get(shape); // JettPack - lithium: shapes.blockstate_cache
-     }
- 
-     public boolean propagatesSkylightDown(BlockState state, BlockGetter world, BlockPos pos) {

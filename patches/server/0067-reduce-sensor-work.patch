@@ -10,10 +10,10 @@ this patch is focused around the sensors used for ai
 delete the line of sight cache less often and use a faster nearby comparison
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 6d92b50b198863a822187d1a9a2f938955e5a74c..6c7ab33840d912f02c942323f35518aafa385e03 100644
+index ed88f7b2be5ed0022bf0adb802c926b75c72d0d9..fea11ce656e5349af2f34d0f144ac90804b97da2 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1037,22 +1037,24 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1038,22 +1038,24 @@ public abstract class LivingEntity extends Entity implements Attackable {
          }
  
          if (entity != null) {
@@ -44,10 +44,10 @@ index 6d92b50b198863a822187d1a9a2f938955e5a74c..6c7ab33840d912f02c942323f35518aa
  
              // Purpur start
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index 92f038fbca81309e8be821a2acccadd20260b19e..cead9334f8d96b2f18f61d13a5e4f2036b41d9f7 100644
+index 908c9c123110fbc7a1777f6b39b4803aaf8eb97f..ce19c110921457e836c86439c4d8dc1147a71d1c 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -934,10 +934,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -935,10 +935,10 @@ public abstract class Mob extends LivingEntity implements Targeting {
              return;
          }
          // Paper end

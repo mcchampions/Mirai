@@ -22,7 +22,7 @@ index 9e1604f5a429d9964486f92eb841dc45e7296746..38cb85492aeb7c84d1dcfe8647ead4c9
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
-index 8a674441a27137ddf00561647115da1bf841090e..5b985648183831d0eab27c8ef2493cb67a08c07b 100644
+index e4fd372a1d585887287253a02531cd192929377b..25d868e8bf5319ec985dcc2ca5b219dc69cc0e4d 100644
 --- a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
 +++ b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
 @@ -355,7 +355,7 @@ public final class ChatProcessor {
@@ -74,10 +74,10 @@ index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 034883a2bfbf34b05846e632f19dadce3f1ed961..a88d0582a8597b7ebda10808e4c895b848d663df 100644
+index 02721f9b517cff456c962fe3615c65c28ad56725..476e4d706ba44b67dfc0a19f77d96cbae1f22556 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -677,6 +677,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -674,6 +674,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
@@ -86,10 +86,10 @@ index 034883a2bfbf34b05846e632f19dadce3f1ed961..a88d0582a8597b7ebda10808e4c895b8
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 8e8967e827b7b85a6c65f2480d67439f34752cee..9a4bda463474f181a652f480cf1b37fed27ec490 100644
+index 1e2134291e1ce28baa7106dc5c7d3a33e7d7c878..91083f49ddaea80d3bb19114d48b9a79fc2b8a55 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2154,7 +2154,7 @@ public class ServerPlayer extends Player {
+@@ -2150,7 +2150,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -98,13 +98,29 @@ index 8e8967e827b7b85a6c65f2480d67439f34752cee..9a4bda463474f181a652f480cf1b37fe
      }
  
      @Override
-diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index d59d1bb0ee6f2effbff455b08588ee43dc820dd0..cd56747752d98a32a34aa4089da2be52918e286f 100644
---- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-+++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2293,10 +2293,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+index 6f6228edfe77668552a40a814ab3cebd74c4cb5a..533c8e297039fe382b8fca27e9b9ca38f8f8bc9b 100644
+--- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+@@ -2,6 +2,7 @@ package net.minecraft.server.network;
  
-     @Override
+ import com.mojang.authlib.GameProfile;
+ import com.mojang.logging.LogUtils;
++import io.papermc.paper.adventure.PaperAdventure;
+ import java.util.Objects;
+ import javax.annotation.Nullable;
+ import net.minecraft.ChatFormatting;
+@@ -22,6 +23,7 @@ import net.minecraft.network.protocol.common.ServerboundKeepAlivePacket;
+ import net.minecraft.network.protocol.common.ServerboundPongPacket;
+ import net.minecraft.network.protocol.common.ServerboundResourcePackPacket;
+ import net.minecraft.network.protocol.game.ClientboundSetDefaultSpawnPositionPacket;
++import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
+ import net.minecraft.resources.ResourceLocation;
+ import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.level.ClientInformation;
+@@ -266,10 +268,31 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+     }
+ 
      public void send(Packet<?> packet) {
 +        // Mirai start - configurable chat message signatures
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) {
@@ -135,10 +151,10 @@ index d59d1bb0ee6f2effbff455b08588ee43dc820dd0..cd56747752d98a32a34aa4089da2be52
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a4feb6400e345098e5419fb24322775bfe4d2fac..dd64a2b8cf1af03f24835fb729ecb3ad1ad1c861 100644
+index 7926ad7e1815c35f4ac4a56cb87f41266316a01b..681c6c6185f328bbebc8847bff0b3b40289680d4 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1462,7 +1462,7 @@ public abstract class PlayerList {
+@@ -1454,7 +1454,7 @@ public abstract class PlayerList {
          // Paper end
          boolean flag = this.verifyChatTrusted(message);
  
@@ -147,7 +163,7 @@ index a4feb6400e345098e5419fb24322775bfe4d2fac..dd64a2b8cf1af03f24835fb729ecb3ad
          OutgoingChatMessage outgoingchatmessage = OutgoingChatMessage.create(message);
          boolean flag1 = false;
  
-@@ -1491,6 +1491,7 @@ public abstract class PlayerList {
+@@ -1483,6 +1483,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public

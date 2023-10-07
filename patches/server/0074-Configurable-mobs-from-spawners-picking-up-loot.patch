@@ -25,7 +25,7 @@ index 38cb85492aeb7c84d1dcfe8647ead4c99a9a8f1c..198230ca348782cb5b933b9a21484d28
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
-index dd84433a988712da9d799cbda2487a902315fb92..c5b210531f7e24d1a45f5a36ef416bb02a81d716 100644
+index 28eb98d383d6846a25c29f8cd8ff211c360a56dc..03d9c5c69b1d54f5e5c0e986ba7baa8d0676b9e9 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 @@ -141,7 +141,13 @@ public abstract class AbstractSkeleton extends Monster implements RangedAttackMo
@@ -44,10 +44,10 @@ index dd84433a988712da9d799cbda2487a902315fb92..c5b210531f7e24d1a45f5a36ef416bb0
              if (net.minecraft.world.entity.ambient.Bat.isHalloweenSeason(world.getMinecraftWorld()) && this.random.nextFloat() < this.level().purpurConfig.chanceHeadHalloweenOnEntity) { // Purpur
                  this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(randomsource.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-index 7c5efb5582f43d9f333f926ad7dba1ed9920333a..a6f7aa31a48963a6fcc0be003218cd275cc2099e 100644
+index 3f00634dd8d426f4578a3d6362f7a52f57e09d3b..c7830d2491de01b7b550ff608fe44dda07cc1d4f 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-@@ -556,7 +556,13 @@ public class Zombie extends Monster {
+@@ -549,7 +549,13 @@ public class Zombie extends Monster {
          Object object = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
          float f = difficulty.getSpecialMultiplier();
  

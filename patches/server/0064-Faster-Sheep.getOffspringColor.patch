@@ -7,10 +7,10 @@ Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Sheep.java b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-index 54de1f782e45cb3e3b1442aeb56b6e8547b065c0..9762461c4f498291cafe321ab92b8b2a65b56b73 100644
+index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..d756d9f9c5cb9d985859dc014d38a5d7e3117064 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-@@ -431,21 +431,56 @@ public class Sheep extends Animal implements Shearable {
+@@ -433,21 +433,56 @@ public class Sheep extends Animal implements Shearable {
          return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
      }
  
@@ -60,8 +60,8 @@ index 54de1f782e45cb3e3b1442aeb56b6e8547b065c0..9762461c4f498291cafe321ab92b8b2a
 -        DyeColor enumcolor = ((Sheep) firstParent).getColor();
 -        DyeColor enumcolor1 = ((Sheep) secondParent).getColor();
 -        CraftingContainer inventorycrafting = Sheep.makeContainer(enumcolor, enumcolor1);
--        Optional<Item> optional = this.level().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventorycrafting, this.level()).map((recipecrafting) -> { // CraftBukkit - decompile error
--            return recipecrafting.assemble(inventorycrafting, this.level().registryAccess());
+-        Optional<Item> optional = this.level().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, inventorycrafting, this.level()).map((recipeholder) -> { // CraftBukkit - decompile error
+-            return ((CraftingRecipe) recipeholder.value()).assemble(inventorycrafting, this.level().registryAccess());
 -        }).map(ItemStack::getItem);
 -
 -        Objects.requireNonNull(DyeItem.class);

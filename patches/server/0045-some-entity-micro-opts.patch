@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index c1939270fd222076c1b3f30038c418bede376b0d..1cc18dc5acad86bad8b0ac926eefc416d6c405ee 100644
+index 56adb9239a924cb61b9e8bda6884d21c65a0261e..1aefe45c23c86e0667aa0859ab63023e87a1dc7d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -499,16 +499,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -492,16 +492,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return true;
      }
  
@@ -47,7 +47,7 @@ index c1939270fd222076c1b3f30038c418bede376b0d..1cc18dc5acad86bad8b0ac926eefc416
          }
  
          return false;
-@@ -2058,12 +2075,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2007,12 +2024,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          }
      }
  
@@ -67,7 +67,7 @@ index c1939270fd222076c1b3f30038c418bede376b0d..1cc18dc5acad86bad8b0ac926eefc416
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4678,6 +4701,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4633,6 +4656,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  

@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/core/Direction.java b/src/main/java/net/minecraft/core/Direction.java
-index 66d583d7d6678110996377bddc1e81e50fe43372..3050260dd6cc9cc2e37b6d72326060298ad60324 100644
+index 4cbe84a009b4e2597176c470a606c586d5a75879..1a37036a7e11e203225fa04bd81b3594435f9f1f 100644
 --- a/src/main/java/net/minecraft/core/Direction.java
 +++ b/src/main/java/net/minecraft/core/Direction.java
 @@ -39,7 +39,7 @@ public enum Direction implements StringRepresentable {
@@ -45,33 +45,32 @@ index a544db042c8d2ecec8d323770552c4f10ca758a6..c04da8da5b40430b61972bce32cec4e8
  
      public int size() {
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/CubeVoxelShape.java b/src/main/java/net/minecraft/world/phys/shapes/CubeVoxelShape.java
-index 68e89dbd79171627046e89699057964e44c40e7d..959588962acb0196ec9f1cc2502e62117f6ccdc4 100644
+index 110405e6e70d980d3e09f04d79562b32a7413071..62d72bd9e7b0ee31cea0d43f3568762ce1ec29fb 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/CubeVoxelShape.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/CubeVoxelShape.java
-@@ -3,15 +3,25 @@ package net.minecraft.world.phys.shapes;
- import it.unimi.dsi.fastutil.doubles.DoubleList;
- import net.minecraft.core.Direction;
+@@ -5,6 +5,8 @@ import net.minecraft.core.Direction;
  import net.minecraft.util.Mth;
-+import net.minecraft.world.phys.shapes.CubePointRange; // JettPack
  
  public final class CubeVoxelShape extends VoxelShape {
-+    private DoubleList[] list; // JettPack - lithium: shapes.precompute_shape_arrays
++    private DoubleList[] list; // Gale - Lithium - cache CubeVoxelShape shape array
 +
      protected CubeVoxelShape(DiscreteVoxelShape voxels) {
          super(voxels);
-+        // JettPack start - lithium: shapes.precompute_shape_arrays
-+        this.list = new DoubleList[Direction.VALUES.length];
-+
-+        for (Direction.Axis axis : Direction.Axis.VALUES) {
-+            this.list[axis.ordinal()] = new CubePointRange(voxels.getSize(axis));
-+        }
-+        // JettPack end
-     }
+         this.initCache(); // Paper - optimise collisions
+@@ -12,7 +14,15 @@ public final class CubeVoxelShape extends VoxelShape {
  
      @Override
      protected DoubleList getCoords(Direction.Axis axis) {
 -        return new CubePointRange(this.shape.getSize(axis));
-+        return this.list[axis.ordinal()]; // JettPack - lithium: shapes.precompute_shape_arrays
++        // Gale start - Lithium - cache CubeVoxelShape shape array
++        if (this.list == null) {
++            this.list = new DoubleList[Direction.Axis.VALUES.length];
++            for (Direction.Axis existingAxis : Direction.Axis.VALUES) {
++                this.list[existingAxis.ordinal()] = new CubePointRange(this.shape.getSize(axis));
++            }
++        }
++        return this.list[axis.ordinal()];
++        // Gale end - Lithium - cache CubeVoxelShape shape array
      }
  
      @Override

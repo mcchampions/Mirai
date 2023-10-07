@@ -7,19 +7,19 @@ Original code by PatinaMC, licensed under GPL v3
 You can find the original code on https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b2150169f3c77898e461da47b8da3ce5693248ed..72652084cc92f642230c9415cefd31601a15125f 100644
+index efe4243ccca47b10627f9df1a0b8ef380878675f..e8b2b59298f3b9eef5ac16389b214e5b0f456853 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -194,7 +194,7 @@ import org.bukkit.event.server.ServerLoadEvent;
+@@ -190,7 +190,7 @@ import org.bukkit.event.server.ServerLoadEvent;
  
  import co.aikar.timings.MinecraftTimings; // Paper
  
--public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTask> implements CommandSource, AutoCloseable {
-+public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnable> implements CommandSource, AutoCloseable { // Patina
+-public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTask> implements ServerInfo, CommandSource, AutoCloseable {
++public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnable> implements ServerInfo, CommandSource, AutoCloseable { // Patina
  
      private static MinecraftServer SERVER; // Paper
      public static final Logger LOGGER = LogUtils.getLogger();
-@@ -1319,19 +1319,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1303,19 +1303,21 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      @Override
@@ -43,7 +43,7 @@ index b2150169f3c77898e461da47b8da3ce5693248ed..72652084cc92f642230c9415cefd3160
  
      @Override
      public boolean pollTask() {
-@@ -1363,10 +1365,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1347,10 +1349,12 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          }
      }
  
@@ -57,10 +57,10 @@ index b2150169f3c77898e461da47b8da3ce5693248ed..72652084cc92f642230c9415cefd3160
      private Optional<ServerStatus.Favicon> loadStatusIcon() {
          Optional<Path> optional = Optional.of(this.getFile("server-icon.png").toPath()).filter((path) -> {
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 2d5b0f293bb30243e774bfb62b8100c01e7eb383..114e09469913e4e8bb96b39be76bdfb9b4cba948 100644
+index 4ab448842dcbf7f0f45d4443d0bb007e2e286a20..eca0a6d91d37f9484cd23a69f2b403808d1efae1 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -883,10 +883,12 @@ public class ServerChunkCache extends ChunkSource {
+@@ -844,10 +844,12 @@ public class ServerChunkCache extends ChunkSource {
              return runnable;
          }
  

@@ -5,34 +5,35 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 53e2e36b4778e11889b1eec5069aedcb3063dbf8..9449c8ce795faf20ede06e1c4514c7f038955c13 100644
+index 53f80638378c6f6cab216373cb74035c4d608ea2..beb40ad8fc8d5da2de244465229a73ee4e945ebf 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -61,10 +61,12 @@ dependencies {
+@@ -60,6 +60,15 @@ dependencies {
+     implementation("org.mozilla:rhino-engine:1.7.14") // Purpur
      implementation("dev.omega24:upnp4j:1.0") // Purpur
  
-     // Pufferfish start
--    implementation("org.yaml:snakeyaml:1.32")
--    implementation ("com.github.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
++    // Pufferfish start
 +    // Mirai start
-+    implementation("org.yaml:snakeyaml:2.1")
++    implementation("org.yaml:snakeyaml:2.2")
 +    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
-         exclude(group="org.yaml", module="snakeyaml")
-     }
++        exclude(group="org.yaml", module="snakeyaml")
++    }
 +    // Mirai end
-     // Pufferfish end
- 
++    // Pufferfish end
++
      testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
+     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+     testImplementation("org.hamcrest:hamcrest:2.2")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..91886b59dc8e97f93b9b1f004781e4b8076595b0 100644
+index a2f71a6d1a9e98133dff6cd0f625da9435a8af14..042d342b03a13a1ad0be839383221b621bb67015 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -243,7 +243,8 @@ public class TimingsExport extends Thread {
+@@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
+         parent.put("config", createObject(
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
              pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
-             pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
--            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)) // Pufferfish
-+            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)), // Pufferfish
+-            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
++            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)),
 +            pair("mirai", mapAsJSON(dev.etil.mirai.MiraiConfig.getConfigCopy(), null)) // Mirai
          ));
  
@@ -263,14 +264,13 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 2a70abb9e0af502885593df1e732887cd9d2ce4d..034883a2bfbf34b05846e632f19dadce3f1ed961 100644
+index e2c74460d149360f01c4d0577054879f2601a58f..02721f9b517cff456c962fe3615c65c28ad56725 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -234,7 +234,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         gg.pufferfish.pufferfish.PufferfishConfig.pufferfishFile = (java.io.File) options.valueOf("pufferfish-settings"); // Purpur
-         gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
-         gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish
--
+@@ -232,6 +232,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
+         // Paper end
+ 
 +        dev.etil.mirai.MiraiConfig.load(); // Mirai
 +        dev.etil.mirai.MiraiCommand.init(); // Mirai
          this.setPvpAllowed(dedicatedserverproperties.pvp);

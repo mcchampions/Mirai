@@ -30,10 +30,10 @@ index 3cfe1cbffa6b1ae5c556897ce107c0f099622f60..c75568116166e23152e6e34307fbea4e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index bff6d6e0d44bfec2d10d24638979fe9ef8438ff5..8e8967e827b7b85a6c65f2480d67439f34752cee 100644
+index 01bf3a48d96ab2a255925b64c19d9bac9ca2bb8a..1e2134291e1ce28baa7106dc5c7d3a33e7d7c878 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -708,7 +708,7 @@ public class ServerPlayer extends Player {
+@@ -709,7 +709,7 @@ public class ServerPlayer extends Player {
  
      @Override
      protected void onInsideBlock(BlockState state) {
@@ -42,7 +42,7 @@ index bff6d6e0d44bfec2d10d24638979fe9ef8438ff5..8e8967e827b7b85a6c65f2480d67439f
      }
  
      @Override
-@@ -755,7 +755,7 @@ public class ServerPlayer extends Player {
+@@ -756,7 +756,7 @@ public class ServerPlayer extends Player {
              }
          }
  
@@ -51,7 +51,7 @@ index bff6d6e0d44bfec2d10d24638979fe9ef8438ff5..8e8967e827b7b85a6c65f2480d67439f
          if (this.levitationStartPos != null) {
              CriteriaTriggers.LEVITATION.trigger(this, this.levitationStartPos, this.tickCount - this.levitationStartTime);
          }
-@@ -840,9 +840,7 @@ public class ServerPlayer extends Player {
+@@ -841,9 +841,7 @@ public class ServerPlayer extends Player {
                  this.connection.send(new ClientboundSetExperiencePacket(this.experienceProgress, this.totalExperience, this.experienceLevel));
              }
  
