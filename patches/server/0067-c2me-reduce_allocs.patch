@@ -173,22 +173,18 @@ index 0000000000000000000000000000000000000000..b989019847f73ba3af57f7428699c9c8
 +
 +}
 diff --git a/src/main/java/net/minecraft/resources/ResourceLocation.java b/src/main/java/net/minecraft/resources/ResourceLocation.java
-index fa9b84b604659a6b35262fbe5acbee0fdb20a56d..3a24b5209365aab592588c397fde964454175a94 100644
+index 8921b1bc2c870222d145c73bac765169099763f1..bf735fb80b034fda8d662e6be1f80c69b52b6b81 100644
 --- a/src/main/java/net/minecraft/resources/ResourceLocation.java
 +++ b/src/main/java/net/minecraft/resources/ResourceLocation.java
-@@ -26,8 +26,9 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
-     public static final char NAMESPACE_SEPARATOR = ':';
-     public static final String DEFAULT_NAMESPACE = "minecraft";
-     public static final String REALMS_NAMESPACE = "realms";
--    private final String namespace;
--    private final String path;
-+    protected final String namespace;
-+    protected final String path;
+@@ -29,6 +29,7 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
+     public static final String PAPER_NAMESPACE = "paper"; // Paper
+     private final String namespace;
+     private final String path;
 +    private String cachedString = null; // Mirai - c2me: opts allocs
  
      protected ResourceLocation(String namespace, String path, @Nullable ResourceLocation.Dummy extraData) {
          this.namespace = namespace;
-@@ -117,7 +118,16 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
+@@ -118,7 +119,16 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
  
      @Override
      public String toString() {

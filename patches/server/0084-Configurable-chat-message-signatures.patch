@@ -22,10 +22,10 @@ index 5560b7f4c4e43e82111e5531e4d57377b5f0d0ab..e0eae8b46fa1177214f2ed833f2b40e0
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
-index 774fb97912f766589f3548f659618ad554e0503f..eaee74abf64390ef8a65aa6fcd96c43cb03c8cd4 100644
+index e4fd372a1d585887287253a02531cd192929377b..25d868e8bf5319ec985dcc2ca5b219dc69cc0e4d 100644
 --- a/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
 +++ b/src/main/java/io/papermc/paper/adventure/ChatProcessor.java
-@@ -353,7 +353,7 @@ public final class ChatProcessor {
+@@ -355,7 +355,7 @@ public final class ChatProcessor {
  
          private void sendToServer(final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
              final PlayerChatMessage toConsoleMessage = msgFunction == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(msgFunction.apply(ChatProcessor.this.server.console));
@@ -99,7 +99,7 @@ index cf726126c539fd69f59e95eb2a88f2f844f2e726..14566d55218522f0b96a3445819623d6
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a86e395046fa1440bb2f6eb72aedd968082f97d9..9d76ee51b1ac822d6958523c9b5ee305fb219ecf 100644
+index 5544b5e903a281e8cc2357b76adaafe4a9161ec2..1dafa98998eb407881fa313ec9587704816132ab 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -2217,10 +2217,31 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic

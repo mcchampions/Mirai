@@ -44,10 +44,10 @@ index 7894bf9ec45fe99521b56ca9cadcdafb1c01be17..329aba05c53aef6d147c431598b78767
          // Paper start
          this.setPosRaw(x, y, z, false);
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index ffd8bea0107280c236bbbdf1601de8752fb6b908..2cc7774cb670e5fb6ce082294f79616ec82ca908 100644
+index eb4038680fcc244b8bafec661135cb1800b0fd78..d8f6763fbdfc22ac8399bb7a2295277da4aee9f8 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -1701,15 +1701,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1708,15 +1708,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
  
      }
  

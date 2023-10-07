@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Git Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@main
       - name: Set up JDK (GraalVM)
@@ -14,7 +14,7 @@ jobs:
           java-version: 17
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull Gradle Cache
-        uses: actions/cache@v3
+        uses: actions/cache@main
         id: gradle-cache
         with:
           path: ~/.gradle
@@ -34,7 +34,7 @@ jobs:
         run: mv build/libs/Mirai-paperclip-1.20.1-R0.1-SNAPSHOT-reobf.jar ./mirai-1.20.1.jar
       - name: Release
         if: github.ref_name == 'ver/1.20.1'
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: marvinpinto/action-automatic-releases@master
         with:
           title: "Mirai-1.20.1"
           automatic_release_tag: "1.20.1"

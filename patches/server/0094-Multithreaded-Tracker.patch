@@ -253,10 +253,10 @@ index 1e380c5ab6902495a610839e4f95b4176157bece..24d1962d42fc29e3f8710a36e7c86328
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f353b2ec2 100644
+index 3aa050cbfff3005a9a638737f776aec5f0026fa2..98cbe11697afa53a397625209c6fd3d2dd9273a8 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1268,8 +1268,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1271,8 +1271,36 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          entity.tracker = null; // Paper - We're no longer tracked
      }
  
@@ -293,7 +293,7 @@ index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f
          this.level.timings.tracker1.startTiming();
          try {
              for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -1447,11 +1475,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1450,11 +1478,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -308,7 +308,7 @@ index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -1463,7 +1491,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1466,7 +1494,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -317,7 +317,7 @@ index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f
              com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> oldTrackerCandidates = this.lastTrackerCandidates;
              this.lastTrackerCandidates = newTrackerCandidates;
  
-@@ -1505,14 +1533,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1508,14 +1536,12 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcast(Packet<?> packet) {
@@ -335,7 +335,7 @@ index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f
          }
  
          public void broadcastAndSend(Packet<?> packet) {
-@@ -1524,18 +1550,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1527,18 +1553,16 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcastRemoved() {
@@ -358,7 +358,7 @@ index 04d53753a646e2286776af0d8b0ea6bec339457a..4bbc8c8fa40c1d1bdefaefecfbbac12f
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1543,7 +1567,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1546,7 +1570,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {

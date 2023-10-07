@@ -11,10 +11,10 @@ You can find the original code on https://github.com/Bloom-host/Petal
 2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index c429990e83304951ac995556d0424479f7e83c64..8f287e12146bd7fda597746e45dff07d4abf26c8 100644
+index 6c378e3485fef4e8b8906c33a45a23e6f77e9cdd..9149a5ee6063121591c934bd16a2aa6931a2b8b0 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-@@ -126,6 +126,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
+@@ -128,6 +128,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
              world.playSound((Player) null, pos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + random.nextFloat() * 0.4F);
          }
  
