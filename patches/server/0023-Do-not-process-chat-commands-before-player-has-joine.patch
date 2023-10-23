@@ -7,10 +7,10 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 4f09263ffae4808cd4012930c6cb689c9838b260..3d21d9c44e441e6c5444f3d1da835ff9a05e9201 100644
+index f603dfa204df05ca5f3f935811091eb1fd1f3e77..d482072041daab0b358a21f0727650dff407e6cb 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -2392,6 +2392,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2245,6 +2245,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
              this.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"), org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event causes
              }); // Paper - push to main
              return Optional.empty();

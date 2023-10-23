@@ -26,10 +26,10 @@ index e9c604aa084b159ffa22d4afae4f90e9e7af236c..db60b0dc87c5c7d50a5161ed2816067a
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 7dfe357bfe55d03e02b7b3eba71164e19df35f44..161f890ce8b29b3cf202b64ea6fb9103e72be865 100644
+index ed055008500895be5271504298eaae2b897eeb3f..f603dfa204df05ca5f3f935811091eb1fd1f3e77 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -363,7 +363,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -339,7 +339,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
          ++this.tickCount;
          this.knownMovePacketCount = this.receivedMovePacketCount;
          if (this.clientIsFloating && !this.player.isSleeping() && !this.player.isPassenger() && !this.player.isDeadOrDying()) {
@@ -38,7 +38,7 @@ index 7dfe357bfe55d03e02b7b3eba71164e19df35f44..161f890ce8b29b3cf202b64ea6fb9103
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked for floating too long!", this.player.getName().getString());
                  this.disconnect(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.flyingPlayer, org.bukkit.event.player.PlayerKickEvent.Cause.FLYING_PLAYER); // Paper - use configurable kick message & kick event cause
                  return;
-@@ -382,7 +382,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -358,7 +358,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
              this.vehicleLastGoodY = this.lastVehicle.getY();
              this.vehicleLastGoodZ = this.lastVehicle.getZ();
              if (this.clientVehicleIsFloating && this.player.getRootVehicle().getControllingPassenger() == this.player) {

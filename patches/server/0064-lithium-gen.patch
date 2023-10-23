@@ -106,7 +106,7 @@ index 0000000000000000000000000000000000000000..c99eff34c1be07508c88fe9525c3ae1a
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/WorldGenRegion.java b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
-index b0c8cea531fc9872875781235b61502140406644..521f594a93f0ebeba1fefe6f547f4bc77690058d 100644
+index 65f718bbec3b6f0033a8169f60c55e25331580f4..47840ffba9fb4d7388386b7884533fea9a12c4ba 100644
 --- a/src/main/java/net/minecraft/server/level/WorldGenRegion.java
 +++ b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
 @@ -55,6 +55,7 @@ import net.minecraft.world.phys.Vec3;
@@ -138,8 +138,8 @@ index b0c8cea531fc9872875781235b61502140406644..521f594a93f0ebeba1fefe6f547f4bc7
 +        // Mirai end
      }
  
-     public boolean isOldChunkAround(ChunkPos chunkPos, int checkRadius) {
-@@ -120,11 +129,33 @@ public class WorldGenRegion implements WorldGenLevel {
+     // Paper start - starlight
+@@ -141,11 +150,33 @@ public class WorldGenRegion implements WorldGenLevel {
          this.currentlyGenerating = structureName;
      }
  
@@ -174,7 +174,7 @@ index b0c8cea531fc9872875781235b61502140406644..521f594a93f0ebeba1fefe6f547f4bc7
      @Nullable
      @Override
      public ChunkAccess getChunk(int chunkX, int chunkZ, ChunkStatus leastStatus, boolean create) {
-@@ -180,10 +211,24 @@ public class WorldGenRegion implements WorldGenLevel {
+@@ -201,10 +232,24 @@ public class WorldGenRegion implements WorldGenLevel {
      }
      // Paper end
  

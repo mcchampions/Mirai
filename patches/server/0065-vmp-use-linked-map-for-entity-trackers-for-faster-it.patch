@@ -7,18 +7,19 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 3770ced0b227f7eea1f04d6afd5c14331f6a1480..04d53753a646e2286776af0d8b0ea6bec339457a 100644
+index 7eaee0d0dcbb420abb5c49ba0a465d90fe513551..7463100d1b31f0acf221d4228d982c9de852f300 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -116,6 +116,7 @@ import org.bukkit.entity.Player;
+@@ -106,6 +106,8 @@ import org.bukkit.craftbukkit.generator.CustomChunkGenerator;
+ import org.bukkit.entity.Player;
  // CraftBukkit end
  
- import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet; // Paper
 +import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap; // Mirai - vmp: use linked map for entity trackers for faster iteration
- 
++
  public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider {
  
-@@ -295,7 +296,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+     private static final byte CHUNK_TYPE_REPLACEABLE = -1;
+@@ -214,7 +216,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper - rewrite chunk system
          this.tickingGenerated = new AtomicInteger();
          this.playerMap = new PlayerMap();

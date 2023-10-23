@@ -36,23 +36,23 @@ index 432ba1293419dea0903e31043f68f5ad45ed0c2d..bb19a14b0f1afc20e92f7ca0efaf3b45
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index acc49f66bf34e2507d0ee6fec0a56b11bfc68f46..47e55cef56c2e92b41c26ad97dcb74488d6405ac 100644
+index e38e2e5a7ddba9c140f362021b6be0b0974f7cd1..5052d7cdbbc524f3d2abfed680cb0068cde9f70a 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-@@ -147,7 +147,7 @@ public class PlayerAdvancements {
-                         if (advancement == null) {
-                             // CraftBukkit start
-                             if (entry.getKey().getNamespace().equals("minecraft")) {
--                                PlayerAdvancements.LOGGER.warn("Ignored advancement '{}' in progress file {} - it doesn't exist anymore?", entry.getKey(), this.playerSavePath);
-+                                if (!dev.etil.mirai.MiraiConfig.loggerSuppressIgnoredAdvancementWarnings) PlayerAdvancements.LOGGER.warn("Ignored advancement '{}' in progress file {} - it doesn't exist anymore?", entry.getKey(), this.playerSavePath); // Purpur
-                             }
-                             // CraftBukkit end
-                         } else {
+@@ -200,7 +200,7 @@ public class PlayerAdvancements {
+ 
+             if (advancementholder == null) {
+                 if (!minecraftkey.getNamespace().equals("minecraft")) return; // CraftBukkit
+-                PlayerAdvancements.LOGGER.warn("Ignored advancement '{}' in progress file {} - it doesn't exist anymore?", minecraftkey, this.playerSavePath);
++                if (!dev.etil.mirai.MiraiConfig.loggerSuppressIgnoredAdvancementWarnings) PlayerAdvancements.LOGGER.warn("Ignored advancement '{}' in progress file {} - it doesn't exist anymore?", minecraftkey, this.playerSavePath); // Purpur
+             } else {
+                 this.startProgress(advancementholder, advancementprogress);
+                 this.progressChanged.add(advancementholder);
 diff --git a/src/main/java/net/minecraft/server/level/WorldGenRegion.java b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
-index 877498729c66de9aa6a27c9148f7494d7895615c..b0c8cea531fc9872875781235b61502140406644 100644
+index 50ed7cfe1ecef6d075ba484804827cec83ba2bf2..65f718bbec3b6f0033a8169f60c55e25331580f4 100644
 --- a/src/main/java/net/minecraft/server/level/WorldGenRegion.java
 +++ b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
-@@ -297,7 +297,7 @@ public class WorldGenRegion implements WorldGenLevel {
+@@ -318,7 +318,7 @@ public class WorldGenRegion implements WorldGenLevel {
              return true;
          } else {
              // Paper start
@@ -62,17 +62,17 @@ index 877498729c66de9aa6a27c9148f7494d7895615c..b0c8cea531fc9872875781235b615021
              hasSetFarWarned = true;
              if (this.getServer() != null && this.getServer().isDebugging()) {
 diff --git a/src/main/java/net/minecraft/stats/ServerRecipeBook.java b/src/main/java/net/minecraft/stats/ServerRecipeBook.java
-index ea29e07a105f3ba6a878bdccf36e7eaf66280280..6ae2d81c4c37b4b9716d062d58a1498f231bfa9c 100644
+index 4103ddf16164e3992fef0765d368282572537e29..a624d954eac2b9e177a47ff7f5d8be4193562e91 100644
 --- a/src/main/java/net/minecraft/stats/ServerRecipeBook.java
 +++ b/src/main/java/net/minecraft/stats/ServerRecipeBook.java
 @@ -125,7 +125,7 @@ public class ServerRecipeBook extends RecipeBook {
-                 Optional<? extends Recipe<?>> optional = recipeManager.byKey(minecraftkey);
+                 Optional<RecipeHolder<?>> optional = recipeManager.byKey(minecraftkey);
  
-                 if (!optional.isPresent()) {
+                 if (optional.isEmpty()) {
 -                    ServerRecipeBook.LOGGER.error("Tried to load unrecognized recipe: {} removed now.", minecraftkey);
 +                    if (!dev.etil.mirai.MiraiConfig.loggerSuppressUnrecognizedRecipeErrors) ServerRecipeBook.LOGGER.error("Tried to load unrecognized recipe: {} removed now.", minecraftkey); // Purpur
                  } else {
-                     handler.accept((Recipe) optional.get());
+                     handler.accept((RecipeHolder) optional.get());
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 index 2677e21d8239bf0361a3bc5c9a50c328e54d70f6..9af8122404f9a8f56f40c3eecae7bc6ad45ea92c 100644

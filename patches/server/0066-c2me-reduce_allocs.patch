@@ -173,7 +173,7 @@ index 0000000000000000000000000000000000000000..b989019847f73ba3af57f7428699c9c8
 +
 +}
 diff --git a/src/main/java/net/minecraft/resources/ResourceLocation.java b/src/main/java/net/minecraft/resources/ResourceLocation.java
-index 8921b1bc2c870222d145c73bac765169099763f1..bf735fb80b034fda8d662e6be1f80c69b52b6b81 100644
+index 38e2a8cec48bc779b8154d6d719031f457a2403e..c3255ff691025b61ea1a4bd835ef0bd405e00282 100644
 --- a/src/main/java/net/minecraft/resources/ResourceLocation.java
 +++ b/src/main/java/net/minecraft/resources/ResourceLocation.java
 @@ -29,6 +29,7 @@ public class ResourceLocation implements Comparable<ResourceLocation> {

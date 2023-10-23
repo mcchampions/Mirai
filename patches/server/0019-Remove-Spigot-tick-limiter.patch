@@ -7,7 +7,7 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 29a3f846a2dcc2f1934a0bc07aa445d52a3fc7ff..cb86f5368fbd2717fa416b28b160bed0fa74d7f0 100644
+index 7eb091cb5108de2992deb6f143695bb49a62695f..7d049489c8c3cbadc4426ec55c58d96428fec272 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -178,8 +178,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -21,7 +21,7 @@ index 29a3f846a2dcc2f1934a0bc07aa445d52a3fc7ff..cb86f5368fbd2717fa416b28b160bed0
      private int tileTickPosition;
      public final Map<Explosion.CacheKey, Float> explosionDensityCache = new HashMap<>(); // Paper - Optimize explosions
      public java.util.ArrayDeque<net.minecraft.world.level.block.RedstoneTorchBlock.Toggle> redstoneUpdateInfos; // Paper - Move from Map in BlockRedstoneTorch to here
-@@ -375,8 +375,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -296,8 +296,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          // CraftBukkit end
          timings = new co.aikar.timings.WorldTimingsHandler(this); // Paper - code below can generate new world and access timings
          this.keepSpawnInMemory = this.paperConfig().spawn.keepSpawnLoaded; // Paper
@@ -30,8 +30,8 @@ index 29a3f846a2dcc2f1934a0bc07aa445d52a3fc7ff..cb86f5368fbd2717fa416b28b160bed0
 +        //this.entityLimiter = new org.spigotmc.TickLimiter(spigotConfig.entityMaxTickTime); // JettPack - remove tick limiter
 +        //this.tileLimiter = new org.spigotmc.TickLimiter(spigotConfig.tileMaxTickTime); // JettPack - remove tick limiter
          this.chunkPacketBlockController = this.paperConfig().anticheat.antiXray.enabled ? new com.destroystokyo.paper.antixray.ChunkPacketBlockControllerAntiXray(this, executor) : com.destroystokyo.paper.antixray.ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
-     }
- 
+         // Paper start - optimise collisions
+         this.minSection = io.papermc.paper.util.WorldUtil.getMinSection(this);
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index 5b5109e942b18418b3a3a0e2109fe4ef15045fe5..2f1c566c6236dfda251155733a5b370c704e5a14 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 7894bf9ec45fe99521b56ca9cadcdafb1c01be17..329aba05c53aef6d147c431598b78767dba5dd98 100644
+index 92c02981aec7585f9a7bae7fd87c0c29247c705e..5d868d7d855976fd1017401ba622869b54bd1246 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2037,12 +2037,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1998,12 +1998,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          }
      }
  
@@ -30,7 +30,7 @@ index 7894bf9ec45fe99521b56ca9cadcdafb1c01be17..329aba05c53aef6d147c431598b78767
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4612,6 +4618,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4631,6 +4637,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  
@@ -44,10 +44,10 @@ index 7894bf9ec45fe99521b56ca9cadcdafb1c01be17..329aba05c53aef6d147c431598b78767
          // Paper start
          this.setPosRaw(x, y, z, false);
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index eb4038680fcc244b8bafec661135cb1800b0fd78..d8f6763fbdfc22ac8399bb7a2295277da4aee9f8 100644
+index 6dd585dfa7797eac21c80abb24acd9fc99ec1146..d09b7aea2642069e2b352f07cd5bc0c46db31f70 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -1708,15 +1708,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1717,15 +1717,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
  
      }
  

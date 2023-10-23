@@ -7,10 +7,10 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/core/Direction.java b/src/main/java/net/minecraft/core/Direction.java
-index 58881658f3c7667955f223076b742c05c5ad0758..66d583d7d6678110996377bddc1e81e50fe43372 100644
+index b5d9d256ad40e1318d8451810ae03f7cf8f6ede5..4cbe84a009b4e2597176c470a606c586d5a75879 100644
 --- a/src/main/java/net/minecraft/core/Direction.java
 +++ b/src/main/java/net/minecraft/core/Direction.java
-@@ -238,6 +238,12 @@ public enum Direction implements StringRepresentable {
+@@ -253,6 +253,12 @@ public enum Direction implements StringRepresentable {
              case EAST:
                  var10000 = SOUTH;
                  break;
@@ -23,7 +23,7 @@ index 58881658f3c7667955f223076b742c05c5ad0758..66d583d7d6678110996377bddc1e81e5
              default:
                  throw new IllegalStateException("Unable to get Y-rotated facing of " + this);
          }
-@@ -350,6 +356,12 @@ public enum Direction implements StringRepresentable {
+@@ -365,6 +371,12 @@ public enum Direction implements StringRepresentable {
              case EAST:
                  var10000 = NORTH;
                  break;

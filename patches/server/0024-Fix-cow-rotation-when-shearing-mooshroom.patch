@@ -7,10 +7,10 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/MushroomCow.java b/src/main/java/net/minecraft/world/entity/animal/MushroomCow.java
-index 68a5ee85e64802e4509ba0d184fc0ceb3cbe2d11..862fff87cd341e0e84466030b4534adbe3b150a2 100644
+index 52cc265f1663d648b6bfd03f2ac3e191b1c16d44..5c593e7cb0b13bda291f0640044b2d3e0c9d0895 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/MushroomCow.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/MushroomCow.java
-@@ -180,7 +180,13 @@ public class MushroomCow extends Cow implements Shearable, VariantHolder<Mushroo
+@@ -176,7 +176,13 @@ public class MushroomCow extends Cow implements Shearable, VariantHolder<Mushroo
                  // this.discard(); // CraftBukkit - moved down
                  entitycow.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
                  entitycow.setHealth(this.getHealth());

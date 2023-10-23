@@ -29,10 +29,10 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9207a8014e83e2d3f9f880f96fe21f766702819c..2763d27cd589dab39b24771d04826b1a3f98eb84 100644
+index fc965c154f9ec8b21e6857ab28fd6800fefd29d2..ae651d50bc7ac92e627e2cddc4275c7b3705bfb9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -302,7 +302,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -297,7 +297,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      public static final int TPS = 20;
      public static final int TICK_TIME = 1000000000 / MinecraftServer.TPS;
      private static final int SAMPLE_INTERVAL = 20; // Paper
@@ -41,7 +41,7 @@ index 9207a8014e83e2d3f9f880f96fe21f766702819c..2763d27cd589dab39b24771d04826b1a
      // Spigot end
      public final io.papermc.paper.configuration.PaperConfigurations paperConfigurations;
      public static long currentTickLong = 0L; // Paper
-@@ -1047,6 +1047,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1033,6 +1033,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      private static final long MAX_CATCHUP_BUFFER = TICK_TIME * TPS * 60L;
      private long lastTick = 0;
      private long catchupTime = 0;
@@ -49,7 +49,7 @@ index 9207a8014e83e2d3f9f880f96fe21f766702819c..2763d27cd589dab39b24771d04826b1a
      public final RollingAverage tps1 = new RollingAverage(60);
      public final RollingAverage tps5 = new RollingAverage(60 * 5);
      public final RollingAverage tps15 = new RollingAverage(60 * 15);
-@@ -1148,13 +1149,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1134,13 +1135,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                  {
                      final long diff = curTime - tickSection;
                      java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);
@@ -71,10 +71,10 @@ index 9207a8014e83e2d3f9f880f96fe21f766702819c..2763d27cd589dab39b24771d04826b1a
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f882870f8cb2ec6cdc0d93c570653626af5535cf..1d48022cbee9da1c7ea6e83ef56d4047d57749b3 100644
+index 0414e5d5433803090016bb69333a6fd154345e3a..84085190292a1f489a51e933ce7ea34ef83d69b8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2871,6 +2871,7 @@ public final class CraftServer implements Server {
+@@ -2873,6 +2873,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {

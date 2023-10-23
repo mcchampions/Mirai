@@ -23,10 +23,10 @@ index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..9379fd91df73ac482064a89462764dac
  }
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index f85c455e56d3ba7ec939493e279109023b192995..c82fb99fd47cc243e7e4e673377139370cb12085 100644
+index ee1249a84513a22c4b50a68a6d7a780c4ae59caa..cdabcaeb1edf249e347ed62ce78c251cd94556f7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -203,6 +203,7 @@ public class ServerEntity {
+@@ -200,6 +200,7 @@ public class ServerEntity {
                          flag4 = true;
                          flag5 = true;
                      }
@@ -34,7 +34,7 @@ index f85c455e56d3ba7ec939493e279109023b192995..c82fb99fd47cc243e7e4e67337713937
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -275,6 +276,22 @@ public class ServerEntity {
+@@ -272,6 +273,22 @@ public class ServerEntity {
          });
      }
  

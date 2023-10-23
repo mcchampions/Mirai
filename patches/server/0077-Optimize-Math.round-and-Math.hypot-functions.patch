@@ -162,7 +162,7 @@ index b2f1d117abd3828140c1edf2baf314b34d2ccf40..9ad796fbe60f15be09c3d47e9f7ae210
                  throw ERROR_TICK_COUNT_TOO_LOW.create(j, this.minimum);
              } else {
 diff --git a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
-index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def4f030041 100644
+index 33d9131e9c75ef23cd637f5d6c39a2704a0c92a5..0a43a51f91a1d6e4d6a629fa32c9d1a57a35f0ef 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
 @@ -9,7 +9,7 @@ public class VecDeltaCodec {
@@ -175,10 +175,10 @@ index 4b6e0fe2fabcc55007fd8979e81f66df9c0278b7..b067fd3dbad0861925f3938fbbc10def
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2763d27cd589dab39b24771d04826b1a3f98eb84..3639444d46838bdfc4cc9a72bee02a078fd87809 100644
+index ae651d50bc7ac92e627e2cddc4275c7b3705bfb9..bd83ca350a98ab4092e6fdc843a082c6436546c0 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2811,7 +2811,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -2814,7 +2814,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -201,10 +201,10 @@ index 88f10d729aa1e0a01790521821d691a0ecd373a2..45b2aa542969798a5a3b73af78de21cc
      // Paper end
  }
 diff --git a/src/main/java/net/minecraft/util/Mth.java b/src/main/java/net/minecraft/util/Mth.java
-index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d72910fa17 100644
+index 0de9e45766eabb542b2203bb14f4a11bc69b2c87..5dc60dc29bd1267dd3a72a869fe7295146e9b537 100644
 --- a/src/main/java/net/minecraft/util/Mth.java
 +++ b/src/main/java/net/minecraft/util/Mth.java
-@@ -593,6 +593,7 @@ public class Mth {
+@@ -606,6 +606,7 @@ public class Mth {
      }
  
      public static double length(double a, double b) {
@@ -213,10 +213,10 @@ index affe2b50302421ec740ad4f72aa7b29d00043e56..b261504d51536c788184b8f72bf934d7
      }
  
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b2ad4a5fe 100644
+index 180c9b6fd1a3680641d6c97cdd84d60eb37c9447..ece7930b28d631a376e65f9c4e6590150510d10d 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1545,7 +1545,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1577,7 +1577,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              if (this instanceof ServerPlayer) {
                  CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, source, f1, amount, flag);
                  if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -225,7 +225,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                  }
              }
  
-@@ -2117,9 +2117,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2151,9 +2151,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -237,7 +237,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                      }
                  }
              }
-@@ -2231,9 +2231,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2265,9 +2265,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  float f3 = (float) -event.getDamage(DamageModifier.RESISTANCE);
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -249,7 +249,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                      }
                  }
              }
-@@ -2265,7 +2265,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2299,7 +2299,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              float f2 = absorptionModifier;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F && this instanceof net.minecraft.world.entity.player.Player) {
@@ -258,7 +258,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
              }
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
                  Entity entity = damagesource.getEntity();
-@@ -2273,7 +2273,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2307,7 +2307,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  if (entity instanceof ServerPlayer) {
                      ServerPlayer entityplayer = (ServerPlayer) entity;
  
@@ -267,7 +267,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                  }
              }
  
-@@ -2282,7 +2282,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2316,7 +2316,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                      // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                      ((net.minecraft.world.entity.player.Player) this).causeFoodExhaustion(damagesource.getFoodExhaustion(), org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.DAMAGED); // CraftBukkit - EntityExhaustionEvent
                      if (f < 3.4028235E37F) {
@@ -276,7 +276,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                      }
                  }
                  // CraftBukkit end
-@@ -2302,7 +2302,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2336,7 +2336,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                          CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, damagesource, originalDamage, f, true); // Paper - fix taken/dealt param order
                          f2 = (float) -event.getDamage(DamageModifier.BLOCKING);
                          if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -285,7 +285,7 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
                          }
                      }
  
-@@ -3071,13 +3071,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3106,13 +3106,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
          this.level().getProfiler().push("rangeChecks");
  
          // Paper start - stop large pitch and yaw changes from crashing the server
@@ -304,10 +304,10 @@ index 6274c4c097b5c175ee3a0b851f6ac4d2d4d6567f..23986e472cd61ac86933ffa0ec73219b
  
          this.level().getProfiler().pop();
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a22500e62 100644
+index 7c1b81cdb61d8e9a4ed8d9280c122352b4bccdde..50256e85435144d3f2f11eef7a11d1df4487746e 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1072,7 +1072,7 @@ public abstract class Player extends LivingEntity {
+@@ -1078,7 +1078,7 @@ public abstract class Player extends LivingEntity {
              float f2 = f1 - f;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -316,7 +316,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
              }
  
              if (f != 0.0F) {
-@@ -1080,7 +1080,7 @@ public abstract class Player extends LivingEntity {
+@@ -1086,7 +1086,7 @@ public abstract class Player extends LivingEntity {
                  this.getCombatTracker().recordDamage(damagesource, f);
                  this.setHealth(this.getHealth() - f);
                  if (f < 3.4028235E37F) {
@@ -325,7 +325,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
                  }
  
                  this.gameEvent(GameEvent.ENTITY_DAMAGE);
-@@ -1421,7 +1421,7 @@ public abstract class Player extends LivingEntity {
+@@ -1427,7 +1427,7 @@ public abstract class Player extends LivingEntity {
                          if (target instanceof LivingEntity) {
                              float f5 = f3 - ((LivingEntity) target).getHealth();
  
@@ -334,7 +334,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1688,29 +1688,29 @@ public abstract class Player extends LivingEntity {
+@@ -1694,29 +1694,29 @@ public abstract class Player extends LivingEntity {
              int i;
  
              if (this.isSwimming()) {
@@ -369,7 +369,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1724,10 +1724,10 @@ public abstract class Player extends LivingEntity {
+@@ -1730,10 +1730,10 @@ public abstract class Player extends LivingEntity {
                      }
                  }
              } else if (this.isFallFlying()) {
@@ -382,7 +382,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
                  if (i > 25) {
                      this.awardStat(Stats.FLY_ONE_CM, i);
                  }
-@@ -1738,7 +1738,7 @@ public abstract class Player extends LivingEntity {
+@@ -1744,7 +1744,7 @@ public abstract class Player extends LivingEntity {
  
      private void checkRidingStatistics(double dx, double dy, double dz) {
          if (this.isPassenger()) {
@@ -391,7 +391,7 @@ index be42192f7409dbc39bc03c8d33a04ee00d95de71..b430f40910c64da35692c389e0e0924a
  
              if (i > 0) {
                  Entity entity = this.getVehicle();
-@@ -1765,7 +1765,7 @@ public abstract class Player extends LivingEntity {
+@@ -1771,7 +1771,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {
@@ -440,7 +440,7 @@ index ecf640b00007a386290f8dfe9935a8aa610079fd..8b199643eda44a6f020768af70e85175
              if (!list2.isEmpty()) {
                  WeightedRandom.getRandomItem(random, list2).ifPresent(list::add);
 diff --git a/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java b/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
-index 81376e725151f723dad8a7b5c1a4bd597e60294e..5a33c98d29e1a76e5239dab166514ab95779ddc6 100644
+index 48eb8f0c1da1fc1971563934497059b21aebf7b6..6581cbe21845f9f53e746639c8fffb785b29cf43 100644
 --- a/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
 @@ -62,7 +62,7 @@ public class DaylightDetectorBlock extends BaseEntityBlock {
@@ -493,10 +493,10 @@ index b07e0be0ced2fb5f1651dfae7a2477974ea3b32e..d8e6240cfae2dab56cb9119d2ed87bb4
      }
  }
 diff --git a/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java b/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java
-index 31918fa2eb38e42a5ea5366e559f25ea9d7d59ae..fe0bcd4295e96556d1c5282d6acc426980697675 100644
+index 3fb1e558c3510243c94981211f9a0e5e0ef1895b..b5f97e51a4e459027c96a7bdcd9ac175d4dabfe1 100644
 --- a/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java
 +++ b/src/main/java/net/minecraft/world/level/storage/loot/functions/LootingEnchantFunction.java
-@@ -61,7 +61,7 @@ public class LootingEnchantFunction extends LootItemConditionalFunction {
+@@ -69,7 +69,7 @@ public class LootingEnchantFunction extends LootItemConditionalFunction {
  
              float f = (float) i * this.value.getFloat(context);
  
@@ -519,10 +519,10 @@ index 2a7c75ea447b179ea1ab9db56e8a39d03faa0bce..53ca87c7659a4fff9e99d21217d1ad08
  
      LootNumberProviderType getType();
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
-index 731c7dd15f131dc124be6af8f342b122cb89491b..24a82111a5485da1e3903977d0519e9ed502f34d 100644
+index 17785f7c709073a01928e8e6a57702f8357900f4..9f023410fd54d5dc8f271bb438a23ae8f5120889 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
-@@ -59,8 +59,8 @@ public final class Shapes {
+@@ -120,8 +120,8 @@ public final class Shapes {
                  int j = 1 << i;
                  double d = min * (double)j;
                  double e = max * (double)j;

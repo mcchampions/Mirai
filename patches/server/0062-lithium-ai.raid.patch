@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/raid/Raid.java b/src/main/java/net/minecraft/world/entity/raid/Raid.java
-index f7399737548483905f3b5c08a03876b0da54b714..bdaea898c1f7c6fce7a85772e4da78f9e3daf08d 100644
+index eaa2943b667967f93f28d9d794d702fdaeb670ec..410ba320637ff94c1f318226a588d8ecb92dc45a 100644
 --- a/src/main/java/net/minecraft/world/entity/raid/Raid.java
 +++ b/src/main/java/net/minecraft/world/entity/raid/Raid.java
-@@ -269,7 +269,16 @@ public class Raid {
+@@ -271,7 +271,16 @@ public class Raid {
          this.status = Raid.RaidStatus.STOPPED;
      }
  
@@ -27,7 +27,7 @@ index f7399737548483905f3b5c08a03876b0da54b714..bdaea898c1f7c6fce7a85772e4da78f9
          if (!this.isStopped()) {
              if (this.status == Raid.RaidStatus.ONGOING) {
                  boolean flag = this.active;
-@@ -638,7 +647,7 @@ public class Raid {
+@@ -642,7 +651,7 @@ public class Raid {
      }
  
      public void updateBossbar() {
@@ -37,7 +37,7 @@ index f7399737548483905f3b5c08a03876b0da54b714..bdaea898c1f7c6fce7a85772e4da78f9
  
      public float getHealthOfLivingRaiders() {
 diff --git a/src/main/java/net/minecraft/world/entity/raid/Raider.java b/src/main/java/net/minecraft/world/entity/raid/Raider.java
-index 57fdcdaf54fd1c92a6e51a3a81789029096e5abe..660e391bdef767a0fd2b8793325789f04ba86e3a 100644
+index cdbc925ef61b8b439415f0a89368227890bcecb2..b345aa9e407692301200af4fa7c2c087578c59ea 100644
 --- a/src/main/java/net/minecraft/world/entity/raid/Raider.java
 +++ b/src/main/java/net/minecraft/world/entity/raid/Raider.java
 @@ -46,8 +46,9 @@ import net.minecraft.world.phys.Vec3;

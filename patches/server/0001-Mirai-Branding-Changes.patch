@@ -5,7 +5,7 @@ Subject: [PATCH] Mirai Branding Changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 1c1dd088187f5700e3e4b7ec3b4b6c0acd5c119a..df9438c45b127d3a28f3c0d30bc819399298a9ed 100644
+index 77f76653c22c44ac9ab7f396b686affc228502c9..b3e0e4de74b2e7af946c4cdc5a5194d719845fae 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -13,9 +13,9 @@ configurations.named(log4jPlugins.compileClasspathConfigurationName) {
@@ -20,7 +20,7 @@ index 1c1dd088187f5700e3e4b7ec3b4b6c0acd5c119a..df9438c45b127d3a28f3c0d30bc81939
          exclude("io.papermc.paper", "paper-api")
      }
      // Pufferfish end
-@@ -92,7 +92,7 @@ tasks.jar {
+@@ -90,7 +90,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -367,10 +367,10 @@ index 0000000000000000000000000000000000000000..ff9f3656ba84e468be9a9dea8598e8f7
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 67cba5cf510e4a602121e10c015a491650127752..4cedfae378517ce994ff0c2338f8430568b926d5 100644
+index 371049c1236c6443384c0ce184e99d5b9f8e57c2..f48e5be2457ac6c4e81d6a9cd205fffb430408fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -922,7 +922,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -910,7 +910,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          shutdownThread = Thread.currentThread();
          org.spigotmc.WatchdogThread.doStop(); // Paper
          if (!isSameThread()) {
@@ -379,7 +379,7 @@ index 67cba5cf510e4a602121e10c015a491650127752..4cedfae378517ce994ff0c2338f84305
              while (this.getRunningThread().isAlive()) {
                  this.getRunningThread().stop();
                  try {
-@@ -1694,7 +1694,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1699,7 +1699,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -389,10 +389,10 @@ index 67cba5cf510e4a602121e10c015a491650127752..4cedfae378517ce994ff0c2338f84305
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 74c46cea456f4a736325892bb7b4d0f1b35b62cd..5ad13e4b9cf2bb7f0b57ef396b8a11be8c677178 100644
+index 5a95dcc02241d6036ee520a6a7a05e8713c6081f..6c3fe259b0be81536d54bfd35fed372284bf49dc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -265,7 +265,7 @@ import javax.annotation.Nullable; // Paper
+@@ -267,7 +267,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -402,10 +402,10 @@ index 74c46cea456f4a736325892bb7b4d0f1b35b62cd..5ad13e4b9cf2bb7f0b57ef396b8a11be
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 2b4581f92543c11f31bcc1417e90d7f90b2aea20..e648cfd7d48582113ee197fc0501966d858154c5 100644
+index 3298aac109e08da4801a6f08aa6f7acfc5e6bf16..41914b1da0ae150bcec455259d7e9a1af232b7d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -470,7 +470,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -462,7 +462,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
  
      @Override
      public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
@@ -452,7 +452,7 @@ index 80553face9c70c2a3d897681e7761df85b22d464..fdfb304a860a1c5bda8fa6a9a5fc6e65
      }
  }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 98fba0288be9ed2cb18ffba5cf81148157dd4fcf..9ed048cd8f2bb90b65d2bdef422c63a85c18aed0 100644
+index 50c72e5db369a180f425eaaa0411cb8871bc3463..f7b707557cf28b9e167b802d5824b80e9b32ba05 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -155,14 +155,14 @@ public final class WatchdogThread extends io.papermc.paper.util.TickThread // Pa
