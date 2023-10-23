@@ -7,10 +7,10 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 91083f49ddaea80d3bb19114d48b9a79fc2b8a55..512683bfdf13c7cfdbfcfdfd9003c6a6791a55f0 100644
+index ad055f5959e4608599a4c4ab8ac3b850afa094a7..2a50fd82204c89ff6382c036f52472115b26d941 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -277,6 +277,7 @@ public class ServerPlayer extends Player {
+@@ -278,6 +278,7 @@ public class ServerPlayer extends Player {
      private boolean tpsBar = false; // Purpur
      private boolean compassBar = false; // Purpur
      private boolean ramBar = false; // Purpur
@@ -36,7 +36,7 @@ index 681c6c6185f328bbebc8847bff0b3b40289680d4..9a65e208253b7a314e20f64a7021210b
          entityplayer1.connection.send(new ClientboundChangeDifficultyPacket(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
          entityplayer1.connection.send(new ClientboundSetExperiencePacket(entityplayer1.experienceProgress, entityplayer1.totalExperience, entityplayer1.experienceLevel));
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 28910943e5efcdf24865b961fba161b7d1e4a8f5..d9c0d48b52afe36fd78e6ebb7a0442ba18387172 100644
+index b6515c469ae3ff06daf631f0d5e5f792b41f8e48..0c99e388049ae4753aef2bc5785b6b97901f933b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1261,6 +1261,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

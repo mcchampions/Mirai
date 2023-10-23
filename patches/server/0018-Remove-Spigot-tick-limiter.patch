@@ -7,7 +7,7 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index bd616b12e11ac6b4c469e3de66a3894c3f6a9b86..1fa29808cd4e5aaa48a10b424d40f01a718cc1aa 100644
+index 3ea813b537b6573a3a76f1af56e248684fc1d8a0..458eecb0cd17a01259c6c5b1416b7617a5c97ece 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -179,8 +179,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -21,7 +21,7 @@ index bd616b12e11ac6b4c469e3de66a3894c3f6a9b86..1fa29808cd4e5aaa48a10b424d40f01a
      private int tileTickPosition;
      public final Map<Explosion.CacheKey, Float> explosionDensityCache = new HashMap<>(); // Paper - Optimize explosions
      public java.util.ArrayDeque<net.minecraft.world.level.block.RedstoneTorchBlock.Toggle> redstoneUpdateInfos; // Paper - Move from Map in BlockRedstoneTorch to here
-@@ -340,8 +340,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -342,8 +342,8 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
          // CraftBukkit end
          timings = new co.aikar.timings.WorldTimingsHandler(this); // Paper - code below can generate new world and access timings
          this.keepSpawnInMemory = this.paperConfig().spawn.keepSpawnLoaded; // Paper

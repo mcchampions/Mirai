@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
-index ffd1ae235e6602e73c6585f60c6ef5dd21844a12..a87ffae3d6e60c1772bd3162a9cf065244cce16b 100644
+index 6b0855cffb901dbc7dcc5fd44506275206bc9a2d..32f841ba370800178bb573964c2784a9b08986a2 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeMap.java
 @@ -17,11 +17,13 @@ import net.minecraft.nbt.CompoundTag;
@@ -24,5 +24,5 @@ index ffd1ae235e6602e73c6585f60c6ef5dd21844a12..a87ffae3d6e60c1772bd3162a9cf0652
 +    private final Map<Attribute, AttributeInstance> attributes = new Reference2ReferenceOpenHashMap<>(0); // Mirai
 +    private final Set<AttributeInstance> dirtyAttributes = new ReferenceOpenHashSet<>(0); // Mirai
      private final AttributeSupplier supplier;
+     private final java.util.function.Function<Attribute, AttributeInstance> createInstance; // Pufferfish
      private final net.minecraft.world.entity.LivingEntity entity; // Purpur
- 

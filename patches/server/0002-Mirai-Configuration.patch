@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 53f80638378c6f6cab216373cb74035c4d608ea2..beb40ad8fc8d5da2de244465229a73ee4e945ebf 100644
+index ddf44d09d6aa70874f4c026c5a5c5d7d0bc2df36..7c0f5a1c61a325a0fe0b846488809867c938f11a 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -60,6 +60,15 @@ dependencies {
+@@ -67,6 +67,15 @@ dependencies {
      implementation("org.mozilla:rhino-engine:1.7.14") // Purpur
      implementation("dev.omega24:upnp4j:1.0") // Purpur
  
@@ -25,15 +25,15 @@ index 53f80638378c6f6cab216373cb74035c4d608ea2..beb40ad8fc8d5da2de244465229a73ee
      testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
      testImplementation("org.hamcrest:hamcrest:2.2")
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index a2f71a6d1a9e98133dff6cd0f625da9435a8af14..042d342b03a13a1ad0be839383221b621bb67015 100644
+index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..91886b59dc8e97f93b9b1f004781e4b8076595b0 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -242,7 +242,8 @@ public class TimingsExport extends Thread {
-         parent.put("config", createObject(
+@@ -243,7 +243,8 @@ public class TimingsExport extends Thread {
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
              pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
--            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null))
-+            pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)),
+             pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
+-            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)) // Pufferfish
++            pair("pufferfish", mapAsJSON(gg.pufferfish.pufferfish.PufferfishConfig.getConfigCopy(), null)), // Pufferfish
 +            pair("mirai", mapAsJSON(dev.etil.mirai.MiraiConfig.getConfigCopy(), null)) // Mirai
          ));
  
@@ -264,12 +264,12 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index e2c74460d149360f01c4d0577054879f2601a58f..02721f9b517cff456c962fe3615c65c28ad56725 100644
+index 21da8b6b0df40b6b88a325ced5d6553ad5912d31..a2a4ee980740c80b49214302590a59654f27c61f 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -232,6 +232,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // init PaperBrigadierProvider
-         // Paper end
+@@ -235,6 +235,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+         gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
+         gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish
  
 +        dev.etil.mirai.MiraiConfig.load(); // Mirai
 +        dev.etil.mirai.MiraiCommand.init(); // Mirai

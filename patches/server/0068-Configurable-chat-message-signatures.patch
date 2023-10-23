@@ -74,10 +74,10 @@ index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 02721f9b517cff456c962fe3615c65c28ad56725..476e4d706ba44b67dfc0a19f77d96cbae1f22556 100644
+index a2a4ee980740c80b49214302590a59654f27c61f..b9cc843ddd245d2260b440e1c9143a9fd7b161cc 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -674,6 +674,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -678,6 +678,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
  
      @Override
      public boolean enforceSecureProfile() {
@@ -86,10 +86,10 @@ index 02721f9b517cff456c962fe3615c65c28ad56725..476e4d706ba44b67dfc0a19f77d96cba
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 1e2134291e1ce28baa7106dc5c7d3a33e7d7c878..91083f49ddaea80d3bb19114d48b9a79fc2b8a55 100644
+index cd63004a739d53a0284b3a4c7d0ceade70d97666..ad055f5959e4608599a4c4ab8ac3b850afa094a7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2150,7 +2150,7 @@ public class ServerPlayer extends Player {
+@@ -2156,7 +2156,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -99,7 +99,7 @@ index 1e2134291e1ce28baa7106dc5c7d3a33e7d7c878..91083f49ddaea80d3bb19114d48b9a79
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 6f6228edfe77668552a40a814ab3cebd74c4cb5a..533c8e297039fe382b8fca27e9b9ca38f8f8bc9b 100644
+index fa7f85303f9fe80a2e51740c376d9daedfaa60b4..12e2f45adb23e7d57635cc8c5edb79796d2f251e 100644
 --- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -2,6 +2,7 @@ package net.minecraft.server.network;
@@ -118,7 +118,7 @@ index 6f6228edfe77668552a40a814ab3cebd74c4cb5a..533c8e297039fe382b8fca27e9b9ca38
  import net.minecraft.resources.ResourceLocation;
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.level.ClientInformation;
-@@ -266,10 +268,31 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -258,10 +260,31 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      }
  
      public void send(Packet<?> packet) {

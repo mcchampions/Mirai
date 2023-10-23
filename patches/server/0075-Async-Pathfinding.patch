@@ -520,10 +520,10 @@ index 0000000000000000000000000000000000000000..71fb306d267227a587224ca653db7446
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index ce19c110921457e836c86439c4d8dc1147a71d1c..d274bc22545f5a496d7106252b57e62bffd6b6e2 100644
+index 0344c3d5312678c06ee5eb25ce22f56479ac7305..9e9174f387f6258162b338cf7c7b71850485667b 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -289,6 +289,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -291,6 +291,7 @@ public abstract class Mob extends LivingEntity implements Targeting {
      @Nullable
      @Override
      public LivingEntity getTarget() {
@@ -1115,7 +1115,7 @@ index 38a3dcec138d9233a46e5d523bcc6d64bc7fffd0..329ea6d899b601d9a2803ca288da698c
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
-index 420ece09271aa745b1b7123d5a72bcc6861b4584..df5b67aba568b2472dbcf46b5dde46193ddbad30 100644
+index 9417ce67cc231d5bfa6813f78ec27196eed423c8..d814991093f4d9ad01e9c840ec7f10d5d8d57786 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/frog/Frog.java
 @@ -6,6 +6,9 @@ import java.util.Objects;
@@ -1136,7 +1136,7 @@ index 420ece09271aa745b1b7123d5a72bcc6861b4584..df5b67aba568b2472dbcf46b5dde4619
  import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
  import net.minecraft.world.entity.ai.memory.MemoryModuleType;
  import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
-@@ -442,6 +444,17 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -443,6 +445,17 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
              super(frog, world);
          }
  
@@ -1154,7 +1154,7 @@ index 420ece09271aa745b1b7123d5a72bcc6861b4584..df5b67aba568b2472dbcf46b5dde4619
          @Override
          public boolean canCutCorner(BlockPathTypes nodeType) {
              return nodeType != BlockPathTypes.WATER_BORDER && super.canCutCorner(nodeType);
-@@ -451,6 +464,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
+@@ -452,6 +465,11 @@ public class Frog extends Animal implements VariantHolder<FrogVariant> {
          protected PathFinder createPathFinder(int range) {
              this.nodeEvaluator = new Frog.FrogNodeEvaluator(true);
              this.nodeEvaluator.setCanPassDoors(true);
@@ -1229,10 +1229,10 @@ index 2f49b528601a1feb7246fe7a9b83ce828c2d78fc..de48848cd50556eaf48cbf6b56441b48
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java b/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
-index b7a2edd9fb90931bb89d4f3004f1bdc051aeb053..c5b8c3b93b18072f26dafec0d3cd6a93b643bbd4 100644
+index 5e66c2bd3807619cadee5b7081d93d21886e2806..cc1c4e0820ebd42f61ff316480f94d2d36680b56 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/warden/Warden.java
-@@ -622,6 +622,16 @@ public class Warden extends Monster implements VibrationSystem {
+@@ -624,6 +624,16 @@ public class Warden extends Monster implements VibrationSystem {
              protected PathFinder createPathFinder(int range) {
                  this.nodeEvaluator = new WalkNodeEvaluator();
                  this.nodeEvaluator.setCanPassDoors(true);
