@@ -153,7 +153,7 @@ index 4c1fbf3e2e6cfaf5f5db199b232d007ec6a9d226..10546fb8b47b54989f5f98ddf37f2026
              buf.writeByte((int)(l & 127L) | 128);
              l >>>= 7;
 diff --git a/src/test/java/net/minecraft/network/VarIntLongTest.java b/src/test/java/net/minecraft/network/VarIntLongTest.java
-index a1892a904042fcfad9137df592dabd46d4d1c30b..248a17166a52dca991484c6844a6e2ef6af23cfb 100644
+index a1892a904042fcfad9137df592dabd46d4d1c30b..892877b1a1ebfe42bb7a7af7555606329c39e9b3 100644
 --- a/src/test/java/net/minecraft/network/VarIntLongTest.java
 +++ b/src/test/java/net/minecraft/network/VarIntLongTest.java
 @@ -2,6 +2,7 @@
@@ -170,13 +170,13 @@ index a1892a904042fcfad9137df592dabd46d4d1c30b..248a17166a52dca991484c6844a6e2ef
  
 +    // Gale - Velocity - optimized VarInt#write and VarLong#write
 +    @Test
-+    public void testWriteVarIntComparedToOriginal() {
++    public void testWriteVarIntComparedToOld() {
 +        integerCases.forEach(value -> {
 +            // given
 +            int capacity = 5;
 +            FriendlyByteBuf buf1 = new FriendlyByteBuf(Unpooled.buffer(capacity));
 +            FriendlyByteBuf buf2 = new FriendlyByteBuf(Unpooled.buffer(capacity));
-+            VarInt.writeOriginal(buf1, value);
++            VarInt.writeOld(buf1, value);
 +
 +            // when
 +            buf2.writeVarInt(value);
