@@ -7,7 +7,7 @@ Original code by nopjmp, licensed under MIT
 You can find the original code on https://github.com/nopjmp/Dionysus
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index 73f12e176acc0a035d3283cf5ecebcb1b8b06b73..2ae3f9f404cb92f6ea7ec3edd6515ae672a7cab4 100644
+index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad059e7950d 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 @@ -13,8 +13,10 @@ import net.minecraft.server.MinecraftServer;

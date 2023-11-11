@@ -7,7 +7,7 @@ Original code by Electroid, licensed under GPL v3
 You can find the original code on https://github.com/Electroid/SportPaper
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index f99bb69c04227ddaf548032d0ab5959a86be2c46..c20c0041c0f99a19ff8d87d8cb8dfc95c398b5ef 100644
+index dc337e0f431e29853134a87574aab1f9eaf59bc1..24e13edf1a7d322ab6b2216129f4afa64a53b67e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1846,6 +1846,7 @@ public class ServerLevel extends Level implements WorldGenLevel {

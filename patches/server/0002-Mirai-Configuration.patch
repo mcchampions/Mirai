@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index ddf44d09d6aa70874f4c026c5a5c5d7d0bc2df36..7c0f5a1c61a325a0fe0b846488809867c938f11a 100644
+index 05fbc730205644bf87ce5592c1d044b9fb755eb1..221198ce3bf9218d59fb939b1090947e52adbbfb 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -67,6 +67,15 @@ dependencies {
+@@ -66,6 +66,15 @@ dependencies {
      implementation("org.mozilla:rhino-engine:1.7.14") // Purpur
      implementation("dev.omega24:upnp4j:1.0") // Purpur
  
@@ -264,7 +264,7 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 21da8b6b0df40b6b88a325ced5d6553ad5912d31..a2a4ee980740c80b49214302590a59654f27c61f 100644
+index 38454025445c4a0bdc16adc35dd3883064333243..5e56d759ac2ec05fc01f756e1646514620bb541c 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -235,6 +235,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface

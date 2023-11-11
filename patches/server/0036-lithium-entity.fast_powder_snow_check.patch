@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 1a03ea36493378cbf6b5ddd15c828206f9fe25ed..80d406a3dbc8e3095ddc3c8efd279834947df515 100644
+index 52093a23dbe6a330f18418af044ffcc92580cf10..80fab13d6b022b5b72899ec2f0fa1265d902e21e 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -589,11 +589,11 @@ public abstract class LivingEntity extends Entity implements Attackable {

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Martijn Muijsers <martijnmuijsers@live.nl>
 Date: Mon, 21 Aug 2023 21:46:10 +0200
-Subject: [PATCH] Pre-compute VarInt and VarLong sizes
+Subject: [PATCH] Pre-compute VarLong sizes
 
 Original code by GaleMC, licensed under GPL v3
 You can find the original code on https://github.com/GaleMC/Gale
@@ -20,33 +20,6 @@ Given that we do a lot of varint writing as well, this should provide a small pe
 
 This includes a test to ensure that the behavior is as expected and fixes the initialization loop so that the correct results will be given. Much thanks to @octylFractal for acting as my duck while trying to figure this out.
 
-diff --git a/src/main/java/net/minecraft/network/VarInt.java b/src/main/java/net/minecraft/network/VarInt.java
-index 18d5a22ad3ef4cb279475531dbc2c65e07c69929..2f4a8970f3de335f3846f6f88524bb1924b4258b 100644
---- a/src/main/java/net/minecraft/network/VarInt.java
-+++ b/src/main/java/net/minecraft/network/VarInt.java
-@@ -8,7 +8,22 @@ public class VarInt {
-     private static final int CONTINUATION_BIT_MASK = 128;
-     private static final int DATA_BITS_PER_BYTE = 7;
- 
-+    // Gale start - Velocity - pre-compute VarInt and VarLong sizes
-+    private static final int[] EXACT_BYTE_LENGTHS = new int[33];
-+    static {
-+        for (int i = 0; i < 32; ++i) {
-+            EXACT_BYTE_LENGTHS[i] = (32 - i + 6) / 7;
-+        }
-+        EXACT_BYTE_LENGTHS[32] = 1; // Special case for the number 0
-+    }
-+    // Gale end - Velocity - pre-compute VarInt and VarLong sizes
-     public static int getByteSize(int i) {
-+        // Gale start - Velocity - pre-compute VarInt and VarLong sizes
-+        return EXACT_BYTE_LENGTHS[Integer.numberOfLeadingZeros(i)];
-+    }
-+
-+    static int getByteSizeOriginal(int i) { // public -> package-private
-+        // Gale end - Velocity - pre-compute VarInt and VarLong sizes
-         for(int j = 1; j < 5; ++j) {
-             if ((i & -1 << j * 7) == 0) {
-                 return j;
 diff --git a/src/main/java/net/minecraft/network/VarLong.java b/src/main/java/net/minecraft/network/VarLong.java
 index 3ea9f42b7ad50c0dc4466849e3432ebddcfe2f7b..4c1fbf3e2e6cfaf5f5db199b232d007ec6a9d226 100644
 --- a/src/main/java/net/minecraft/network/VarLong.java
@@ -76,7 +49,7 @@ index 3ea9f42b7ad50c0dc4466849e3432ebddcfe2f7b..4c1fbf3e2e6cfaf5f5db199b232d007e
                  return i;
 diff --git a/src/test/java/net/minecraft/network/VarIntLongTest.java b/src/test/java/net/minecraft/network/VarIntLongTest.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..682996bf3802ddd2be78f25944a32235ca86accf
+index 0000000000000000000000000000000000000000..a1892a904042fcfad9137df592dabd46d4d1c30b
 --- /dev/null
 +++ b/src/test/java/net/minecraft/network/VarIntLongTest.java
 @@ -0,0 +1,159 @@
@@ -88,8 +61,8 @@ index 0000000000000000000000000000000000000000..682996bf3802ddd2be78f25944a32235
 +import it.unimi.dsi.fastutil.ints.IntSet;
 +import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 +import it.unimi.dsi.fastutil.longs.LongSet;
-+import org.junit.Assert;
-+import org.junit.Test;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.Test;
 +
 +public class VarIntLongTest {
 +
@@ -210,16 +183,16 @@ index 0000000000000000000000000000000000000000..682996bf3802ddd2be78f25944a32235
 +
 +    // Gale start - Velocity - pre-compute VarInt and VarLong sizes
 +    @Test
-+    public void testGetVarIntSizeComparedToOriginal() {
++    public void testGetVarIntSizeComparedToOld() {
 +        integerCases.forEach(value -> {
 +            // given
-+            int originalSize = VarInt.getByteSizeOriginal(value);
++            int originalSize = VarInt.getByteSizeOld(value);
 +
 +            // when
 +            int size = VarInt.getByteSize(value);
 +
 +            // then
-+            Assert.assertEquals("Optimized size (" + size + ") is not equal to original size (" + originalSize + ") for test case value " + value + " (binary: " + padStringWithLeadingZeros(Integer.toBinaryString(value), 32) + ")", originalSize, size);
++            Assertions.assertEquals(Float.parseFloat("Optimized size (" + size + ") is not equal to original size (" + originalSize + ") for test case value " + value + " (binary: " + padStringWithLeadingZeros(Integer.toBinaryString(value), 32) + ")"), originalSize, size);
 +        });
 +    }
 +
@@ -233,7 +206,7 @@ index 0000000000000000000000000000000000000000..682996bf3802ddd2be78f25944a32235
 +            int size = VarLong.getByteSize(value);
 +
 +            // then
-+            Assert.assertEquals("Optimized size (" + size + ") is not equal to original size (" + originalSize + ") for test case value " + value + " (binary: " + padStringWithLeadingZeros(Long.toBinaryString(value), 64) + ")", originalSize, size);
++            Assertions.assertEquals(Float.parseFloat("Optimized size (" + size + ") is not equal to original size (" + originalSize + ") for test case value " + value + " (binary: " + padStringWithLeadingZeros(Long.toBinaryString(value), 64) + ")"), originalSize, size);
 +        });
 +    }
 +    // Gale end - Velocity - pre-compute VarInt and VarLong sizes

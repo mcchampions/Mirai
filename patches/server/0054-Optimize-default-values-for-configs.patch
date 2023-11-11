@@ -33,7 +33,7 @@ index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..0e37d98b5908382a242729408d0b9f0e
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020653c8e97 100644
+index ed79d30f33b2674863b2d73b1abdb48433c33412..33ea6674d275ea88d4110c289fd931e78f53953f 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -128,8 +128,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -83,7 +83,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
      }
  
      public Fixes fixes;
-@@ -452,7 +452,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -451,7 +451,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Hopper extends ConfigurationPart {
          public boolean cooldownWhenFull = true;
          public boolean disableMoveEvent = false;
@@ -92,7 +92,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
      }
  
      public Collisions collisions;
-@@ -460,9 +460,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -459,9 +459,9 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Collisions extends ConfigurationPart {
          public boolean onlyPlayersCollide = false;
          public boolean allowVehicleCollisions = true;
@@ -104,7 +104,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
          public boolean allowPlayerCrammingDamage = false;
      }
  
-@@ -470,18 +470,32 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -469,18 +469,32 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Chunks extends ConfigurationPart {
          public AutosavePeriod autoSaveInterval = AutosavePeriod.def();
@@ -146,7 +146,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
          });
          public boolean flushRegionsOnSave = false;
      }
-@@ -496,11 +510,22 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -495,11 +509,22 @@ public class WorldConfiguration extends ConfigurationPart {
      public TickRates tickRates;
  
      public class TickRates extends ConfigurationPart {
@@ -174,7 +174,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
      }
  
      @Setting(FeatureSeedsGeneration.FEATURE_SEEDS_KEY)
-@@ -509,7 +534,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -508,7 +533,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class FeatureSeeds extends ConfigurationPart {
          @SuppressWarnings("unused") // Is used in FeatureSeedsGeneration
          @Setting(FeatureSeedsGeneration.GENERATE_KEY)
@@ -183,7 +183,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -523,9 +548,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -522,9 +547,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;
@@ -196,7 +196,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
          public float maxLeashDistance = 10f;
          public boolean disableSprintInterruptionOnAttack = false;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b161ec86464 100644
+index 68602dfb171d47e47fd0710b4324013ef05214d0..3cae79ada5db7821df279a149cd7debcac9d068b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -218,7 +218,7 @@ public class SpigotConfig
@@ -209,7 +209,7 @@ index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b16
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 2f1c566c6236dfda251155733a5b370c704e5a14..cab7a4bb6d1fccdab128833a935db055542b1e8b 100644
+index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed43320464617f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -150,14 +150,14 @@ public class SpigotWorldConfig

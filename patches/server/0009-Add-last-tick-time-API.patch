@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4b272398c141ced1ce9821e5cf77fd8617707ea6..c53e54d459a954ea4e4dad57d1caac75d6f6964f 100644
+index 201759ca565a2c85b6e4fa85f4bb01347283d509..d90e1e6e5a06f7bc573efc7ba5f04af1e269b089 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1095,6 +1095,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -29,10 +29,10 @@ index 4b272398c141ced1ce9821e5cf77fd8617707ea6..c53e54d459a954ea4e4dad57d1caac75
                  this.mayHaveDelayedTasks = true;
                      // Purpur start - tps catchup
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4ff7f7f4ee5755435cff05314a17aef5e6ce3f9a..208231c98d0207585b51bbaf99dac9f4a9b70e58 100644
+index cbb9af5df7f9dd0d8cb9188e720696edab0f2b2f..cbce200ebf3b946b1d97ef147cbd177daca25515 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3214,7 +3214,6 @@ public final class CraftServer implements Server {
+@@ -3215,7 +3215,6 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -40,7 +40,7 @@ index 4ff7f7f4ee5755435cff05314a17aef5e6ce3f9a..208231c98d0207585b51bbaf99dac9f4
      // Paper end
  
      // Purpur start
-@@ -3228,4 +3227,11 @@ public final class CraftServer implements Server {
+@@ -3229,4 +3228,11 @@ public final class CraftServer implements Server {
          return getServer().lagging;
      }
      // Purpur end
@@ -53,7 +53,7 @@ index 4ff7f7f4ee5755435cff05314a17aef5e6ce3f9a..208231c98d0207585b51bbaf99dac9f4
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 08221c7256f41ca511a4a61ffb2b979325aebee9..edce32ccd3417bef0a21b1b8412f46996dfa3c4b 100644
+index 5da1ef6d90c6a5bd047e971bcc56d786239c6fd8..af54a6d91bda191f6657b8da31109aafcec3ec94 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@

@@ -10,7 +10,7 @@ In vanilla, statistics that count time spent for an action (i.e. time played or 
 With an interval of 20, this patch saves roughly 3ms per tick on a server w/ 80 players online.
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 20c3d3c9d2150574e9b4761dc1bda11cee04862f..a117508e9ab0b0a56a7aa24a5c344e8d6c9fec96 100644
+index 724329ded5d72eb230db392972d30e7ba4e69ceb..52bf1536d727b2a6cf11a4cf0208fb5a4885f3b4 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -312,19 +312,21 @@ public abstract class Player extends LivingEntity {

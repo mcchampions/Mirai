@@ -44,7 +44,7 @@ index 28eb98d383d6846a25c29f8cd8ff211c360a56dc..03d9c5c69b1d54f5e5c0e986ba7baa8d
              if (net.minecraft.world.entity.ambient.Bat.isHalloweenSeason(world.getMinecraftWorld()) && this.random.nextFloat() < this.level().purpurConfig.chanceHeadHalloweenOnEntity) { // Purpur
                  this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(randomsource.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-index 3f00634dd8d426f4578a3d6362f7a52f57e09d3b..c7830d2491de01b7b550ff608fe44dda07cc1d4f 100644
+index 1be1bfb831198b68d8e20bf5ff922edff8832114..4f0cc3a853ca101314dc8df0412c0616d539c811 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 @@ -549,7 +549,13 @@ public class Zombie extends Monster {

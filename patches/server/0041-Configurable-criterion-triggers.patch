@@ -30,7 +30,7 @@ index 3cfe1cbffa6b1ae5c556897ce107c0f099622f60..c75568116166e23152e6e34307fbea4e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index d712eb74989fc4d0209a47cdf45cf702083d68fe..cd63004a739d53a0284b3a4c7d0ceade70d97666 100644
+index 08ef38046d7e5bd6890e58450eae17b5aa6b6671..e049c8f5be0c5adb69294b146b42477a5120d6f7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -710,7 +710,7 @@ public class ServerPlayer extends Player {
