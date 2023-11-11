@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f48e5be2457ac6c4e81d6a9cd205fffb430408fa..ec72bf036b22651126b1e410fbe2600269c7d949 100644
+index 5cebe365f68b2df9c37b43cf8e5cd0a3f3507960..b2fa0b7b31fd0a9962e668635f88df6162945e09 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1081,6 +1081,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -29,10 +29,10 @@ index f48e5be2457ac6c4e81d6a9cd205fffb430408fa..ec72bf036b22651126b1e410fbe26002
                  this.mayHaveDelayedTasks = true;
                  this.delayedTasksMaxNextTickTime = Math.max(Util.getMillis() + 50L, this.nextTickTime);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6c3fe259b0be81536d54bfd35fed372284bf49dc..0414e5d5433803090016bb69333a6fd154345e3a 100644
+index a1ecf9de049b843e3796045539265ab1e65480a4..9c4a2f8939bf6e19dc86d775a6b5f91d9592abd3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3135,6 +3135,12 @@ public final class CraftServer implements Server {
+@@ -3136,6 +3136,12 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -47,7 +47,7 @@ index 6c3fe259b0be81536d54bfd35fed372284bf49dc..0414e5d5433803090016bb69333a6fd1
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index bf970bf3356a914459c2d6db93537ce2d32c7e18..c12e3f31606ae2fbf294ab8ab1b46f72122ce466 100644
+index 9eb2823cc8f83bad2626fc77578b0162d9ed5782..602fda840f5ea3d5202ffc6534ac3cf535c14102 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@

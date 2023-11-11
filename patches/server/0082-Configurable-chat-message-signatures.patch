@@ -74,7 +74,7 @@ index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index d862dc6681d0b25413572955228a3e3bd545d1ad..d7ee3ce3cef22779808a820aa7ce4076dafd30d3 100644
+index a3c7f7b3adab0fafb180c074e6eb44409227956e..8afa2ec91376eb466d77767fcffbbf2fda90732a 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -641,6 +641,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -86,7 +86,7 @@ index d862dc6681d0b25413572955228a3e3bd545d1ad..d7ee3ce3cef22779808a820aa7ce4076
  
          return dedicatedserverproperties.enforceSecureProfile && dedicatedserverproperties.onlineMode && this.services.profileKeySignatureValidator() != null;
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 02ccb5d1a3d72451062a34743368f7f03eebc12a..28efeeea3d1e42693d7355d0d3a3574a76029c6e 100644
+index 1c9cab8c19ce570331afe05cfb81b080c7df8533..92ba960b564c25873ed47945f024502b2f896888 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -2093,7 +2093,7 @@ public class ServerPlayer extends Player {
@@ -99,7 +99,7 @@ index 02ccb5d1a3d72451062a34743368f7f03eebc12a..28efeeea3d1e42693d7355d0d3a3574a
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 935d28adf99d2c1fc02937e1eb0d1144697603f3..4ce36cb98cee60384bf5f49527d7356f0650c0c5 100644
+index b18f644e27d31f0db6df523be0632b697291c26a..cd98a600ec669f503dbcf64468cdfa74842c3f92 100644
 --- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
@@ -152,7 +152,7 @@ index 935d28adf99d2c1fc02937e1eb0d1144697603f3..4ce36cb98cee60384bf5f49527d7356f
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 203304de483fec22594e754726c8cb885d3cb28c..2c56b24fb439b16802c672f58eee4ed89de09333 100644
+index 3f96332b8fe3d6c3b2e3c9347990a5b8a00fcf32..9dc6ea20cd2253090c268c351409d3ad6b4a3a7a 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1416,7 +1416,7 @@ public abstract class PlayerList {

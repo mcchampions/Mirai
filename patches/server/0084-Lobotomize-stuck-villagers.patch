@@ -119,7 +119,7 @@ index bbcc0356b4c0470502e893cf2dc2f16936a88bc4..45bcb2426d00fe63f4e215b95771cff1
          if (this.assignProfessionWhenSpawned) {
              this.assignProfessionWhenSpawned = false;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
-index a67b5d20b956e0bf801c9eeb9330567c21927010..15c7dd5ae4ea040b91b665e5ce05c0d35ab1604e 100644
+index 6c15d40979fd3e3d246a447c432b321fbf29ada3..6ace76a829c88e2e747dbbcce0a6582c615fc56d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftVillager.java
 @@ -252,4 +252,11 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {

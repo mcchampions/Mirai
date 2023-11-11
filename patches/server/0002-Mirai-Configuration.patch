@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index df9438c45b127d3a28f3c0d30bc819399298a9ed..4a277b7fe8213149a8c5def25c50bffaf5624d22 100644
+index 5df721330448062f78259b243e526d5e292067be..37e1bf62970f770fd41a0ad2ce5c3a610d6df0d1 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -57,10 +57,12 @@ dependencies {
+@@ -56,10 +56,12 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
  
      // Pufferfish start
@@ -263,7 +263,7 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 28af96ce4f9f1a83316b6fd9e1625c71b5874c3f..13b191851347eebb9dc74f77e8f2491a8049a7a6 100644
+index 462c4eb3c06779f86f66778e9578d3d8f06c3294..a3c7f7b3adab0fafb180c074e6eb44409227956e 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,6 +223,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface

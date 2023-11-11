@@ -96,7 +96,7 @@ index a27ee205d13dda890646ebf451076f383de0728b..1ef4565c5e4e395ea5c93e7146a7401a
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020653c8e97 100644
+index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51eba1bbab 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -128,8 +128,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -259,7 +259,7 @@ index c9ae7e88afb1ca8349a118c6b491a1e1e83517a7..7d0b9e7c55da2e0d577b66b3bf134020
          public float maxLeashDistance = 10f;
          public boolean disableSprintInterruptionOnAttack = false;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b161ec86464 100644
+index 68602dfb171d47e47fd0710b4324013ef05214d0..3cae79ada5db7821df279a149cd7debcac9d068b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -218,7 +218,7 @@ public class SpigotConfig
@@ -272,7 +272,7 @@ index 612c3169c3463d702b85975e1db79ae6e47d60d0..3bc58a858049153caa1d32d96c035b16
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 2f1c566c6236dfda251155733a5b370c704e5a14..cab7a4bb6d1fccdab128833a935db055542b1e8b 100644
+index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed43320464617f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -150,14 +150,14 @@ public class SpigotWorldConfig

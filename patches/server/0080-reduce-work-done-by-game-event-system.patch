@@ -11,10 +11,10 @@ You can find the original code on https://github.com/Bloom-host/Petal
 2. EuclideanGameEventListenerRegistry is not used concurrently so we ban that usage for improved performance with allays
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-index 6c378e3485fef4e8b8906c33a45a23e6f77e9cdd..9149a5ee6063121591c934bd16a2aa6931a2b8b0 100644
+index 65112ec3a6ea1c27f032477720ae74395523012b..d05baf1d2dec991d58ba79351f83e45860dfd499 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/SculkCatalystBlockEntity.java
-@@ -128,6 +128,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
+@@ -135,6 +135,13 @@ public class SculkCatalystBlockEntity extends BlockEntity implements GameEventLi
              world.playSound((Player) null, pos, SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + random.nextFloat() * 0.4F);
          }
  
@@ -29,7 +29,7 @@ index 6c378e3485fef4e8b8906c33a45a23e6f77e9cdd..9149a5ee6063121591c934bd16a2aa69
              LivingEntity entityliving1 = deadEntity.getLastHurtByMob();
  
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index b78476223637722efe12520d3c2e301603abd8a1..e12b17c9b94da2f38e0300b01e700a9f120e8af5 100644
+index 7fd68d4aba72b15b2e21e5c88b44e677b794fe57..9039af77390e552f7852107759d03cb30f7d4ac2 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -81,7 +81,19 @@ public class LevelChunk extends ChunkAccess {

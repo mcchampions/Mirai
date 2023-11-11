@@ -276,7 +276,7 @@ index d46e61640b241d32df05240dedd2c23f138725e6..ee1249a84513a22c4b50a68a6d7a780c
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index c1b03e4c37ea85ddf283479682d0eb2eca57ee3c..d7e86fa013ff8b5dc3c7da177d733c8322a8e200 100644
+index c4a22fab14c74f268e8452c398add4323e1f09e7..5fcf38ef633c24e896a88ec075d27968c1c7fe55 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1057,7 +1057,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -298,7 +298,7 @@ index c1b03e4c37ea85ddf283479682d0eb2eca57ee3c..d7e86fa013ff8b5dc3c7da177d733c83
          return ret;
      }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index ef6d8f787cba0db53270adedd923f9a47d435852..ed055008500895be5271504298eaae2b897eeb3f 100644
+index 2061f374a2b40ff5ba3e3bdb6ef02bbec3be9748..ab6a6455abc6a7fcf6494a495b276f17a06e3514 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -770,13 +770,13 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
@@ -317,7 +317,7 @@ index ef6d8f787cba0db53270adedd923f9a47d435852..ed055008500895be5271504298eaae2b
              return;
          }
          // Paper end
-@@ -3193,7 +3193,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
+@@ -3199,7 +3199,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
          // Paper start
          if (!org.bukkit.Bukkit.isPrimaryThread()) {
              if (this.recipeSpamPackets.addAndGet(io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamIncrement) > io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.recipeSpamLimit) {
@@ -327,7 +327,7 @@ index ef6d8f787cba0db53270adedd923f9a47d435852..ed055008500895be5271504298eaae2b
              }
          }
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index ff2dd53e9e943aa929188fd9d4c35498b78c497a..2c1cc7aa805b7e4555d7db2b10ae365bae4d0989 100644
+index 1c4f272219e68373eaae93fc5ea9af7d8f3fd6f9..8039f4282f661090506917d1bb97cdfc0cfd9e27 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 @@ -157,8 +157,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
@@ -351,7 +351,7 @@ index ff2dd53e9e943aa929188fd9d4c35498b78c497a..2c1cc7aa805b7e4555d7db2b10ae365b
          final String s;
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 48d1444fbad1c57738807d0128b94160a5a17a4d..e80d228f527d7353f796b6b4547f3baabfd8c5b6 100644
+index 30dd56871acff2dd730d96406520bab066229d7a..0e4d673781b7bd0b336966f0b31b386d2d80ffe9 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -695,7 +695,7 @@ public abstract class PlayerList {
@@ -414,10 +414,10 @@ index 2e324276ea4cd9e528c6a3f9a9ba394b378fe075..8c3648d1fd8aaed641a1a8ead94a9fc5
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 2cdc2bd62f0cb62f75365b6b3e6d80d9a2132451..732f395a345065c874ec13753dd682751ee93275 100644
+index 26b57d004cf9b43967dce65c75946895fb703b84..4c52c3ad8e03d8e0286866bb7a6d7a507b4892b4 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3143,7 +3143,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3140,7 +3140,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -467,7 +467,7 @@ index 4cb836dfa7cbd2e634d4a3a567da0305aac0da4d..6dd585dfa7797eac21c80abb24acd9fc
  
                      for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/entity/monster/ZombieVillager.java b/src/main/java/net/minecraft/world/entity/monster/ZombieVillager.java
-index 807cff3fb51269b97d9aecbcc4706f0a139dfeaa..53c9806f8069a3d2096a95f5f06f6a670761d297 100644
+index 94396ad1a3c280787d36c6c18256d10340ace488..8e64d01db9f6f3897fffe41f63b5460ba2abd798 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/ZombieVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/ZombieVillager.java
 @@ -237,7 +237,7 @@ public class ZombieVillager extends Zombie implements VillagerDataHolder {
@@ -546,7 +546,7 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 1e2620338f0b6fd1c160a8f8d6b659e273f2f1c9..cb67a9632a47f761fe634155dc92bf0efd2e6399 100644
+index 99e1c645871be28d130319b65700a1b8db093de4..cead1fd11320168bd663542dd631d1e9422af847 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -1826,7 +1826,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
@@ -657,7 +657,7 @@ index 6827979a5b270ced53b46ecb9eff548727dadb81..4b42ae96bc786d2a9d57086ae8d1f5ca
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java b/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
-index bbacf58740f3faea0d555e4012fe2b15fb46ed50..92516f73134b4932bbe1f27b739f98f2aaf94d3c 100644
+index b25dc23b81687dd4d4e70b3615ffb91f8c03c68b..54ce53e4680da87b13975a269542eeaaf2bf2f62 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/WeakCollection.java
 @@ -164,7 +164,7 @@ public final class WeakCollection<T> implements Collection<T> {

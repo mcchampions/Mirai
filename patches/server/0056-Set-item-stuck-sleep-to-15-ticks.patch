@@ -7,7 +7,7 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
-index 80fc7918cb294b0d88a293bd6a920441cb55c3ad..6410152a192b5364de3ecf18540e1216915b520e 100644
+index eb0351aa12eebcefab1d1d14641fc3c60cbbcab8..6bff3bcbf61228b1f50c8a09d236bc8fd615d8ca 100644
 --- a/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/item/ItemEntity.java
 @@ -150,7 +150,7 @@ public class ItemEntity extends Entity implements TraceableEntity {

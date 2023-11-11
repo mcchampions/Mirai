@@ -44,7 +44,7 @@ index b319021b22c5dceba6199ed27814b2dcf47b8d50..021a70682dff08d8cf85a9ed977b1cac
              LocalDate localdate = LocalDate.now();
              int i = localdate.get(ChronoField.DAY_OF_MONTH);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-index 3d44f8e9f8056d7d899e90e61240b2d1d109354b..4333431e1f556ab52e9cee34b0061d459a405899 100644
+index 5fdad1600cc7a7c22d1d9a58b6b2dda605521b97..1ff96cc9e0550e2d3212a055d675eaea5eb79e42 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 @@ -512,7 +512,13 @@ public class Zombie extends Monster {
