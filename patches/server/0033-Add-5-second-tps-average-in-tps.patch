@@ -71,10 +71,10 @@ index 5c75e2a2181e8f823754691dd0494b44151317d7..54d7f5410c38669714f8f78c9672d1c1
                      tickSection = curTime;
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9c4a2f8939bf6e19dc86d775a6b5f91d9592abd3..c923882299b8e2e5efe3ba4bc84e97a9cb846474 100644
+index 707808e264c5dee288bea6ae2d6de2a2fab9381d..4aff5f3b5ddf27e3aad97d954f959a0e9004a567 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2874,6 +2874,7 @@ public final class CraftServer implements Server {
+@@ -2937,6 +2937,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {

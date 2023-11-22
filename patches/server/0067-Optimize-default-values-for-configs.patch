@@ -96,10 +96,10 @@ index a27ee205d13dda890646ebf451076f383de0728b..1ef4565c5e4e395ea5c93e7146a7401a
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51eba1bbab 100644
+index 84e6fc5bac43ee0499b391827726bc02f6d3e46f..eef3f1f19235ece8f7f1453db40b74f0f631f1c5 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-@@ -128,8 +128,8 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -152,8 +152,8 @@ public class WorldConfiguration extends ConfigurationPart {
          public ArmorStands armorStands;
  
          public class ArmorStands extends ConfigurationPart {
@@ -110,7 +110,7 @@ index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51
          }
  
          public Markers markers;
-@@ -228,7 +228,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -252,7 +252,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
          public class Behavior extends ConfigurationPart {
              public boolean disableChestCatDetection = false;
@@ -119,7 +119,7 @@ index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51
              public int experienceMergeMaxValue = -1;
              public boolean shouldRemoveDragon = false;
              public boolean zombiesTargetTurtleEggs = true;
-@@ -275,7 +275,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -276,7 +276,7 @@ public class WorldConfiguration extends ConfigurationPart {
              public int playerInsomniaStartTicks = 72000;
              public int phantomsSpawnAttemptMinSeconds = 60;
              public int phantomsSpawnAttemptMaxSeconds = 119;
@@ -128,7 +128,7 @@ index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51
              @BelowZeroToEmpty
              public DoubleOr.Default zombieVillagerInfectionChance = DoubleOr.Default.USE_DEFAULT;
              public MobsCanAlwaysPickUpLoot mobsCanAlwaysPickUpLoot;
-@@ -380,7 +380,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -381,7 +381,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class Environment extends ConfigurationPart {
          public boolean disableThunder = false;
          public boolean disableIceAndSnow = false;
@@ -137,7 +137,7 @@ index 387a887d3aebb57da80bc36e36c2a7ea05cfd74f..fb4724d97ddf42f5b65c903f65926d51
          public boolean disableExplosionKnockback = false;
          public boolean generateFlatBedrock = false;
          public FrostedIce frostedIce;
-@@ -426,7 +426,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -427,7 +427,7 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Maps extends ConfigurationPart {
          public int itemFrameCursorLimit = 128;

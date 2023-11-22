@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 1d33a04a1ff3167f2384066cfde5207339bd2122..203304de483fec22594e754726c8cb885d3cb28c 100644
+index 059d8d783e7d51a56be181803f4cad713c6254db..9b7c7001b343a28ee681c468bbfc0a4718c073db 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -718,6 +718,8 @@ public abstract class PlayerList {
+@@ -739,6 +739,8 @@ public abstract class PlayerList {
          if (getBans().isBanned(gameprofile) && (gameprofilebanentry = getBans().get(gameprofile)) != null) {
              // Paper end
  
@@ -19,7 +19,7 @@ index 1d33a04a1ff3167f2384066cfde5207339bd2122..203304de483fec22594e754726c8cb88
              ichatmutablecomponent = Component.translatable("multiplayer.disconnect.banned.reason", gameprofilebanentry.getReason());
              if (gameprofilebanentry.getExpires() != null) {
                  ichatmutablecomponent.append((Component) Component.translatable("multiplayer.disconnect.banned.expiration", PlayerList.BAN_DATE_FORMAT.format(gameprofilebanentry.getExpires())));
-@@ -725,6 +727,10 @@ public abstract class PlayerList {
+@@ -746,6 +748,10 @@ public abstract class PlayerList {
  
              // return chatmessage;
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, io.papermc.paper.adventure.PaperAdventure.asAdventure(ichatmutablecomponent)); // Paper - Adventure
