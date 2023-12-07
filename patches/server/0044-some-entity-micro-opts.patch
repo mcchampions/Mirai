@@ -7,7 +7,7 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 7ca3ff0c81b58fe12b57c8718b6366f9bd52cf60..925376438537f6a0a16c7534ff9b4cbee3624aae 100644
+index 9c5d4b7ea48c0600c9fadfa2986b1b8955e10278..4b71c1e0b6a79493b1c8fd782fc14f166308b6c1 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -499,16 +499,33 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
@@ -67,7 +67,7 @@ index 7ca3ff0c81b58fe12b57c8718b6366f9bd52cf60..925376438537f6a0a16c7534ff9b4cbe
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4709,6 +4732,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4735,6 +4758,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
      // Paper end - block invalid positions
  

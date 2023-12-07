@@ -33,7 +33,7 @@ index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..0e37d98b5908382a242729408d0b9f0e
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 84e6fc5bac43ee0499b391827726bc02f6d3e46f..eef3f1f19235ece8f7f1453db40b74f0f631f1c5 100644
+index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..73bb9c66e62eea0e8fa8730b3627aed785ff8dc6 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -152,8 +152,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -146,19 +146,21 @@ index 84e6fc5bac43ee0499b391827726bc02f6d3e46f..eef3f1f19235ece8f7f1453db40b74f0
          });
          public boolean flushRegionsOnSave = false;
      }
-@@ -496,11 +510,22 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -496,13 +510,24 @@ public class WorldConfiguration extends ConfigurationPart {
      public TickRates tickRates;
  
      public class TickRates extends ConfigurationPart {
 -        public int grassSpread = 1;
 -        public int containerUpdate = 1;
 -        public int mobSpawner = 1;
--        public Table<EntityType<?>, String, Integer> sensor = Util.make(HashBasedTable.create(), table -> table.put(EntityType.VILLAGER, "secondarypoisensor", 40));
--        public Table<EntityType<?>, String, Integer> behavior = Util.make(HashBasedTable.create(), table -> table.put(EntityType.VILLAGER, "validatenearbypoi", -1));
 +        // Mirai start - optimize default values for configs
 +        public int grassSpread = 4;
 +        public int containerUpdate = 3;
 +        public int mobSpawner = 2;
+         public int wetFarmland = 1;
+         public int dryFarmland = 1;
+-        public Table<EntityType<?>, String, Integer> sensor = Util.make(HashBasedTable.create(), table -> table.put(EntityType.VILLAGER, "secondarypoisensor", 40));
+-        public Table<EntityType<?>, String, Integer> behavior = Util.make(HashBasedTable.create(), table -> table.put(EntityType.VILLAGER, "validatenearbypoi", -1));
 +        public Table<EntityType<?>, String, Integer> sensor = Util.make(HashBasedTable.create(), table -> {
 +            table.put(EntityType.VILLAGER, "secondarypoisensor", 80);
 +            table.put(EntityType.VILLAGER, "nearestbedsensor", 80);
@@ -174,7 +176,7 @@ index 84e6fc5bac43ee0499b391827726bc02f6d3e46f..eef3f1f19235ece8f7f1453db40b74f0
      }
  
      @Setting(FeatureSeedsGeneration.FEATURE_SEEDS_KEY)
-@@ -509,7 +534,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -511,7 +536,7 @@ public class WorldConfiguration extends ConfigurationPart {
      public class FeatureSeeds extends ConfigurationPart {
          @SuppressWarnings("unused") // Is used in FeatureSeedsGeneration
          @Setting(FeatureSeedsGeneration.GENERATE_KEY)
@@ -183,7 +185,7 @@ index 84e6fc5bac43ee0499b391827726bc02f6d3e46f..eef3f1f19235ece8f7f1453db40b74f0
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -523,9 +548,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -525,9 +550,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;

@@ -74,7 +74,7 @@ index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 5e56d759ac2ec05fc01f756e1646514620bb541c..84848b41811ad101c10219cc2cacad3fe46768db 100644
+index 15e936842407927f2c99705cf3c15866b815d55c..01d0c93972401f4084df6081ba49a2ee77258c9f 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -678,6 +678,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -86,10 +86,10 @@ index 5e56d759ac2ec05fc01f756e1646514620bb541c..84848b41811ad101c10219cc2cacad3f
          // Paper start - fix secure profile with proxy online mode
          return dedicatedserverproperties.enforceSecureProfile
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index e049c8f5be0c5adb69294b146b42477a5120d6f7..1f3227dfc43a4f3d665a3e34d1cb102a0ba99cdf 100644
+index ef2f6aff12a6184ce53d52898bf43fcbe698d3d3..1687cdc71ea2ec26250ea24922a060bbb09a02c0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2156,7 +2156,7 @@ public class ServerPlayer extends Player {
+@@ -2154,7 +2154,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {

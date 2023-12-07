@@ -401,10 +401,10 @@ index 2e324276ea4cd9e528c6a3f9a9ba394b378fe075..8c3648d1fd8aaed641a1a8ead94a9fc5
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 02f4a2a0bfd66a557f5167ac9ccd13ff9f3dd763..b5f6af357b575f8f6689a7e00a30f2dcc5e5114b 100644
+index 18b12edbbdc2d974e2bc48c5d33848dc3bc9f976..36182365fe8250b73db732b05bb382bd450af207 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -3205,7 +3205,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3213,7 +3213,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
      @Nullable
      private Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
          Map<EquipmentSlot, ItemStack> map = null;
@@ -467,10 +467,10 @@ index 4d744e00bbaf25d1bad3782a6415e9bf5958e536..95fc74441355b807ec232afc1859c163
  
          for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/world/item/ItemStack.java b/src/main/java/net/minecraft/world/item/ItemStack.java
-index fc481f26368f4d823379921573a05ac5b91f39e6..e797d6f2a9b72db461b7bb6a875622babe446fb1 100644
+index 2776b124dd15e4c84edcfbf98ba44d53ef149e43..356c70fb4a979c00c37df733d49165e41963227c 100644
 --- a/src/main/java/net/minecraft/world/item/ItemStack.java
 +++ b/src/main/java/net/minecraft/world/item/ItemStack.java
-@@ -1043,7 +1043,7 @@ public final class ItemStack {
+@@ -1045,7 +1045,7 @@ public final class ItemStack {
          int k;
  
          if (ItemStack.shouldShowInTooltip(i, ItemStack.TooltipPart.MODIFIERS)) {
