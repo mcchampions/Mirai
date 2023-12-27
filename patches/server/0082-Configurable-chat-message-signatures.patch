@@ -86,10 +86,10 @@ index d5c38940d151efc0067b7e2859fc8aef006169ab..3d872f4169b99e4b7880c9927245bb05
          // Paper start - fix secure profile with proxy online mode
          return dedicatedserverproperties.enforceSecureProfile
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 1c9cab8c19ce570331afe05cfb81b080c7df8533..92ba960b564c25873ed47945f024502b2f896888 100644
+index 3423decdc9d9451ba11a1ce624c1940f0fcf8bdd..814b8d66843e0aba0aee9fbba912a55928edf69f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2093,7 +2093,7 @@ public class ServerPlayer extends Player {
+@@ -2091,7 +2091,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
