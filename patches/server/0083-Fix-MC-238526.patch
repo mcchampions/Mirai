@@ -5,10 +5,10 @@ Subject: [PATCH] Fix MC-238526
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java b/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
-index cd2ce5bcb8c30e4657cd0e340d80544c7e805905..2f53bc9832648d99ded0606049fef616b03664ff 100644
+index 827912174ee08cd19249797d351887149b25c880..ab0b5502fad0043f776a8c151371baacdd7ab5ec 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
-@@ -82,6 +82,6 @@ public abstract class WaterAnimal extends PathfinderMob {
+@@ -77,6 +77,6 @@ public abstract class WaterAnimal extends PathfinderMob {
          i = world.getMinecraftWorld().paperConfig().entities.spawning.wateranimalSpawnHeight.maximum.or(i);
          j = world.getMinecraftWorld().paperConfig().entities.spawning.wateranimalSpawnHeight.minimum.or(j);
          // Paper end

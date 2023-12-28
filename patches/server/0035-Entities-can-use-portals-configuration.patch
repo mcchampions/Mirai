@@ -7,7 +7,7 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 1f97269f92732bf15115b3e2e53b28218fb21df1..bca7260d38cb84fcfca19b2781f16f898d26d86e 100644
+index f9353df394ae6b74df2f1d8a4745be4ec9928645..6bd032d296d6c0d0cd33b88aebe479a375804e4d 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -191,4 +191,10 @@ public class MiraiConfig {
@@ -22,10 +22,10 @@ index 1f97269f92732bf15115b3e2e53b28218fb21df1..bca7260d38cb84fcfca19b2781f16f89
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index ab9b2156d3060841d1709cd5baa33f8a7d1a2ed6..a1d6c58449263889a92e34459ca3c580e5dec109 100644
+index 43383efaed845df319bdf859ffcd2bf73c0e2e83..142f3eccaf9beb12ddcbc5115ef998fb01c53246 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3108,7 +3108,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3132,7 +3132,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
          if (this.isOnPortalCooldown()) {
              if (!(dev.etil.mirai.MiraiConfig.playerFixStuckPortal && this instanceof Player && !pos.equals(portalPos))) // Purpur
              this.setPortalCooldown();
@@ -34,7 +34,7 @@ index ab9b2156d3060841d1709cd5baa33f8a7d1a2ed6..a1d6c58449263889a92e34459ca3c580
              if (!this.level().isClientSide && !pos.equals(this.portalEntrancePos)) {
                  this.portalEntrancePos = pos.immutable();
                  portalPos = BlockPos.ZERO; // Purpur
-@@ -3814,7 +3814,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3842,7 +3842,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      }
  
      public boolean canChangeDimensions() {

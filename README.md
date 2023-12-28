@@ -2,10 +2,10 @@
 <div align="center">
   <h1>Mirai</h1>
   <h3>A powerful Minecraft Server Software coming from the future</h3>
-  <h4>Mirai is ❗under heavy development❗ and contributions are welcome!</h4>
-  <h5><b>This project is experimental, its usage in production environment is discouraged if you are not ready to face possible bugs.</b></h5>
+  <h4>❗If you are looking for alternatives of Mirai, <a href="https://github.com/GaleMC/Gale">Gale</a> or <a href="https://github.com/Winds-Studio/Leaf">Leaf</a> maybe is a good choice.❗</h4>
+  <h5><b>This project is experimental under development, its usage in production environment is discouraged if you are not ready to face possible bugs.</b></h5>
 
-  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-1202.yml?branch=ver%2F1.20.2&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.20.2)
+  [![Build status](https://img.shields.io/github/actions/workflow/status/Dreeam-qwq/Mirai/build-1204.yml?branch=ver%2F1.20.4&style=for-the-badge)](https://github.com/Dreeam-qwq/Mirai/releases)
   [![Discord](https://img.shields.io/discord/1145991395388162119?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/gfgAwdSEuM)
 </div>
 
@@ -27,7 +27,7 @@
 ## Downloads
 The latest successful build can be downloaded here:
 
-[mirai-1.20.2.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.20.2)
+[mirai-1.20.4.jar](https://github.com/Dreeam-qwq/Mirai/releases/tag/1.20.4)
 
 **Please note Java >= 17 is required, and Java >=19 is recommended.**
 

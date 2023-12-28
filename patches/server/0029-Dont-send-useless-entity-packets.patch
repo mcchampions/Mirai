@@ -7,23 +7,22 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index db60b0dc87c5c7d50a5161ed2816067a49f2f5a7..9379fd91df73ac482064a89462764dac9835c71f 100644
+index 8717e40515dbc7cfbb5b45ce706f5c720596b5fc..d867baee944627e1a1419611fac2d3385350b182 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -153,4 +153,10 @@ public class MiraiConfig {
-                                 "Whether or not vanilla anticheat should check for passengers flying.");
+@@ -152,4 +152,10 @@ public class MiraiConfig {
+         checkVehicleFlying = getBoolean("checks.vehicle-flight", true,
+             "Whether or not vanilla anticheat should check for passengers flying.");
      }
- 
++
 +    public static boolean dontSendUselessEntityPackets;
 +    private static void uselessEntityPackets() {
 +        dontSendUselessEntityPackets = getBoolean("dont-send-useless-entity-packets", true,
-+                                        "Whether or not server should send entity packets with null movements.");
++            "Whether or not server should send entity packets with null movements.");
 +    }
-+
  }
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index ee1249a84513a22c4b50a68a6d7a780c4ae59caa..cdabcaeb1edf249e347ed62ce78c251cd94556f7 100644
+index ee1249a84513a22c4b50a68a6d7a780c4ae59caa..fef721a3d63813813d6adaae2f30e4cda87f7581 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -200,6 +200,7 @@ public class ServerEntity {
@@ -34,14 +33,13 @@ index ee1249a84513a22c4b50a68a6d7a780c4ae59caa..cdabcaeb1edf249e347ed62ce78c251c
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -272,6 +273,22 @@ public class ServerEntity {
+@@ -272,6 +273,21 @@ public class ServerEntity {
          });
      }
  
 +    // Purpur start
 +    private boolean isUselessPacket(Packet<?> possibleUselessPacket) {
-+        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket) {
-+            ClientboundMoveEntityPacket packet = (ClientboundMoveEntityPacket) possibleUselessPacket;
++        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket packet) {
 +            if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos) {
 +                return packet.getXa() == 0 && packet.getYa() == 0 && packet.getZa() == 0;
 +            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.PosRot) {

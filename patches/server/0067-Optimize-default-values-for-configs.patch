@@ -5,41 +5,37 @@ Subject: [PATCH] Optimize default values for configs
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6755008dc43bf96c1507ce2ae6a066a1b75df760..51e4396bdaae628f994f0d3623f68af2e28ba874 100644
+index 6755008dc43bf96c1507ce2ae6a066a1b75df760..d8e4ac55c6f72e9f92b683d18b5538088996378d 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -219,7 +219,7 @@ public class PufferfishConfig {
+@@ -218,8 +218,8 @@ public class PufferfishConfig {
+     public static int maxProjectileLoadsPerTick;
      public static int maxProjectileLoadsPerProjectile;
      private static void projectileLoading() {
-         maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 10, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick.");
+-        maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 10, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick.");
 -        maxProjectileLoadsPerProjectile = getInt("projectile.max-loads-per-projectile", 10, "Controls how many chunks a projectile", "can load in its lifetime before it gets", "automatically removed.");
++        maxProjectileLoadsPerTick = getInt("projectile.max-loads-per-tick", 8, "Controls how many chunks are allowed", "to be sync loaded by projectiles in a tick."); // Mirai - optimize default values for configs
 +        maxProjectileLoadsPerProjectile = getInt("projectile.max-loads-per-projectile", 8, "Controls how many chunks a projectile", "can load in its lifetime before it gets", "automatically removed."); // Mirai - optimize default values for configs
  
          setComment("projectile", "Optimizes projectile settings");
      }
-@@ -233,18 +233,18 @@ public class PufferfishConfig {
+@@ -233,14 +233,14 @@ public class PufferfishConfig {
  
      private static void dynamicActivationOfBrains() throws IOException {
          dearEnabled = getBoolean("dab.enabled", "activation-range.enabled", true);
 -        startDistance = getInt("dab.start-distance", "activation-range.start-distance", 12,
-+        startDistance = getInt("dab.start-distance", "activation-range.start-distance", 8,
++        startDistance = getInt("dab.start-distance", "activation-range.start-distance", 8, // Mirai - optimize default values for configs
                  "This value determines how far away an entity has to be",
--                "from the player to start being effected by DEAR.");
-+                "from the player to start being effected by DEAR."); // Mirai - optimize default values for configs
+                 "from the player to start being effected by DEAR.");
          startDistanceSquared = startDistance * startDistance;
          maximumActivationPrio = getInt("dab.max-tick-freq", "activation-range.max-tick-freq", 20,
                  "This value defines how often in ticks, the furthest entity",
                  "will get their pathfinders and behaviors ticked. 20 = 1s");
 -        activationDistanceMod = getInt("dab.activation-dist-mod", "activation-range.activation-dist-mod", 8,
-+        activationDistanceMod = getInt("dab.activation-dist-mod", "activation-range.activation-dist-mod", 7,
++        activationDistanceMod = getInt("dab.activation-dist-mod", "activation-range.activation-dist-mod", 7, // Mirai - optimize default values for configs
                  "This value defines how much distance modifies an entity's",
                  "tick frequency. freq = (distanceToPlayer^2) / (2^value)",
                  "If you want further away entities to tick less often, use 7.",
--                "If you want further away entities to tick more often, try 9.");
-+                "If you want further away entities to tick more often, try 9."); // Mirai - optimize default values for configs
- 
-         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
-             entityType.dabEnabled = true; // reset all, before setting the ones to true
 @@ -260,8 +260,14 @@ public class PufferfishConfig {
  	public static Map<String, Integer> projectileTimeouts;
  	private static void projectileTimeouts() {
@@ -276,7 +272,7 @@ index 68602dfb171d47e47fd0710b4324013ef05214d0..3cae79ada5db7821df279a149cd7debc
      public static String restartScript = "./start.sh";
      public static String restartMessage;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed43320464617f 100644
+index 10adb1850650fb4eb1c8890cf9d56570bfdb8b61..a3fb7dd7e3de98620983a1b070549391f3fdc48b 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -150,14 +150,14 @@ public class SpigotWorldConfig
@@ -305,7 +301,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
          this.log( "Mob Spawn Range: " + this.mobSpawnRange );
      }
  
-@@ -207,14 +207,14 @@ public class SpigotWorldConfig
+@@ -207,14 +207,16 @@ public class SpigotWorldConfig
          this.log( "Item Despawn Rate: " + this.itemDespawnRate );
      }
  
@@ -313,21 +309,23 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
 -    public int monsterActivationRange = 32;
 -    public int raiderActivationRange = 48;
 -    public int miscActivationRange = 16;
-+    public int animalActivationRange = 16; // Mirai - optimize default values for configs
-+    public int monsterActivationRange = 24; // Mirai - optimize default values for configs
-+    public int raiderActivationRange = 32; // Mirai - optimize default values for configs
-+    public int miscActivationRange = 8; // Mirai - optimize default values for configs
++    // Mirai start - optimize default values for configs
++    public int animalActivationRange = 16;
++    public int monsterActivationRange = 24;
++    public int raiderActivationRange = 32;
++    public int miscActivationRange = 8;
      // Paper start
 -    public int flyingMonsterActivationRange = 32;
 -    public int waterActivationRange = 16;
 -    public int villagerActivationRange = 32;
-+    public int flyingMonsterActivationRange = 24; // Mirai - optimize default values for configs
-+    public int waterActivationRange = 8; // Mirai - optimize default values for configs
-+    public int villagerActivationRange = 16; // Mirai - optimize default values for configs
++    public int flyingMonsterActivationRange = 24;
++    public int waterActivationRange = 8;
++    public int villagerActivationRange = 16;
++    // Mirai end
      public int wakeUpInactiveAnimals = 4;
      public int wakeUpInactiveAnimalsEvery = 60*20;
      public int wakeUpInactiveAnimalsFor = 5*20;
-@@ -231,7 +231,7 @@ public class SpigotWorldConfig
+@@ -231,7 +233,7 @@ public class SpigotWorldConfig
      public int villagersWorkImmunityFor = 20;
      public boolean villagersActiveForPanic = true;
      // Paper end
@@ -336,7 +334,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
      public boolean ignoreSpectatorActivation = false;
      private void activationRange()
      {
-@@ -270,12 +270,13 @@ public class SpigotWorldConfig
+@@ -270,12 +272,15 @@ public class SpigotWorldConfig
          this.log( "Entity Activation Range: An " + this.animalActivationRange + " / Mo " + this.monsterActivationRange + " / Ra " + this.raiderActivationRange + " / Mi " + this.miscActivationRange + " / Tiv " + this.tickInactiveVillagers + " / Isa " + this.ignoreSpectatorActivation );
      }
  
@@ -346,17 +344,19 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
 -    public int miscTrackingRange = 32;
 -    public int displayTrackingRange = 128;
 -    public int otherTrackingRange = 64;
-+    public int playerTrackingRange = 32; // Mirai - optimize default values for configs
-+    public int animalTrackingRange = 24; // Mirai - optimize default values for configs
-+    public int monsterTrackingRange = 24; // Mirai - optimize default values for configs
-+    public int miscTrackingRange = 16; // Mirai - optimize default values for configs
-+    public int displayTrackingRange = 64; // Mirai - optimize default values for configs
-+    public int otherTrackingRange = 32; // Mirai - optimize default values for configs
++    // Mirai start - optimize default values for configs
++    public int playerTrackingRange = 32;
++    public int animalTrackingRange = 24;
++    public int monsterTrackingRange = 24;
++    public int miscTrackingRange = 16;
++    public int displayTrackingRange = 64;
++    public int otherTrackingRange = 32;
++    // Mirai end
 +
      private void trackingRange()
      {
          this.playerTrackingRange = this.getInt( "entity-tracking-range.players", this.playerTrackingRange );
-@@ -294,13 +295,13 @@ public class SpigotWorldConfig
+@@ -294,13 +299,13 @@ public class SpigotWorldConfig
      private void hoppers()
      {
          // Set the tick delay between hopper item movements
@@ -373,7 +373,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
          this.hopperCanLoadChunks = this.getBoolean( "hopper-can-load-chunks", false );
          this.log( "Hopper Transfer: " + this.hopperTransfer + " Hopper Check: " + this.hopperCheck + " Hopper Amount: " + this.hopperAmount + " Hopper Can Load Chunks: " + this.hopperCanLoadChunks );
      }
-@@ -309,7 +310,7 @@ public class SpigotWorldConfig
+@@ -309,7 +314,7 @@ public class SpigotWorldConfig
      public int tridentDespawnRate;
      private void arrowDespawnRate()
      {
@@ -382,7 +382,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
          this.tridentDespawnRate = this.getInt( "trident-despawn-rate", this.arrowDespawnRate );
          this.log( "Arrow Despawn Rate: " + this.arrowDespawnRate + " Trident Respawn Rate:" + this.tridentDespawnRate );
      }
-@@ -324,14 +325,14 @@ public class SpigotWorldConfig
+@@ -324,14 +329,14 @@ public class SpigotWorldConfig
      public boolean nerfSpawnerMobs;
      private void nerfSpawnerMobs()
      {
@@ -399,7 +399,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
          this.log( "Allow Zombie Pigmen to spawn from portal blocks: " + this.enableZombiePigmenPortalSpawns );
      }
  
-@@ -344,7 +345,7 @@ public class SpigotWorldConfig
+@@ -344,7 +349,7 @@ public class SpigotWorldConfig
      public int witherSpawnSoundRadius;
      private void witherSpawnSoundRadius()
      {
@@ -408,7 +408,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
      }
  
      public int endPortalSoundRadius;
-@@ -440,14 +441,14 @@ public class SpigotWorldConfig
+@@ -442,14 +447,14 @@ public class SpigotWorldConfig
          {
              this.set( "max-tnt-per-tick", 100 );
          }
@@ -426,7 +426,7 @@ index 2ded20d45cd7909ededa9de7b4ddaa8a39f032c9..7b32cc38189de9f11e47e51968ed4332
  
      /* JettPack - remove tick limiter
 diff --git a/src/main/resources/configurations/bukkit.yml b/src/main/resources/configurations/bukkit.yml
-index eef7c125b2689f29cae5464659eacdf33f5695b2..480dc4dd7d168da90457e808c7e6a9a5f6ff900c 100644
+index eef7c125b2689f29cae5464659eacdf33f5695b2..2027f836e2b7e0494e68c5bd6f482db384aca90f 100644
 --- a/src/main/resources/configurations/bukkit.yml
 +++ b/src/main/resources/configurations/bukkit.yml
 @@ -17,29 +17,29 @@ settings:
@@ -468,20 +468,23 @@ index eef7c125b2689f29cae5464659eacdf33f5695b2..480dc4dd7d168da90457e808c7e6a9a5
 -    axolotl-spawns: 1
 -    ambient-spawns: 1
 +    monster-spawns: 10
-+    water-spawns: 200
-+    water-ambient-spawns: 200
-+    water-underground-creature-spawns: 200
-+    axolotl-spawns: 200
-+    ambient-spawns: 200
++    water-spawns: 50
++    water-ambient-spawns: 50
++    water-underground-creature-spawns: 50
++    axolotl-spawns: 50
++    ambient-spawns: 50
      autosave: 6000
  aliases: now-in-commands.yml
 diff --git a/src/main/resources/configurations/commands.yml b/src/main/resources/configurations/commands.yml
-index 18f54571200e2eca09a39b88f170fe7b99d8618f..1b57d51d92c5c69286800d10baeaa936fa208cae 100644
+index 18f54571200e2eca09a39b88f170fe7b99d8618f..94e384ccc393a5dc48147b56f62ca8c0757bb893 100644
 --- a/src/main/resources/configurations/commands.yml
 +++ b/src/main/resources/configurations/commands.yml
-@@ -12,5 +12,3 @@
+@@ -12,5 +12,5 @@
  command-block-overrides: []
  ignore-vanilla-permissions: false
  aliases:
 -    icanhasbukkit:
 -      - "version $1-"
++  icanhasbukkit:
++    - "afk"
+\ No newline at end of file

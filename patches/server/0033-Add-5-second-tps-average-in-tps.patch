@@ -7,7 +7,7 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
-index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf21641a2200c 100644
+index 066b9e4c4f0e7773548eda045cdd1ca8445221d2..92eaba96135ccddb7d682dab7e82cde9318a48ef 100644
 --- a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 +++ b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 @@ -58,7 +58,7 @@ public class RAMDetails extends JList<String> {
@@ -22,17 +22,17 @@ index fa56cd09102a89692b42f1d14257990508c5c720..f9251183df72ddc56662fd3f02acf216
 @@ -67,7 +67,7 @@ public class RAMDetails extends JList<String> {
          vector.add("Memory use: " + (data.getUsedMem() / 1024L / 1024L) + " mb (" + (data.getFree() * 100L / data.getMax()) + "% free)");
          vector.add("Heap: " + (data.getTotal() / 1024L / 1024L) + " / " + (data.getMax() / 1024L / 1024L) + " mb");
-         vector.add("Avg tick: " + DECIMAL_FORMAT.format(getAverage(server.tickTimes)) + " ms");
+         vector.add("Avg tick: " + DECIMAL_FORMAT.format(this.getAverage(server.getTickTimesNanos())) + " ms");
 -        vector.add("TPS from last 1m, 5m, 15m: " + String.join(", ", tpsAvg));
 +        vector.add("TPS from last 5s, 1m, 5m, 15m: " + String.join(", ", tpsAvg)); // Purpur
  
          setListData(vector);
      }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5c75e2a2181e8f823754691dd0494b44151317d7..54d7f5410c38669714f8f78c9672d1c185c51732 100644
+index ce7271080a5cbce2249797a0016f412e0cd461c2..12afa779654cb33d4496131694f1ceeb805b1c87 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -297,7 +297,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -303,7 +303,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      public static final int TPS = 20;
      public static final int TICK_TIME = 1000000000 / MinecraftServer.TPS;
      private static final int SAMPLE_INTERVAL = 20; // Paper
@@ -41,7 +41,7 @@ index 5c75e2a2181e8f823754691dd0494b44151317d7..54d7f5410c38669714f8f78c9672d1c1
      // Spigot end
      public final io.papermc.paper.configuration.PaperConfigurations paperConfigurations;
      public static long currentTickLong = 0L; // Paper
-@@ -1033,6 +1033,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1079,6 +1079,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
      private static final long MAX_CATCHUP_BUFFER = TICK_TIME * TPS * 60L;
      private long lastTick = 0;
      private long catchupTime = 0;
@@ -49,8 +49,8 @@ index 5c75e2a2181e8f823754691dd0494b44151317d7..54d7f5410c38669714f8f78c9672d1c1
      public final RollingAverage tps1 = new RollingAverage(60);
      public final RollingAverage tps5 = new RollingAverage(60 * 5);
      public final RollingAverage tps15 = new RollingAverage(60 * 15);
-@@ -1134,13 +1135,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
-                 {
+@@ -1190,13 +1191,17 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+                     curTime = Util.getNanos();
                      final long diff = curTime - tickSection;
                      java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);
 +                    tps5s.add(currentTps, diff); // Purpur
@@ -69,12 +69,12 @@ index 5c75e2a2181e8f823754691dd0494b44151317d7..54d7f5410c38669714f8f78c9672d1c1
 +                    // Purpur end
                      // Paper end
                      tickSection = curTime;
-                 }
+                 } else curTime = Util.getNanos(); // Paper
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 707808e264c5dee288bea6ae2d6de2a2fab9381d..4aff5f3b5ddf27e3aad97d954f959a0e9004a567 100644
+index d4544eab93c5ca452ddc612901a5e44b552ef6f0..deaafceb2779ffd2632bf7a63db41069502409f2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2937,6 +2937,7 @@ public final class CraftServer implements Server {
+@@ -2970,6 +2970,7 @@ public final class CraftServer implements Server {
      @Override
      public double[] getTPS() {
          return new double[] {
@@ -83,7 +83,7 @@ index 707808e264c5dee288bea6ae2d6de2a2fab9381d..4aff5f3b5ddf27e3aad97d954f959a0e
                  net.minecraft.server.MinecraftServer.getServer().tps5.getAverage(),
                  net.minecraft.server.MinecraftServer.getServer().tps15.getAverage()
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 602fda840f5ea3d5202ffc6534ac3cf535c14102..41a8aee04ba75e08e3e692943abab3158a080dde 100644
+index d7c8f2737c64e0036bccc7ef3d73af7af2d3b1d3..ccac0af3dc5066af12b8b9890f7784aa83bb2b6a 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -37,7 +37,7 @@ public class TicksPerSecondCommand extends Command

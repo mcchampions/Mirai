@@ -7,7 +7,7 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index bb19a14b0f1afc20e92f7ca0efaf3b453c8d0594..1f97269f92732bf15115b3e2e53b28218fb21df1 100644
+index 916805b5f1befc1a3a82ab706be87df6d5542321..f9353df394ae6b74df2f1d8a4745be4ec9928645 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -184,4 +184,11 @@ public class MiraiConfig {
@@ -23,10 +23,10 @@ index bb19a14b0f1afc20e92f7ca0efaf3b453c8d0594..1f97269f92732bf15115b3e2e53b2821
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 3ed1ba6bc41cada4c7966332c65158f2fce07147..654d155102709f6478431409df57b3161a78e58d 100644
+index 918bd7a64d024df75b7aff39ba3b1d53635a0619..23536c5b10dfdb81e1815fd76e5b937a653160a3 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -1243,6 +1243,7 @@ public class ServerPlayer extends Player {
+@@ -1247,6 +1247,7 @@ public class ServerPlayer extends Player {
                  playerlist.sendPlayerPermissionLevel(this);
                  worldserver1.removePlayerImmediately(this, Entity.RemovalReason.CHANGED_DIMENSION);
                  this.unsetRemoved();
@@ -35,10 +35,10 @@ index 3ed1ba6bc41cada4c7966332c65158f2fce07147..654d155102709f6478431409df57b316
                  // CraftBukkit end
                  this.setServerLevel(worldserver);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 80c9a523e94704f73e833e2255af6b0bf55da454..ab9b2156d3060841d1709cd5baa33f8a7d1a2ed6 100644
+index b8810cce6f4995d78dca3691b0a1cbd133a05e06..43383efaed845df319bdf859ffcd2bf73c0e2e83 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3103,12 +3103,15 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3127,12 +3127,15 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
          return Vec3.directionFromRotation(this.getRotationVector());
      }
  

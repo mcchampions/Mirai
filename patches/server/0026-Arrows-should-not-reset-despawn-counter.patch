@@ -10,10 +10,10 @@ This prevents keeping arrows alive indefinitely (such as when the block
 the arrow is stuck in gets removed, like a piston head going up/down)
 
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/AbstractArrow.java b/src/main/java/net/minecraft/world/entity/projectile/AbstractArrow.java
-index 5d6d26cfe8f0ab68a3145214b3fc126ca7a71a66..6d00e5d22147ae69de3723a46eabf0ecc577d421 100644
+index 42ebd91196ae420eee57f4380abc558555457163..b81e049b73e70c6798194cdb328bfbfc2fe6fe0e 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/AbstractArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/AbstractArrow.java
-@@ -312,7 +312,7 @@ public abstract class AbstractArrow extends Projectile {
+@@ -319,7 +319,7 @@ public abstract class AbstractArrow extends Projectile {
          Vec3 vec3d = this.getDeltaMovement();
  
          this.setDeltaMovement(vec3d.multiply((double) (this.random.nextFloat() * 0.2F), (double) (this.random.nextFloat() * 0.2F), (double) (this.random.nextFloat() * 0.2F)));

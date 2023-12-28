@@ -5,17 +5,17 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 5df721330448062f78259b243e526d5e292067be..37e1bf62970f770fd41a0ad2ce5c3a610d6df0d1 100644
+index 138f62b87e6af88131bd4412f94502435956fdce..ab3610ef65407aa6737217b9a2ab19fede24306f 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -56,10 +56,12 @@ dependencies {
-     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
+     runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.9.18")
  
      // Pufferfish start
 -    implementation("org.yaml:snakeyaml:1.32")
 -    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
 +    // Mirai start
-+    implementation("org.yaml:snakeyaml:2.1")
++    implementation("org.yaml:snakeyaml:2.2")
 +    implementation ("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4") {
          exclude(group="org.yaml", module="snakeyaml")
      }
@@ -39,10 +39,10 @@ index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..54d8fe961f5a28b8230e726f86ebf191
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/dev/etil/mirai/MiraiCommand.java b/src/main/java/dev/etil/mirai/MiraiCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0b673ed4f
+index 0000000000000000000000000000000000000000..2705506cb39aebf1d66e5d1dfd1b5128176600c6
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiCommand.java
-@@ -0,0 +1,78 @@
+@@ -0,0 +1,76 @@
 +package dev.etil.mirai;
 +
 +import java.io.IOException;
@@ -73,8 +73,8 @@ index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0
 +    public List<String> tabComplete(CommandSender sender, String alias, String[] args, Location location) throws IllegalArgumentException {
 +        if (args.length == 1) {
 +            return Stream.of("reload", "version")
-+              .filter(arg -> arg.startsWith(args[0].toLowerCase()))
-+              .collect(Collectors.toList());
++                .filter(arg -> arg.startsWith(args[0].toLowerCase()))
++                .collect(Collectors.toList());
 +        }
 +        return Collections.emptyList();
 +    }
@@ -82,16 +82,14 @@ index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0
 +    @Override
 +    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 +        if (!testPermission(sender)) return true;
-+        net.kyori.adventure.text.Component prefix = net.kyori.adventure.text.Component.text("Mirai » ")
++        net.kyori.adventure.text.TextComponent prefix = net.kyori.adventure.text.Component.text("Mirai » ")
 +            .color(net.kyori.adventure.text.format.TextColor.color(0x12fff6))
 +            .decoration(net.kyori.adventure.text.format.TextDecoration.BOLD, true);
 +
 +        if (args.length != 1) {
 +            sender.sendMessage(net.kyori.adventure.text.Component.text()
 +                .append(prefix)
-+                .color(net.kyori.adventure.text.format.TextColor.color(0xe8f9f9))
-+                .append(net.kyori.adventure.text.Component.text("Usage: ")
-+                .append(net.kyori.adventure.text.Component.text(usageMessage)))
++                .append(net.kyori.adventure.text.Component.text("Usage: " + usageMessage, net.kyori.adventure.text.format.NamedTextColor.WHITE))
 +                .build());
 +            args = new String[]{"version"};
 +        }
@@ -109,12 +107,12 @@ index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0
 +
 +            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text()
 +                .append(prefix)
-+                .append(net.kyori.adventure.text.Component.text("Mirai configuration has been reloaded.", net.kyori.adventure.text.format.TextColor.color(0xe8f9f9)))
++                .append(net.kyori.adventure.text.Component.text("Mirai configuration has been reloaded.", net.kyori.adventure.text.format.NamedTextColor.WHITE))
 +                .build());
 +        } else if (args[0].equalsIgnoreCase("version")) {
 +            Command.broadcastCommandMessage(sender, net.kyori.adventure.text.Component.text()
 +                .append(prefix)
-+                .append(net.kyori.adventure.text.Component.text("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.TextColor.color(0xe8f9f9)))
++                .append(net.kyori.adventure.text.Component.text("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE))
 +                .build());
 +        }
 +
@@ -123,7 +121,7 @@ index 0000000000000000000000000000000000000000..a75b240d0966abc6e4b871c4e049c1f0
 +}
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f17804d49
+index 0000000000000000000000000000000000000000..d4e242b74f77e29099421450ced16481d3f1af13
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -0,0 +1,134 @@
@@ -134,8 +132,8 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +import java.lang.reflect.Method;
 +import java.lang.reflect.Modifier;
 +import java.util.List;
++
 +import net.minecraft.server.MinecraftServer;
-+import org.apache.logging.log4j.Level;
 +import org.bukkit.configuration.ConfigurationSection;
 +import org.bukkit.configuration.MemoryConfiguration;
 +import org.jetbrains.annotations.Nullable;
@@ -179,15 +177,15 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +            }
 +        }
 +
-+        getString("info.version", "2.1");
++        getString("info.version", "2.2");
 +        setComment("info",
-+                "Mirai Configuration",
-+                "Join our Discord at https://discord.gg/DdH6Yfu9gM",
-+                "Download new builds at https://ci.codemc.io/job/etil2jz/job/Mirai-1.19/lastSuccessfulBuild/");
++            "Mirai Configuration",
++            "Join our Discord at https://discord.gg/gfgAwdSEuM",
++            "Download new builds at https://github.com/Dreeam-qwq/Mirai/releases");
 +
 +        for (Method method : MiraiConfig.class.getDeclaredMethods()) {
 +            if (Modifier.isStatic(method.getModifiers()) && Modifier.isPrivate(method.getModifiers()) && method.getParameterCount() == 0 &&
-+                    method.getReturnType() == Void.TYPE && !method.getName().startsWith("lambda")) {
++                method.getReturnType() == Void.TYPE && !method.getName().startsWith("lambda")) {
 +                method.setAccessible(true);
 +                try {
 +                    method.invoke(null);
@@ -261,9 +259,8 @@ index 0000000000000000000000000000000000000000..54cab7abec16b0c7155fc494f317119f
 +    }
 +
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 462c4eb3c06779f86f66778e9578d3d8f06c3294..a3c7f7b3adab0fafb180c074e6eb44409227956e 100644
+index 3b8c810a228a59bf02a8557b229e5eca56c16562..87d4b40657b71087ffe92148619b636c6b3d4584 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,6 +223,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface

@@ -5,24 +5,23 @@ Subject: [PATCH] Configurable max bees in hive
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 5f3ba184fae5170425cfdbd95150ed00c3f3433b..e9c604aa084b159ffa22d4afae4f90e9e7af236c 100644
+index af9303f211c340473b6b236216ff19d3417e4b28..15973a524157b3301960365c7e9dd09b6bbeec91 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -137,4 +137,11 @@ public class MiraiConfig {
-                                 "Whether or not player login location should be written in logs.");
+@@ -136,4 +136,11 @@ public class MiraiConfig {
+         logPlayerLoginLoc = getBoolean("log-player-login-location", true,
+             "Whether or not player login location should be written in logs.");
      }
- 
++
 +    public static int maxBees;
 +    private static void maximumBees() {
 +        maxBees = getInt("max-bees-in-hive", 3,
-+                    "This value defines how many bees can fit in a hive.",
-+                    "Allowing more bees in a hive can reduce the number of ticking hives.");
++            "This value defines how many bees can fit in a hive.",
++            "Allowing more bees in a hive can reduce the number of ticking hives.");
 +    }
-+
  }
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
-index 41c9f074203915c31c1ae7a160ce509c13383f84..53b2984d4e5c689f4bce26ec996ede8bcdd69d7d 100644
+index dfd364ac4b7551a13c4c6c100b5e62c0dfb10595..f3299759067698f73d296268c1a5277c5644a2ea 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
 @@ -43,7 +43,7 @@ public class BeehiveBlockEntity extends BlockEntity {

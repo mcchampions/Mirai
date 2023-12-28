@@ -29,7 +29,7 @@ index 392406722b0a040c1d41fdc1154d75d39f6e9c86..b5d9d256ad40e1318d8451810ae03f7c
  
      public static Direction getNearest(double x, double y, double z) {
 diff --git a/src/main/java/net/minecraft/world/phys/AABB.java b/src/main/java/net/minecraft/world/phys/AABB.java
-index e3dbf3066337a482460238f8a94d854cf88adfa2..0a15f00e7ff4dd37a13b5b444f07f1dde46885e3 100644
+index 67d595f75e0c3bffdb27b85b25ccd1f0bf1427d5..ed0910b3f8214ab885d8b7debfc1a348d73bc081 100644
 --- a/src/main/java/net/minecraft/world/phys/AABB.java
 +++ b/src/main/java/net/minecraft/world/phys/AABB.java
 @@ -16,6 +16,15 @@ public class AABB {
@@ -48,38 +48,31 @@ index e3dbf3066337a482460238f8a94d854cf88adfa2..0a15f00e7ff4dd37a13b5b444f07f1dd
      public AABB(double x1, double y1, double z1, double x2, double y2, double z2) {
          this.minX = Math.min(x1, x2);
          this.minY = Math.min(y1, y2);
-@@ -81,11 +90,33 @@ public class AABB {
+@@ -81,11 +90,26 @@ public class AABB {
      }
  
      public double min(Direction.Axis axis) {
 -        return axis.choose(this.minX, this.minY, this.minZ);
 +        // JettPack start - lithium: fast_util
-+        switch (axis.ordinal()) {
-+            case 0: //X
-+                return this.minX;
-+            case 1: //Y
-+                return this.minY;
-+            case 2: //Z
-+                return this.minZ;
-+        }
++        return switch (axis.ordinal()) {
++            case 0 -> this.minX; //X
++            case 1 -> this.minY; //Y
++            case 2 -> this.minZ; //Z
++            default -> throw new IllegalArgumentException();
++        };
 +
-+        throw new IllegalArgumentException();
 +        // JettPack end
      }
  
      public double max(Direction.Axis axis) {
 -        return axis.choose(this.maxX, this.maxY, this.maxZ);
 +        // JettPack start - lithium: fast_util
-+        switch (axis.ordinal()) {
-+            case 0: //X
-+                return this.maxX;
-+            case 1: //Y
-+                return this.maxY;
-+            case 2: //Z
-+                return this.maxZ;
-+        }
-+
-+        throw new IllegalArgumentException();
++        return switch (axis.ordinal()) {
++            case 0 -> this.maxX; //X
++            case 1 -> this.maxY; //Y
++            case 2 -> this.maxZ; //Z
++            default -> throw new IllegalArgumentException();
++        };
 +        // JettPack end
      }
  

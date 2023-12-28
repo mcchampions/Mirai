@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable chat message signatures
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 5560b7f4c4e43e82111e5531e4d57377b5f0d0ab..e0eae8b46fa1177214f2ed833f2b40e0bf407211 100644
+index 521104e3cf75e30c4fba1ff1a7f65bb04a084518..3b3cd94404ac5ec8be63bd9a10d2bedac78c6076 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -232,4 +232,12 @@ public class MiraiConfig {
@@ -61,20 +61,20 @@ index d1d2fc0c57523c1abf1e8bfec913c78927c3dafc..96a69a350c0cabf1a9c4d2a7585f97d4
      }
  
 diff --git a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
-index 98ea56cbc8de5a5694b4f4d9a2f25811fdecba04..fd378ef4f20199665d67dd9edb0ac3a2fa48db03 100644
+index c40979e2fa37acb2f3df493395f3ab6e185345d7..86c9ea10530a309c2fe9c748378facf7b7477268 100644
 --- a/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
 +++ b/src/main/java/net/minecraft/network/protocol/status/ServerStatus.java
-@@ -17,7 +17,7 @@ import net.minecraft.util.ExtraCodecs;
+@@ -17,7 +17,7 @@ import net.minecraft.network.chat.ComponentSerialization;
  
  public record ServerStatus(Component description, Optional<ServerStatus.Players> players, Optional<ServerStatus.Version> version, Optional<ServerStatus.Favicon> favicon, boolean enforcesSecureChat) {
      public static final Codec<ServerStatus> CODEC = RecordCodecBuilder.create((instance) -> {
--        return instance.group(ExtraCodecs.COMPONENT.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new);
-+        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return instance.group(ExtraCodecs.COMPONENT.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(x -> true)).apply(instance, ServerStatus::new); else return instance.group(ExtraCodecs.COMPONENT.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new); // Mirai - configurable chat message signatures
+-        return instance.group(ComponentSerialization.CODEC.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.valueOf(false)).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new);
++        return dev.etil.mirai.MiraiConfig.chatMessageSignatures ? instance.group(ComponentSerialization.CODEC.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.FALSE).forGetter(x -> true)).apply(instance, ServerStatus::new) : instance.group(ComponentSerialization.CODEC.optionalFieldOf("description", CommonComponents.EMPTY).forGetter(ServerStatus::description), ServerStatus.Players.CODEC.optionalFieldOf("players").forGetter(ServerStatus::players), ServerStatus.Version.CODEC.optionalFieldOf("version").forGetter(ServerStatus::version), ServerStatus.Favicon.CODEC.optionalFieldOf("favicon").forGetter(ServerStatus::favicon), Codec.BOOL.optionalFieldOf("enforcesSecureChat", Boolean.FALSE).forGetter(ServerStatus::enforcesSecureChat)).apply(instance, ServerStatus::new); // Mirai - configurable chat message signatures
      });
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index d5c38940d151efc0067b7e2859fc8aef006169ab..3d872f4169b99e4b7880c9927245bb0545004749 100644
+index 87d4b40657b71087ffe92148619b636c6b3d4584..9ecb819ba67c53457fcf8de87c11c9a7adbcd226 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -641,6 +641,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -83,13 +83,13 @@ index d5c38940d151efc0067b7e2859fc8aef006169ab..3d872f4169b99e4b7880c9927245bb05
      public boolean enforceSecureProfile() {
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return false; // Mirai - configurable chat message signatures
          DedicatedServerProperties dedicatedserverproperties = this.getProperties();
+ 
          // Paper start - fix secure profile with proxy online mode
-         return dedicatedserverproperties.enforceSecureProfile
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 3423decdc9d9451ba11a1ce624c1940f0fcf8bdd..814b8d66843e0aba0aee9fbba912a55928edf69f 100644
+index 5840771994b634bb86980f7eabf2b5720947c977..1887bd071d0c56b3fefa6f84d1083f3e6c5be6dc 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2091,7 +2091,7 @@ public class ServerPlayer extends Player {
+@@ -2192,7 +2192,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -99,7 +99,7 @@ index 3423decdc9d9451ba11a1ce624c1940f0fcf8bdd..814b8d66843e0aba0aee9fbba912a559
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index b18f644e27d31f0db6df523be0632b697291c26a..cd98a600ec669f503dbcf64468cdfa74842c3f92 100644
+index a20454bbcf39dfc58232238ca70f054a06b94e29..eeb708e1977a11aa43f77d9be602e5109dcda37f 100644
 --- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
@@ -119,7 +119,7 @@ index b18f644e27d31f0db6df523be0632b697291c26a..cd98a600ec669f503dbcf64468cdfa74
  import net.minecraft.resources.ResourceLocation;
  import net.minecraft.server.MinecraftServer;
  import net.minecraft.server.level.ClientInformation;
-@@ -250,10 +253,31 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -263,10 +266,30 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      }
  
      public void send(Packet<?> packet) {
@@ -129,7 +129,6 @@ index b18f644e27d31f0db6df523be0632b697291c26a..cd98a600ec669f503dbcf64468cdfa74
 +                packet = new ClientboundSystemChatPacket(PaperAdventure.asAdventure(chat.chatType().resolve(this.player.level().registryAccess())
 +                    .get().decorate(chat.unsignedContent() != null ? chat.unsignedContent()
 +                        : Component.literal(chat.body().content()))), false);
-+
 +
 +                this.send(packet);
 +                return;
@@ -152,7 +151,7 @@ index b18f644e27d31f0db6df523be0632b697291c26a..cd98a600ec669f503dbcf64468cdfa74
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 9b7c7001b343a28ee681c468bbfc0a4718c073db..2bfc85c34ed79b34e3f032c21b6452000d0065d9 100644
+index cdeaffff99831b1e48a91a29248152c99458fb7f..4abe85d651a83b6a52d1f48dff828e9ce7806494 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -1437,7 +1437,7 @@ public abstract class PlayerList {

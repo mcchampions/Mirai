@@ -7,19 +7,19 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/net/minecraft/core/Direction.java b/src/main/java/net/minecraft/core/Direction.java
-index b5d9d256ad40e1318d8451810ae03f7cf8f6ede5..4cbe84a009b4e2597176c470a606c586d5a75879 100644
+index b5d9d256ad40e1318d8451810ae03f7cf8f6ede5..c44ed3da99979d97d4ded96082586a544be73729 100644
 --- a/src/main/java/net/minecraft/core/Direction.java
 +++ b/src/main/java/net/minecraft/core/Direction.java
 @@ -253,6 +253,12 @@ public enum Direction implements StringRepresentable {
              case EAST:
                  var10000 = SOUTH;
                  break;
-+        // Purpur start
-+        case UP:
-+            return UP;
-+        case DOWN:
-+            return DOWN;
-+        // Purpur end
++            // Purpur start
++            case UP:
++                return UP;
++            case DOWN:
++                return DOWN;
++            // Purpur end
              default:
                  throw new IllegalStateException("Unable to get Y-rotated facing of " + this);
          }
@@ -27,12 +27,12 @@ index b5d9d256ad40e1318d8451810ae03f7cf8f6ede5..4cbe84a009b4e2597176c470a606c586
              case EAST:
                  var10000 = NORTH;
                  break;
-+        // Purpur start
-+        case UP:
-+            return UP;
-+        case DOWN:
-+            return DOWN;
-+        // Purpur end
++            // Purpur start
++            case UP:
++                return UP;
++            case DOWN:
++                return DOWN;
++            // Purpur end
              default:
                  throw new IllegalStateException("Unable to get CCW facing of " + this);
          }

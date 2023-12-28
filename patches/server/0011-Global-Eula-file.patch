@@ -7,15 +7,15 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/Eula.java b/src/main/java/net/minecraft/server/Eula.java
-index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..d2a164fc61a249f623c9495c4aa40a7fe61a5708 100644
+index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..0b4121601c417943ca0089ef3907d8c2c75662c3 100644
 --- a/src/main/java/net/minecraft/server/Eula.java
 +++ b/src/main/java/net/minecraft/server/Eula.java
-@@ -16,11 +16,24 @@ public class Eula {
+@@ -16,11 +16,25 @@ public class Eula {
  
      public Eula(Path eulaFile) {
          this.file = eulaFile;
 -        this.agreed = SharedConstants.IS_RUNNING_IN_IDE || this.readFile();
-+        this.agreed = SharedConstants.IS_RUNNING_IN_IDE || globalEula() || this.readFile(eulaFile);
++        this.agreed = SharedConstants.IS_RUNNING_IN_IDE || globalEula() || this.readFile(eulaFile); // Yatopia - global eula file
      }
  
 -    private boolean readFile() {
@@ -33,6 +33,7 @@ index 4996694ec43a894cbbb363e48bfdff6b6ae17b5f..d2a164fc61a249f623c9495c4aa40a7f
 +        return false;
 +    }
 +    // Yatopia end
++
 +    private boolean readFile(java.nio.file.Path path) {
 +        try (InputStream inputStream = Files.newInputStream(path)) {
              Properties properties = new Properties();

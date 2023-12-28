@@ -5,10 +5,10 @@ Subject: [PATCH] Sync event calls on async threads
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 96e2018133959cb1ae9bbaf79f96717eb35fe57c..91f711e7d618f70adb9003a6b3cefa1c9613af67 100644
+index 741b6af45cee2b63162f419ba93458a1591b2b35..26d0c9fee5e01a2bfc89e5857e37b4804cf490cd 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -292,4 +292,17 @@ public class MiraiConfig {
+@@ -291,4 +291,17 @@ public class MiraiConfig {
              enableAsyncEntityTracker = temp;
          }
      }
@@ -27,15 +27,15 @@ index 96e2018133959cb1ae9bbaf79f96717eb35fe57c..91f711e7d618f70adb9003a6b3cefa1c
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index d076b1a4429dcadb01bf2e1a5e09d500baef08d0..92d494894c3dd43fba888105711771c01f2f27a9 100644
+index 32bd9b4e4f77598806962cb6a91c0f04455a7133..21844207d3acf8b86367db95a23f5cbc57fb44c5 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -42,7 +42,7 @@ class PaperEventManager {
+@@ -41,7 +41,7 @@ class PaperEventManager {
              throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
          } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
              // Mirai start
--            if(MiraiConfig.enableAsyncEntityTracker) {
-+            if(MiraiConfig.enableAsyncEntityTracker || MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
+-            if (dev.etil.mirai.MiraiConfig.enableAsyncEntityTracker) {
++            if (dev.etil.mirai.MiraiConfig.enableAsyncEntityTracker || dev.etil.mirai.MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
                  MinecraftServer.getServer().executeBlocking(event::callEvent);
                  return;
              } else {

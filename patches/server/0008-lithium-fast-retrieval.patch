@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
-index ee692b49c62f36287bf9d008861f5d47e0e42c00..fc19193602514717588aa6e407cbd3e5e8192635 100644
+index ee692b49c62f36287bf9d008861f5d47e0e42c00..d7a8a8aa5e73781187cab22552bf91a384ffee02 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 +++ b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 @@ -33,7 +33,7 @@ public class EntitySectionStorage<T extends EntityAccess> {
@@ -60,7 +60,7 @@ index ee692b49c62f36287bf9d008861f5d47e0e42c00..fc19193602514717588aa6e407cbd3e5
 +        } else {
 +            // Vanilla order of the AVL long set is sorting by ascending long value. The x, y, z positions are packed into
 +            // a long with the x position's lowest 22 bits placed at the MSB.
-+            // Therefore the long is negative iff the 22th bit of the x position is set, which happens iff the x position
++            // Therefore, the long is negative iff the 22th bit of the x position is set, which happens iff the x position
 +            // is negative. A positive x position will never have its 22th bit set, as these big coordinates are far outside
 +            // the world. y and z positions are treated as unsigned when sorting by ascending long value, as their sign bits
 +            // are placed somewhere inside the packed long
@@ -92,7 +92,7 @@ index ee692b49c62f36287bf9d008861f5d47e0e42c00..fc19193602514717588aa6e407cbd3e5
 +
 +    private void consumeSection(long pos, AbortableIterationConsumer<EntitySection<T>> consumer) {
 +        EntitySection<T> entitySection = this.sections.get(pos);
-+        if (entitySection != null && 0 != entitySection.size() && entitySection.getStatus().isAccessible()) {
++        if (entitySection != null && !entitySection.isEmpty() && entitySection.getStatus().isAccessible()) {
 +            consumer.accept(entitySection);
 +        }
      }

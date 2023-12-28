@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5cebe365f68b2df9c37b43cf8e5cd0a3f3507960..b2fa0b7b31fd0a9962e668635f88df6162945e09 100644
+index bac48b3a6cf1d62777e233ff26091a968953ceaa..082f731b0c815b1219b1cd9498de36c59a2e2dfc 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1081,6 +1081,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1127,6 +1127,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
@@ -18,21 +18,23 @@ index 5cebe365f68b2df9c37b43cf8e5cd0a3f3507960..b2fa0b7b31fd0a9962e668635f88df61
  
      protected void runServer() {
          try {
-@@ -1155,7 +1156,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
-                 this.nextTickTime += 50L;
+@@ -1213,9 +1214,11 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+                 this.nextTickTimeNanos += i;
                  this.startMetricsRecordingTick();
                  this.profiler.push("tick");
 +                long tickStart = System.nanoTime(); // Yatopia
-                 this.tickServer(this::haveTime);
+                 this.tickServer(flag ? () -> {
+                     return false;
+                 } : this::haveTime);
 +                lastTickDuration = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
                  this.profiler.popPush("nextTickWait");
                  this.mayHaveDelayedTasks = true;
-                 this.delayedTasksMaxNextTickTime = Math.max(Util.getMillis() + 50L, this.nextTickTime);
+                 this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 27b5081df40d3bc7bc9b2160132eecb183efe898..707808e264c5dee288bea6ae2d6de2a2fab9381d 100644
+index c5f30afd31351deea621233eba20b10753820d5e..d4544eab93c5ca452ddc612901a5e44b552ef6f0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3199,6 +3199,12 @@ public final class CraftServer implements Server {
+@@ -3232,6 +3232,12 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -47,7 +49,7 @@ index 27b5081df40d3bc7bc9b2160132eecb183efe898..707808e264c5dee288bea6ae2d6de2a2
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 9eb2823cc8f83bad2626fc77578b0162d9ed5782..602fda840f5ea3d5202ffc6534ac3cf535c14102 100644
+index 9eb2823cc8f83bad2626fc77578b0162d9ed5782..d7c8f2737c64e0036bccc7ef3d73af7af2d3b1d3 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@
@@ -84,9 +86,9 @@ index 9eb2823cc8f83bad2626fc77578b0162d9ed5782..602fda840f5ea3d5202ffc6534ac3cf5
 +    public static net.kyori.adventure.text.Component formatTo(java.time.Duration duration, java.util.concurrent.TimeUnit unit) {
 +        java.util.concurrent.TimeUnit nanosUnit = java.util.concurrent.TimeUnit.NANOSECONDS;
 +        long nanos = duration.toNanos();
-+        long toAskedUnit = unit.convert( nanos, nanosUnit );
-+        long ms = nanosUnit.toMillis( nanos );
-+        net.kyori.adventure.text.format.TextColor startingColor = ms < 40 ? net.kyori.adventure.text.format.NamedTextColor.GREEN : ( ms < 50 ) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED;
++        long toAskedUnit = unit.convert(nanos, nanosUnit);
++        long ms = nanosUnit.toMillis(nanos);
++        net.kyori.adventure.text.format.TextColor startingColor = ms < 40 ? net.kyori.adventure.text.format.NamedTextColor.GREEN : (ms < 50) ? net.kyori.adventure.text.format.NamedTextColor.YELLOW : net.kyori.adventure.text.format.NamedTextColor.RED;
 +        return net.kyori.adventure.text.Component.text(toAskedUnit, startingColor)
 +            .append(net.kyori.adventure.text.Component.text(org.yatopiamc.yatopia.server.util.TimeUtils.getFriendlyName(unit), net.kyori.adventure.text.format.NamedTextColor.GOLD));
 +    }

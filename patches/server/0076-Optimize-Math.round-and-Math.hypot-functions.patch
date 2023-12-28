@@ -8,7 +8,7 @@ You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn 
 
 diff --git a/src/main/java/carpetfixes/helpers/FastMath.java b/src/main/java/carpetfixes/helpers/FastMath.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..e9d6256ab8bfd2d4147063235d6ab1de71da93a8
+index 0000000000000000000000000000000000000000..758a184db7bb4e57e383b40668389e35101fb7ec
 --- /dev/null
 +++ b/src/main/java/carpetfixes/helpers/FastMath.java
 @@ -0,0 +1,59 @@
@@ -16,15 +16,15 @@ index 0000000000000000000000000000000000000000..e9d6256ab8bfd2d4147063235d6ab1de
 +
 +public class FastMath {
 +
-+    private static final double HYPOT_MAX_MAG = 2^511;
-+    private static final double HYPOT_FACTOR = 2^750;
++    private static final double HYPOT_MAX_MAG = 2 ^ 511;
++    private static final double HYPOT_FACTOR = 2 ^ 750;
 +
 +    /**
 +     * @author FX - PR0CESS
 +     * ~1.25x faster than {@link Math#round(float)}
 +     */
 +    public static int round(float a) {
-+        if (dev.etil.mirai.MiraiConfig.optimizedRound) return a > 0F ? (int)(a + .5F) : (int)(a - .5F);
++        if (dev.etil.mirai.MiraiConfig.optimizedRound) return a > 0F ? (int) (a + .5F) : (int) (a - .5F);
 +        return Math.round(a);
 +    }
 +
@@ -33,14 +33,14 @@ index 0000000000000000000000000000000000000000..e9d6256ab8bfd2d4147063235d6ab1de
 +     * ~1.28x faster than {@link Math#round(double)}
 +     */
 +    public static long round(double a) {
-+        if (dev.etil.mirai.MiraiConfig.optimizedRound) return a > 0D ? (long)(a + .5D) : (long)(a - .5D);
++        if (dev.etil.mirai.MiraiConfig.optimizedRound) return a > 0D ? (long) (a + .5D) : (long) (a - .5D);
 +        return Math.round(a);
 +    }
 +
 +    /**
 +     * @author FX - PR0CESS
 +     * Hypot implementation from the jafama library. Not 100% accurate! (3E-14%, 15 is perfectly accurate)
-+     * ~1.6x faster than {@link Math#hypot(double,double)}
++     * ~1.6x faster than {@link Math#hypot(double, double)}
 +     */
 +    public static double hypot(double x, double y) {
 +        x = Math.abs(x);
@@ -52,28 +52,27 @@ index 0000000000000000000000000000000000000000..e9d6256ab8bfd2d4147063235d6ab1de
 +        } else if (!(y >= x)) { // Testing if we have some NaN
 +            return x == Double.POSITIVE_INFINITY ? Double.POSITIVE_INFINITY : Double.NaN;
 +        }
-+        if (y-x == y) { // x too small to subtract from y
++        if (y - x == y) { // x too small to subtract from y
 +            return y;
 +        } else {
 +            double factor;
 +            if (y > HYPOT_MAX_MAG) { // y is too large: scaling down
-+                x *= (1/HYPOT_FACTOR);
-+                y *= (1/HYPOT_FACTOR);
++                x *= (1 / HYPOT_FACTOR);
++                y *= (1 / HYPOT_FACTOR);
 +                factor = HYPOT_FACTOR;
-+            } else if (x < (1/HYPOT_MAX_MAG)) { // x is too small: scaling up
++            } else if (x < (1 / HYPOT_MAX_MAG)) { // x is too small: scaling up
 +                x *= HYPOT_FACTOR;
 +                y *= HYPOT_FACTOR;
-+                factor = (1/HYPOT_FACTOR);
++                factor = (1 / HYPOT_FACTOR);
 +            } else {
 +                factor = 1.0;
 +            }
-+            return factor * Math.sqrt(x*x+y*y);
++            return factor * Math.sqrt(x * x + y * y);
 +        }
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
-index f9251183df72ddc56662fd3f02acf21641a2200c..525bbe1a07025179cb32d9182fdde1d472b5852e 100644
+index 92eaba96135ccddb7d682dab7e82cde9318a48ef..22f37518ae2df5c75568025749cd6557eb2d9d56 100644
 --- a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 +++ b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 @@ -81,6 +81,6 @@ public class RAMDetails extends JList<String> {
@@ -98,7 +97,7 @@ index c3e54da4ab6440811aab2f9dd1e218802ac13285..db1319c51a5410ee106d023fce759f1e
          }
      }
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index de02cb80c88a7b7b4a3206a37ccf102776f96814..5560b7f4c4e43e82111e5531e4d57377b5f0d0ab 100644
+index 870cea7d725059020204234f0c7a3ade440e1965..521104e3cf75e30c4fba1ff1a7f65bb04a084518 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -223,4 +223,13 @@ public class MiraiConfig {
@@ -149,7 +148,7 @@ index 463c6d8d5b114816ed9065558285945817c30385..1872fc7c724a3c12d38b9bbac0d8871a
                      text("Relit ", BLUE), text(totalRelit),
                      text(" chunks. Took ", BLUE), text(diff + "ms")
 diff --git a/src/main/java/net/minecraft/commands/arguments/TimeArgument.java b/src/main/java/net/minecraft/commands/arguments/TimeArgument.java
-index b2f1d117abd3828140c1edf2baf314b34d2ccf40..9ad796fbe60f15be09c3d47e9f7ae2103aa73dff 100644
+index c54b6a6c3db25c896582a1ba5469080d3122361a..0d4ada5b1875b1852f4f1f09911ec2bad19af070 100644
 --- a/src/main/java/net/minecraft/commands/arguments/TimeArgument.java
 +++ b/src/main/java/net/minecraft/commands/arguments/TimeArgument.java
 @@ -48,7 +48,7 @@ public class TimeArgument implements ArgumentType<Integer> {
@@ -157,7 +156,7 @@ index b2f1d117abd3828140c1edf2baf314b34d2ccf40..9ad796fbe60f15be09c3d47e9f7ae210
              throw ERROR_INVALID_UNIT.create();
          } else {
 -            int j = Math.round(f * (float)i);
-+            int j = carpetfixes.helpers.FastMath.round(f * (float)i);
++            int j = carpetfixes.helpers.FastMath.round(f * (float)i); // Mirai
              if (j < this.minimum) {
                  throw ERROR_TICK_COUNT_TOO_LOW.create(j, this.minimum);
              } else {
@@ -175,23 +174,23 @@ index 33d9131e9c75ef23cd637f5d6c39a2704a0c92a5..0a43a51f91a1d6e4d6a629fa32c9d1a5
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 54d7f5410c38669714f8f78c9672d1c185c51732..679aa503d295a008422246dfc273a7a06bbce057 100644
+index 12afa779654cb33d4496131694f1ceeb805b1c87..29b966ddc41f91b044b6c5d28627b98874450633 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -2814,7 +2814,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1431,7 +1431,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
 -                    long extraSleep = (long)Math.round(overuseCount*CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME);
-+                    long extraSleep = (long)carpetfixes.helpers.FastMath.round(overuseCount*CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME); // Mirai
++                    long extraSleep = (long) carpetfixes.helpers.FastMath.round(overuseCount*CHUNK_TASK_QUEUE_BACKOFF_MIN_TIME); // Mirai
  
                      lastMidTickExecute = currTime + extraSleep;
                      return;
 diff --git a/src/main/java/net/minecraft/server/gui/StatsComponent.java b/src/main/java/net/minecraft/server/gui/StatsComponent.java
-index 88f10d729aa1e0a01790521821d691a0ecd373a2..45b2aa542969798a5a3b73af78de21ccc57bcca1 100644
+index 4073484fefbf1ec6072013f6903f9237eb3ebfbc..fb4c4d25c8e070f72479c646df1f9a16d97fd968 100644
 --- a/src/main/java/net/minecraft/server/gui/StatsComponent.java
 +++ b/src/main/java/net/minecraft/server/gui/StatsComponent.java
-@@ -88,7 +88,7 @@ public class StatsComponent extends JComponent {
+@@ -79,7 +79,7 @@ public class StatsComponent extends JComponent {
  
      // Paper - start Add tps entry
      private static String format(double tps) {
@@ -200,11 +199,72 @@ index 88f10d729aa1e0a01790521821d691a0ecd373a2..45b2aa542969798a5a3b73af78de21cc
      }
      // Paper end
  }
+diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+index 055cc564d69fd4ff4717d137f260f4000d692760..5840771994b634bb86980f7eabf2b5720947c977 100644
+--- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
++++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
+@@ -1740,29 +1740,29 @@ public class ServerPlayer extends Player {
+             int i;
+ 
+             if (this.isSwimming()) {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F); // Mirai
+                 if (i > 0) {
+                     this.awardStat(Stats.SWIM_ONE_CM, i);
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent // Spigot
+                 }
+             } else if (this.isEyeInFluid(FluidTags.WATER)) {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F); // Mirai
+                 if (i > 0) {
+                     this.awardStat(Stats.WALK_UNDER_WATER_ONE_CM, i);
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent // Spigot
+                 }
+             } else if (this.isInWater()) {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F); // Mirai
+                 if (i > 0) {
+                     this.awardStat(Stats.WALK_ON_WATER_ONE_CM, i);
+                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent // Spigot
+                 }
+             } else if (this.onClimbable()) {
+                 if (deltaY > 0.0D) {
+-                    this.awardStat(Stats.CLIMB_ONE_CM, (int) Math.round(deltaY * 100.0D));
++                    this.awardStat(Stats.CLIMB_ONE_CM, (int) carpetfixes.helpers.FastMath.round(deltaY * 100.0D)); // Mirai
+                 }
+             } else if (this.onGround()) {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F); // Mirai
+                 if (i > 0) {
+                     if (this.isSprinting()) {
+                         this.awardStat(Stats.SPRINT_ONE_CM, i);
+@@ -1776,10 +1776,10 @@ public class ServerPlayer extends Player {
+                     }
+                 }
+             } else if (this.isFallFlying()) {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F); // Mirai
+                 this.awardStat(Stats.AVIATE_ONE_CM, i);
+             } else {
+-                i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F);
++                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaZ * deltaZ) * 100.0F); // Mirai
+                 if (i > 25) {
+                     this.awardStat(Stats.FLY_ONE_CM, i);
+                 }
+@@ -1790,7 +1790,7 @@ public class ServerPlayer extends Player {
+ 
+     private void checkRidingStatistics(double deltaX, double deltaY, double deltaZ) {
+         if (this.isPassenger() && !ServerPlayer.didNotMove(deltaX, deltaY, deltaZ)) {
+-            int i = Math.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F);
++            int i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 100.0F); // Mirai
+             Entity entity = this.getVehicle();
+ 
+             if (entity instanceof AbstractMinecart) {
 diff --git a/src/main/java/net/minecraft/util/Mth.java b/src/main/java/net/minecraft/util/Mth.java
-index 0de9e45766eabb542b2203bb14f4a11bc69b2c87..5dc60dc29bd1267dd3a72a869fe7295146e9b537 100644
+index a1af7b18db174bdc114f57bcf68f19ee23211205..55b86137bbbc62e0c8aedae7514eaa952f17791a 100644
 --- a/src/main/java/net/minecraft/util/Mth.java
 +++ b/src/main/java/net/minecraft/util/Mth.java
-@@ -606,6 +606,7 @@ public class Mth {
+@@ -611,6 +611,7 @@ public class Mth {
      }
  
      public static double length(double a, double b) {
@@ -212,11 +272,24 @@ index 0de9e45766eabb542b2203bb14f4a11bc69b2c87..5dc60dc29bd1267dd3a72a869fe72951
          return Math.sqrt(lengthSquared(a, b));
      }
  
+diff --git a/src/main/java/net/minecraft/util/SegmentedAnglePrecision.java b/src/main/java/net/minecraft/util/SegmentedAnglePrecision.java
+index 52151082b031f250b13bfaa35417e1d934a54f60..9ab3ca431858331c80e6d38c2e8584a3136d5947 100644
+--- a/src/main/java/net/minecraft/util/SegmentedAnglePrecision.java
++++ b/src/main/java/net/minecraft/util/SegmentedAnglePrecision.java
+@@ -37,7 +37,7 @@ public class SegmentedAnglePrecision {
+     }
+ 
+     public int fromDegreesWithTurns(float degrees) {
+-        return Math.round(degrees * this.degreeToAngle);
++        return carpetfixes.helpers.FastMath.round(degrees * this.degreeToAngle); // Mirai
+     }
+ 
+     public int fromDegrees(float degrees) {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d35088005 100644
+index 729008cd749b972eea3ff4feb10d5cb3e7f73d58..7a1c4ec89a8e2c961b6a239af343cee31d01b039 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1582,7 +1582,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1581,7 +1581,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              if (this instanceof ServerPlayer) {
                  CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, source, f1, amount, flag);
                  if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -225,7 +298,7 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
                  }
              }
  
-@@ -2156,9 +2156,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2153,9 +2153,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -237,7 +310,7 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
                      }
                  }
              }
-@@ -2270,9 +2270,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2267,9 +2267,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  float f3 = (float) -event.getDamage(DamageModifier.RESISTANCE);
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -249,7 +322,7 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
                      }
                  }
              }
-@@ -2304,7 +2304,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2301,7 +2301,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              float f2 = absorptionModifier;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F && this instanceof net.minecraft.world.entity.player.Player) {
@@ -258,16 +331,16 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
              }
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
                  Entity entity = damagesource.getEntity();
-@@ -2312,7 +2312,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2309,7 +2309,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  if (entity instanceof ServerPlayer) {
                      ServerPlayer entityplayer = (ServerPlayer) entity;
  
 -                    entityplayer.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(f2 * 10.0F));
-+                    entityplayer.awardStat(Stats.DAMAGE_DEALT_ABSORBED, carpetfixes.helpers.FastMath.round(f2 * 10.0F));
++                    entityplayer.awardStat(Stats.DAMAGE_DEALT_ABSORBED, carpetfixes.helpers.FastMath.round(f2 * 10.0F)); // Mirai
                  }
              }
  
-@@ -2321,7 +2321,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2318,7 +2318,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                      // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                      ((net.minecraft.world.entity.player.Player) this).causeFoodExhaustion(damagesource.getFoodExhaustion(), org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.DAMAGED); // CraftBukkit - EntityExhaustionEvent
                      if (f < 3.4028235E37F) {
@@ -276,7 +349,7 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
                      }
                  }
                  // CraftBukkit end
-@@ -2341,7 +2341,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2338,7 +2338,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                          CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, damagesource, originalDamage, f, true); // Paper - fix taken/dealt param order
                          f2 = (float) -event.getDamage(DamageModifier.BLOCKING);
                          if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -285,7 +358,7 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
                          }
                      }
  
-@@ -3111,13 +3111,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3108,13 +3108,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
          this.level().getProfiler().push("rangeChecks");
  
          // Paper start - stop large pitch and yaw changes from crashing the server
@@ -303,11 +376,41 @@ index 6e9ce3d6f66cdf51ad53a8a07704beb2b77df7c9..a870ca3df92b747669424dce528fba9d
          // Paper end
  
          this.level().getProfiler().pop();
+diff --git a/src/main/java/net/minecraft/world/entity/monster/breeze/LongJump.java b/src/main/java/net/minecraft/world/entity/monster/breeze/LongJump.java
+index 2d78886b43aea59aeb1945767f992af462ea7844..70a2c4c745558c0750e6fc4db0e55a3964a9529c 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/breeze/LongJump.java
++++ b/src/main/java/net/minecraft/world/entity/monster/breeze/LongJump.java
+@@ -31,7 +31,7 @@ public class LongJump extends Behavior<Breeze> {
+     private static final double MAX_LINE_OF_SIGHT_TEST_RANGE = 50.0D;
+     private static final int JUMP_COOLDOWN_TICKS = 10;
+     private static final int JUMP_COOLDOWN_WHEN_HURT_TICKS = 2;
+-    private static final int INHALING_DURATION_TICKS = Math.round(10.0F);
++    private static final int INHALING_DURATION_TICKS = carpetfixes.helpers.FastMath.round(10.0F); // Mirai
+     private static final float MAX_JUMP_VELOCITY = 1.4F;
+     private static final ObjectArrayList<Integer> ALLOWED_ANGLES = new ObjectArrayList<>(Lists.newArrayList(40, 55, 60, 75, 80));
+ 
+diff --git a/src/main/java/net/minecraft/world/entity/monster/breeze/Shoot.java b/src/main/java/net/minecraft/world/entity/monster/breeze/Shoot.java
+index 0478df726d785128d593643dc07e0a9e5674b064..fcda83fa78b508ee1d439459c2de4d0e1c8d8887 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/breeze/Shoot.java
++++ b/src/main/java/net/minecraft/world/entity/monster/breeze/Shoot.java
+@@ -22,9 +22,9 @@ public class Shoot extends Behavior<Breeze> {
+     private static final int UNCERTAINTY_BASE = 5;
+     private static final int UNCERTAINTY_MULTIPLIER = 4;
+     private static final float PROJECTILE_MOVEMENT_SCALE = 0.7F;
+-    private static final int SHOOT_INITIAL_DELAY_TICKS = Math.round(15.0F);
+-    private static final int SHOOT_RECOVER_DELAY_TICKS = Math.round(4.0F);
+-    private static final int SHOOT_COOLDOWN_TICKS = Math.round(10.0F);
++    private static final int SHOOT_INITIAL_DELAY_TICKS = carpetfixes.helpers.FastMath.round(15.0F); // Mirai
++    private static final int SHOOT_RECOVER_DELAY_TICKS = carpetfixes.helpers.FastMath.round(4.0F); // Mirai
++    private static final int SHOOT_COOLDOWN_TICKS = carpetfixes.helpers.FastMath.round(10.0F); // Mirai
+ 
+     @VisibleForTesting
+     public Shoot() {
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 932e83e47a7b722b0f1d16d0b8690dc9a44c4f0d..b72deb5725ada446c97e51e003edabde6b929150 100644
+index f9f3d36bd95e759b450cf46a0e80637e201d9be1..385468aa7ffd88c6f6f807efa16f1067752ec673 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1078,7 +1078,7 @@ public abstract class Player extends LivingEntity {
+@@ -1073,7 +1073,7 @@ public abstract class Player extends LivingEntity {
              float f2 = f1 - f;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -316,7 +419,7 @@ index 932e83e47a7b722b0f1d16d0b8690dc9a44c4f0d..b72deb5725ada446c97e51e003edabde
              }
  
              if (f != 0.0F) {
-@@ -1086,7 +1086,7 @@ public abstract class Player extends LivingEntity {
+@@ -1081,7 +1081,7 @@ public abstract class Player extends LivingEntity {
                  this.getCombatTracker().recordDamage(damagesource, f);
                  this.setHealth(this.getHealth() - f);
                  if (f < 3.4028235E37F) {
@@ -325,7 +428,7 @@ index 932e83e47a7b722b0f1d16d0b8690dc9a44c4f0d..b72deb5725ada446c97e51e003edabde
                  }
  
                  this.gameEvent(GameEvent.ENTITY_DAMAGE);
-@@ -1427,7 +1427,7 @@ public abstract class Player extends LivingEntity {
+@@ -1422,7 +1422,7 @@ public abstract class Player extends LivingEntity {
                          if (target instanceof LivingEntity) {
                              float f5 = f3 - ((LivingEntity) target).getHealth();
  
@@ -334,64 +437,7 @@ index 932e83e47a7b722b0f1d16d0b8690dc9a44c4f0d..b72deb5725ada446c97e51e003edabde
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1694,29 +1694,29 @@ public abstract class Player extends LivingEntity {
-             int i;
- 
-             if (this.isSwimming()) {
--                i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
-                 if (i > 0) {
-                     this.awardStat(Stats.SWIM_ONE_CM, i);
-                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent // Spigot
-                 }
-             } else if (this.isEyeInFluid(FluidTags.WATER)) {
--                i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
-                 if (i > 0) {
-                     this.awardStat(Stats.WALK_UNDER_WATER_ONE_CM, i);
-                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent // Spigot
-                 }
-             } else if (this.isInWater()) {
--                i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F); // Mirai
-                 if (i > 0) {
-                     this.awardStat(Stats.WALK_ON_WATER_ONE_CM, i);
-                     this.causeFoodExhaustion(this.level().spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent // Spigot
-                 }
-             } else if (this.onClimbable()) {
-                 if (dy > 0.0D) {
--                    this.awardStat(Stats.CLIMB_ONE_CM, (int) Math.round(dy * 100.0D));
-+                    this.awardStat(Stats.CLIMB_ONE_CM, (int) carpetfixes.helpers.FastMath.round(dy * 100.0D)); // Mirai
-                 }
-             } else if (this.onGround()) {
--                i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F); // Mirai
-                 if (i > 0) {
-                     if (this.isSprinting()) {
-                         this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1730,10 +1730,10 @@ public abstract class Player extends LivingEntity {
-                     }
-                 }
-             } else if (this.isFallFlying()) {
--                i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
-                 this.awardStat(Stats.AVIATE_ONE_CM, i);
-             } else {
--                i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
-+                i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F); // Mirai
-                 if (i > 25) {
-                     this.awardStat(Stats.FLY_ONE_CM, i);
-                 }
-@@ -1744,7 +1744,7 @@ public abstract class Player extends LivingEntity {
- 
-     private void checkRidingStatistics(double dx, double dy, double dz) {
-         if (this.isPassenger()) {
--            int i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
-+            int i = carpetfixes.helpers.FastMath.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F); // Mirai
- 
-             if (i > 0) {
-                 Entity entity = this.getVehicle();
-@@ -1771,7 +1771,7 @@ public abstract class Player extends LivingEntity {
+@@ -1686,7 +1686,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {
@@ -401,10 +447,10 @@ index 932e83e47a7b722b0f1d16d0b8690dc9a44c4f0d..b72deb5725ada446c97e51e003edabde
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index cd0629581bae5f805842157af36c2d838e01bee3..21b02b258846efbb302f66ba571ff9efd3e160b7 100644
+index a7653d8d7291a537c997364c6222bb84d45f7277..b79f8612669375496a9b858654df58c91fb1a3ac 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -299,7 +299,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
+@@ -307,7 +307,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      }
  
      protected static float lerpRotation(float prevRot, float newRot) {
@@ -414,7 +460,7 @@ index cd0629581bae5f805842157af36c2d838e01bee3..21b02b258846efbb302f66ba571ff9ef
          return Mth.lerp(0.2F, prevRot, newRot);
      }
 diff --git a/src/main/java/net/minecraft/world/item/Item.java b/src/main/java/net/minecraft/world/item/Item.java
-index dd2f6c67533cc3344a171fe3ae9b3704796d8c50..78e641cf4f5857712f60b168be803f311e7def10 100644
+index c072e3e9742f733aad0d13833fb700c42ca1c356..db9a015029be056fa15c80f5619f0bd5add74e8e 100644
 --- a/src/main/java/net/minecraft/world/item/Item.java
 +++ b/src/main/java/net/minecraft/world/item/Item.java
 @@ -169,7 +169,7 @@ public class Item implements FeatureElement, ItemLike {
@@ -440,10 +486,10 @@ index ecf640b00007a386290f8dfe9935a8aa610079fd..8b199643eda44a6f020768af70e85175
              if (!list2.isEmpty()) {
                  WeightedRandom.getRandomItem(random, list2).ifPresent(list::add);
 diff --git a/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java b/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
-index c98a7d0cc2fcf993ab05dc9347bfb34a7e1bdde5..a38387a77ae52966ea747c0431f1b4b89c75052d 100644
+index de6f00d03223939386aa2ccfdec1e696a68313d7..c91eebd46b1e370d8e85dce63681b94129a2942c 100644
 --- a/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
 +++ b/src/main/java/net/minecraft/world/level/block/DaylightDetectorBlock.java
-@@ -62,7 +62,7 @@ public class DaylightDetectorBlock extends BaseEntityBlock {
+@@ -69,7 +69,7 @@ public class DaylightDetectorBlock extends BaseEntityBlock {
              float f1 = f < 3.1415927F ? 0.0F : 6.2831855F;
  
              f += (f1 - f) * 0.2F;
@@ -453,10 +499,10 @@ index c98a7d0cc2fcf993ab05dc9347bfb34a7e1bdde5..a38387a77ae52966ea747c0431f1b4b8
  
          i = Mth.clamp(i, 0, 15);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-index f8cd23fb6ea7909b8f30bd21d3f2c7bcc483ef21..e2263c812a6470f96058b63f19e59983de285011 100644
+index 5d3d9164a05efbecc59ace6175f449f34d8d3ccd..9e2fbdf99162d100fb322a1ebe0bd6fc7ae3c09f 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-@@ -236,8 +236,8 @@ public class ChunkGeneratorStructureState {
+@@ -239,8 +239,8 @@ public class ChunkGeneratorStructureState {
  
              for (int j1 = 0; j1 < j; ++j1) {
                  double d1 = (double) (4 * i + i * i1 * 6) + (randomsource.nextDouble() - 0.5D) * (double) i * 2.5D;
@@ -519,9 +565,20 @@ index 2a7c75ea447b179ea1ab9db56e8a39d03faa0bce..53ca87c7659a4fff9e99d21217d1ad08
  
      LootNumberProviderType getType();
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
-index 17785f7c709073a01928e8e6a57702f8357900f4..9f023410fd54d5dc8f271bb438a23ae8f5120889 100644
+index 17785f7c709073a01928e8e6a57702f8357900f4..795f158fe83bff449a159010f3975317d39e2ea7 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
+@@ -85,8 +85,8 @@ public final class Shapes {
+                     final int sizeZ = 1 << bitsZ;
+                     final BitSetDiscreteVoxelShape shape = BitSetDiscreteVoxelShape.withFilledBounds(
+                             sizeX, sizeY, sizeZ,
+-                            (int)Math.round(minX * (double)sizeX), (int)Math.round(minY * (double)sizeY), (int)Math.round(minZ * (double)sizeZ),
+-                            (int)Math.round(maxX * (double)sizeX), (int)Math.round(maxY * (double)sizeY), (int)Math.round(maxZ * (double)sizeZ)
++                            (int)carpetfixes.helpers.FastMath.round(minX * (double)sizeX), (int)carpetfixes.helpers.FastMath.round(minY * (double)sizeY), (int)carpetfixes.helpers.FastMath.round(minZ * (double)sizeZ), // Mirai
++                            (int)carpetfixes.helpers.FastMath.round(maxX * (double)sizeX), (int)carpetfixes.helpers.FastMath.round(maxY * (double)sizeY), (int)carpetfixes.helpers.FastMath.round(maxZ * (double)sizeZ) // Mirai
+                     );
+                     return new ArrayVoxelShape(
+                             shape,
 @@ -120,8 +120,8 @@ public final class Shapes {
                  int j = 1 << i;
                  double d = min * (double)j;
@@ -534,7 +591,7 @@ index 17785f7c709073a01928e8e6a57702f8357900f4..9f023410fd54d5dc8f271bb438a23ae8
                      return i;
                  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 41a8aee04ba75e08e3e692943abab3158a080dde..0b1bce408858afa353251c9f370c0d3157c391db 100644
+index ccac0af3dc5066af12b8b9890f7784aa83bb2b6a..81bcff003e1ad4755164e9b7a3f1535a463da16d 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -70,7 +70,7 @@ public class TicksPerSecondCommand extends Command

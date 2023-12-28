@@ -7,7 +7,7 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index e0eae8b46fa1177214f2ed833f2b40e0bf407211..3186a8f4fad751cffef318b5ad1bd716d7c045cb 100644
+index 3b3cd94404ac5ec8be63bd9a10d2bedac78c6076..e8cde60fa80928308dd948d423c0b85cb2794b8a 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -240,4 +240,13 @@ public class MiraiConfig {
@@ -25,7 +25,7 @@ index e0eae8b46fa1177214f2ed833f2b40e0bf407211..3186a8f4fad751cffef318b5ad1bd716
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/npc/Villager.java b/src/main/java/net/minecraft/world/entity/npc/Villager.java
-index bbcc0356b4c0470502e893cf2dc2f16936a88bc4..45bcb2426d00fe63f4e215b95771cff126dfe36c 100644
+index 6b869c05bbdb13e23ecaa2c38e0cb05bda5a083d..643aaff6138695a6ef40ad437cb342896dd0c514 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/Villager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/Villager.java
 @@ -141,6 +141,8 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
@@ -48,7 +48,7 @@ index bbcc0356b4c0470502e893cf2dc2f16936a88bc4..45bcb2426d00fe63f4e215b95771cff1
 +            // check half as often if not lobotomized for the last 3+ consecutive checks
 +            interval *= 2;
 +        }
-+        if ((this.level().getGameTime()) % interval == 0) {
++        if (this.level().getGameTime() % interval == 0) {
 +            // offset Y for short blocks like dirt_path/farmland
 +            this.isLobotomized = !canTravelFrom(BlockPos.containing(this.position().x, this.getBoundingBox().minY + 0.0625D, this.position().z));
 +
@@ -87,7 +87,7 @@ index bbcc0356b4c0470502e893cf2dc2f16936a88bc4..45bcb2426d00fe63f4e215b95771cff1
      @Override
      public Brain<Villager> getBrain() {
          return (Brain<Villager>) super.getBrain(); // CraftBukkit - decompile error
-@@ -254,14 +299,29 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
+@@ -254,14 +299,28 @@ public class Villager extends AbstractVillager implements ReputationEventHandler
          // Paper start
          this.customServerAiStep(false);
      }
@@ -100,7 +100,6 @@ index bbcc0356b4c0470502e893cf2dc2f16936a88bc4..45bcb2426d00fe63f4e215b95771cff1
 +            // treat as inactive if lobotomized
 +            inactive = inactive || checkLobotomized();
 +        } else {
-+            // clean up state for API
 +            this.isLobotomized = false;
 +        }
 +        // Purpur end
