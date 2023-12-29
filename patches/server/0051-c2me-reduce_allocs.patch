@@ -37,13 +37,14 @@ index 0000000000000000000000000000000000000000..b1229bae2e74d22065c723c6d3eaf9a9
 +}
 diff --git a/src/main/java/com/ishland/c2me/opts/allocs/common/PooledFeatureContext.java b/src/main/java/com/ishland/c2me/opts/allocs/common/PooledFeatureContext.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..4c84006c90bda4849b27879d5218f98e6d98f1dc
+index 0000000000000000000000000000000000000000..291ca92e7f1bc4da33fdc8368cd5895edea311e2
 --- /dev/null
 +++ b/src/main/java/com/ishland/c2me/opts/allocs/common/PooledFeatureContext.java
-@@ -0,0 +1,68 @@
+@@ -0,0 +1,70 @@
 +package com.ishland.c2me.opts.allocs.common;
 +
 +import java.util.Optional;
++
 +import net.minecraft.core.BlockPos;
 +import net.minecraft.util.RandomSource;
 +import net.minecraft.world.level.WorldGenLevel;
@@ -54,7 +55,8 @@ index 0000000000000000000000000000000000000000..4c84006c90bda4849b27879d5218f98e
 +
 +public class PooledFeatureContext<FC extends FeatureConfiguration> extends FeaturePlaceContext<FC> {
 +
-+    public static final ThreadLocal<SimpleObjectPool<PooledFeatureContext<?>>> POOL = ThreadLocal.withInitial(() -> new SimpleObjectPool<>(unused -> new PooledFeatureContext<>(), unused -> {}, 2048));
++    public static final ThreadLocal<SimpleObjectPool<PooledFeatureContext<?>>> POOL = ThreadLocal.withInitial(() -> new SimpleObjectPool<>(unused -> new PooledFeatureContext<>(), unused -> {
++    }, 2048));
 +
 +    private Optional<ConfiguredFeature<?, ?>> feature;
 +    private WorldGenLevel world;
@@ -203,7 +205,7 @@ index 38e2a8cec48bc779b8154d6d719031f457a2403e..c3255ff691025b61ea1a4bd835ef0bd4
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java b/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java
-index f9ee7e23e69a36730c5585a2989cebdc6b2f3342..e84a8bf780dbdcbb5ee1b1260928dc2b3ad21b39 100644
+index f9ee7e23e69a36730c5585a2989cebdc6b2f3342..949541d81e1d4003a824ab6c4fded0761f38bbdd 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/feature/ConfiguredFeature.java
 @@ -13,6 +13,10 @@ import net.minecraft.util.RandomSource;
@@ -223,8 +225,8 @@ index f9ee7e23e69a36730c5585a2989cebdc6b2f3342..e84a8bf780dbdcbb5ee1b1260928dc2b
      public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
 -        return this.feature.place(this.config, world, chunkGenerator, random, origin);
 +        // Mirai start - c2me: opts allocs
-+        /**
-+         * @author ishland
++        /*
++          @author ishland
 +         * @reason pool FeatureContext
 +         */
 +        if (!world.ensureCanWrite(origin)) return false;

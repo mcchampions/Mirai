@@ -7,13 +7,13 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
-index 1ef87580574919796dbba707f44a413ee5c5781b..5b032ebca4d38a8006899c11ac767989218a1aa1 100644
+index 1ef87580574919796dbba707f44a413ee5c5781b..86f739c9125bbaad41ed665da7dd85740c99d99e 100644
 --- a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
-@@ -55,6 +55,74 @@ public class PistonMovingBlockEntity extends BlockEntity {
-         this.extending = extending;
+@@ -56,6 +56,75 @@ public class PistonMovingBlockEntity extends BlockEntity {
          this.isSourcePiston = source;
      }
+ 
 +    // JettPack start - lithium: block.moving_block_shapes
 +    private static final VoxelShape[] PISTON_BASE_WITH_MOVING_HEAD_SHAPES = precomputePistonBaseWithMovingHeadShapes();
 +
@@ -51,21 +51,21 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..5b032ebca4d38a8006899c11ac767989
 +
 +        for (Direction facing : directions) {
 +            VoxelShape baseShape = Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.EXTENDED, true)
-+                    .setValue(PistonBaseBlock.FACING, facing).getCollisionShape(null, null);
++                .setValue(PistonBaseBlock.FACING, facing).getCollisionShape(null, null);
 +            for (float offset : offsets) {
-+                //this cache is only required for the merged piston head + base shape.
-+                //this shape is only used when !this.extending
-+                //here: isShort = this.extending != 1.0F - this.progress < 0.25F can be simplified to:
-+                //isShort = f < 0.25F , because f = getAmountExtended(this.progress) can be simplified to f == 1.0F - this.progress
-+                //therefore isShort is dependent on the offset:
++                // this cache is only required for the merged piston head + base shape.
++                // this shape is only used when !this.extending
++                // here: isShort = this.extending != 1.0F - this.progress < 0.25F can be simplified to:
++                // isShort = f < 0.25F , because f = getAmountExtended(this.progress) can be simplified to f == 1.0F - this.progress
++                // therefore isShort is dependent on the offset:
 +                boolean isShort = offset < 0.25f;
 +
 +                VoxelShape headShape = (Blocks.PISTON_HEAD.defaultBlockState().setValue(PistonHeadBlock.FACING, facing))
-+                        .setValue(PistonHeadBlock.SHORT, isShort).getCollisionShape(null, null);
++                    .setValue(PistonHeadBlock.SHORT, isShort).getCollisionShape(null, null);
 +
 +                VoxelShape offsetHead = headShape.move(facing.getStepX() * offset,
-+                        facing.getStepY() * offset,
-+                        facing.getStepZ() * offset);
++                    facing.getStepY() * offset,
++                    facing.getStepZ() * offset);
 +                mergedShapes[getIndexForMergedShape(offset, facing)] = Shapes.or(baseShape, offsetHead);
 +            }
 +
@@ -78,28 +78,28 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..5b032ebca4d38a8006899c11ac767989
 +        if (offset != 0f && offset != 0.5f && offset != 1f) {
 +            return -1;
 +        }
-+        //shape of offset 0 is still dependent on the direction, due to piston head and base being directional blocks
++        // shape of offset 0 is still dependent on the direction, due to piston head and base being directional blocks
 +        return (int) (2 * offset) + (3 * direction.get3DDataValue());
 +    }
 +    // JettPack end
- 
++
      @Override
      public CompoundTag getUpdateTag() {
-@@ -355,10 +423,27 @@ public class PistonMovingBlockEntity extends BlockEntity {
+         return this.saveWithoutMetadata();
+@@ -355,10 +424,26 @@ public class PistonMovingBlockEntity extends BlockEntity {
              }
  
              float f = this.getExtendedProgress(this.progress);
 +            // JettPack start - lithium: block.moving_block_shapes
 +            if (this.extending || !this.isSourcePiston || !(this.movedState.getBlock() instanceof PistonBaseBlock)) {
-+                //here voxelShape2.isEmpty() is guaranteed, vanilla code would call union() which calls simplify()
++                // here voxelShape2.isEmpty() is guaranteed, vanilla code would call union() which calls simplify()
 +                VoxelShape blockShape = blockState.getCollisionShape(world, pos);
 +
-+                //we cache the simplified shapes, as the simplify() method costs a lot of CPU time and allocates several objects
-+                VoxelShape offsetAndSimplified = getOffsetAndSimplified(blockShape, Math.abs(f), f < 0f ? this.direction.getOpposite() : this.direction);
-+                return offsetAndSimplified;
++                // we cache the simplified shapes, as the simplify() method costs a lot of CPU time and allocates several objects
++                return getOffsetAndSimplified(blockShape, Math.abs(f), f < 0f ? this.direction.getOpposite() : this.direction);
 +            } else {
-+                //retracting piston heads have to act like their base as well, as the base block is replaced with the moving block
-+                //f >= 0f is guaranteed (assuming no other mod interferes)
++                // retracting piston heads have to act like their base as well, as the base block is replaced with the moving block
++                // f >= 0f is guaranteed (assuming no other mod interferes)
 +                int index = getIndexForMergedShape(f, this.direction);
 +                return PISTON_BASE_WITH_MOVING_HEAD_SHAPES[index];
 +            }
@@ -114,7 +114,7 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..5b032ebca4d38a8006899c11ac767989
      }
  
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/VoxelShape.java b/src/main/java/net/minecraft/world/phys/shapes/VoxelShape.java
-index 6bd6385ad82481a099f3556ed2dbd3744888fc34..eec2e561eb097be2de18a4f3a23428e3ebe8cc51 100644
+index 6bd6385ad82481a099f3556ed2dbd3744888fc34..51131b80295cbf37b0cbda6ceb433eb318184b69 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/VoxelShape.java
 +++ b/src/main/java/net/minecraft/world/phys/shapes/VoxelShape.java
 @@ -362,6 +362,44 @@ public abstract class VoxelShape {
@@ -153,7 +153,7 @@ index 6bd6385ad82481a099f3556ed2dbd3744888fc34..eec2e561eb097be2de18a4f3a23428e3
 +            throw new IllegalArgumentException("offset must be one of {0f, 0.5f, 1f}");
 +        }
 +        if (offset == 0f) {
-+            return 0; //can treat offsetting by 0 in all directions the same
++            return 0; // can treat offsetting by 0 in all directions the same
 +        }
 +        return (int) (2 * offset) + 2 * direction.get3DDataValue();
 +    }

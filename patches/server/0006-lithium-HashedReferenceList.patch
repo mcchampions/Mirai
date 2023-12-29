@@ -8,10 +8,10 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/collections/HashedReferenceList.java b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/HashedReferenceList.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..4128567173d3985257a1bdd4412c7db0ff81535d
+index 0000000000000000000000000000000000000000..53f61a10f8f0e71b3717449d44985bdc6fbfd797
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/HashedReferenceList.java
-@@ -0,0 +1,281 @@
+@@ -0,0 +1,285 @@
 +package me.jellysquid.mods.lithium.common.util.collections;
 +
 +import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
@@ -19,7 +19,11 @@ index 0000000000000000000000000000000000000000..4128567173d3985257a1bdd4412c7db0
 +import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 +import org.jetbrains.annotations.NotNull;
 +
-+import java.util.*;
++import java.util.Collection;
++import java.util.Iterator;
++import java.util.List;
++import java.util.ListIterator;
++import java.util.NoSuchElementException;
 +
 +/**
 + * Wraps a {@link List} with a hash table which provides O(1) lookups for {@link Collection#contains(Object)}. The type
@@ -293,12 +297,11 @@ index 0000000000000000000000000000000000000000..4128567173d3985257a1bdd4412c7db0
 +        return new HashedReferenceList<>(list);
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 2e59dd9b529fc63896d1ff98232f65fd5165eb27..d5f39272d284e61dce819bf62630907b19e9bdf2 100644
+index 3abf13c8017da1223c07a4f6f54371c405caf863..956fad3f6c5f0e5893a42127803c6e2bc7f01070 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -117,9 +117,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -120,9 +120,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public static final int TICKS_PER_DAY = 24000;
      public static final int MAX_ENTITY_SPAWN_Y = 20000000;
      public static final int MIN_ENTITY_SPAWN_Y = -20000000;

@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Dreeam <61569423+Dreeam-qwq@users.noreply.github.com>
+Date: Thu, 28 Dec 2023 18:39:51 -0500
+Subject: [PATCH] Mirai: Add Higher Java Versions Support for SIMD
+
+
+diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+index 53231d5db719d2f693d86bfbc9e0270bcea2d500..53399114419ac254487b08d593b2e57f5eadb40a 100644
+--- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
++++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
+@@ -87,7 +87,7 @@ public class PufferfishConfig {
+ 		// Attempt to detect vectorization
+ 		try {
+ 			SIMDDetection.isEnabled = SIMDDetection.canEnable(PufferfishLogger.LOGGER);
+-			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() != 17 && SIMDDetection.getJavaVersion() != 18 && SIMDDetection.getJavaVersion() != 19;
++			SIMDDetection.versionLimited = SIMDDetection.getJavaVersion() < 17; // Mirai - Add Higher Java Versions Support for SIMD
+ 		} catch (NoClassDefFoundError | Exception ignored) {
+ 			ignored.printStackTrace();
+ 		}

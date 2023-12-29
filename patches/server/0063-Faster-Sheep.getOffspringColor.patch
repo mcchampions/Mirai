@@ -7,7 +7,7 @@ Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Sheep.java b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..d756d9f9c5cb9d985859dc014d38a5d7e3117064 100644
+index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..08f2b0bef7f4f26d388d2bbb162bdcab065de5e6 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 @@ -433,21 +433,56 @@ public class Sheep extends Animal implements Shearable {
@@ -17,9 +17,9 @@ index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..d756d9f9c5cb9d985859dc014d38a5d7
 +    // Mirai start
 +    private static DyeColor properDye(DyeColor firstColor, DyeColor secondColor) {
 +        if (firstColor.equals(secondColor)) return firstColor;
-+        switch(firstColor) {
++        switch (firstColor) {
 +            case WHITE -> {
-+                switch(secondColor) {
++                switch (secondColor) {
 +                    case BLUE -> {return DyeColor.LIGHT_BLUE;}
 +                    case GRAY -> {return DyeColor.LIGHT_GRAY;}
 +                    case BLACK -> {return DyeColor.GRAY;}
@@ -28,21 +28,21 @@ index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..d756d9f9c5cb9d985859dc014d38a5d7
 +                }
 +            }
 +            case BLUE -> {
-+                switch(secondColor) {
++                switch (secondColor) {
 +                    case WHITE -> {return DyeColor.LIGHT_BLUE;}
 +                    case GREEN -> {return DyeColor.CYAN;}
 +                    case RED -> {return DyeColor.PURPLE;}
 +                }
 +            }
 +            case RED -> {
-+                switch(secondColor) {
++                switch (secondColor) {
 +                    case YELLOW -> {return DyeColor.ORANGE;}
 +                    case WHITE -> {return DyeColor.PINK;}
 +                    case BLUE -> {return DyeColor.PURPLE;}
 +                }
 +            }
 +            case GREEN -> {
-+                switch(secondColor) {
++                switch (secondColor) {
 +                    case BLUE -> {return DyeColor.CYAN;}
 +                    case WHITE -> {return DyeColor.LIME;}
 +                }
@@ -70,9 +70,9 @@ index 8502fc1331c2e94992ab39e4e7ea0f36e83b06a5..d756d9f9c5cb9d985859dc014d38a5d7
 -        return (DyeColor) optional.map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> {
 -            return this.level().random.nextBoolean() ? enumcolor : enumcolor1;
 -        });
-+        DyeColor firstColor = ((Sheep)firstParent).getColor();
-+        DyeColor secondColor = ((Sheep)secondParent).getColor();
-+        DyeColor col = properDye(firstColor,secondColor);
++        DyeColor firstColor = ((Sheep) firstParent).getColor();
++        DyeColor secondColor = ((Sheep) secondParent).getColor();
++        DyeColor col = properDye(firstColor, secondColor);
 +        if (col == null) col = this.level().random.nextBoolean() ? firstColor : secondColor;
 +        return col;
      }

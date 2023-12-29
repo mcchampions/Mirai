@@ -5,7 +5,7 @@ Subject: [PATCH] Sync event calls on async threads
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 9ae2ccd8138831a06640140a7eea80b162bc6dd9..25db52067a91e9b3b304ee0a6c7e68aedc6dbaf9 100644
+index 590e3d386f9d2d8a3bd307198ec36a29bb92f76b..d51608b4b3fe8ad4699239e4423ab34ba5dcc99b 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -236,4 +236,17 @@ public class MiraiConfig {
@@ -27,15 +27,15 @@ index 9ae2ccd8138831a06640140a7eea80b162bc6dd9..25db52067a91e9b3b304ee0a6c7e68ae
 +    }
  }
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index d95f88a6ea90ecb0a5b08e74d34ebea765018513..28b1504582f7e778671f60acb3a4864376dac1d0 100644
+index 3c059afc7bbed7645c9fd1e4c9dbb156071e40a0..d7c6c27e605e0e97be03c9297b786346f394f429 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -42,7 +42,7 @@ class PaperEventManager {
+@@ -41,7 +41,7 @@ class PaperEventManager {
              throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
          } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
              // Mirai start
--            if(MiraiConfig.enableAsyncEntityTracker) {
-+            if(MiraiConfig.enableAsyncEntityTracker || MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
+-            if (dev.etil.mirai.MiraiConfig.enableAsyncEntityTracker) {
++            if (dev.etil.mirai.MiraiConfig.enableAsyncEntityTracker || dev.etil.mirai.MiraiConfig.enableSyncEventCallsOnAsyncThreads) {
                  MinecraftServer.getServer().scheduleOnMain(event::callEvent);
                  return;
              } else {

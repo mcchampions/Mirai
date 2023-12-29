@@ -2,7 +2,7 @@ plugins {
     java
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("io.papermc.paperweight.patcher") version "1.5.11-SNAPSHOT"
+    id("io.papermc.paperweight.patcher") version "1.5.12-SNAPSHOT"
 }
 
 repositories {
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    remapper("net.fabricmc:tiny-remapper:0.8.11:fat")
+    remapper("net.fabricmc:tiny-remapper:0.9.0:fat")
     decompiler("org.vineflower:vineflower:1.9.3")
     paperclip("io.papermc:paperclip:3.0.4-SNAPSHOT")
 }

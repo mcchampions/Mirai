@@ -7,7 +7,7 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/C2ME-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
-index fb84d703b4461343d50510d7c9be32fc1f09ed22..3da6b30febc98e5392e42d39c5bd69a82116dc2d 100644
+index fb84d703b4461343d50510d7c9be32fc1f09ed22..5e9c327ea80b3b2480bada425b8423b646baa8af 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
 @@ -11,6 +11,27 @@ public final class ImprovedNoise {
@@ -16,38 +16,41 @@ index fb84d703b4461343d50510d7c9be32fc1f09ed22..3da6b30febc98e5392e42d39c5bd69a8
  
 +    // Mirai start - c2me: opts math
 +    private static final double[] FLAT_SIMPLEX_GRAD = new double[]{
-+            1, 1, 0, 0,
-+            -1, 1, 0, 0,
-+            1, -1, 0, 0,
-+            -1, -1, 0, 0,
-+            1, 0, 1, 0,
-+            -1, 0, 1, 0,
-+            1, 0, -1, 0,
-+            -1, 0, -1, 0,
-+            0, 1, 1, 0,
-+            0, -1, 1, 0,
-+            0, 1, -1, 0,
-+            0, -1, -1, 0,
-+            1, 1, 0, 0,
-+            0, -1, 1, 0,
-+            -1, 1, 0, 0,
-+            0, -1, -1, 0,
++        1, 1, 0, 0,
++        -1, 1, 0, 0,
++        1, -1, 0, 0,
++        -1, -1, 0, 0,
++        1, 0, 1, 0,
++        -1, 0, 1, 0,
++        1, 0, -1, 0,
++        -1, 0, -1, 0,
++        0, 1, 1, 0,
++        0, -1, 1, 0,
++        0, 1, -1, 0,
++        0, -1, -1, 0,
++        1, 1, 0, 0,
++        0, -1, 1, 0,
++        -1, 1, 0, 0,
++        0, -1, -1, 0,
 +    };
 +    // Mirai end
 +
      public ImprovedNoise(RandomSource random) {
          this.xo = random.nextDouble() * 256.0D;
          this.yo = random.nextDouble() * 256.0D;
-@@ -34,34 +55,38 @@ public final class ImprovedNoise {
+@@ -34,34 +55,40 @@ public final class ImprovedNoise {
          return this.noise(x, y, z, 0.0D, 0.0D);
      }
  
+-    /** @deprecated */
 +    // Mirai start - c2me: opts math
-+    /**
-+     * @author ishland
++    /*
++      @author ishland
 +     * @reason optimize: remove frequent type conversions
 +     */
-     /** @deprecated */
++    /**
++     * @deprecated
++     */
      @Deprecated
      public double noise(double x, double y, double z, double yScale, double yMax) {
          double d = x + this.xo;
@@ -90,7 +93,7 @@ index fb84d703b4461343d50510d7c9be32fc1f09ed22..3da6b30febc98e5392e42d39c5bd69a8
  
      public double noiseWithDerivative(double x, double y, double z, double[] ds) {
          double d = x + this.xo;
-@@ -84,26 +109,76 @@ public final class ImprovedNoise {
+@@ -84,26 +111,76 @@ public final class ImprovedNoise {
          return this.p[input & 255] & 255;
      }
  
@@ -187,7 +190,7 @@ index fb84d703b4461343d50510d7c9be32fc1f09ed22..3da6b30febc98e5392e42d39c5bd69a8
      private double sampleWithDerivative(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double[] ds) {
          int i = this.p(sectionX);
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/synth/PerlinNoise.java b/src/main/java/net/minecraft/world/level/levelgen/synth/PerlinNoise.java
-index 97ef7288ea935f3d17c5b7a9eba642143c786c2b..0a4dd6c6b48e79d40c4b0790c2b2178f894c984a 100644
+index 97ef7288ea935f3d17c5b7a9eba642143c786c2b..b911cc7de87b981eca44372add72c68f40f51885 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/synth/PerlinNoise.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/synth/PerlinNoise.java
 @@ -26,6 +26,10 @@ public class PerlinNoise {
@@ -195,8 +198,8 @@ index 97ef7288ea935f3d17c5b7a9eba642143c786c2b..0a4dd6c6b48e79d40c4b0790c2b2178f
      private final double lowestFreqInputFactor;
      private final double maxValue;
 +    // Mirai start - c2me: opts math
-+    private int octaveSamplersCount = 0;
-+    private double[] amplitudesArray = null;
++    private int octaveSamplersCount;
++    private double[] amplitudesArray;
 +    // Mirai end
  
      /** @deprecated */
@@ -227,12 +230,12 @@ index 97ef7288ea935f3d17c5b7a9eba642143c786c2b..0a4dd6c6b48e79d40c4b0790c2b2178f
 +        double e = this.lowestFreqInputFactor;
 +        double f = this.lowestFreqValueFactor;
 +
-+        for(int i = 0; i < this.octaveSamplersCount; ++i) {
++        for (int i = 0; i < this.octaveSamplersCount; ++i) {
 +            ImprovedNoise perlinNoiseSampler = this.noiseLevels[i];
 +            if (perlinNoiseSampler != null) {
 +                @SuppressWarnings("deprecation")
 +                double g = perlinNoiseSampler.noise(
-+                        wrap(x * e), wrap(y * e), wrap(z * e), 0.0, 0.0
++                    wrap(x * e), wrap(y * e), wrap(z * e), 0.0, 0.0
 +                );
 +                d += this.amplitudesArray[i] * g * f;
 +            }

@@ -7,12 +7,12 @@ Original code by PurpurMC, licensed under MIT
 You can find the original code on https://github.com/PurpurMC/Purpur
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 293889cf1aab7fc512c4816ddf26d4f1d45ccd7d..83d7440db9dac15fce1d617bfb1d9d0ba4bdac3a 100644
+index fcc55d83eaffdb87015fb63070d33565a0310987..a5b4f3fb4bd4217fc81da8605df40c2eca0f96fa 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -145,4 +145,10 @@ public class MiraiConfig {
          checkVehicleFlying = getBoolean("checks.vehicle-flight", true,
-                                 "Whether or not vanilla anticheat should check for passengers flying.");
+             "Whether or not vanilla anticheat should check for passengers flying.");
      }
 +
 +    public static boolean dontSendUselessEntityPackets;
@@ -22,7 +22,7 @@ index 293889cf1aab7fc512c4816ddf26d4f1d45ccd7d..83d7440db9dac15fce1d617bfb1d9d0b
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index ca6c394d1ee980e7e18a11814dc4c0d1105a4b3e..7dcb726789dba6e6d61dbc33d6f993e72c3702a6 100644
+index ca6c394d1ee980e7e18a11814dc4c0d1105a4b3e..c0470146efbb9f2fe843548e597cd138e6bae93e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -200,6 +200,7 @@ public class ServerEntity {
@@ -33,14 +33,13 @@ index ca6c394d1ee980e7e18a11814dc4c0d1105a4b3e..7dcb726789dba6e6d61dbc33d6f993e7
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -272,6 +273,22 @@ public class ServerEntity {
+@@ -272,6 +273,21 @@ public class ServerEntity {
          });
      }
  
 +    // Purpur start
 +    private boolean isUselessPacket(Packet<?> possibleUselessPacket) {
-+        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket) {
-+            ClientboundMoveEntityPacket packet = (ClientboundMoveEntityPacket) possibleUselessPacket;
++        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket packet) {
 +            if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos) {
 +                return packet.getXa() == 0 && packet.getYa() == 0 && packet.getZa() == 0;
 +            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.PosRot) {

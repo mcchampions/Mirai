@@ -16,7 +16,7 @@ Some things are too unsafe to run off the main thread so we don't attempt to do
 that. This multithreaded tracker remains accurate, non-breaking and fast.
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index b1f858a26515baa8ad2694e3588c3b990788643b..9ae2ccd8138831a06640140a7eea80b162bc6dd9 100644
+index bbcc067e6c157e6469420386b411bdca855ffb9f..590e3d386f9d2d8a3bd307198ec36a29bb92f76b 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -224,4 +224,16 @@ public class MiraiConfig {
@@ -38,7 +38,7 @@ index b1f858a26515baa8ad2694e3588c3b990788643b..9ae2ccd8138831a06640140a7eea80b1
  }
 diff --git a/src/main/java/dev/etil/mirai/tracker/MultithreadedTracker.java b/src/main/java/dev/etil/mirai/tracker/MultithreadedTracker.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a18dde470c501cfcc8a07ae0cb24fbcf0fd00749
+index 0000000000000000000000000000000000000000..82d41ac1ac0009510a83b05f882b7a554d91d59f
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/tracker/MultithreadedTracker.java
 @@ -0,0 +1,154 @@
@@ -66,9 +66,9 @@ index 0000000000000000000000000000000000000000..a18dde470c501cfcc8a07ae0cb24fbcf
 +
 +    private static final int parallelism = Math.max(4, Runtime.getRuntime().availableProcessors());
 +    private static final Executor trackerExecutor = Executors.newFixedThreadPool(parallelism, new ThreadFactoryBuilder()
-+            .setNameFormat("mirai-tracker-%d")
-+            .setPriority(Thread.NORM_PRIORITY - 2)
-+            .build());
++        .setNameFormat("mirai-tracker-%d")
++        .setPriority(Thread.NORM_PRIORITY - 2)
++        .build());
 +
 +    private final IteratorSafeOrderedReferenceSet<LevelChunk> entityTickingChunks;
 +    private final AtomicInteger taskIndex = new AtomicInteger();
@@ -144,7 +144,7 @@ index 0000000000000000000000000000000000000000..a18dde470c501cfcc8a07ae0cb24fbcf
 +
 +    private void runUpdatePlayers() {
 +        try {
-+            while (handleChunkUpdates(10));
++            while (handleChunkUpdates(10)) ;
 +        } finally {
 +            this.finishedTasks.incrementAndGet();
 +        }
@@ -197,25 +197,24 @@ index 0000000000000000000000000000000000000000..a18dde470c501cfcc8a07ae0cb24fbcf
 +
 +}
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..d95f88a6ea90ecb0a5b08e74d34ebea765018513 100644
+index 7ce9ebba8ce304d1f3f21d4f15ee5f3560d7700b..3c059afc7bbed7645c9fd1e4c9dbb156071e40a0 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -4,6 +4,8 @@ import co.aikar.timings.TimedEventExecutor;
+@@ -4,6 +4,7 @@ import co.aikar.timings.TimedEventExecutor;
  import com.destroystokyo.paper.event.server.ServerExceptionEvent;
  import com.destroystokyo.paper.exception.ServerEventException;
  import com.google.common.collect.Sets;
-+import dev.etil.mirai.MiraiConfig;
 +import net.minecraft.server.MinecraftServer;
  import org.bukkit.Server;
  import org.bukkit.Warning;
  import org.bukkit.event.Event;
-@@ -39,7 +41,14 @@ class PaperEventManager {
+@@ -39,7 +40,14 @@ class PaperEventManager {
          if (event.isAsynchronous() && this.server.isPrimaryThread()) {
              throw new IllegalStateException(event.getEventName() + " may only be triggered asynchronously.");
          } else if (!event.isAsynchronous() && !this.server.isPrimaryThread() && !this.server.isStopping()) {
 -            throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
 +            // Mirai start
-+            if(MiraiConfig.enableAsyncEntityTracker) {
++            if (dev.etil.mirai.MiraiConfig.enableAsyncEntityTracker) {
 +                MinecraftServer.getServer().scheduleOnMain(event::callEvent);
 +                return;
 +            } else {
@@ -252,10 +251,10 @@ index 1e380c5ab6902495a610839e4f95b4176157bece..24d1962d42fc29e3f8710a36e7c86328
      public FullChunkStatus status;
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index e7652688d4a3d1acce2a9a29d93248af115974cd..3c8d6fddbed6109e4a93d31b1ec152bdde902c86 100644
+index d44090402a493e3d3829f60e457da60d975f386f..6855763eb4436858f1d0f091a12e8da9906d366e 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1180,7 +1180,34 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1179,7 +1179,34 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
      }
      // Paper end - optimised tracker
  
@@ -290,7 +289,7 @@ index e7652688d4a3d1acce2a9a29d93248af115974cd..3c8d6fddbed6109e4a93d31b1ec152bd
          // Paper start - optimized tracker
          if (true) {
              this.processTrackQueue();
-@@ -1323,11 +1350,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1322,11 +1349,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      public class TrackedEntity {
  
@@ -305,7 +304,7 @@ index e7652688d4a3d1acce2a9a29d93248af115974cd..3c8d6fddbed6109e4a93d31b1ec152bd
  
          public TrackedEntity(Entity entity, int i, int j, boolean flag) {
              this.serverEntity = new ServerEntity(ChunkMap.this.level, entity, j, flag, this::broadcast, this.seenBy); // CraftBukkit
-@@ -1381,14 +1408,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1380,14 +1407,11 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcast(Packet<?> packet) {
@@ -323,7 +322,7 @@ index e7652688d4a3d1acce2a9a29d93248af115974cd..3c8d6fddbed6109e4a93d31b1ec152bd
          }
  
          public void broadcastAndSend(Packet<?> packet) {
-@@ -1400,18 +1424,15 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1399,18 +1423,15 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void broadcastRemoved() {
@@ -346,7 +345,7 @@ index e7652688d4a3d1acce2a9a29d93248af115974cd..3c8d6fddbed6109e4a93d31b1ec152bd
              if (this.seenBy.remove(player.connection)) {
                  this.serverEntity.removePairing(player);
              }
-@@ -1419,7 +1440,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1418,7 +1439,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          }
  
          public void updatePlayer(ServerPlayer player) {
@@ -369,10 +368,10 @@ index ca42c2642a729b90d22b968af7258f3aee72e14b..c4d6d5be09c788bbc062c50d8547538e
      public boolean visible = true;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 7dcb726789dba6e6d61dbc33d6f993e72c3702a6..3073d967d85488ee80eeb2002b1f484882d5adeb 100644
+index c0470146efbb9f2fe843548e597cd138e6bae93e..6c3c12f726ca02058456bc5794475343b8ac4f73 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -291,7 +291,11 @@ public class ServerEntity {
+@@ -290,7 +290,11 @@ public class ServerEntity {
  
      public void removePairing(ServerPlayer player) {
          this.entity.stopSeenByPlayer(player);
@@ -385,7 +384,7 @@ index 7dcb726789dba6e6d61dbc33d6f993e72c3702a6..3073d967d85488ee80eeb2002b1f4848
      }
  
      public void addPairing(ServerPlayer player) {
-@@ -299,7 +303,7 @@ public class ServerEntity {
+@@ -298,7 +302,7 @@ public class ServerEntity {
  
          Objects.requireNonNull(list);
          this.sendPairingData(player, list::add);
@@ -394,7 +393,7 @@ index 7dcb726789dba6e6d61dbc33d6f993e72c3702a6..3073d967d85488ee80eeb2002b1f4848
          this.entity.startSeenByPlayer(player);
      }
  
-@@ -393,19 +397,29 @@ public class ServerEntity {
+@@ -392,19 +396,29 @@ public class ServerEntity {
  
          if (list != null) {
              this.trackedDataValues = datawatcher.getNonDefaultValues();
@@ -428,10 +427,10 @@ index 7dcb726789dba6e6d61dbc33d6f993e72c3702a6..3073d967d85488ee80eeb2002b1f4848
  
              set.clear();
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 24e13edf1a7d322ab6b2216129f4afa64a53b67e..81e972727d98937fe86b887ef8646e37ea119bd8 100644
+index 6065a3b1ee66c4969e3f5eb0a0e3e9aed18ec23b..406848789d351b4bfd32bbbd9e681cbe89c476cc 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -2688,7 +2688,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2723,7 +2723,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {

@@ -9,10 +9,10 @@ You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/me/titaniumtown/ServerWorkerWrapper.java b/src/main/java/me/titaniumtown/ServerWorkerWrapper.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7bd88761137b2a68c04fbaa920a9ea9ce1f9e873
+index 0000000000000000000000000000000000000000..934e0834188a170c2aae18d519eecdc755243f35
 --- /dev/null
 +++ b/src/main/java/me/titaniumtown/ServerWorkerWrapper.java
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,21 @@
 +package me.titaniumtown;
 +
 +import com.google.common.base.Preconditions;
@@ -26,23 +26,19 @@ index 0000000000000000000000000000000000000000..7bd88761137b2a68c04fbaa920a9ea9c
 +    }
 +
 +    @Override
-+    public final void run() {
++    public void run() {
 +        try {
 +            this.internalRunnable.run();
-+            return;
-+        }
-+        catch (Throwable throwable) {
++        } catch (Throwable throwable) {
 +            Util.onThreadException(Thread.currentThread(), throwable);
-+            return;
 +        }
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/Util.java b/src/main/java/net/minecraft/Util.java
-index 5c1503f5b173138fc9e918d5562a981ca8b66d06..f554dd78962d907eb2f29c29a2dcb955080e2ea5 100644
+index 22dfe70df68b35e313f94b17a87e4121392b17b4..3a14c39531b5256d54648f895a692380ff12ccd5 100644
 --- a/src/main/java/net/minecraft/Util.java
 +++ b/src/main/java/net/minecraft/Util.java
-@@ -75,6 +75,12 @@ import net.minecraft.util.TimeSource;
+@@ -80,6 +80,12 @@ import net.minecraft.util.TimeSource;
  import net.minecraft.util.datafix.DataFixers;
  import net.minecraft.world.level.block.state.properties.Property;
  import org.slf4j.Logger;
@@ -55,39 +51,39 @@ index 5c1503f5b173138fc9e918d5562a981ca8b66d06..f554dd78962d907eb2f29c29a2dcb955
  
  public class Util {
      static final Logger LOGGER = LogUtils.getLogger();
-@@ -167,7 +173,46 @@ public class Util {
+@@ -174,7 +180,46 @@ public class Util {
          if (i <= 0) {
              executorService = MoreExecutors.newDirectExecutorService();
          } else {
--            executorService = new java.util.concurrent.ThreadPoolExecutor(i, i,0L, TimeUnit.MILLISECONDS, new java.util.concurrent.LinkedBlockingQueue<Runnable>(), target -> new io.papermc.paper.util.ServerWorkerThread(target, s, priorityModifier));
-+            //executorService = new java.util.concurrent.ThreadPoolExecutor(i, i,0L, TimeUnit.MILLISECONDS, new java.util.concurrent.LinkedBlockingQueue<Runnable>(), target -> new net.minecraft.server.ServerWorkerThread(target, s, priorityModifier)); // JettPack
+-            executorService = new java.util.concurrent.ThreadPoolExecutor(i, i,0L, TimeUnit.MILLISECONDS, new java.util.concurrent.LinkedBlockingQueue<>(), target -> new io.papermc.paper.util.ServerWorkerThread(target, s, priorityModifier));
++            //executorService = new java.util.concurrent.ThreadPoolExecutor(i, i,0L, TimeUnit.MILLISECONDS, new java.util.concurrent.LinkedBlockingQueue<>(), target -> new io.papermc.paper.util.ServerWorkerThread(target, s, priorityModifier)); // JettPack
 +            // JettPack start
 +            executorService = Integer.getInteger("Paper.WorkerThreadCount", i) <= 0 ? MoreExecutors.newDirectExecutorService() : new AbstractExecutorService() {
 +                private volatile boolean shutdown = false;
 +
 +                @Override
-+                public final List<Runnable> shutdownNow() {
++                public List<Runnable> shutdownNow() {
 +                    this.shutdown = true;
 +                    return Collections.emptyList();
 +                }
 +
 +                @Override
-+                public final void shutdown() {
++                public void shutdown() {
 +                    this.shutdown = true;
 +                }
 +
 +                @Override
-+                public final boolean isShutdown() {
++                public boolean isShutdown() {
 +                    return this.shutdown;
 +                }
 +
 +                @Override
-+                public final boolean isTerminated() {
++                public boolean isTerminated() {
 +                    return this.shutdown;
 +                }
 +
 +                @Override
-+                public final boolean awaitTermination(long l2, TimeUnit timeUnit) throws InterruptedException {
++                public boolean awaitTermination(long l2, TimeUnit timeUnit) {
 +                    if (!this.shutdown) {
 +                        throw new UnsupportedOperationException();
 +                    }
@@ -95,7 +91,7 @@ index 5c1503f5b173138fc9e918d5562a981ca8b66d06..f554dd78962d907eb2f29c29a2dcb955
 +                }
 +
 +                @Override
-+                public final void execute(Runnable runnable) {
++                public void execute(Runnable runnable) {
 +                    MCUtil.asyncExecutor.execute(new ServerWorkerWrapper(runnable));
 +                }
 +            };

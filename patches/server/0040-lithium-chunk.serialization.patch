@@ -8,19 +8,21 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette.java b/src/main/java/me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..0fceb0c3b6c7bdd337d13cadeef65af270bedd0d
+index 0000000000000000000000000000000000000000..a97a5eba2bdec33f67d812322ce7832bf99654b7
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette.java
-@@ -0,0 +1,190 @@
+@@ -0,0 +1,192 @@
 +package me.jellysquid.mods.lithium.common.world.chunk;
 +
 +import com.google.common.collect.ImmutableList;
 +import it.unimi.dsi.fastutil.HashCommon;
 +import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 +import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
++
 +import java.util.Arrays;
 +import java.util.List;
 +import java.util.function.Predicate;
++
 +import net.minecraft.core.IdMap;
 +import net.minecraft.network.FriendlyByteBuf;
 +import net.minecraft.network.VarInt;
@@ -309,10 +311,10 @@ index acae3eb30e0689048937f479dc3070f0688abdad..9c2b79655f2c63a208c7087d5d897db0
      int onResize(int newBits, T object);
  }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
-index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e03e4aecc5 100644
+index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..6bfc5e4e682bc34e566a89fd2d1b6a28359db54d 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
-@@ -23,8 +23,23 @@ import net.minecraft.util.Mth;
+@@ -23,8 +23,25 @@ import net.minecraft.util.Mth;
  import net.minecraft.util.SimpleBitStorage;
  import net.minecraft.util.ThreadingDetector;
  import net.minecraft.util.ZeroBitStorage;
@@ -322,9 +324,11 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
 +    // JettPack start - lithium: chunk.serialization
 +    private static final ThreadLocal<short[]> CACHED_ARRAY_4096 = ThreadLocal.withInitial(() -> new short[4096]);
 +    private static final ThreadLocal<short[]> CACHED_ARRAY_64 = ThreadLocal.withInitial(() -> new short[64]);
++
 +    private Optional<LongStream> asOptional(long[] data) {
 +        return Optional.of(Arrays.stream(data));
 +    }
++
 +    private short[] getOrCreate(int size) {
 +        return switch (size) {
 +            case 64 -> CACHED_ARRAY_64.get();
@@ -336,7 +340,7 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
      private static final int MIN_PALETTE_BITS = 0;
      private final PaletteResize<T> dummyPaletteResize = (newSize, added) -> {
          return 0;
-@@ -302,30 +317,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -302,30 +319,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
      public synchronized PalettedContainerRO.PackedData<T> pack(IdMap<T> idList, PalettedContainer.Strategy paletteProvider) { // Paper - synchronize
          this.acquire();
  
@@ -408,7 +412,7 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
      }
  
      private static <T> void swapPalette(int[] is, IntUnaryOperator applier) {
-@@ -365,17 +404,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -365,17 +406,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(PalettedContainer.CountConsumer<T> counter) {

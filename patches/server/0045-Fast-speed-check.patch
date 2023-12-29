@@ -12,7 +12,7 @@ doing questionable/buggy ones, and claiming breathtaking performance improvement
 any of those Spigot forks!
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index c75568116166e23152e6e34307fbea4ef6d4c2f8..6f5d24e1ef7a033d88ec4e039b7bab24441cb0d0 100644
+index b77c000a31bb53619f65debcea7fe22614f5c9ee..9a3917c86da9c95fba76d45a2963198dd8eda605 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -170,4 +170,11 @@ public class MiraiConfig {
@@ -28,10 +28,10 @@ index c75568116166e23152e6e34307fbea4ef6d4c2f8..6f5d24e1ef7a033d88ec4e039b7bab24
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 925376438537f6a0a16c7534ff9b4cbee3624aae..2ce5437ed3848bd0f555352932d1fc4d5ece3cc9 100644
+index d18982c97daa8e8bc471f0cd81d3bd96bd602aee..60ac665b8db2c976b3862159981bc9d3d768b179 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1288,7 +1288,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1292,7 +1292,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
                  }
  
                  this.tryCheckInsideBlocks();

@@ -7,7 +7,7 @@ Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/biome/BiomeManager.java b/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
-index 5695c5116c8a338b2e41aafcb2dc9f2146856970..e477b2f28121e043f2edfd0918e2a4dd8ba6f091 100644
+index 5695c5116c8a338b2e41aafcb2dc9f2146856970..5476091213ed2e78a2e10abeaf0be58ce5275b74 100644
 --- a/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
 +++ b/src/main/java/net/minecraft/world/level/biome/BiomeManager.java
 @@ -28,41 +28,72 @@ public class BiomeManager {
@@ -67,7 +67,7 @@ index 5695c5116c8a338b2e41aafcb2dc9f2146856970..e477b2f28121e043f2edfd0918e2a4dd
 +            if (biomeX != 0) {
 +                maxQuartYY = Mth.square(Math.max(quartYY + maxOffset, Math.abs(quartYY - maxOffset)));
 +                maxQuartZZ = Mth.square(Math.max(quartZZ + maxOffset, Math.abs(quartZZ - maxOffset)));
-+                double maxQuartXX = Mth.square(Math.max(quartXX + maxOffset,Math.abs(quartXX - maxOffset)));
++                double maxQuartXX = Mth.square(Math.max(quartXX + maxOffset, Math.abs(quartXX - maxOffset)));
 +                if (smallestDist < maxQuartXX + maxQuartYY + maxQuartZZ) continue;
 +            }
 +
@@ -103,7 +103,7 @@ index 5695c5116c8a338b2e41aafcb2dc9f2146856970..e477b2f28121e043f2edfd0918e2a4dd
 -        int x = (o & 2) == 0 ? m : m + 1;
 -        int y = (o & 1) == 0 ? n : n + 1;
 -        return this.noiseBiomeSource.getNoiseBiome(w, x, y);
-+        return(this.noiseBiomeSource.getNoiseBiome(
++        return (this.noiseBiomeSource.getNoiseBiome(
 +            (smallestX & 4) == 0 ? x : x + 1,
 +            (smallestX & 2) == 0 ? y : y + 1,
 +            (smallestX & 1) == 0 ? z : z + 1

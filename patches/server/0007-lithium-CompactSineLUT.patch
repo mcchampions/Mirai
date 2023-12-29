@@ -8,7 +8,7 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528b9647916
+index 0000000000000000000000000000000000000000..af7bd822f09f65129130d96be4b440385977e7fb
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 @@ -0,0 +1,90 @@
@@ -20,11 +20,11 @@ index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528
 + * A replacement for the sine angle lookup table used in {@link Mth}, both reducing the size of LUT and improving
 + * the access patterns for common paired sin/cos operations.
 + *
-+ *  sin(-x) = -sin(x)
-+ *    ... to eliminate negative angles from the LUT.
++ * sin(-x) = -sin(x)
++ * ... to eliminate negative angles from the LUT.
 + *
-+ *  sin(x) = sin(pi/2 - x)
-+ *    ... to eliminate supplementary angles from the LUT.
++ * sin(x) = sin(pi/2 - x)
++ * ... to eliminate supplementary angles from the LUT.
 + *
 + * Using these identities allows us to reduce the LUT from 64K entries (256 KB) to just 16K entries (64 KB), enabling
 + * it to better fit into the CPU's caches at the expense of some cycles on the fast path. The implementation has been
@@ -38,7 +38,7 @@ index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528
 + * from {@link Mth}. Validation is performed during runtime to ensure that the table is correct.
 + *
 + * @author coderbot16   Author of the original (and very clever) implementation in Rust:
-+ *  https://gitlab.com/coderbot16/i73/-/tree/master/i73-trig/src
++ * https://gitlab.com/coderbot16/i73/-/tree/master/i73-trig/src
 + * @author jellysquid3  Additional optimizations, port to Java
 + */
 +public class CompactSineLUT {
@@ -102,12 +102,11 @@ index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528
 +        return Float.intBitsToFloat(SINE_TABLE_INT[pos] ^ neg);
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/util/Mth.java b/src/main/java/net/minecraft/util/Mth.java
-index a378a2ddd96e76925fa3409282d9606a86c72334..c34a69e8b67cdf907dca1b20d16680b4fdf2d487 100644
+index 03854a2d26a3cfc1817acfdc28cbf151ba59e05b..a1af7b18db174bdc114f57bcf68f19ee23211205 100644
 --- a/src/main/java/net/minecraft/util/Mth.java
 +++ b/src/main/java/net/minecraft/util/Mth.java
-@@ -30,6 +30,7 @@ public class Mth {
+@@ -35,6 +35,7 @@ public class Mth {
  
      });
      private static final RandomSource RANDOM = RandomSource.createThreadSafe();
@@ -115,7 +114,7 @@ index a378a2ddd96e76925fa3409282d9606a86c72334..c34a69e8b67cdf907dca1b20d16680b4
      private static final int[] MULTIPLY_DE_BRUIJN_BIT_POSITION = new int[]{0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8, 31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9};
      private static final double ONE_SIXTH = 0.16666666666666666D;
      private static final int FRAC_EXP = 8;
-@@ -39,11 +40,11 @@ public class Mth {
+@@ -44,11 +45,11 @@ public class Mth {
      private static final double[] COS_TAB = new double[257];
  
      public static float sin(float value) {

@@ -8,14 +8,16 @@ You can find the original code on https://github.com/RelativityMC/VMP-fabric (Ya
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/collections/Object2BooleanCacheTable.java b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/Object2BooleanCacheTable.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c1cb79e96
+index 0000000000000000000000000000000000000000..1fa7785128bd4c31fb23380528f41e96dcf0d05b
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/util/collections/Object2BooleanCacheTable.java
-@@ -0,0 +1,59 @@
+@@ -0,0 +1,54 @@
 +package me.jellysquid.mods.lithium.common.util.collections;
 +
 +import it.unimi.dsi.fastutil.HashCommon;
++
 +import java.util.function.Predicate;
++
 +import net.minecraft.util.Mth;
 +
 +/**
@@ -61,23 +63,15 @@ index 0000000000000000000000000000000000000000..a833ec84b2053c805dd33821cc08939c
 +        return test;
 +    }
 +
-+    static class Node<T> {
-+        final T key;
-+        final boolean value;
-+
-+        Node(T key, boolean value) {
-+            this.key = key;
-+            this.value = value;
-+        }
++    record Node<T>(T key, boolean value) {
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 3771caa73b0b41428f3d629aca1f562df7bcfaff..e7652688d4a3d1acce2a9a29d93248af115974cd 100644
+index cd55b5bbba17a60766c3302fd8cb94553fe3f929..d44090402a493e3d3829f60e457da60d975f386f 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -106,6 +106,8 @@ import org.bukkit.craftbukkit.generator.CustomChunkGenerator;
- import org.bukkit.entity.Player;
+@@ -107,6 +107,8 @@ import org.slf4j.Logger;
+ import org.bukkit.craftbukkit.generator.CustomChunkGenerator;
  // CraftBukkit end
  
 +import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap; // Mirai - vmp: use linked map for entity trackers for faster iteration
@@ -85,7 +79,7 @@ index 3771caa73b0b41428f3d629aca1f562df7bcfaff..e7652688d4a3d1acce2a9a29d93248af
  public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider {
  
      private static final byte CHUNK_TYPE_REPLACEABLE = -1;
-@@ -252,7 +254,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -251,7 +253,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper - rewrite chunk system
          this.tickingGenerated = new AtomicInteger();
          this.playerMap = new PlayerMap();
@@ -94,15 +88,3 @@ index 3771caa73b0b41428f3d629aca1f562df7bcfaff..e7652688d4a3d1acce2a9a29d93248af
          this.chunkTypeCache = new Long2ByteOpenHashMap();
          this.chunkSaveCooldowns = new Long2LongOpenHashMap();
          this.unloadQueue = Queues.newConcurrentLinkedQueue();
-diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 69d4a3029b5e3ffcfd8ccb637f432ad1cd74997b..dfe9721b233dab6fb045776bde4ddfc60e246cfc 100644
---- a/src/main/java/net/minecraft/world/level/block/Block.java
-+++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -61,6 +61,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
- import net.minecraft.world.phys.shapes.Shapes;
- import net.minecraft.world.phys.shapes.VoxelShape;
- import org.slf4j.Logger;
-+import me.jellysquid.mods.lithium.common.util.collections.Object2BooleanCacheTable; // JettPack
- 
- // Purpur start
- import net.minecraft.nbt.CompoundTag;

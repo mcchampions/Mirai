@@ -7,10 +7,10 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index dc718efe054aaf36961514287c9cc48e2d28bc4c..8b399db5c35a4ea6e30f4c53b4bd536faa12bef9 100644
+index 9e32ca4a0f94627bbd4d3cedd5be93bfeb8115ee..6da6da1a9347730a3d65be3e1b0e562ef48ffc49 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
-@@ -659,11 +659,18 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -667,11 +667,18 @@ public class Block extends BlockBehaviour implements ItemLike {
          private final BlockState first;
          private final BlockState second;
          private final Direction direction;
@@ -29,7 +29,7 @@ index dc718efe054aaf36961514287c9cc48e2d28bc4c..8b399db5c35a4ea6e30f4c53b4bd536f
          }
  
          public boolean equals(Object object) {
-@@ -679,11 +686,7 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -687,11 +694,7 @@ public class Block extends BlockBehaviour implements ItemLike {
          }
  
          public int hashCode() {

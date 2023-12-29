@@ -5,15 +5,15 @@ Subject: [PATCH] Skip cloning loot parameters
 
 
 diff --git a/src/main/java/net/minecraft/advancements/Advancement.java b/src/main/java/net/minecraft/advancements/Advancement.java
-index afa5ac5e3b045f8eeafd14b7db09e547fbd59f3a..250c2fc53c7d29a5e4d5ae074796302a0db282d4 100644
+index a053d30f171c0c022888f098313b50f73c434180..82956d68c56b1934593669549b7d10f7f60a746f 100644
 --- a/src/main/java/net/minecraft/advancements/Advancement.java
 +++ b/src/main/java/net/minecraft/advancements/Advancement.java
-@@ -22,7 +22,7 @@ import net.minecraft.world.level.ItemLike;
+@@ -40,7 +40,7 @@ public record Advancement(Optional<ResourceLocation> parent, Optional<DisplayInf
+     }), Advancement::validate);
  
- public record Advancement(Optional<ResourceLocation> parent, Optional<DisplayInfo> display, AdvancementRewards rewards, Map<String, Criterion<?>> criteria, AdvancementRequirements requirements, boolean sendsTelemetryEvent, Optional<Component> name) {
      public Advancement(Optional<ResourceLocation> parent, Optional<DisplayInfo> display, AdvancementRewards rewards, Map<String, Criterion<?>> criteria, AdvancementRequirements requirements, boolean sendsTelemetryEvent) {
 -        this(parent, display, rewards, Map.copyOf(criteria), requirements, sendsTelemetryEvent, display.map(Advancement::decorateName));
 +        this(parent, display, rewards, criteria, requirements, sendsTelemetryEvent, display.map(Advancement::decorateName));  // Mirai - Skip cloning loot parameters
      }
  
-     public static Component decorateName(DisplayInfo display) {
+     private static DataResult<Advancement> validate(Advancement advancement) {

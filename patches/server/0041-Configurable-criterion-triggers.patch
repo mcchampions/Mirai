@@ -9,7 +9,7 @@ You can find the original code on https://github.com/YatopiaMC/Yatopia
 This patch adds toggles for three criterion triggers that are called every tick. These can be very unnecessary, and especially in the case of CriterionTriggerEnterBlock, quite heavy.
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 3cfe1cbffa6b1ae5c556897ce107c0f099622f60..c75568116166e23152e6e34307fbea4ef6d4c2f8 100644
+index 3a65686b7bc80d4c71cec9a8d3845ca9b36d6c5a..b77c000a31bb53619f65debcea7fe22614f5c9ee 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -158,4 +158,16 @@ public class MiraiConfig {
@@ -30,10 +30,10 @@ index 3cfe1cbffa6b1ae5c556897ce107c0f099622f60..c75568116166e23152e6e34307fbea4e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 08ef38046d7e5bd6890e58450eae17b5aa6b6671..e049c8f5be0c5adb69294b146b42477a5120d6f7 100644
+index 3b7ed9e81ec0703f1d4e754faca3e81c2f38cecf..6c5bef7091352ec80599b9540ce253baccf7335f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -710,7 +710,7 @@ public class ServerPlayer extends Player {
+@@ -717,7 +717,7 @@ public class ServerPlayer extends Player {
  
      @Override
      protected void onInsideBlock(BlockState state) {
@@ -42,7 +42,7 @@ index 08ef38046d7e5bd6890e58450eae17b5aa6b6671..e049c8f5be0c5adb69294b146b42477a
      }
  
      @Override
-@@ -757,7 +757,7 @@ public class ServerPlayer extends Player {
+@@ -764,7 +764,7 @@ public class ServerPlayer extends Player {
              }
          }
  
@@ -51,7 +51,7 @@ index 08ef38046d7e5bd6890e58450eae17b5aa6b6671..e049c8f5be0c5adb69294b146b42477a
          if (this.levitationStartPos != null) {
              CriteriaTriggers.LEVITATION.trigger(this, this.levitationStartPos, this.tickCount - this.levitationStartTime);
          }
-@@ -842,9 +842,7 @@ public class ServerPlayer extends Player {
+@@ -849,9 +849,7 @@ public class ServerPlayer extends Player {
                  this.connection.send(new ClientboundSetExperiencePacket(this.experienceProgress, this.totalExperience, this.experienceLevel));
              }
  

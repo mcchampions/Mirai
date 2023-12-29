@@ -8,7 +8,7 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric/p
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/IterateOutwardsCache.java b/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/IterateOutwardsCache.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a5d3aa309d3fdaab9e0fea2dfb91a080a3ac1193
+index 0000000000000000000000000000000000000000..a4dfccd5b18094a70e00c7a7fc0f232800a76cfe
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/IterateOutwardsCache.java
 @@ -0,0 +1,71 @@
@@ -16,27 +16,27 @@ index 0000000000000000000000000000000000000000..a5d3aa309d3fdaab9e0fea2dfb91a080
 +
 +import it.unimi.dsi.fastutil.longs.LongArrayList;
 +import it.unimi.dsi.fastutil.longs.LongList;
++
 +import java.util.Iterator;
-+import java.util.Random;
 +import java.util.concurrent.ConcurrentHashMap;
++import java.util.concurrent.ThreadLocalRandom;
++
 +import net.minecraft.core.BlockPos;
 +
 +/**
 + * @author 2No2Name, original implemenation by SuperCoder7979 and Gegy1000
 + */
 +public class IterateOutwardsCache {
-+    //POS_ZERO must not be replaced with BlockPos.ORIGIN, otherwise iterateOutwards at BlockPos.ORIGIN will not use the cache
-+    public static final BlockPos POS_ZERO = new BlockPos(0,0,0);
++    // POS_ZERO must not be replaced with BlockPos.ORIGIN, otherwise iterateOutwards at BlockPos.ORIGIN will not use the cache
++    public static final BlockPos POS_ZERO = new BlockPos(0, 0, 0);
 +
 +
 +    private final ConcurrentHashMap<Long, LongArrayList> table;
 +    private final int capacity;
-+    private final Random random;
 +
 +    public IterateOutwardsCache(int capacity) {
 +        this.capacity = capacity;
 +        this.table = new ConcurrentHashMap<>(31);
-+        this.random = new Random();
 +    }
 +
 +    private void fillPositionsWithIterateOutwards(LongList entry, int xRange, int yRange, int zRange) {
@@ -59,22 +59,22 @@ index 0000000000000000000000000000000000000000..a5d3aa309d3fdaab9e0fea2dfb91a080
 +
 +        this.fillPositionsWithIterateOutwards(entry, xRange, yRange, zRange);
 +
-+        //decrease the array size, as of now it won't be modified anymore anyways
++        // decrease the array size, as of now it won't be modified anymore anyways
 +        entry.trim();
 +
-+        //this might overwrite an entry as the same entry could have been computed and added during this thread's computation
-+        //we do not use computeIfAbsent, as it can delay other threads for too long
++        // this might overwrite an entry as the same entry could have been computed and added during this thread's computation
++        // we do not use computeIfAbsent, as it can delay other threads for too long
 +        Object previousEntry = this.table.put(key, entry);
 +
 +
 +        if (previousEntry == null && this.table.size() > this.capacity) {
-+            //prevent a memory leak by randomly removing about 1/8th of the elements when the exceed the desired capacity is exceeded
++            // prevent a memory leak by randomly removing about 1/8th of the elements when the exceed the desired capacity is exceeded
 +            final Iterator<Long> iterator = this.table.keySet().iterator();
-+            //prevent an unlikely infinite loop caused by another thread filling the table concurrently using counting
++            // prevent an unlikely infinite loop caused by another thread filling the table concurrently using counting
 +            for (int i = -this.capacity; iterator.hasNext() && i < 5; i++) {
 +                Long key2 = iterator.next();
-+                //random is not threadsafe, but it doesn't matter here, because we don't need quality random numbers
-+                if (this.random.nextInt(8) == 0 && key2 != key) {
++                // new random() is not threadsafe, but it doesn't matter here, because we don't need quality random numbers // Mirai - Use ThreadLocalRandom, faster and thread safe
++                if (ThreadLocalRandom.current().nextInt(8) == 0 && key2 != key) {
 +                    iterator.remove();
 +                }
 +            }
@@ -83,18 +83,19 @@ index 0000000000000000000000000000000000000000..a5d3aa309d3fdaab9e0fea2dfb91a080
 +        return entry;
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/LongList2BlockPosMutableIterable.java b/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/LongList2BlockPosMutableIterable.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..493661ff3ac7247b68b7b02784b09b0eaf88fc52
+index 0000000000000000000000000000000000000000..88c13950ab4c40a2fcfc5b4f0455ea53f3771687
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/cached_blockpos_iteration/LongList2BlockPosMutableIterable.java
-@@ -0,0 +1,46 @@
+@@ -0,0 +1,48 @@
 +package me.jellysquid.mods.lithium.common.cached_blockpos_iteration;
 +
 +import it.unimi.dsi.fastutil.longs.LongIterator;
 +import it.unimi.dsi.fastutil.longs.LongList;
++
 +import java.util.Iterator;
++
 +import net.minecraft.core.BlockPos;
 +
 +/**
@@ -114,7 +115,7 @@ index 0000000000000000000000000000000000000000..493661ff3ac7247b68b7b02784b09b0e
 +
 +    @Override
 +    public Iterator<BlockPos> iterator() {
-+        return new Iterator<BlockPos>() {
++        return new Iterator<>() {
 +
 +            private final LongIterator it = LongList2BlockPosMutableIterable.this.positions.iterator();
 +            private final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -128,15 +129,14 @@ index 0000000000000000000000000000000000000000..493661ff3ac7247b68b7b02784b09b0e
 +            public net.minecraft.core.BlockPos next() {
 +                long nextPos = this.it.nextLong();
 +                return this.pos.set(
-+                        LongList2BlockPosMutableIterable.this.xOffset + BlockPos.getX(nextPos),
-+                        LongList2BlockPosMutableIterable.this.yOffset + BlockPos.getY(nextPos),
-+                        LongList2BlockPosMutableIterable.this.zOffset + BlockPos.getZ(nextPos));
++                    LongList2BlockPosMutableIterable.this.xOffset + BlockPos.getX(nextPos),
++                    LongList2BlockPosMutableIterable.this.yOffset + BlockPos.getY(nextPos),
++                    LongList2BlockPosMutableIterable.this.zOffset + BlockPos.getZ(nextPos));
 +            }
 +        };
 +    }
 +
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/core/BlockPos.java b/src/main/java/net/minecraft/core/BlockPos.java
 index ec6b58dae525c81bbb1c0e2d96fbded6f00a45b5..772ffb60b1b1411c30588e9949749292aa18fb17 100644
 --- a/src/main/java/net/minecraft/core/BlockPos.java

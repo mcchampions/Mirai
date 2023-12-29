@@ -7,29 +7,28 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 5f3ba184fae5170425cfdbd95150ed00c3f3433b..293889cf1aab7fc512c4816ddf26d4f1d45ccd7d 100644
+index af9303f211c340473b6b236216ff19d3417e4b28..fcc55d83eaffdb87015fb63070d33565a0310987 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -137,4 +137,12 @@ public class MiraiConfig {
-                                 "Whether or not player login location should be written in logs.");
+@@ -136,4 +136,13 @@ public class MiraiConfig {
+         logPlayerLoginLoc = getBoolean("log-player-login-location", true,
+             "Whether or not player login location should be written in logs.");
      }
- 
--}
-\ No newline at end of file
++
 +    public static boolean checkFlying;
 +    public static boolean checkVehicleFlying;
 +    private static void flightChecks() {
 +        checkFlying = getBoolean("checks.flight", true,
-+                            "Whether or not vanilla anticheat should check for players flying.");
++            "Whether or not vanilla anticheat should check for players flying.");
 +        checkVehicleFlying = getBoolean("checks.vehicle-flight", true,
-+                                "Whether or not vanilla anticheat should check for passengers flying.");
++            "Whether or not vanilla anticheat should check for passengers flying.");
 +    }
-+}
+ }
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 84c5a2d1dbe777aee70d1e28fbe81b13aaef7668..6b108de9b7eb47b24e1914ce874f26e0a449b5f9 100644
+index 5a2c9221cbf8cbea63e24394328ba5350c5493d6..7cc3b98e7549c272aa38eb24e7bb3f62bc1d839e 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -353,7 +353,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
+@@ -356,7 +356,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
          ++this.tickCount;
          this.knownMovePacketCount = this.receivedMovePacketCount;
          if (this.clientIsFloating && !this.player.isSleeping() && !this.player.isPassenger() && !this.player.isDeadOrDying()) {
@@ -38,7 +37,7 @@ index 84c5a2d1dbe777aee70d1e28fbe81b13aaef7668..6b108de9b7eb47b24e1914ce874f26e0
                  ServerGamePacketListenerImpl.LOGGER.warn("{} was kicked for floating too long!", this.player.getName().getString());
                  this.disconnect(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.flyingPlayer, org.bukkit.event.player.PlayerKickEvent.Cause.FLYING_PLAYER); // Paper - use configurable kick message & kick event cause
                  return;
-@@ -372,7 +372,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
+@@ -375,7 +375,7 @@ public class ServerGamePacketListenerImpl extends ServerCommonPacketListenerImpl
              this.vehicleLastGoodY = this.lastVehicle.getY();
              this.vehicleLastGoodZ = this.lastVehicle.getZ();
              if (this.clientVehicleIsFloating && this.player.getRootVehicle().getControllingPassenger() == this.player) {

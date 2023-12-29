@@ -8,19 +8,22 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/world/scheduler/OrderedTickQueue.java b/src/main/java/me/jellysquid/mods/lithium/common/world/scheduler/OrderedTickQueue.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..52e90ea09b44543af661c214767073cf9d5f3d8f
+index 0000000000000000000000000000000000000000..39cf3510c68d55b806e7a4a95f26d5098d04094e
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/world/scheduler/OrderedTickQueue.java
-@@ -0,0 +1,192 @@
+@@ -0,0 +1,195 @@
 +package me.jellysquid.mods.lithium.common.world.scheduler;
 +
 +import it.unimi.dsi.fastutil.HashCommon;
-+import java.util.*;
++
 +import net.minecraft.world.ticks.ScheduledTick;
 +
-+/**
++import java.util.AbstractQueue;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.Comparator;
++import java.util.Iterator;
 +
-+ */
 +public class OrderedTickQueue<T> extends AbstractQueue<ScheduledTick<T>> {
 +    private static final int INITIAL_CAPACITY = 16;
 +    private static final Comparator<ScheduledTick<?>> COMPARATOR = Comparator.comparingLong(ScheduledTick::subTickOrder);
@@ -106,14 +109,14 @@ index 0000000000000000000000000000000000000000..52e90ea09b44543af661c214767073cf
 +
 +    public boolean offer(ScheduledTick<T> tick) {
 +        if (this.lastIndexExclusive >= this.arr.length) {
-+            //todo remove consumed elements first
++            // TODO: remove consumed elements first
 +            this.arr = copyArray(this.arr, HashCommon.nextPowerOfTwo(this.arr.length + 1));
 +        }
 +        if (tick.subTickOrder() <= this.currentMaxSubTickOrder) {
-+            //Set to unsorted instead of slowing down the insertion
-+            //This is rare but may happen in bulk
-+            //Sorting later needs O(n*log(n)) time, but it only needs to happen when unordered insertion needs to happen
-+            //Therefore it is better than n times log(n) time of the PriorityQueue that happens on ordered insertion too
++            // Set to unsorted instead of slowing down the insertion
++            // This is rare but may happen in bulk
++            // Sorting later needs O(n*log(n)) time, but it only needs to happen when unordered insertion needs to happen
++            // Therefore it is better than n times log(n) time of the PriorityQueue that happens on ordered insertion too
 +            this.isSorted = false;
 +            ScheduledTick<T> firstTick = this.size() > 0 ? this.arr[this.firstIndex] : null;
 +            this.unsortedPeekResult = firstTick == null || tick.subTickOrder() < firstTick.subTickOrder() ? tick : firstTick;
@@ -205,7 +208,7 @@ index 0000000000000000000000000000000000000000..52e90ea09b44543af661c214767073cf
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java b/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
-index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd22032cdc 100644
+index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..5aa6165d45d01b3b00008491e742707aa977dc10 100644
 --- a/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
 +++ b/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
 @@ -16,14 +16,37 @@ import javax.annotation.Nullable;
@@ -248,28 +251,28 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd
  
      // Paper start - add dirty flag
      private boolean dirty;
-@@ -48,36 +71,133 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
+@@ -48,37 +71,134 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
              this.ticksPerPosition.add(ScheduledTick.probe(savedTick.type(), savedTick.pos()));
          }
  
 +        // Mirai start - lithium: world.tick_scheduler
-+        //Remove replaced collections
++        // Remove replaced collections
 +        if (this.pendingTicks != null) {
 +            for (SavedTick<?> orderedTick : this.pendingTicks) {
 +                this.allpendingTicks.add(tickToInt(orderedTick.pos(), orderedTick.type()));
 +            }
 +        }
-+        //this.ticksPerPosition = null; // KeYi - dont null
-+        //this.tickQueue = null; // KeYi - dont null
++        // this.ticksPerPosition = null; // KeYi - dont null
++        // this.tickQueue = null; // KeYi - dont null
 +        // Mirai end
 +    }
 +
 +    // Mirai start - lithium: world.tick_scheduler
 +    private static int tickToInt(BlockPos pos, Object type) {
-+        //Y coordinate is 12 bits (BlockPos.toLong)
-+        //X and Z coordinate is 4 bits each (This scheduler is for a single chunk)
-+        //20 bits are in use for pos
-+        //12 bits remaining for the type, so up to 4096 different tickable blocks/fluids (not block states) -> can upgrade to long if needed
++        // Y coordinate is 12 bits (BlockPos.toLong)
++        // X and Z coordinate is 4 bits each (This scheduler is for a single chunk)
++        // 20 bits are in use for pos
++        // 12 bits remaining for the type, so up to 4096 different tickable blocks/fluids (not block states) -> can upgrade to long if needed
 +        int typeIndex = TYPE_2_INDEX.getInt(type);
 +        if (typeIndex == -1) {
 +            typeIndex = fixMissingType2Index(type);
@@ -280,10 +283,10 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd
 +        return ret;
      }
  
-+    //This method must be synchronized, otherwise type->int assignments can be overwritten and therefore change
-+    //Uses clone and volatile store to ensure only fully initialized maps are used, all threads share the same mapping
++    // This method must be synchronized, otherwise type->int assignments can be overwritten and therefore change
++    // Uses clone and volatile store to ensure only fully initialized maps are used, all threads share the same mapping
 +    private static synchronized int fixMissingType2Index(Object type) {
-+        //check again, other thread might have replaced the collection
++        // check again, other thread might have replaced the collection
 +        int typeIndex = TYPE_2_INDEX.getInt(type);
 +        if (typeIndex == -1) {
 +            Reference2IntOpenHashMap<Object> clonedType2Index = TYPE_2_INDEX.clone();
@@ -350,17 +353,17 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd
 +        int intTick = tickToInt(orderedTick.pos(), orderedTick.type());
 +        if (this.allpendingTicks.add(intTick)) {
 +            this.queueTick(orderedTick);
-+        }
+         }
 +    }
-+
+ 
 +    // Computes a timestamped key including the tick's priority
 +    // Keys can be sorted in descending order to find what should be executed first
 +    // 60 time bits, 4 priority bits
 +    private static long getBucketKey(long time, TickPriority priority) {
-+        //using priority.ordinal() as is not negative instead of priority.index
++        // using priority.ordinal() as is not negative instead of priority.index
 +        return (time << 4L) | (priority.ordinal() & 15);
-+    }
-+
+     }
+ 
 +    private void updateNextTickQueue(boolean elementRemoved) {
 +        if (elementRemoved && this.nextTickQueue != null && this.nextTickQueue.isEmpty()) {
 +            OrderedTickQueue<T> removed = this.tickQueuesByTimeAndPriority.remove(this.tickQueuesByTimeAndPriority.firstLongKey());
@@ -371,7 +374,7 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd
 +        if (this.tickQueuesByTimeAndPriority.isEmpty()) {
 +            this.nextTickQueue = null;
 +            return;
-         }
++        }
 +        long firstKey = this.tickQueuesByTimeAndPriority.firstLongKey();
 +        this.nextTickQueue = this.tickQueuesByTimeAndPriority.get(firstKey);
 +    }
@@ -382,16 +385,17 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..89c5169d05687582ebef67267e8e2cbd
 +            this.updateNextTickQueue(false);
 +        }
 +        tickQueue.offer(orderedTick);
- 
++
 +        if (this.onTickAdded != null) {
-+            //noinspection unchecked
-+            this.onTickAdded.accept((LevelChunkTicks<T>) (Object) this, orderedTick);
++            // noinspection unchecked
++            this.onTickAdded.accept(this, orderedTick);
 +        }
-     }
++    }
 +    // Mirai end
- 
++
      private void scheduleUnchecked(ScheduledTick<T> orderedTick) {
          this.tickQueue.add(orderedTick);
+         if (this.onTickAdded != null) {
 @@ -87,50 +207,83 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
  
      }
