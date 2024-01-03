@@ -186,10 +186,10 @@ index 4073484fefbf1ec6072013f6903f9237eb3ebfbc..fb4c4d25c8e070f72479c646df1f9a16
      // Paper end
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 6c5bef7091352ec80599b9540ce253baccf7335f..98b59c6443a539c3bcb5699731a298aedea35f80 100644
+index 5b0720220de336f512747e9433755ff16e00470e..1faffbf21859692cdf93cc8f3418fc96d6bb9217 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -1783,29 +1783,29 @@ public class ServerPlayer extends Player {
+@@ -1784,29 +1784,29 @@ public class ServerPlayer extends Player {
              int i;
  
              if (this.isSwimming()) {
@@ -224,7 +224,7 @@ index 6c5bef7091352ec80599b9540ce253baccf7335f..98b59c6443a539c3bcb5699731a298ae
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1819,10 +1819,10 @@ public class ServerPlayer extends Player {
+@@ -1820,10 +1820,10 @@ public class ServerPlayer extends Player {
                      }
                  }
              } else if (this.isFallFlying()) {
@@ -237,7 +237,7 @@ index 6c5bef7091352ec80599b9540ce253baccf7335f..98b59c6443a539c3bcb5699731a298ae
                  if (i > 25) {
                      this.awardStat(Stats.FLY_ONE_CM, i);
                  }
-@@ -1833,7 +1833,7 @@ public class ServerPlayer extends Player {
+@@ -1834,7 +1834,7 @@ public class ServerPlayer extends Player {
  
      private void checkRidingStatistics(double deltaX, double deltaY, double deltaZ) {
          if (this.isPassenger() && !ServerPlayer.didNotMove(deltaX, deltaY, deltaZ)) {
@@ -272,7 +272,7 @@ index 52151082b031f250b13bfaa35417e1d934a54f60..9ab3ca431858331c80e6d38c2e8584a3
  
      public int fromDegrees(float degrees) {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index c026597a3b6d902e4bb5966b693e3b91ecc4cd2b..f534924658186dfe91b132fc88439d797795fa29 100644
+index 470dc326761c08b719f14af16c2f9665a66eef7a..d035414b968f45ea60f81029872447cb282a4b92 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -1617,7 +1617,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -393,7 +393,7 @@ index 0478df726d785128d593643dc07e0a9e5674b064..fcda83fa78b508ee1d439459c2de4d0e
      @VisibleForTesting
      public Shoot() {
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 7fb3a6a48d4656181df9736f1e59062babb7fb5e..43032cda8dfbce0ab6c3c854ef1e4d8d411a77cc 100644
+index ac293df271629946eab1c91a8b410e742000c2fa..9b759ee8a94ebe6bc490204f9885d58f9c598a83 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -1112,7 +1112,7 @@ public abstract class Player extends LivingEntity {
@@ -423,7 +423,7 @@ index 7fb3a6a48d4656181df9736f1e59062babb7fb5e..43032cda8dfbce0ab6c3c854ef1e4d8d
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1725,7 +1725,7 @@ public abstract class Player extends LivingEntity {
+@@ -1741,7 +1741,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {
@@ -432,7 +432,7 @@ index 7fb3a6a48d4656181df9736f1e59062babb7fb5e..43032cda8dfbce0ab6c3c854ef1e4d8d
              }
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
-@@ -1943,7 +1943,7 @@ public abstract class Player extends LivingEntity {
+@@ -1959,7 +1959,7 @@ public abstract class Player extends LivingEntity {
              // Purpur start
              int toDrop;
              try {

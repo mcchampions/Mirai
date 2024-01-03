@@ -8,7 +8,7 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..af7bd822f09f65129130d96be4b440385977e7fb
+index 0000000000000000000000000000000000000000..ff0daf9e0a9cf575084d62fbd3b18694c7e30c67
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 @@ -0,0 +1,90 @@
@@ -19,21 +19,21 @@ index 0000000000000000000000000000000000000000..af7bd822f09f65129130d96be4b44038
 +/**
 + * A replacement for the sine angle lookup table used in {@link Mth}, both reducing the size of LUT and improving
 + * the access patterns for common paired sin/cos operations.
-+ *
++ * <p>
 + * sin(-x) = -sin(x)
 + * ... to eliminate negative angles from the LUT.
-+ *
++ * <p>
 + * sin(x) = sin(pi/2 - x)
 + * ... to eliminate supplementary angles from the LUT.
-+ *
++ * <p>
 + * Using these identities allows us to reduce the LUT from 64K entries (256 KB) to just 16K entries (64 KB), enabling
 + * it to better fit into the CPU's caches at the expense of some cycles on the fast path. The implementation has been
 + * tightly optimized to avoid branching where possible and to use very quick integer operations.
-+ *
++ * <p>
 + * Generally speaking, reducing the size of a lookup table is always a good optimization, but since we need to spend
 + * extra CPU cycles trying to maintain parity with vanilla, there is the potential risk that this implementation ends
 + * up being slower than vanilla when the lookup table is able to be kept in cache memory.
-+ *
++ * <p>
 + * Unlike other "fast math" implementations, the values returned by this class are *bit-for-bit identical* with those
 + * from {@link Mth}. Validation is performed during runtime to ensure that the table is correct.
 + *

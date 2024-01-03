@@ -86,10 +86,10 @@ index dbb0cb8babafb239921acc09899ab5664709e16e..c30ff024e52679a61f282a2e04b099ac
  
          // Paper start - fix secure profile with proxy online mode
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 98b59c6443a539c3bcb5699731a298aedea35f80..ce817be94cd83b02fc758a8b618d851f64574ce6 100644
+index 1faffbf21859692cdf93cc8f3418fc96d6bb9217..96d702bcacf3da177882b360e88b95e5b3c44a3e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2255,7 +2255,7 @@ public class ServerPlayer extends Player {
+@@ -2256,7 +2256,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -150,10 +150,10 @@ index da499e0b21eba40d24d95047e3a9220567d4bae7..4408157c5065b385d903839cb5b03778
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index f890a77b8e7f72bde1d19f5c361a6f712da5f021..aa8ac132a423bac175033e6ddf3cbcb5c7e6b27c 100644
+index 5229cbac1fa544727cbc11d773cf1f01fcb331d4..37294dab6d1e0bb8c0e891703044d90a8ee50d53 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1475,7 +1475,7 @@ public abstract class PlayerList {
+@@ -1481,7 +1481,7 @@ public abstract class PlayerList {
          // Paper end
          boolean flag = this.verifyChatTrusted(message);
  
@@ -162,7 +162,7 @@ index f890a77b8e7f72bde1d19f5c361a6f712da5f021..aa8ac132a423bac175033e6ddf3cbcb5
          OutgoingChatMessage outgoingchatmessage = OutgoingChatMessage.create(message);
          boolean flag1 = false;
  
-@@ -1504,6 +1504,7 @@ public abstract class PlayerList {
+@@ -1510,6 +1510,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public
