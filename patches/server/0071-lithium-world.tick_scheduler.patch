@@ -207,10 +207,10 @@ index 0000000000000000000000000000000000000000..ade371aa8f441d15fa5eec204e23f128
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java b/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
-index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..b737a874152ce434e6628e2b0ee64616de513de7 100644
+index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..0e2a112e01f15c4804756e2790799456457d9e33 100644
 --- a/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
 +++ b/src/main/java/net/minecraft/world/ticks/LevelChunkTicks.java
-@@ -16,14 +16,37 @@ import javax.annotation.Nullable;
+@@ -16,14 +16,34 @@ import javax.annotation.Nullable;
  import net.minecraft.core.BlockPos;
  import net.minecraft.nbt.ListTag;
  import net.minecraft.world.level.ChunkPos;
@@ -220,9 +220,6 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..b737a874152ce434e6628e2b0ee64616
 +import it.unimi.dsi.fastutil.objects.ObjectIterator;
 +import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 +import me.jellysquid.mods.lithium.common.world.scheduler.OrderedTickQueue;
-+import net.minecraft.world.ticks.SavedTick;
-+import net.minecraft.world.ticks.ScheduledTick;
-+import net.minecraft.world.ticks.TickPriority;
 +import java.util.Collection;
 +// Mirai end
  
@@ -250,12 +247,12 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..b737a874152ce434e6628e2b0ee64616
  
      // Paper start - add dirty flag
      private boolean dirty;
-@@ -48,36 +71,133 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
+@@ -48,36 +68,133 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
              this.ticksPerPosition.add(ScheduledTick.probe(savedTick.type(), savedTick.pos()));
          }
  
 +        // Mirai start - lithium: world.tick_scheduler
-+        //Remove replaced collections
++        // Remove replaced collections
 +        if (this.pendingTicks != null) {
 +            for (SavedTick<?> orderedTick : this.pendingTicks) {
 +                this.allpendingTicks.add(tickToInt(orderedTick.pos(), orderedTick.type()));
@@ -394,7 +391,7 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..b737a874152ce434e6628e2b0ee64616
  
      private void scheduleUnchecked(ScheduledTick<T> orderedTick) {
          this.tickQueue.add(orderedTick);
-@@ -87,50 +207,83 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
+@@ -87,50 +204,83 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
  
      }
  
@@ -498,7 +495,7 @@ index ac807277a6b26d140ea9873d17c7aa4fb5fe37b2..b737a874152ce434e6628e2b0ee64616
      public void unpack(long time) {
          if (this.pendingTicks != null) {
              // Paper start - add dirty system to level chunk ticks
-@@ -139,14 +292,13 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
+@@ -139,14 +289,13 @@ public class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickCon
              }
              // Paper end - add dirty system to level chunk ticks
              int i = -this.pendingTicks.size();

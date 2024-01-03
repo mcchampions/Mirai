@@ -174,10 +174,10 @@ index 33d9131e9c75ef23cd637f5d6c39a2704a0c92a5..0a43a51f91a1d6e4d6a629fa32c9d1a5
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 12afa779654cb33d4496131694f1ceeb805b1c87..29b966ddc41f91b044b6c5d28627b98874450633 100644
+index 81c228fa49c9606fddf0f70d87a5506dbc0984c2..cdbae05fc71ce3aee99e945c005d68da32687b40 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1431,7 +1431,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1437,7 +1437,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -200,7 +200,7 @@ index 4073484fefbf1ec6072013f6903f9237eb3ebfbc..fb4c4d25c8e070f72479c646df1f9a16
      // Paper end
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 055cc564d69fd4ff4717d137f260f4000d692760..5840771994b634bb86980f7eabf2b5720947c977 100644
+index ba1195eba24fb4a75a54d54be9430e878b4ca2b6..37870bb4e8eb4165b101bbc4e5bf5933fc37b5a5 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -1740,29 +1740,29 @@ public class ServerPlayer extends Player {
@@ -286,7 +286,7 @@ index 52151082b031f250b13bfaa35417e1d934a54f60..9ab3ca431858331c80e6d38c2e8584a3
  
      public int fromDegrees(float degrees) {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 729008cd749b972eea3ff4feb10d5cb3e7f73d58..7a1c4ec89a8e2c961b6a239af343cee31d01b039 100644
+index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf29c60aab 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -1581,7 +1581,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -407,7 +407,7 @@ index 0478df726d785128d593643dc07e0a9e5674b064..fcda83fa78b508ee1d439459c2de4d0e
      @VisibleForTesting
      public Shoot() {
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index f9f3d36bd95e759b450cf46a0e80637e201d9be1..385468aa7ffd88c6f6f807efa16f1067752ec673 100644
+index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430e07aaaf6 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -1073,7 +1073,7 @@ public abstract class Player extends LivingEntity {

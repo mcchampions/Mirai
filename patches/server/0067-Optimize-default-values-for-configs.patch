@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize default values for configs
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index 6755008dc43bf96c1507ce2ae6a066a1b75df760..d8e4ac55c6f72e9f92b683d18b5538088996378d 100644
+index 1ca25529245ed369b8705075a8c2e32fa4d9b1d1..14e98404514971162ac93e13415b0011c6800a01 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -218,8 +218,8 @@ public class PufferfishConfig {
+@@ -226,8 +226,8 @@ public class PufferfishConfig {
      public static int maxProjectileLoadsPerTick;
      public static int maxProjectileLoadsPerProjectile;
      private static void projectileLoading() {
@@ -19,7 +19,7 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..d8e4ac55c6f72e9f92b683d18b553808
  
          setComment("projectile", "Optimizes projectile settings");
      }
-@@ -233,14 +233,14 @@ public class PufferfishConfig {
+@@ -241,14 +241,14 @@ public class PufferfishConfig {
  
      private static void dynamicActivationOfBrains() throws IOException {
          dearEnabled = getBoolean("dab.enabled", "activation-range.enabled", true);
@@ -36,7 +36,7 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..d8e4ac55c6f72e9f92b683d18b553808
                  "This value defines how much distance modifies an entity's",
                  "tick frequency. freq = (distanceToPlayer^2) / (2^value)",
                  "If you want further away entities to tick less often, use 7.",
-@@ -260,8 +260,14 @@ public class PufferfishConfig {
+@@ -268,8 +268,14 @@ public class PufferfishConfig {
  	public static Map<String, Integer> projectileTimeouts;
  	private static void projectileTimeouts() {
  		// Set some defaults
@@ -53,7 +53,7 @@ index 6755008dc43bf96c1507ce2ae6a066a1b75df760..d8e4ac55c6f72e9f92b683d18b553808
  		setComment("entity_timeouts",
  				"These values define a entity's maximum lifespan. If an",
  				"entity is in this list and it has survived for longer than",
-@@ -319,7 +325,7 @@ public class PufferfishConfig {
+@@ -327,7 +333,7 @@ public class PufferfishConfig {
  	public static boolean disableOutOfOrderChat;
      private static void miscSettings() {
  		disableMethodProfiler = getBoolean("misc.disable-method-profiler", true);

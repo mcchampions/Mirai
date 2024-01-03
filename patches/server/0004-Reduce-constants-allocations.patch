@@ -301,7 +301,7 @@ index d46e61640b241d32df05240dedd2c23f138725e6..ee1249a84513a22c4b50a68a6d7a780c
  
              for (int j = 0; j < i; ++j) {
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 66cbea2fd146bdabf1241dae72bd76dc256afe45..6fa4aa536b6ff8caff2bafbe7852ab3d537b107e 100644
+index 4a802588f58bdea30b58521cbc4f0d76743f732e..c09dac76fb75b686c74876992d4fcc29547f85db 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -1076,7 +1076,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
@@ -352,7 +352,7 @@ index 20cd751a602593740e87eb79d5059b5fc7856cb5..4d94ac32da3a219f4b0569159e613d45
              }
          }
 diff --git a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-index 89b3184be952fd0803520dd0f717f3acfc3cb496..dbf8d05b61475a883b8eae6f6f820f0e1015861c 100644
+index 8ce2fd887d9c2cf86fa4ec0332b70681f1572911..f080d06774bf5ba56b04e95a15a2984d27e26e44 100644
 --- a/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 @@ -138,8 +138,8 @@ public class ServerLoginPacketListenerImpl implements ServerLoginPacketListener,
@@ -385,7 +385,7 @@ index 89b3184be952fd0803520dd0f717f3acfc3cb496..dbf8d05b61475a883b8eae6f6f820f0e
          ServerConfigurationPacketListenerImpl serverconfigurationpacketlistenerimpl = new ServerConfigurationPacketListenerImpl(this.server, this.connection, commonlistenercookie, this.player); // CraftBukkit
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a35638a92479b90afa89cf201fc45b49c9e767f3..78b9b690894bc77ec484f8161c3fe92db74dc5e1 100644
+index e98a455b6bca9d094d0da323bddd7b3f2c07bb23..cce5d17e6f00504d801e2dc64da20c1e3fbd129a 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -714,7 +714,7 @@ public abstract class PlayerList {
@@ -448,7 +448,7 @@ index 2e324276ea4cd9e528c6a3f9a9ba394b378fe075..8c3648d1fd8aaed641a1a8ead94a9fc5
      private EquipmentSlot(EquipmentSlot.Type type, int entityId, int armorStandId, String name) {
          this.type = type;
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index e24e20a63b74e82afb7f911d286b9bdf72d87afb..e2e33861436e28c55ad5cc2d72bd4c77aac07248 100644
+index 0a9a77564d624d66e76637eef509e2f321333dc6..cbd8687ec7579676f2bc7bc2760c6d31c9161727 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -3145,7 +3145,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
@@ -580,10 +580,10 @@ index 2f9f15d99f8b31e9f13f7f32378b2a9e09bcb5e5..b9579e3d1610ddcb5251baa2dd9462e0
  
      @Override
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 527ece810f0bd16ba7d94c4576764902a044f216..306fddeb1d31c7581a498ee83492721c802b5c27 100644
+index 2e14e03d01c97b9da97e8e15c663262d22b1b3fc..c9a4e862a7e63e02cc42d781b4c32d1079e6036b 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -1846,7 +1846,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1840,7 +1840,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public org.bukkit.entity.Entity[] getChunkEntities(int chunkX, int chunkZ) {
          io.papermc.paper.world.ChunkEntitySlices slices = ((ServerLevel)this).getEntityLookup().getChunk(chunkX, chunkZ);
          if (slices == null) {

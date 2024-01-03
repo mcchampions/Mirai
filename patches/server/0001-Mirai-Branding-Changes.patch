@@ -226,10 +226,10 @@ index c5d5648f4ca603ef2b1df723b58f9caf4dd3c722..d0a342ce8a5cc1a12ecab7969187166f
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fad8316b15
+index 0000000000000000000000000000000000000000..da69d188a2602818c3a635f4d224bdae5fe12e92
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
-@@ -0,0 +1,141 @@
+@@ -0,0 +1,144 @@
 +package dev.etil.mirai;
 +
 +import static net.kyori.adventure.text.Component.text;
@@ -240,6 +240,7 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +import com.destroystokyo.paper.util.VersionFetcher;
 +import com.google.gson.Gson;
 +import com.google.gson.JsonObject;
++
 +import java.io.IOException;
 +import java.net.URI;
 +import java.net.http.HttpClient;
@@ -249,6 +250,7 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +import java.util.concurrent.TimeUnit;
 +import java.util.logging.Level;
 +import java.util.logging.Logger;
++
 +import net.kyori.adventure.text.Component;
 +import net.kyori.adventure.text.JoinConfiguration;
 +import net.kyori.adventure.text.format.NamedTextColor;
@@ -266,10 +268,10 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +    private static final String GITHUB_FORMAT = "https://api.github.com/repos/Dreeam-qwq/Mirai/compare/ver/1.20.4...%s";
 +
 +    private static final HttpResponse.BodyHandler<JsonObject> JSON_OBJECT_BODY_HANDLER = responseInfo -> HttpResponse.BodySubscribers
-+            .mapping(
-+                    HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
-+                    string -> new Gson().fromJson(string, JsonObject.class)
-+            );
++        .mapping(
++            HttpResponse.BodySubscribers.ofString(StandardCharsets.UTF_8),
++            string -> new Gson().fromJson(string, JsonObject.class)
++        );
 +
 +    @Override
 +    public long getCacheTime() {
@@ -298,7 +300,7 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +
 +        final @Nullable Component history = this.getHistory();
 +        return history != null ? Component
-+                .join(JoinConfiguration.noSeparators(), component, Component.newline(), this.getHistory()) : component;
++            .join(JoinConfiguration.noSeparators(), component, Component.newline(), this.getHistory()) : component;
 +    }
 +
 +    // Mirai start - Remove Jenkins fetcher
@@ -351,8 +353,9 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +        return switch (Math.max(-1, Math.min(1, versionDiff))) {
 +            case -1 -> text("You are running an unsupported version of Mirai.", RED);
 +            case 0 -> text("You are on the latest version!", GREEN);
-+            default -> text("You are running " + versionDiff + " version" + (versionDiff == 1 ? "" : "s") + " beyond. " +
-+                            "Please update your server when possible to maintain stability, security, and receive the latest optimizations.",
++            default ->
++                text("You are running " + versionDiff + " version" + (versionDiff == 1 ? "" : "s") + " beyond. " +
++                        "Please update your server when possible to maintain stability, security, and receive the latest optimizations.",
 +                    RED);
 +        };
 +    }
@@ -372,7 +375,7 @@ index 0000000000000000000000000000000000000000..a7aca717c58c6e1fad936455238fa1fa
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..bac48b3a6cf1d62777e233ff26091a968953ceaa 100644
+index 32f2c4bc66c4c891cf854d96b901b0f3046b34e9..ab002008598e3003184c8c442a84838c8bd191f3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -956,7 +956,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -384,7 +387,7 @@ index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..bac48b3a6cf1d62777e233ff26091a96
              while (this.getRunningThread().isAlive()) {
                  this.getRunningThread().stop();
                  try {
-@@ -1868,7 +1868,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1874,7 +1874,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @DontObfuscate
      public String getServerModName() {
@@ -394,7 +397,7 @@ index 53d0a930ae5ec34c1f3a58e96e92f54dd9c7881c..bac48b3a6cf1d62777e233ff26091a96
  
      public SystemReport fillSystemReport(SystemReport details) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6550d4ea03b5b56159b19e297f03b0b141c59c62..c5f30afd31351deea621233eba20b10753820d5e 100644
+index 36c68a6e2bc49b5192fb4d27f174b520e59430c6..9db0b44316a2e86c4803bc38a99938b5938afaba 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -264,7 +264,7 @@ import javax.annotation.Nullable; // Paper

@@ -7,7 +7,7 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/util/thread/BlockableEventLoop.java b/src/main/java/net/minecraft/util/thread/BlockableEventLoop.java
-index 9b71f38bf10b63c0a4304a053540c9c00099bf47..5ae3841c570d663a4ddc35914c25ecb32d7e5ea3 100644
+index 9b71f38bf10b63c0a4304a053540c9c00099bf47..78eefe5d51f94b3fdcc42ccdab97bf2035a68afd 100644
 --- a/src/main/java/net/minecraft/util/thread/BlockableEventLoop.java
 +++ b/src/main/java/net/minecraft/util/thread/BlockableEventLoop.java
 @@ -1,13 +1,13 @@
@@ -38,7 +38,7 @@ index 9b71f38bf10b63c0a4304a053540c9c00099bf47..5ae3841c570d663a4ddc35914c25ecb3
      private final String name;
      private static final Logger LOGGER = LogUtils.getLogger();
 -    private final Queue<R> pendingRunnables = Queues.newConcurrentLinkedQueue();
-+    private final LinkedBlockingDeque<R> pendingRunnables = new LinkedBlockingDeque(); // JettPack
++    private final LinkedBlockingDeque<R> pendingRunnables = new LinkedBlockingDeque<>(); // JettPack
      private int blockingCount;
 +    private R next = null; // JettPack
  

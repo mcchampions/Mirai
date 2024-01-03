@@ -39,10 +39,10 @@ index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..54d8fe961f5a28b8230e726f86ebf191
          new TimingsExport(listeners, parent, history).start();
 diff --git a/src/main/java/dev/etil/mirai/MiraiCommand.java b/src/main/java/dev/etil/mirai/MiraiCommand.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2705506cb39aebf1d66e5d1dfd1b5128176600c6
+index 0000000000000000000000000000000000000000..a210170ec7bdbdaf77ea8cf50b988216a9fb0739
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiCommand.java
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,77 @@
 +package dev.etil.mirai;
 +
 +import java.io.IOException;
@@ -50,6 +50,7 @@ index 0000000000000000000000000000000000000000..2705506cb39aebf1d66e5d1dfd1b5128
 +import java.util.List;
 +import java.util.stream.Collectors;
 +import java.util.stream.Stream;
++
 +import net.minecraft.server.MinecraftServer;
 +import org.bukkit.Bukkit;
 +import org.bukkit.Location;

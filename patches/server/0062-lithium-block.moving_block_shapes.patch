@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
-index 1ef87580574919796dbba707f44a413ee5c5781b..25452b470e24042c97b98de15551025fbdc782a0 100644
+index 1ef87580574919796dbba707f44a413ee5c5781b..d4cb2d19e5baf71b4c52e5818476ea2d6aeee5a3 100644
 --- a/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 @@ -56,6 +56,75 @@ public class PistonMovingBlockEntity extends BlockEntity {
@@ -31,7 +31,7 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..25452b470e24042c97b98de15551025f
 +    private static VoxelShape getOffsetAndSimplified(VoxelShape blockShape, float offset, Direction direction) {
 +        VoxelShape offsetSimplifiedShape = blockShape.getOffsetSimplifiedShape(offset, direction);
 +        if (offsetSimplifiedShape == null) {
-+            //create the offset shape and store it for later use
++            // create the offset shape and store it for later use
 +            offsetSimplifiedShape = blockShape.move(direction.getStepX() * offset, direction.getStepY() * offset, direction.getStepZ() * offset).optimize();
 +            blockShape.setShape(offset, direction, offsetSimplifiedShape);
 +        }
@@ -53,11 +53,11 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..25452b470e24042c97b98de15551025f
 +            VoxelShape baseShape = Blocks.PISTON.defaultBlockState().setValue(PistonBaseBlock.EXTENDED, true)
 +                .setValue(PistonBaseBlock.FACING, facing).getCollisionShape(null, null);
 +            for (float offset : offsets) {
-+                //this cache is only required for the merged piston head + base shape.
-+                //this shape is only used when !this.extending
-+                //here: isShort = this.extending != 1.0F - this.progress < 0.25F can be simplified to:
-+                //isShort = f < 0.25F , because f = getAmountExtended(this.progress) can be simplified to f == 1.0F - this.progress
-+                //therefore isShort is dependent on the offset:
++                // this cache is only required for the merged piston head + base shape.
++                // this shape is only used when !this.extending
++                // here: isShort = this.extending != 1.0F - this.progress < 0.25F can be simplified to:
++                // isShort = f < 0.25F , because f = getAmountExtended(this.progress) can be simplified to f == 1.0F - this.progress
++                // therefore isShort is dependent on the offset:
 +                boolean isShort = offset < 0.25f;
 +
 +                VoxelShape headShape = (Blocks.PISTON_HEAD.defaultBlockState().setValue(PistonHeadBlock.FACING, facing))
@@ -78,7 +78,7 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..25452b470e24042c97b98de15551025f
 +        if (offset != 0f && offset != 0.5f && offset != 1f) {
 +            return -1;
 +        }
-+        //shape of offset 0 is still dependent on the direction, due to piston head and base being directional blocks
++        // shape of offset 0 is still dependent on the direction, due to piston head and base being directional blocks
 +        return (int) (2 * offset) + (3 * direction.get3DDataValue());
 +    }
 +    // JettPack end
@@ -92,14 +92,14 @@ index 1ef87580574919796dbba707f44a413ee5c5781b..25452b470e24042c97b98de15551025f
              float f = this.getExtendedProgress(this.progress);
 +            // JettPack start - lithium: block.moving_block_shapes
 +            if (this.extending || !this.isSourcePiston || !(this.movedState.getBlock() instanceof PistonBaseBlock)) {
-+                //here voxelShape2.isEmpty() is guaranteed, vanilla code would call union() which calls simplify()
++                // here voxelShape2.isEmpty() is guaranteed, vanilla code would call union() which calls simplify()
 +                VoxelShape blockShape = blockState.getCollisionShape(world, pos);
 +
-+                //we cache the simplified shapes, as the simplify() method costs a lot of CPU time and allocates several objects
++                // we cache the simplified shapes, as the simplify() method costs a lot of CPU time and allocates several objects
 +                return getOffsetAndSimplified(blockShape, Math.abs(f), f < 0f ? this.direction.getOpposite() : this.direction);
 +            } else {
-+                //retracting piston heads have to act like their base as well, as the base block is replaced with the moving block
-+                //f >= 0f is guaranteed (assuming no other mod interferes)
++                // retracting piston heads have to act like their base as well, as the base block is replaced with the moving block
++                // f >= 0f is guaranteed (assuming no other mod interferes)
 +                int index = getIndexForMergedShape(f, this.direction);
 +                return PISTON_BASE_WITH_MOVING_HEAD_SHAPES[index];
 +            }

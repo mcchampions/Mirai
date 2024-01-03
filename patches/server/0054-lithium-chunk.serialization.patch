@@ -311,10 +311,10 @@ index acae3eb30e0689048937f479dc3070f0688abdad..9c2b79655f2c63a208c7087d5d897db0
      int onResize(int newBits, T object);
  }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
-index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e03e4aecc5 100644
+index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..4e198ece99983ae1ba3c5b392bba4dc0d2ba88ff 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/PalettedContainer.java
-@@ -23,8 +23,23 @@ import net.minecraft.util.Mth;
+@@ -23,8 +23,26 @@ import net.minecraft.util.Mth;
  import net.minecraft.util.SimpleBitStorage;
  import net.minecraft.util.ThreadingDetector;
  import net.minecraft.util.ZeroBitStorage;
@@ -324,9 +324,11 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
 +    // JettPack start - lithium: chunk.serialization
 +    private static final ThreadLocal<short[]> CACHED_ARRAY_4096 = ThreadLocal.withInitial(() -> new short[4096]);
 +    private static final ThreadLocal<short[]> CACHED_ARRAY_64 = ThreadLocal.withInitial(() -> new short[64]);
++
 +    private Optional<LongStream> asOptional(long[] data) {
 +        return Optional.of(Arrays.stream(data));
 +    }
++
 +    private short[] getOrCreate(int size) {
 +        return switch (size) {
 +            case 64 -> CACHED_ARRAY_64.get();
@@ -334,11 +336,12 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
 +            default -> new short[size];
 +        };
 +    }
++
 +    // JettPack end
      private static final int MIN_PALETTE_BITS = 0;
      private final PaletteResize<T> dummyPaletteResize = (newSize, added) -> {
          return 0;
-@@ -302,30 +317,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -302,30 +320,54 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
      public synchronized PalettedContainerRO.PackedData<T> pack(IdMap<T> idList, PalettedContainer.Strategy paletteProvider) { // Paper - synchronize
          this.acquire();
  
@@ -410,7 +413,7 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
      }
  
      private static <T> void swapPalette(int[] is, IntUnaryOperator applier) {
-@@ -365,17 +404,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -365,17 +407,33 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(PalettedContainer.CountConsumer<T> counter) {
@@ -434,12 +437,8 @@ index 16fbc633de3a1d9e5e8c65ae107397a6f0e50811..1da53ba1114515d3526a69a395cfc8e0
 +                counter.accept(this.data.palette.valueFor(0), this.data.storage.getSize());
 +            } else {
 +                Int2IntOpenHashMap int2IntOpenHashMap = new Int2IntOpenHashMap();
-+                this.data.storage.getAll((key) -> {
-+                    int2IntOpenHashMap.addTo(key, 1);
-+                });
-+                int2IntOpenHashMap.int2IntEntrySet().forEach((entry) -> {
-+                    counter.accept(this.data.palette.valueFor(entry.getIntKey()), entry.getIntValue());
-+                });
++                this.data.storage.getAll((key) -> int2IntOpenHashMap.addTo(key, 1));
++                int2IntOpenHashMap.int2IntEntrySet().forEach((entry) -> counter.accept(this.data.palette.valueFor(entry.getIntKey()), entry.getIntValue()));
 +            }
 +        }
 +

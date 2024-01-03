@@ -8,7 +8,7 @@ You can find the original code on https://github.com/CaffeineMC/lithium-fabric (
 
 diff --git a/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528b9647916
+index 0000000000000000000000000000000000000000..ff0daf9e0a9cf575084d62fbd3b18694c7e30c67
 --- /dev/null
 +++ b/src/main/java/me/jellysquid/mods/lithium/common/util/math/CompactSineLUT.java
 @@ -0,0 +1,90 @@
@@ -19,26 +19,26 @@ index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528
 +/**
 + * A replacement for the sine angle lookup table used in {@link Mth}, both reducing the size of LUT and improving
 + * the access patterns for common paired sin/cos operations.
-+ *
-+ *  sin(-x) = -sin(x)
-+ *    ... to eliminate negative angles from the LUT.
-+ *
-+ *  sin(x) = sin(pi/2 - x)
-+ *    ... to eliminate supplementary angles from the LUT.
-+ *
++ * <p>
++ * sin(-x) = -sin(x)
++ * ... to eliminate negative angles from the LUT.
++ * <p>
++ * sin(x) = sin(pi/2 - x)
++ * ... to eliminate supplementary angles from the LUT.
++ * <p>
 + * Using these identities allows us to reduce the LUT from 64K entries (256 KB) to just 16K entries (64 KB), enabling
 + * it to better fit into the CPU's caches at the expense of some cycles on the fast path. The implementation has been
 + * tightly optimized to avoid branching where possible and to use very quick integer operations.
-+ *
++ * <p>
 + * Generally speaking, reducing the size of a lookup table is always a good optimization, but since we need to spend
 + * extra CPU cycles trying to maintain parity with vanilla, there is the potential risk that this implementation ends
 + * up being slower than vanilla when the lookup table is able to be kept in cache memory.
-+ *
++ * <p>
 + * Unlike other "fast math" implementations, the values returned by this class are *bit-for-bit identical* with those
 + * from {@link Mth}. Validation is performed during runtime to ensure that the table is correct.
 + *
 + * @author coderbot16   Author of the original (and very clever) implementation in Rust:
-+ *  https://gitlab.com/coderbot16/i73/-/tree/master/i73-trig/src
++ * https://gitlab.com/coderbot16/i73/-/tree/master/i73-trig/src
 + * @author jellysquid3  Additional optimizations, port to Java
 + */
 +public class CompactSineLUT {
@@ -102,7 +102,6 @@ index 0000000000000000000000000000000000000000..b8c9cb28876c2c1781cd72870076d528
 +        return Float.intBitsToFloat(SINE_TABLE_INT[pos] ^ neg);
 +    }
 +}
-\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/util/Mth.java b/src/main/java/net/minecraft/util/Mth.java
 index 03854a2d26a3cfc1817acfdc28cbf151ba59e05b..a1af7b18db174bdc114f57bcf68f19ee23211205 100644
 --- a/src/main/java/net/minecraft/util/Mth.java
