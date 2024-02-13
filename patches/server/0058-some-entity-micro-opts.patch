@@ -7,10 +7,10 @@ Original code by Titaniumtown, licensed under GPL v3
 You can find the original code on https://gitlab.com/Titaniumtown/JettPack
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b64e40b2c23f0ca94cf356a369a654452fe5375c..11c0f0a4d80950616fd519a023533297721868e8 100644
+index a0f102537ca5c7d88fd96e622431234cbf52dd44..75f31732066edf0887ea8a27c8d5fbecaa37db23 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2031,12 +2031,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -2034,12 +2034,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
          }
      }
  
@@ -30,10 +30,11 @@ index b64e40b2c23f0ca94cf356a369a654452fe5375c..11c0f0a4d80950616fd519a023533297
      public void absMoveTo(double x, double y, double z, float yaw, float pitch) {
          this.absMoveTo(x, y, z);
          this.setYRot(yaw % 360.0F);
-@@ -4706,6 +4712,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4704,6 +4710,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+         LOGGER.error("New entity position is invalid! Tried to set invalid position ({},{},{}) for entity {} located at {}, entity info: {}", newX, newY, newZ, entity.getClass().getName(), entity.position, entityInfo, new Throwable());
+         return false;
      }
-     // Paper end - block invalid positions
- 
++
 +    // JettPack start
 +    public final int getPositionHashCode() {
 +        return this.position.hashCode();
@@ -41,13 +42,13 @@ index b64e40b2c23f0ca94cf356a369a654452fe5375c..11c0f0a4d80950616fd519a023533297
 +    // JettPack end
 +
      public final void setPosRaw(double x, double y, double z) {
-         // Paper start
          this.setPosRaw(x, y, z, false);
+     }
 diff --git a/src/main/java/net/minecraft/world/entity/Mob.java b/src/main/java/net/minecraft/world/entity/Mob.java
-index a5b2c7a76893b41f8e133308ac2a9915e3ebb95f..f89226af65baa849b5e4abaea24f2d53d2593dd7 100644
+index 423128622d9ab233096b2b0f297b642f6d658869..d404d8d47ca9575a53ce03eb50b9a87eabc33355 100644
 --- a/src/main/java/net/minecraft/world/entity/Mob.java
 +++ b/src/main/java/net/minecraft/world/entity/Mob.java
-@@ -1716,15 +1716,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
+@@ -1720,15 +1720,31 @@ public abstract class Mob extends LivingEntity implements Targeting {
  
      }
  

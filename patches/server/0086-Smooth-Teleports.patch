@@ -7,22 +7,22 @@ Original code by Cryptite, licensed under MIT
 You can find the original code on https://github.com/Cryptite/Slice
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 1887bd071d0c56b3fefa6f84d1083f3e6c5be6dc..d6fff47e89e09312f77b2d0ecd599d0471d44b70 100644
+index 60073e8e74cb44a76a952bfe10b6ac24e24cf152..0c5e18d314733920a1b7b4a56d29293a69b1d7c5 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -281,6 +281,7 @@ public class ServerPlayer extends Player {
-     public com.destroystokyo.paper.event.entity.PlayerNaturallySpawnCreaturesEvent playerNaturallySpawnedEvent; // Paper
-     public @Nullable String clientBrandName = null; // Paper - Brand name
-     public org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - there are a lot of changes to do if we change all methods leading to the event
+     public com.destroystokyo.paper.event.entity.PlayerNaturallySpawnCreaturesEvent playerNaturallySpawnedEvent; // Paper - PlayerNaturallySpawnCreaturesEvent
+     public @Nullable String clientBrandName = null; // Paper - Brand support
+     public org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - Add API for quit reason; there are a lot of changes to do if we change all methods leading to the event
 +    public boolean smoothWorldTeleport; // Slice
  
      // Paper start - replace player chunk loader
      private final java.util.concurrent.atomic.AtomicReference<io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances> viewDistances = new java.util.concurrent.atomic.AtomicReference<>(new io.papermc.paper.chunk.system.RegionizedPlayerChunkLoader.ViewDistances(-1, -1, -1));
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 4abe85d651a83b6a52d1f48dff828e9ce7806494..e0279028808dd4c2a16d10949fd7fffbb226fba8 100644
+index a002aa85eadd0bcd004fe8f47e7e68c82d8652a8..814d0aa44f25d5e2256b991347daee1239fce6ac 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -957,10 +957,10 @@ public abstract class PlayerList {
+@@ -956,10 +956,10 @@ public abstract class PlayerList {
          ServerLevel worldserver2 = entityplayer1.serverLevel();
          LevelData worlddata = worldserver2.getLevelData();
  
@@ -36,10 +36,10 @@ index 4abe85d651a83b6a52d1f48dff828e9ce7806494..e0279028808dd4c2a16d10949fd7fffb
          entityplayer1.connection.send(new ClientboundChangeDifficultyPacket(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
          entityplayer1.connection.send(new ClientboundSetExperiencePacket(entityplayer1.experienceProgress, entityplayer1.totalExperience, entityplayer1.experienceLevel));
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index fa5024752652b6daf53dbb9e23a9e86fea203fe2..071964dc6726627f656c2ad475be14a967197708 100644
+index 39b25c2478eadd373383a3445a7f27ea30d18550..fed596e3a93920a10737557fc84384d53abf2b43 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1267,6 +1267,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1225,6 +1225,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          // Paper end
      }
  

@@ -8,10 +8,10 @@ Original code by Akarin-project, licensed under GPL v3
 You can find the original code on https://github.com/Akarin-project/Akarin
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a1ee195598fe526bf45ab6f4b2315105de579bfe..e91df5d932539bdfdccd7c01164bafbd6e9670b6 100644
+index 94b0eb9f2ec9f23fc6e5667d38809eec13add9d4..2fa030f9523361f2740c85799cc5689542d8d8c2 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -2148,8 +2148,9 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -2151,8 +2151,9 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      public void playerTouch(Player player) {}
  
      public void push(Entity entity) {
@@ -19,6 +19,6 @@ index a1ee195598fe526bf45ab6f4b2315105de579bfe..e91df5d932539bdfdccd7c01164bafbd
          if (!this.isPassengerOfSameVehicle(entity)) {
 -            if (!entity.noPhysics && !this.noPhysics) {
 +            if (true || !entity.noPhysics && !this.noPhysics) { // Akarin - Moved up
-                 if (this.level.paperConfig().collisions.onlyPlayersCollide && !(entity instanceof ServerPlayer || this instanceof ServerPlayer)) return; // Paper
+                 if (this.level.paperConfig().collisions.onlyPlayersCollide && !(entity instanceof ServerPlayer || this instanceof ServerPlayer)) return; // Paper - Collision option for requiring a player participant
                  double d0 = entity.getX() - this.getX();
                  double d1 = entity.getZ() - this.getZ();

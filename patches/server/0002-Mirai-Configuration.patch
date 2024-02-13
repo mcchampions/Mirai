@@ -5,10 +5,10 @@ Subject: [PATCH] Mirai Configuration
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 138f62b87e6af88131bd4412f94502435956fdce..ab3610ef65407aa6737217b9a2ab19fede24306f 100644
+index 38cdcb0e37a0565f75d84f91cc07717bb5125a5f..2bcca6b493734a4a5f1a265c830c4e2868500528 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -56,10 +56,12 @@ dependencies {
+@@ -55,10 +55,12 @@ dependencies {
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.9.18")
  
      // Pufferfish start
@@ -24,10 +24,10 @@ index 138f62b87e6af88131bd4412f94502435956fdce..ab3610ef65407aa6737217b9a2ab19fe
      implementation("com.github.technove:Flare:34637f3f87") // Pufferfish - flare
  
 diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
-index ff940e43ca35094bbcae6c7d471d3c4aeb7c1727..54d8fe961f5a28b8230e726f86ebf1910e4c94bf 100644
+index b35a9f4c5f8960864c402ede8a51fb5ab9c4fcc0..df3eba4d79bc4f5422b07865ddef51a9c83a0bcc 100644
 --- a/src/main/java/co/aikar/timings/TimingsExport.java
 +++ b/src/main/java/co/aikar/timings/TimingsExport.java
-@@ -243,7 +243,8 @@ public class TimingsExport extends Thread {
+@@ -241,7 +241,8 @@ public class TimingsExport extends Thread {
              pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
              pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
              pair("paper", mapAsJSON(Bukkit.spigot().getPaperConfig(), null)), // Pufferfish
@@ -261,11 +261,11 @@ index 0000000000000000000000000000000000000000..d4e242b74f77e29099421450ced16481
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 3b8c810a228a59bf02a8557b229e5eca56c16562..87d4b40657b71087ffe92148619b636c6b3d4584 100644
+index c5f92c80d7ca1e1c7f5b9304a5a1173ebfd9c269..21d462f40fd12a98b8aa5fda8c8167e268c7ff47 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,6 +223,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
-         // Paper end
+         io.papermc.paper.brigadier.PaperBrigadierProviderImpl.INSTANCE.getClass(); // Paper - init PaperBrigadierProvider
          gg.pufferfish.pufferfish.PufferfishConfig.load(); // Pufferfish
          gg.pufferfish.pufferfish.PufferfishCommand.init(); // Pufferfish
 +        dev.etil.mirai.MiraiConfig.load(); // Mirai

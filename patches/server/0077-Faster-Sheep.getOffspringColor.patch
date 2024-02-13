@@ -7,10 +7,10 @@ Original code by fxmorin, licensed under MIT
 You can find the original code on https://github.com/fxmorin/carpet-fixes (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/Sheep.java b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-index 55afa58f3df53ce548c7484d8fff62c903f9dc07..62fd72e117556fd9eda9c84bff4d09e010db5cff 100644
+index 1d80678f7e8f658e43616f0baf723f096a99122a..b5318186a2847a2775c85e2bb9634faa1bd61860 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/Sheep.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/Sheep.java
-@@ -394,21 +394,56 @@ public class Sheep extends Animal implements Shearable {
+@@ -418,21 +418,56 @@ public class Sheep extends Animal implements Shearable {
          return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
      }
  

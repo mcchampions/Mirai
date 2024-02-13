@@ -74,7 +74,7 @@ index c40979e2fa37acb2f3df493395f3ab6e185345d7..86c9ea10530a309c2fe9c748378facf7
  
      public static record Favicon(byte[] iconBytes) {
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 87d4b40657b71087ffe92148619b636c6b3d4584..9ecb819ba67c53457fcf8de87c11c9a7adbcd226 100644
+index 21d462f40fd12a98b8aa5fda8c8167e268c7ff47..5224fc16176dbb00623a3b1d78d5186f4b208928 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -641,6 +641,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -84,12 +84,12 @@ index 87d4b40657b71087ffe92148619b636c6b3d4584..9ecb819ba67c53457fcf8de87c11c9a7
 +        if (dev.etil.mirai.MiraiConfig.chatMessageSignatures) return false; // Mirai - configurable chat message signatures
          DedicatedServerProperties dedicatedserverproperties = this.getProperties();
  
-         // Paper start - fix secure profile with proxy online mode
+         // Paper start - Add setting for proxy online mode status
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 37870bb4e8eb4165b101bbc4e5bf5933fc37b5a5..3e3581d78e42d071487a6a490cc3ac691abe33b3 100644
+index 78cc3d9a1dc2aa4b1c4ebabbe20a806fdddd64d5..60073e8e74cb44a76a952bfe10b6ac24e24cf152 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2192,7 +2192,7 @@ public class ServerPlayer extends Player {
+@@ -2193,7 +2193,7 @@ public class ServerPlayer extends Player {
      }
  
      public void sendServerStatus(ServerStatus metadata) {
@@ -99,7 +99,7 @@ index 37870bb4e8eb4165b101bbc4e5bf5933fc37b5a5..3e3581d78e42d071487a6a490cc3ac69
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index a20454bbcf39dfc58232238ca70f054a06b94e29..eeb708e1977a11aa43f77d9be602e5109dcda37f 100644
+index 26fde0b352a6388390b155b18649975c4d18cc31..22d5daff88b798e11ee9280db4fbdd93af34f4be 100644
 --- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
@@ -151,10 +151,10 @@ index a20454bbcf39dfc58232238ca70f054a06b94e29..eeb708e1977a11aa43f77d9be602e510
          if (packet == null || this.processedDisconnect) { // Spigot
              return;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index d4079ba64e48a322f2f1f48194cf5efbdd238a78..9cf05e7322edeaeaf28b280f583e9ded8905e398 100644
+index 061550fff84074579eb26f277811e1477f1ddb2f..a002aa85eadd0bcd004fe8f47e7e68c82d8652a8 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -1443,7 +1443,7 @@ public abstract class PlayerList {
+@@ -1442,7 +1442,7 @@ public abstract class PlayerList {
          // Paper end
          boolean flag = this.verifyChatTrusted(message);
  
@@ -163,7 +163,7 @@ index d4079ba64e48a322f2f1f48194cf5efbdd238a78..9cf05e7322edeaeaf28b280f583e9ded
          OutgoingChatMessage outgoingchatmessage = OutgoingChatMessage.create(message);
          boolean flag1 = false;
  
-@@ -1472,6 +1472,7 @@ public abstract class PlayerList {
+@@ -1471,6 +1471,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(PlayerChatMessage message) { // Paper - private -> public

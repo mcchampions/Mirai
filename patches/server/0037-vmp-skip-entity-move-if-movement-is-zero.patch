@@ -7,10 +7,10 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 142f3eccaf9beb12ddcbc5115ef998fb01c53246..81ed0d15fb6bab711027da8412c1fe22be5aa89a 100644
+index 672262600e189333b6fa23f3cff4585858bb9abc..59efaf31e35016569f1f3793e46f1b7ff280f039 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -315,6 +315,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -316,6 +316,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      public float yRotO;
      public float xRotO;
      private AABB bb;
@@ -18,7 +18,7 @@ index 142f3eccaf9beb12ddcbc5115ef998fb01c53246..81ed0d15fb6bab711027da8412c1fe22
      public boolean onGround;
      public boolean horizontalCollision;
      public boolean verticalCollision;
-@@ -1084,6 +1085,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -1086,6 +1087,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      // Paper end - detailed watchdog information
  
      public void move(MoverType movementType, Vec3 movement) {
@@ -28,10 +28,10 @@ index 142f3eccaf9beb12ddcbc5115ef998fb01c53246..81ed0d15fb6bab711027da8412c1fe22
 +            return;
 +        }
 +        // Mirai end
+         final Vec3 originalMovement = movement; // Paper - Expose pre-collision velocity
          // Paper start - detailed watchdog information
          io.papermc.paper.util.TickThread.ensureTickThread("Cannot move an entity off-main");
-         synchronized (this.posLock) {
-@@ -4094,6 +4101,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -4090,6 +4097,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      }
  
      public final void setBoundingBox(AABB boundingBox) {

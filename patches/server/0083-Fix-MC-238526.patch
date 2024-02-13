@@ -5,13 +5,13 @@ Subject: [PATCH] Fix MC-238526
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java b/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
-index 827912174ee08cd19249797d351887149b25c880..ab0b5502fad0043f776a8c151371baacdd7ab5ec 100644
+index 9b897cf53f4bb5d366e6ac88dbed93c59d8fe541..14fece98ed3ea7c0ddd6fece4b6da1aebf01ef40 100644
 --- a/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
 +++ b/src/main/java/net/minecraft/world/entity/animal/WaterAnimal.java
 @@ -77,6 +77,6 @@ public abstract class WaterAnimal extends PathfinderMob {
          i = world.getMinecraftWorld().paperConfig().entities.spawning.wateranimalSpawnHeight.maximum.or(i);
          j = world.getMinecraftWorld().paperConfig().entities.spawning.wateranimalSpawnHeight.minimum.or(j);
-         // Paper end
+         // Paper end - Make water animal spawn height configurable
 -        return pos.getY() >= j && pos.getY() <= i && world.getFluidState(pos.below()).is(FluidTags.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
 +        return ((reason == MobSpawnType.SPAWNER) || (pos.getY() >= j && pos.getY() <= i)) && world.getFluidState(pos.below()).is(FluidTags.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER); // Mirai
      }

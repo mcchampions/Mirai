@@ -23,7 +23,7 @@ index d867baee944627e1a1419611fac2d3385350b182..9c1f2ca42871d234e0ec591ccc6070ec
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index d28d0ef6105ddeb562ddf31ae9088739856941fc..a20454bbcf39dfc58232238ca70f054a06b94e29 100644
+index 0306771b8f90dcdd77f151c19c6c2d75c41f8feb..26fde0b352a6388390b155b18649975c4d18cc31 100644
 --- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -51,6 +51,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
@@ -48,7 +48,7 @@ index d28d0ef6105ddeb562ddf31ae9088739856941fc..a20454bbcf39dfc58232238ca70f054a
 +            }
 +        } else
 +        // Purpur end
-         //PacketUtils.ensureRunningOnSameThread(packet, this, this.player.serverLevel()); // CraftBukkit // Paper - This shouldn't be on the main thread
+         //PacketUtils.ensureRunningOnSameThread(packet, this, this.player.serverLevel()); // CraftBukkit // Paper - handle ServerboundKeepAlivePacket async
          if (this.keepAlivePending && packet.getId() == this.keepAliveChallenge) {
              int i = (int) (Util.getMillis() - this.keepAliveTime);
 @@ -209,6 +220,21 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack

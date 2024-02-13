@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable mobs from spawners picking up loot
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 3186a8f4fad751cffef318b5ad1bd716d7c045cb..c2c905a4ee31f0d1418a89326e4877df78ae56cb 100644
+index e8cde60fa80928308dd948d423c0b85cb2794b8a..be6d2fd0890119a4f6a6c97379fa5f48a066a6f7 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
 @@ -249,4 +249,15 @@ public class MiraiConfig {
@@ -25,38 +25,38 @@ index 3186a8f4fad751cffef318b5ad1bd716d7c045cb..c2c905a4ee31f0d1418a89326e4877df
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
-index b319021b22c5dceba6199ed27814b2dcf47b8d50..021a70682dff08d8cf85a9ed977b1cac5e5e5d85 100644
+index 586e3e92ccc275446df6dbbff9bf010a37a9aa8f..9b9445271232250df9161393df46187c662b452f 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/AbstractSkeleton.java
 @@ -159,7 +159,13 @@ public abstract class AbstractSkeleton extends Monster implements RangedAttackMo
          this.populateDefaultEquipmentSlots(randomsource, difficulty);
          this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
          this.reassessWeaponGoal();
--        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
+-        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper - Add world settings for mobs picking up loot
 +        // Mirai start
 +        if (dev.etil.mirai.MiraiConfig.skeletonPickupLoot && spawnReason == MobSpawnType.SPAWNER) {
 +            this.setCanPickUpLoot(false);
 +        } else {
-+            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper
++            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.skeletons || randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier()); // Paper - Add world settings for mobs picking up loot
 +        }
 +        // Mirai end
          if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
              LocalDate localdate = LocalDate.now();
              int i = localdate.get(ChronoField.DAY_OF_MONTH);
 diff --git a/src/main/java/net/minecraft/world/entity/monster/Zombie.java b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
-index 5fdad1600cc7a7c22d1d9a58b6b2dda605521b97..1ff96cc9e0550e2d3212a055d675eaea5eb79e42 100644
+index 5c40e994007dbf46ebc12c1e6a6ca90379471b74..7670436f1b1b1ed852fc166b0368e3ca2046d79b 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/Zombie.java
 @@ -512,7 +512,13 @@ public class Zombie extends Monster {
          Object object = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
          float f = difficulty.getSpecialMultiplier();
  
--        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
+-        this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper - Add world settings for mobs picking up loot
 +        // Mirai start
 +        if (dev.etil.mirai.MiraiConfig.zombiePickupLoot && spawnReason == MobSpawnType.SPAWNER) {
 +            this.setCanPickUpLoot(false);
 +        } else {
-+            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper
++            this.setCanPickUpLoot(this.level().paperConfig().entities.behavior.mobsCanAlwaysPickUpLoot.zombies || randomsource.nextFloat() < 0.55F * f); // Paper - Add world settings for mobs picking up loot
 +        }
 +        // Mirai end
          if (object == null) {

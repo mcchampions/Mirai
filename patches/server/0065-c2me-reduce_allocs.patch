@@ -175,7 +175,7 @@ index 0000000000000000000000000000000000000000..b989019847f73ba3af57f7428699c9c8
 +
 +}
 diff --git a/src/main/java/net/minecraft/resources/ResourceLocation.java b/src/main/java/net/minecraft/resources/ResourceLocation.java
-index 38e2a8cec48bc779b8154d6d719031f457a2403e..c3255ff691025b61ea1a4bd835ef0bd405e00282 100644
+index a4d875df936b6de16f0233482b03af05b427a79f..42d6331d128af0f3f2db11d184d0501d1e52da88 100644
 --- a/src/main/java/net/minecraft/resources/ResourceLocation.java
 +++ b/src/main/java/net/minecraft/resources/ResourceLocation.java
 @@ -29,6 +29,7 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
@@ -185,8 +185,8 @@ index 38e2a8cec48bc779b8154d6d719031f457a2403e..c3255ff691025b61ea1a4bd835ef0bd4
 +    private String cachedString = null; // Mirai - c2me: opts allocs
  
      protected ResourceLocation(String namespace, String path, @Nullable ResourceLocation.Dummy extraData) {
-         this.namespace = namespace;
-@@ -118,7 +119,16 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
+         // Paper start - Validate ResourceLocation
+@@ -125,7 +126,16 @@ public class ResourceLocation implements Comparable<ResourceLocation> {
  
      @Override
      public String toString() {

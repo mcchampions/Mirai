@@ -7,22 +7,28 @@ Original code by nopjmp, licensed under MIT
 You can find the original code on https://github.com/nopjmp/Dionysus
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad059e7950d 100644
+index a53dd1ea02bd19826cd9fd337459b08e9533bce8..d4fcb40c84f70f8a86e19651e4068ea61db39a10 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-@@ -13,8 +13,10 @@ import net.minecraft.server.MinecraftServer;
+@@ -3,7 +3,6 @@ package net.minecraft.server.network;
+ import net.minecraft.SharedConstants;
+ import net.minecraft.network.Connection;
+ import net.minecraft.network.chat.Component;
+-import net.minecraft.network.chat.MutableComponent;
+ import net.minecraft.network.protocol.handshake.ClientIntent;
+ import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
+ import net.minecraft.network.protocol.handshake.ServerHandshakePacketListener;
+@@ -13,8 +12,8 @@ import net.minecraft.server.MinecraftServer;
  
  // CraftBukkit start
  import java.net.InetAddress;
 -import java.util.HashMap;
  // CraftBukkit end
-+// Dionysus start
-+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
-+// Dionysus end
++import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap; // Dionysus
  
  public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketListener {
  
-@@ -24,7 +26,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+@@ -24,7 +23,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
      static final java.util.regex.Pattern PROP_PATTERN = java.util.regex.Pattern.compile("\\w{0,16}");
      // Spigot end
      // CraftBukkit start - add fields
@@ -31,7 +37,7 @@ index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad0
      private static int throttleCounter = 0;
      // CraftBukkit end
      private static final Component IGNORE_STATUS_REASON = Component.translatable("disconnect.ignoring_status_request");
-@@ -51,7 +53,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+@@ -51,7 +50,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
                      InetAddress address = ((java.net.InetSocketAddress) this.connection.getRemoteAddress()).getAddress();
  
                      synchronized (ServerHandshakePacketListenerImpl.throttleTracker) {
@@ -40,7 +46,7 @@ index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad0
                              ServerHandshakePacketListenerImpl.throttleTracker.put(address, currentTime);
                              Component chatmessage = io.papermc.paper.adventure.PaperAdventure.asVanilla(io.papermc.paper.configuration.GlobalConfiguration.get().messages.kick.connectionThrottle); // Paper - Configurable connection throttle kick message
                              this.connection.send(new ClientboundLoginDisconnectPacket(chatmessage));
-@@ -65,13 +67,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
+@@ -65,13 +64,7 @@ public class ServerHandshakePacketListenerImpl implements ServerHandshakePacketL
                              ServerHandshakePacketListenerImpl.throttleCounter = 0;
  
                              // Cleanup stale entries
@@ -51,7 +57,7 @@ index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad0
 -                                    iter.remove();
 -                                }
 -                            }
-+                            throttleTracker.object2LongEntrySet().removeIf(entry -> entry.getLongValue() > connectionThrottle); // Dionysus
++                            ServerHandshakePacketListenerImpl.throttleTracker.object2LongEntrySet().removeIf(entry -> entry.getLongValue() > connectionThrottle); // Dionysus
                          }
                      }
-                     } // Paper - add closing bracket for if check above
+                     } // Paper - Unix domain socket support

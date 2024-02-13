@@ -35,7 +35,7 @@ index 9c1f2ca42871d234e0ec591ccc6070eccf74eb11..916805b5f1befc1a3a82ab706be87df6
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index f655e0ae4a287886d0291cd0089bad2000249d0f..4eef69b752666b6a4a9d62042391d9a1c55fe982 100644
+index 24e5993b281448734eb67c7a8439a349bbf9fd72..24ae3e4727e1d325f3cd55d46c1249924bd023d1 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
 @@ -199,7 +199,7 @@ public class PlayerAdvancements {
@@ -48,13 +48,13 @@ index f655e0ae4a287886d0291cd0089bad2000249d0f..4eef69b752666b6a4a9d62042391d9a1
                  this.startProgress(advancementholder, advancementprogress);
                  this.progressChanged.add(advancementholder);
 diff --git a/src/main/java/net/minecraft/server/level/WorldGenRegion.java b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
-index 14a5492428eac823a295ef3746d0aca6fbdab4ec..d707b584990a792f1ebb9d598f8e57eb28e66d7b 100644
+index 5ece375eaf6bcc61864997a389bb5e24625e4505..3d419987e2a1bcb04b444bbe96726da09a2795c1 100644
 --- a/src/main/java/net/minecraft/server/level/WorldGenRegion.java
 +++ b/src/main/java/net/minecraft/server/level/WorldGenRegion.java
 @@ -318,7 +318,7 @@ public class WorldGenRegion implements WorldGenLevel {
              return true;
          } else {
-             // Paper start
+             // Paper start - Buffer OOB setBlock calls
 -            if (!hasSetFarWarned) {
 +            if (!hasSetFarWarned && !dev.etil.mirai.MiraiConfig.loggerSuppressSetBlockFarChunk) { // Purpur
              Util.logAndPauseIfInIde("Detected setBlock in a far chunk [" + i + ", " + j + "], pos: " + pos + ", status: " + this.generatingStatus + (this.currentlyGenerating == null ? "" : ", currently generating: " + (String) this.currentlyGenerating.get()));
@@ -74,15 +74,15 @@ index 4103ddf16164e3992fef0765d368282572537e29..a624d954eac2b9e177a47ff7f5d8be41
                      handler.accept((RecipeHolder) optional.get());
                  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
-index 2677e21d8239bf0361a3bc5c9a50c328e54d70f6..9af8122404f9a8f56f40c3eecae7bc6ad45ea92c 100644
+index fde9aadd6c688b9797a6755f9d214918047598a0..c7de3726745dd9509870daf3b104b1a5d2a6c86b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 +++ b/src/main/java/org/bukkit/craftbukkit/legacy/CraftLegacy.java
 @@ -256,7 +256,7 @@ public final class CraftLegacy {
      }
  
      static {
--        LOGGER.warn("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!"); // Paper - doesn't need to be an error
-+        if (!dev.etil.mirai.MiraiConfig.loggerSuppressInitLegacyMaterialError) LOGGER.warn("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!"); // Paper - doesn't need to be an error // Purpur
+-        LOGGER.warn("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!"); // Paper - Improve logging and errors; doesn't need to be an error
++        if (!dev.etil.mirai.MiraiConfig.loggerSuppressInitLegacyMaterialError) LOGGER.warn("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!"); // Paper - Improve logging and errors; doesn't need to be an error // Purpur
          if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDebugging()) {
              new Exception().printStackTrace();
          }

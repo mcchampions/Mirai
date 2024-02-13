@@ -22,10 +22,10 @@ index f9353df394ae6b74df2f1d8a4745be4ec9928645..6bd032d296d6c0d0cd33b88aebe479a3
 +    }
  }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 43383efaed845df319bdf859ffcd2bf73c0e2e83..142f3eccaf9beb12ddcbc5115ef998fb01c53246 100644
+index d6f28bb03bd10e7cf6a6c3d1321207329388ffdc..672262600e189333b6fa23f3cff4585858bb9abc 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3132,7 +3132,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -3130,7 +3130,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
          if (this.isOnPortalCooldown()) {
              if (!(dev.etil.mirai.MiraiConfig.playerFixStuckPortal && this instanceof Player && !pos.equals(portalPos))) // Purpur
              this.setPortalCooldown();
@@ -34,12 +34,12 @@ index 43383efaed845df319bdf859ffcd2bf73c0e2e83..142f3eccaf9beb12ddcbc5115ef998fb
              if (!this.level().isClientSide && !pos.equals(this.portalEntrancePos)) {
                  this.portalEntrancePos = pos.immutable();
                  portalPos = BlockPos.ZERO; // Purpur
-@@ -3842,7 +3842,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
+@@ -3838,7 +3838,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, S
      }
  
      public boolean canChangeDimensions() {
--        return !this.isPassenger() && !this.isVehicle() && isAlive() && valid; // Paper
-+        return !this.isPassenger() && !this.isVehicle() && isAlive() && valid && (dev.etil.mirai.MiraiConfig.entitiesCanUsePortals || this instanceof ServerPlayer); // Paper // Purpur
+-        return !this.isPassenger() && !this.isVehicle() && isAlive() && valid; // Paper - Fix item duplication and teleport issues
++        return !this.isPassenger() && !this.isVehicle() && isAlive() && valid && (dev.etil.mirai.MiraiConfig.entitiesCanUsePortals || this instanceof ServerPlayer); // Paper - Fix item duplication and teleport issues // Purpur
      }
  
      public float getBlockExplosionResistance(Explosion explosion, BlockGetter world, BlockPos pos, BlockState blockState, FluidState fluidState, float max) {

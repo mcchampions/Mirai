@@ -7,19 +7,19 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 761bd6b26e1061d36d9046a3f871cac10d8a8ffb..cdeaffff99831b1e48a91a29248152c99458fb7f 100644
+index 6bebab48ca808ce3c9c1944a5c08fed8d9efc5fa..061550fff84074579eb26f277811e1477f1ddb2f 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -737,6 +737,8 @@ public abstract class PlayerList {
+@@ -736,6 +736,8 @@ public abstract class PlayerList {
          if (getBans().isBanned(gameprofile) && (gameprofilebanentry = getBans().get(gameprofile)) != null) {
-             // Paper end
+             // Paper end - Fix MC-158900
  
 +            // Yatopia start - Stop wasting resources on JsonList#get
 +            if (!gameprofilebanentry.hasExpired()) {
              ichatmutablecomponent = Component.translatable("multiplayer.disconnect.banned.reason", gameprofilebanentry.getReason());
              if (gameprofilebanentry.getExpires() != null) {
                  ichatmutablecomponent.append((Component) Component.translatable("multiplayer.disconnect.banned.expiration", PlayerList.BAN_DATE_FORMAT.format(gameprofilebanentry.getExpires())));
-@@ -744,6 +746,10 @@ public abstract class PlayerList {
+@@ -743,6 +745,10 @@ public abstract class PlayerList {
  
              // return chatmessage;
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, io.papermc.paper.adventure.PaperAdventure.asAdventure(ichatmutablecomponent)); // Paper - Adventure
@@ -27,17 +27,17 @@ index 761bd6b26e1061d36d9046a3f871cac10d8a8ffb..cdeaffff99831b1e48a91a29248152c9
 +                getBans().remove(gameprofile);
 +            }
 +            // Yatopia end
-         } else if (!this.isWhiteListed(gameprofile, event)) { // Paper
+         } else if (!this.isWhiteListed(gameprofile, event)) { // Paper - ProfileWhitelistVerifyEvent
              //ichatmutablecomponent = Component.translatable("multiplayer.disconnect.not_whitelisted"); // Paper
              //event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(org.spigotmc.SpigotConfig.whitelistMessage)); // Spigot // Paper - Adventure - moved to isWhitelisted
 diff --git a/src/main/java/net/minecraft/server/players/StoredUserList.java b/src/main/java/net/minecraft/server/players/StoredUserList.java
-index c6e7eb0235eb6cb0add370329404fcf06e16b31c..3cbc549b620901d9dcb8f11d6b0e602a62ed2fd4 100644
+index 15e17852c19bef8fe52ec0e91be5c6a74e2d56a2..7eec181fb3ffed4dfb6d254350b7e0cb6bacddbe 100644
 --- a/src/main/java/net/minecraft/server/players/StoredUserList.java
 +++ b/src/main/java/net/minecraft/server/players/StoredUserList.java
-@@ -57,9 +57,12 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
-         // Paper start
-         // this.g();
-         // return (V) this.d.get(this.a(k0)); // CraftBukkit - fix decompile error
+@@ -55,9 +55,12 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+     @Nullable
+     public V get(K key) {
+         // Paper start - Use ConcurrentHashMap in JsonList
 -        return (V) this.map.computeIfPresent(this.getKeyForUser(key), (k, v) -> {
 +        // Yatopia start - Stop wasting resources on JsonList#get
 +        return this.map.get(this.getKeyForUser(key));
@@ -46,10 +46,10 @@ index c6e7eb0235eb6cb0add370329404fcf06e16b31c..3cbc549b620901d9dcb8f11d6b0e602a
 -        });
 +        });*/
 +        // Yatopia end
-         // Paper end
+         // Paper end - Use ConcurrentHashMap in JsonList
      }
  
-@@ -128,7 +131,8 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -105,7 +108,8 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
      public void save() throws IOException {
          this.removeExpired(); // Paper - remove expired values before saving
          JsonArray jsonarray = new JsonArray();
@@ -59,7 +59,7 @@ index c6e7eb0235eb6cb0add370329404fcf06e16b31c..3cbc549b620901d9dcb8f11d6b0e602a
              JsonObject jsonobject = new JsonObject();
  
              Objects.requireNonNull(jsonlistentry);
-@@ -136,7 +140,13 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
+@@ -113,7 +117,13 @@ public abstract class StoredUserList<K, V extends StoredUserEntry<K>> {
          });
  
          Objects.requireNonNull(jsonarray);

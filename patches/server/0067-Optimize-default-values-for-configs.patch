@@ -92,7 +92,7 @@ index a27ee205d13dda890646ebf451076f383de0728b..1ef4565c5e4e395ea5c93e7146a7401a
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb056f402a6 100644
+index 385ca2c1022e0985550a5cc2bbff953f1aa33f5c..f93b14231ac12574767f043d784f9853158ffb38 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -152,8 +152,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -246,7 +246,7 @@ index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb0
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -525,9 +550,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -532,9 +557,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;
@@ -259,7 +259,7 @@ index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb0
          public float maxLeashDistance = 10f;
          public boolean disableSprintInterruptionOnAttack = false;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 68602dfb171d47e47fd0710b4324013ef05214d0..3cae79ada5db7821df279a149cd7debcac9d068b 100644
+index 6c260403d91d640da0473a3df56e1c5582459fde..b019884bd2415699cc7b4048fb1a303c76ee812f 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -218,7 +218,7 @@ public class SpigotConfig

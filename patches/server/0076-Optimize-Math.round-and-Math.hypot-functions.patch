@@ -72,7 +72,7 @@ index 0000000000000000000000000000000000000000..758a184db7bb4e57e383b40668389e35
 +    }
 +}
 diff --git a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
-index 92eaba96135ccddb7d682dab7e82cde9318a48ef..22f37518ae2df5c75568025749cd6557eb2d9d56 100644
+index 308f67d0616e2d6bb135258f1fda53ccdee01430..b161dd2ecc8a2cdba6a07f84b681b225a16e8761 100644
 --- a/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 +++ b/src/main/java/com/destroystokyo/paper/gui/RAMDetails.java
 @@ -81,6 +81,6 @@ public class RAMDetails extends JList<String> {
@@ -161,23 +161,23 @@ index c54b6a6c3db25c896582a1ba5469080d3122361a..0d4ada5b1875b1852f4f1f09911ec2ba
                  throw ERROR_TICK_COUNT_TOO_LOW.create(j, this.minimum);
              } else {
 diff --git a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
-index 33d9131e9c75ef23cd637f5d6c39a2704a0c92a5..0a43a51f91a1d6e4d6a629fa32c9d1a57a35f0ef 100644
+index 38b56923a642afc1cb411480ba03cc784ed7cd24..8383d76e2b59c7da71bbdda85c3e0223e9cc5c0d 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/VecDeltaCodec.java
 @@ -9,7 +9,7 @@ public class VecDeltaCodec {
  
      @VisibleForTesting
      static long encode(double value) {
--        return Math.round(value * 4096.0D); // Paper - diff on change
-+        return carpetfixes.helpers.FastMath.round(value * 4096.0D); // Paper - diff on change // Mirai
+-        return Math.round(value * 4096.0D); // Paper - Fix MC-4; diff on change
++        return carpetfixes.helpers.FastMath.round(value * 4096.0D); // Paper - Fix MC-4; diff on change // Mirai
      }
  
      @VisibleForTesting
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 81c228fa49c9606fddf0f70d87a5506dbc0984c2..cdbae05fc71ce3aee99e945c005d68da32687b40 100644
+index 6618234c5eedfe120770e301ba350340b2374c29..d58c452c9d436ced8c244bbd3a3c4888703ccb64 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1437,7 +1437,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
+@@ -1433,7 +1433,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<Runnab
                      }
  
                      double overuseCount = (double)overuse/(double)MAX_CHUNK_EXEC_TIME;
@@ -187,23 +187,23 @@ index 81c228fa49c9606fddf0f70d87a5506dbc0984c2..cdbae05fc71ce3aee99e945c005d68da
                      lastMidTickExecute = currTime + extraSleep;
                      return;
 diff --git a/src/main/java/net/minecraft/server/gui/StatsComponent.java b/src/main/java/net/minecraft/server/gui/StatsComponent.java
-index 4073484fefbf1ec6072013f6903f9237eb3ebfbc..fb4c4d25c8e070f72479c646df1f9a16d97fd968 100644
+index 38fe7e5014332f45e41a3d5d91c28dd0acfdc3b0..93a3b867e25bd2bf6caf74bc7ddb61648a1532cf 100644
 --- a/src/main/java/net/minecraft/server/gui/StatsComponent.java
 +++ b/src/main/java/net/minecraft/server/gui/StatsComponent.java
 @@ -79,7 +79,7 @@ public class StatsComponent extends JComponent {
  
-     // Paper - start Add tps entry
+     // Paper start - Improve ServerGUI
      private static String format(double tps) {
 -        return (( tps > 21.0 ) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0); // only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
 +        return (( tps > 21.0 ) ? "*" : "") + Math.min(carpetfixes.helpers.FastMath.round(tps * 100.0) / 100.0, 20.0); // only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise // Mirai
      }
-     // Paper end
+     // Paper end - Improve ServerGUI
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index ba1195eba24fb4a75a54d54be9430e878b4ca2b6..37870bb4e8eb4165b101bbc4e5bf5933fc37b5a5 100644
+index 64fe07440e8821d0e6e5f016c92b3470295b90a9..78cc3d9a1dc2aa4b1c4ebabbe20a806fdddd64d5 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -1740,29 +1740,29 @@ public class ServerPlayer extends Player {
+@@ -1741,29 +1741,29 @@ public class ServerPlayer extends Player {
              int i;
  
              if (this.isSwimming()) {
@@ -238,7 +238,7 @@ index ba1195eba24fb4a75a54d54be9430e878b4ca2b6..37870bb4e8eb4165b101bbc4e5bf5933
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(Stats.SPRINT_ONE_CM, i);
-@@ -1776,10 +1776,10 @@ public class ServerPlayer extends Player {
+@@ -1777,10 +1777,10 @@ public class ServerPlayer extends Player {
                      }
                  }
              } else if (this.isFallFlying()) {
@@ -251,7 +251,7 @@ index ba1195eba24fb4a75a54d54be9430e878b4ca2b6..37870bb4e8eb4165b101bbc4e5bf5933
                  if (i > 25) {
                      this.awardStat(Stats.FLY_ONE_CM, i);
                  }
-@@ -1790,7 +1790,7 @@ public class ServerPlayer extends Player {
+@@ -1791,7 +1791,7 @@ public class ServerPlayer extends Player {
  
      private void checkRidingStatistics(double deltaX, double deltaY, double deltaZ) {
          if (this.isPassenger() && !ServerPlayer.didNotMove(deltaX, deltaY, deltaZ)) {
@@ -286,10 +286,10 @@ index 52151082b031f250b13bfaa35417e1d934a54f60..9ab3ca431858331c80e6d38c2e8584a3
  
      public int fromDegrees(float degrees) {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf29c60aab 100644
+index 2a1bd7320305d42cd20a0309e7bed4ca3863faf1..c4d2359e3a3953158cea6addcb226a0e7beff8ea 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -1581,7 +1581,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1582,7 +1582,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              if (this instanceof ServerPlayer) {
                  CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, source, f1, amount, flag);
                  if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -298,7 +298,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                  }
              }
  
-@@ -2153,9 +2153,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2154,9 +2154,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -310,7 +310,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                      }
                  }
              }
-@@ -2267,9 +2267,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2268,9 +2268,9 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  float f3 = (float) -event.getDamage(DamageModifier.RESISTANCE);
                  if (f3 > 0.0F && f3 < 3.4028235E37F) {
                      if (this instanceof ServerPlayer) {
@@ -322,7 +322,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                      }
                  }
              }
-@@ -2301,7 +2301,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2302,7 +2302,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
              float f2 = absorptionModifier;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F && this instanceof net.minecraft.world.entity.player.Player) {
@@ -331,7 +331,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
              }
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
                  Entity entity = damagesource.getEntity();
-@@ -2309,7 +2309,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2310,7 +2310,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                  if (entity instanceof ServerPlayer) {
                      ServerPlayer entityplayer = (ServerPlayer) entity;
  
@@ -340,7 +340,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                  }
              }
  
-@@ -2318,7 +2318,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2319,7 +2319,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                      // PAIL: Be sure to drag all this code from the EntityHuman subclass each update.
                      ((net.minecraft.world.entity.player.Player) this).causeFoodExhaustion(damagesource.getFoodExhaustion(), org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.DAMAGED); // CraftBukkit - EntityExhaustionEvent
                      if (f < 3.4028235E37F) {
@@ -349,7 +349,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                      }
                  }
                  // CraftBukkit end
-@@ -2338,7 +2338,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -2339,7 +2339,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
                          CriteriaTriggers.ENTITY_HURT_PLAYER.trigger((ServerPlayer) this, damagesource, originalDamage, f, true); // Paper - fix taken/dealt param order
                          f2 = (float) -event.getDamage(DamageModifier.BLOCKING);
                          if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -358,7 +358,7 @@ index 4b8e70c115b47867e6b9425f33f71e189bdf618f..cbe188bea81d0d1fbc673a9ef33c4acf
                          }
                      }
  
-@@ -3108,13 +3108,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -3109,13 +3109,13 @@ public abstract class LivingEntity extends Entity implements Attackable {
          this.level().getProfiler().push("rangeChecks");
  
          // Paper start - stop large pitch and yaw changes from crashing the server
@@ -407,10 +407,10 @@ index 0478df726d785128d593643dc07e0a9e5674b064..fcda83fa78b508ee1d439459c2de4d0e
      @VisibleForTesting
      public Shoot() {
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430e07aaaf6 100644
+index 263add99b628338cc319f5dbf94152c866aad8ba..4e31ac1a9cc8c06eceb610a8bdb2292e07081b16 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -1073,7 +1073,7 @@ public abstract class Player extends LivingEntity {
+@@ -1071,7 +1071,7 @@ public abstract class Player extends LivingEntity {
              float f2 = f1 - f;
  
              if (f2 > 0.0F && f2 < 3.4028235E37F) {
@@ -419,7 +419,7 @@ index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430
              }
  
              if (f != 0.0F) {
-@@ -1081,7 +1081,7 @@ public abstract class Player extends LivingEntity {
+@@ -1079,7 +1079,7 @@ public abstract class Player extends LivingEntity {
                  this.getCombatTracker().recordDamage(damagesource, f);
                  this.setHealth(this.getHealth() - f);
                  if (f < 3.4028235E37F) {
@@ -428,7 +428,7 @@ index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430
                  }
  
                  this.gameEvent(GameEvent.ENTITY_DAMAGE);
-@@ -1422,7 +1422,7 @@ public abstract class Player extends LivingEntity {
+@@ -1420,7 +1420,7 @@ public abstract class Player extends LivingEntity {
                          if (target instanceof LivingEntity) {
                              float f5 = f3 - ((LivingEntity) target).getHealth();
  
@@ -437,7 +437,7 @@ index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430
                              if (j > 0) {
                                  // CraftBukkit start - Call a combust event when somebody hits with a fire enchanted item
                                  EntityCombustByEntityEvent combustEvent = new EntityCombustByEntityEvent(this.getBukkitEntity(), target.getBukkitEntity(), j * 4);
-@@ -1686,7 +1686,7 @@ public abstract class Player extends LivingEntity {
+@@ -1700,7 +1700,7 @@ public abstract class Player extends LivingEntity {
              return false;
          } else {
              if (fallDistance >= 2.0F) {
@@ -447,7 +447,7 @@ index 0ba22158fbbce0ea231fbc3be24ff5abdd380a4a..e883b5888bd3baf9fcf44c34274f0430
  
              return super.causeFallDamage(fallDistance, damageMultiplier, damageSource);
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index a7653d8d7291a537c997364c6222bb84d45f7277..b79f8612669375496a9b858654df58c91fb1a3ac 100644
+index 837f68825f601971f374be47952b23108bf66ba6..a51e9c8cc02f838972c362b49c23b59d51db4058 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 @@ -307,7 +307,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
@@ -499,7 +499,7 @@ index de6f00d03223939386aa2ccfdec1e696a68313d7..c91eebd46b1e370d8e85dce63681b941
  
          i = Mth.clamp(i, 0, 15);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-index 5d3d9164a05efbecc59ace6175f449f34d8d3ccd..9e2fbdf99162d100fb322a1ebe0bd6fc7ae3c09f 100644
+index 798e22fb4d685b5845ebf687e8004e94f13a9751..408c84e3f6caac0b7f1ac0b199456910961dbdb6 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 @@ -239,8 +239,8 @@ public class ChunkGeneratorStructureState {
