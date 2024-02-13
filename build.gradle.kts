@@ -73,5 +73,12 @@ paperweight {
             apiOutputDir.set(layout.projectDirectory.dir("mirai-api"))
             serverOutputDir.set(layout.projectDirectory.dir("mirai-server"))
         }
+
+        patchTasks.register("generatedApi") {
+            isBareDirectory = true
+            upstreamDirPath = "paper-api-generator/generated"
+            patchDir = layout.projectDirectory.dir("patches/generated-api")
+            outputDir = layout.projectDirectory.dir("paper-api-generator/generated")
+        }
     }
 }

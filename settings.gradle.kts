@@ -7,4 +7,4 @@ pluginManagement {
 
 rootProject.name = "Mirai"
 
-include("mirai-api", "mirai-server")
+include("mirai-api", "mirai-server", "paper-api-generator")
