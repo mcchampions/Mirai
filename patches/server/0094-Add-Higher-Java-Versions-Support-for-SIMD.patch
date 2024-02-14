@@ -1,11 +1,11 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Dreeam <61569423+Dreeam-qwq@users.noreply.github.com>
 Date: Thu, 28 Dec 2023 04:00:37 -0500
-Subject: [PATCH] Mirai: Add Higher Java Versions Support for SIMD
+Subject: [PATCH] Add Higher Java Versions Support for SIMD
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index d8e4ac55c6f72e9f92b683d18b5538088996378d..99ec26c76109818891e0a07021ce2113948eca93 100644
+index 14e98404514971162ac93e13415b0011c6800a01..5ed739e83786595616b221c4a10c25f06e62d726 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 @@ -94,7 +94,7 @@ public class PufferfishConfig {
