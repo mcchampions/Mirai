@@ -7,10 +7,10 @@ Original code by Starlis, licensed under GPL v3
 You can find the original code on https://github.com/starlis/empirecraft
 
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
-index fca27f98989bf106060ba08196255fe32f850df5..d154a5d84cbb56f62a028d32ff48e9eb0a5dd829 100644
+index 7005b3a26e9b5d79064981a4a41bee21b65a9fc3..3a8a3b1b11d086af5bcafaa42b4325dd13203e29 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/FireworkRocketEntity.java
-@@ -357,4 +357,11 @@ public class FireworkRocketEntity extends Projectile implements ItemSupplier {
+@@ -352,4 +352,11 @@ public class FireworkRocketEntity extends Projectile implements ItemSupplier {
      public boolean isAttackable() {
          return false;
      }

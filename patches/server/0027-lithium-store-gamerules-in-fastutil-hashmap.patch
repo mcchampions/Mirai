@@ -7,21 +7,21 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/GameRules.java b/src/main/java/net/minecraft/world/level/GameRules.java
-index 4f2fa47d094348bb8f86a86e808019ddba56e187..6d32d9520a3f96b44b1e5ce14a0289d967b2b17d 100644
+index 4a340bd1f1859e43bb58e68aee4018fdb4ca7a5a..8d09531e06a91abe19a4a4ae7a14020eaef6bf14 100644
 --- a/src/main/java/net/minecraft/world/level/GameRules.java
 +++ b/src/main/java/net/minecraft/world/level/GameRules.java
-@@ -27,6 +27,7 @@ import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
- import net.minecraft.server.MinecraftServer;
+@@ -28,6 +28,7 @@ import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.level.ServerLevel;
  import net.minecraft.server.level.ServerPlayer;
  import org.slf4j.Logger;
 +import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap; // JettPack
  
  public class GameRules {
  
-@@ -134,14 +135,16 @@ public class GameRules {
+@@ -135,14 +136,16 @@ public class GameRules {
  
      public GameRules() {
-         // Paper start - use this to ensure gameruleArray is initialized
+         // Paper start - Perf: Use array for gamerule storage
 -        this((Map) GameRules.GAME_RULE_TYPES.entrySet().stream().collect(ImmutableMap.toImmutableMap(Entry::getKey, (entry) -> {
 +        // JettPack start - lithium: store gamerules in fastutil hashmap
 +        this(new Object2ObjectOpenHashMap<>((Map) GameRules.GAME_RULE_TYPES.entrySet().stream().collect(ImmutableMap.toImmutableMap(Entry::getKey, (entry) -> {
@@ -29,12 +29,12 @@ index 4f2fa47d094348bb8f86a86e808019ddba56e187..6d32d9520a3f96b44b1e5ce14a0289d9
 -        })));
 +        }))));
 +        // JettPack end
-         // Paper end
+         // Paper end - Perf: Use array for gamerule storage
      }
  
      private GameRules(Map<GameRules.Key<?>, GameRules.Value<?>> rules) {
 -        this.rules = rules;
 +        this.rules = new Object2ObjectOpenHashMap<>(rules); // JettPack - lithium: store gamerules in fastutil hashmap
  
-         // Paper start
+         // Paper start - Perf: Use array for gamerule storage
          int arraySize = rules.keySet().stream().mapToInt(key -> key.gameRuleIndex).max().orElse(-1) + 1;

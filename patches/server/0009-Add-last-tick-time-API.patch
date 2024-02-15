@@ -7,10 +7,10 @@ Original code by YatopiaMC, licensed under MIT
 You can find the original code on https://github.com/YatopiaMC/Yatopia
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 50be99ebd55fad268e5aeba1fbac2f8dee1b58da..7000e7a004d83352343f792e171a7179c0969c80 100644
+index 67865e4f4ca809424bf2792f52fd6a0a2b85a7ff..02573d8e9a59bc6bad87856d9bb7127f0c81ce6b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1141,6 +1141,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1139,6 +1139,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      // Spigot End
  
      public static volatile RuntimeException chunkSystemCrash; // Paper - rewrite chunk system
@@ -18,7 +18,7 @@ index 50be99ebd55fad268e5aeba1fbac2f8dee1b58da..7000e7a004d83352343f792e171a7179
  
      protected void runServer() {
          try {
-@@ -1232,9 +1233,11 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1233,9 +1234,11 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  this.nextTickTimeNanos += i;
                  //this.startMetricsRecordingTick(); // Purpur
                  //this.profiler.push("tick"); // Purpur
@@ -29,12 +29,12 @@ index 50be99ebd55fad268e5aeba1fbac2f8dee1b58da..7000e7a004d83352343f792e171a7179
 +                lastTickDuration = java.time.Duration.ofNanos(System.nanoTime() - tickStart); // Yatopia
                  //this.profiler.popPush("nextTickWait"); // Purpur
                  this.mayHaveDelayedTasks = true;
-                 // Purpur start - tps catchup
+                 this.delayedTasksMaxNextTickTimeNanos = Math.max(Util.getNanos() + i, this.nextTickTimeNanos);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4bc20e48400f938496a397e1a21ded3dc7369cd2..8690d42e7a0e16b4368c93f9cb43c201cf024aeb 100644
+index 5b2e55e69235353404cd4f1cbf081f0199e3262c..30a482cd94fd9612a5bc498be0e194216c5ab3b3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -3315,7 +3315,6 @@ public final class CraftServer implements Server {
+@@ -3326,7 +3326,6 @@ public final class CraftServer implements Server {
      public CraftPotionBrewer getPotionBrewer() {
          return this.potionBrewer;
      }
@@ -42,7 +42,7 @@ index 4bc20e48400f938496a397e1a21ded3dc7369cd2..8690d42e7a0e16b4368c93f9cb43c201
      // Paper end
  
      // Purpur start
-@@ -3329,4 +3328,11 @@ public final class CraftServer implements Server {
+@@ -3340,4 +3339,11 @@ public final class CraftServer implements Server {
          return getServer().lagging;
      }
      // Purpur end
@@ -55,7 +55,7 @@ index 4bc20e48400f938496a397e1a21ded3dc7369cd2..8690d42e7a0e16b4368c93f9cb43c201
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index 5da1ef6d90c6a5bd047e971bcc56d786239c6fd8..c3ee916f1a34471b5c13d80a00ed43572ef97d21 100644
+index f144a08e88f8268b84eb188a36bf470457f59958..ccac0af3dc5066af12b8b9890f7784aa83bb2b6a 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,5 @@
@@ -67,7 +67,7 @@ index 5da1ef6d90c6a5bd047e971bcc56d786239c6fd8..c3ee916f1a34471b5c13d80a00ed4357
  import org.bukkit.command.CommandSender;
  
 @@ -42,6 +40,16 @@ public class TicksPerSecondCommand extends Command
-         builder.append(net.kyori.adventure.text.Component.text("TPS from last 5s, 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD));
+         builder.append(net.kyori.adventure.text.Component.text("TPS from last 5s, 1m, 5m, 15m: ", net.kyori.adventure.text.format.NamedTextColor.GOLD)); // Purpur
          builder.append(net.kyori.adventure.text.Component.join(net.kyori.adventure.text.JoinConfiguration.commas(true), tpsAvg));
          sender.sendMessage(builder.asComponent());
 +        // Yatopia start - Last tick duration API

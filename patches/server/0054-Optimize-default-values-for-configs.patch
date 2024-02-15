@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize default values for configs
 
 
 diff --git a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-index b4e5fbace85c67e7bd347e6a90514bbc2c132d5e..53231d5db719d2f693d86bfbc9e0270bcea2d500 100644
+index 3fea9b69f4cfc94e7f01d4e3ca4ce7506a8e5d5c..824b77c335282c90fc1ff952d9e0c8b42da87a2f 100644
 --- a/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
 +++ b/src/main/java/gg/pufferfish/pufferfish/PufferfishConfig.java
-@@ -211,8 +211,8 @@ public class PufferfishConfig {
+@@ -219,8 +219,8 @@ public class PufferfishConfig {
      public static int maxProjectileLoadsPerTick;
      public static int maxProjectileLoadsPerProjectile;
      private static void projectileLoading() {
@@ -19,7 +19,7 @@ index b4e5fbace85c67e7bd347e6a90514bbc2c132d5e..53231d5db719d2f693d86bfbc9e0270b
  
          setComment("projectile", "Optimizes projectile settings");
      }
-@@ -225,15 +225,15 @@ public class PufferfishConfig {
+@@ -233,15 +233,15 @@ public class PufferfishConfig {
      public static int activationDistanceMod;
  
      private static void dynamicActivationOfBrains() throws IOException {
@@ -38,7 +38,7 @@ index b4e5fbace85c67e7bd347e6a90514bbc2c132d5e..53231d5db719d2f693d86bfbc9e0270b
                  "This value defines how much distance modifies an entity's",
                  "tick frequency. freq = (distanceToPlayer^2) / (2^value)",
                  "If you want further away entities to tick less often, use 7.",
-@@ -253,8 +253,14 @@ public class PufferfishConfig {
+@@ -261,8 +261,14 @@ public class PufferfishConfig {
  	public static Map<String, Integer> projectileTimeouts;
  	private static void projectileTimeouts() {
  		// Set some defaults
@@ -55,7 +55,7 @@ index b4e5fbace85c67e7bd347e6a90514bbc2c132d5e..53231d5db719d2f693d86bfbc9e0270b
  		setComment("entity_timeouts",
  				"These values define a entity's maximum lifespan. If an",
  				"entity is in this list and it has survived for longer than",
-@@ -269,7 +275,7 @@ public class PufferfishConfig {
+@@ -277,7 +283,7 @@ public class PufferfishConfig {
      
      public static boolean throttleInactiveGoalSelectorTick;
  	private static void inactiveGoalSelectorThrottle() {
@@ -64,7 +64,7 @@ index b4e5fbace85c67e7bd347e6a90514bbc2c132d5e..53231d5db719d2f693d86bfbc9e0270b
  				"Throttles the AI goal selector in entity inactive ticks.",
  				"This can improve performance by a few percent, but has minor gameplay implications.");
  	}
-@@ -287,7 +293,7 @@ public class PufferfishConfig {
+@@ -295,7 +301,7 @@ public class PufferfishConfig {
  	public static boolean disableOutOfOrderChat;
      private static void miscSettings() {
  		disableMethodProfiler = getBoolean("misc.disable-method-profiler", true);
@@ -102,7 +102,7 @@ index a6f58b3457b7477015c5c6d969e7d83017dd3fa1..0e37d98b5908382a242729408d0b9f0e
          public boolean strictAdvancementDimensionCheck = false;
          public IntOr.Default compressionLevel = IntOr.Default.USE_DEFAULT;
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb056f402a6 100644
+index 385ca2c1022e0985550a5cc2bbff953f1aa33f5c..f93b14231ac12574767f043d784f9853158ffb38 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 @@ -152,8 +152,8 @@ public class WorldConfiguration extends ConfigurationPart {
@@ -256,7 +256,7 @@ index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb0
          @Setting(FeatureSeedsGeneration.FEATURES_KEY)
          public Reference2LongMap<Holder<ConfiguredFeature<?, ?>>> features = new Reference2LongOpenHashMap<>();
  
-@@ -525,9 +550,9 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -532,9 +557,9 @@ public class WorldConfiguration extends ConfigurationPart {
  
      public class Misc extends ConfigurationPart {
          public int lightQueueSize = 20;
@@ -269,7 +269,7 @@ index 071d3877e386a0c7c4d2f2e8ddd06e0765c49d0d..f80b23ce7fec92e08c480a6c37555bb0
          public float maxLeashDistance = 10f;
          public boolean disableSprintInterruptionOnAttack = false;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 68602dfb171d47e47fd0710b4324013ef05214d0..3cae79ada5db7821df279a149cd7debcac9d068b 100644
+index 6c260403d91d640da0473a3df56e1c5582459fde..b019884bd2415699cc7b4048fb1a303c76ee812f 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -218,7 +218,7 @@ public class SpigotConfig

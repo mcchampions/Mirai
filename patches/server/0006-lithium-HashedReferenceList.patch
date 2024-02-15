@@ -298,15 +298,15 @@ index 0000000000000000000000000000000000000000..53f61a10f8f0e71b3717449d44985bdc
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 3abf13c8017da1223c07a4f6f54371c405caf863..956fad3f6c5f0e5893a42127803c6e2bc7f01070 100644
+index beb9224a78e1836f693e3e6cc3834d57cffe4be2..fcf67f8f554a81a930a2f08f9a089cf310f179bf 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -120,9 +120,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -115,9 +115,9 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
      public static final int TICKS_PER_DAY = 24000;
      public static final int MAX_ENTITY_SPAWN_Y = 20000000;
      public static final int MIN_ENTITY_SPAWN_Y = -20000000;
--    protected final List<TickingBlockEntity> blockEntityTickers = Lists.newArrayList(); public final int getTotalTileEntityTickers() { return this.blockEntityTickers.size(); } // Paper
-+    protected final List<TickingBlockEntity> blockEntityTickers = me.jellysquid.mods.lithium.common.util.collections.HashedReferenceList.wrapper(Lists.newArrayList()); public final int getTotalTileEntityTickers() { return this.blockEntityTickers.size(); } // Paper // Jettpack - lithium: HashedReferenceList
+-    public final List<TickingBlockEntity> blockEntityTickers = Lists.newArrayList(); // Paper - public
++    public final List<TickingBlockEntity> blockEntityTickers = me.jellysquid.mods.lithium.common.util.collections.HashedReferenceList.wrapper(Lists.newArrayList()); // Paper - public // Jettpack - lithium: HashedReferenceList
      protected final NeighborUpdater neighborUpdater;
 -    private final List<TickingBlockEntity> pendingBlockEntityTickers = Lists.newArrayList();
 +    private final List<TickingBlockEntity> pendingBlockEntityTickers = me.jellysquid.mods.lithium.common.util.collections.HashedReferenceList.wrapper(Lists.newArrayList()); // Jettpack - lithium: HashedReferenceList

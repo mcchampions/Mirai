@@ -5,12 +5,12 @@ Subject: [PATCH] revert Purpur Spark integration
 
 
 diff --git a/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java b/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
-index e35da199be67e04c34df6bc09afd8d8122cb0487..89bf48fd581ee6580b91e2eb31dd532cb622df5e 100644
+index 6141f716b15ad47ac2ac4c9ce92a3897b3ad8807..708e5bb9bbf0476fcc2c4b92c6830b094703b43e 100644
 --- a/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/PluginInitializerManager.java
-@@ -102,7 +102,6 @@ public class PluginInitializerManager {
-         java.util.List<File> files = (java.util.List<File>) optionSet.valuesOf("add-plugin");
-         // Register plugins from the flag
+@@ -104,7 +104,6 @@ public class PluginInitializerManager {
+         @SuppressWarnings("unchecked")
+         java.util.List<Path> files = ((java.util.List<File>) optionSet.valuesOf("add-plugin")).stream().map(File::toPath).toList();
          io.papermc.paper.plugin.util.EntrypointUtil.registerProvidersFromSource(io.papermc.paper.plugin.provider.source.PluginFlagProviderSource.INSTANCE, files);
 -        io.papermc.paper.plugin.util.EntrypointUtil.registerProvidersFromSource(io.papermc.paper.plugin.provider.source.SparkProviderSource.INSTANCE, new File("cache", "spark.jar").toPath()); // Purpur
      }
@@ -18,10 +18,10 @@ index e35da199be67e04c34df6bc09afd8d8122cb0487..89bf48fd581ee6580b91e2eb31dd532c
      // This will be the end of me...
 diff --git a/src/main/java/io/papermc/paper/plugin/provider/source/SparkProviderSource.java b/src/main/java/io/papermc/paper/plugin/provider/source/SparkProviderSource.java
 deleted file mode 100644
-index a7d1ae53eac94bc2dcf8bc78ef1da0d3b8554736..0000000000000000000000000000000000000000
+index cb78dac8e072b5cb3c6e52e17c9ecdf708aeedc1..0000000000000000000000000000000000000000
 --- a/src/main/java/io/papermc/paper/plugin/provider/source/SparkProviderSource.java
 +++ /dev/null
-@@ -1,102 +0,0 @@
+@@ -1,115 +0,0 @@
 -package io.papermc.paper.plugin.provider.source;
 -
 -import com.mojang.logging.LogUtils;
@@ -43,26 +43,23 @@ index a7d1ae53eac94bc2dcf8bc78ef1da0d3b8554736..00000000000000000000000000000000
 -import org.bukkit.plugin.java.JavaPlugin;
 -import org.slf4j.Logger;
 -
--public class SparkProviderSource extends FileProviderSource {
--    public static final SparkProviderSource INSTANCE = new SparkProviderSource();
+-public class SparkProviderSource implements ProviderSource<Path, Path> {
 -
+-    public static final SparkProviderSource INSTANCE = new SparkProviderSource();
+-    private static final FileProviderSource FILE_PROVIDER_SOURCE = new FileProviderSource("File '%s' specified by Purpur"::formatted);
 -    private static final Logger LOGGER = LogUtils.getClassLogger();
 -
--    public SparkProviderSource() {
--        super("File '%s' specified by Purpur"::formatted);
--    }
--
 -    @Override
--    public void registerProviders(EntrypointHandler entrypointHandler, Path context) throws Exception {
+-    public Path prepareContext(Path context) {
 -        // first, check if user doesn't want spark at all
 -        if (Boolean.getBoolean("Purpur.IReallyDontWantSpark")) {
--            return; // boo!
+-            return null; // boo!
 -        }
 -
 -        // second, check if user has their own spark
 -        if (hasSpark()) {
 -            LOGGER.info("Purpur: Using user-provided spark plugin instead of our own.");
--            return; // let's hope it's at least the modern version :3
+-            return null; // let's hope it's at least the modern version :3
 -        }
 -
 -        // you can't have errors in your code if you wrap the entire codebase in a try/catch block
@@ -108,10 +105,26 @@ index a7d1ae53eac94bc2dcf8bc78ef1da0d3b8554736..00000000000000000000000000000000
 -            }
 -
 -            // register the spark, newly downloaded or existing
--            super.registerProviders(entrypointHandler, context);
+-            return FILE_PROVIDER_SOURCE.prepareContext(context);
 -
 -        } catch (Throwable e) {
 -            LOGGER.error("Purpur: Failed to download and install spark plugin", e);
+-        }
+-        return null;
+-    }
+-
+-    @Override
+-    public void registerProviders(final EntrypointHandler entrypointHandler, final Path context) {
+-        if (context == null) {
+-            return;
+-        }
+-
+-        try {
+-            FILE_PROVIDER_SOURCE.registerProviders(entrypointHandler, context);
+-        } catch (IllegalArgumentException ignored) {
+-            // Ignore illegal argument exceptions from jar checking
+-        } catch (Exception e) {
+-            LOGGER.error("Error loading our spark plugin: " + e.getMessage(), e);
 -        }
 -    }
 -

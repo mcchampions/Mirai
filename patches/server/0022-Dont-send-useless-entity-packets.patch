@@ -22,10 +22,10 @@ index fcc55d83eaffdb87015fb63070d33565a0310987..a5b4f3fb4bd4217fc81da8605df40c2e
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index ca6c394d1ee980e7e18a11814dc4c0d1105a4b3e..c0470146efbb9f2fe843548e597cd138e6bae93e 100644
+index ba008b21f8670e01eff6f0064bc4503e0b580ac1..14d65b543609d150153c69fde120b01dd6137214 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -200,6 +200,7 @@ public class ServerEntity {
+@@ -206,6 +206,7 @@ public class ServerEntity {
                          flag4 = true;
                          flag5 = true;
                      }
@@ -33,7 +33,7 @@ index ca6c394d1ee980e7e18a11814dc4c0d1105a4b3e..c0470146efbb9f2fe843548e597cd138
                  }
  
                  if ((this.trackDelta || this.entity.hasImpulse || this.entity instanceof LivingEntity && ((LivingEntity) this.entity).isFallFlying()) && this.tickCount > 0) {
-@@ -272,6 +273,21 @@ public class ServerEntity {
+@@ -278,6 +279,21 @@ public class ServerEntity {
          });
      }
  

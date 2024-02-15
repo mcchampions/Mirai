@@ -7,7 +7,7 @@ Original code by nopjmp, licensed under MIT
 You can find the original code on https://github.com/nopjmp/Dionysus
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
-index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad059e7950d 100644
+index a53dd1ea02bd19826cd9fd337459b08e9533bce8..496995f980cc00b00a26ee60b2a9bd4da7011668 100644
 --- a/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerHandshakePacketListenerImpl.java
 @@ -13,8 +13,10 @@ import net.minecraft.server.MinecraftServer;
@@ -51,7 +51,7 @@ index c6bcf4a5d5c48e6f73b8e5d3662ec0d7c288c6c8..c83a1e3b17c3a0e4d8aa1fc240677ad0
 -                                    iter.remove();
 -                                }
 -                            }
-+                            throttleTracker.object2LongEntrySet().removeIf(entry -> entry.getLongValue() > connectionThrottle); // Dionysus
++                            ServerHandshakePacketListenerImpl.throttleTracker.object2LongEntrySet().removeIf(entry -> entry.getLongValue() > connectionThrottle); // Dionysus
                          }
                      }
-                     } // Paper - add closing bracket for if check above
+                     } // Paper - Unix domain socket support
