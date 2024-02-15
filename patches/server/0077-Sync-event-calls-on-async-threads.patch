@@ -5,17 +5,16 @@ Subject: [PATCH] Sync event calls on async threads
 
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 590e3d386f9d2d8a3bd307198ec36a29bb92f76b..d51608b4b3fe8ad4699239e4423ab34ba5dcc99b 100644
+index 829c5a79e05f7ef3a228ddce53da48f149ac3635..bdc8d24880a4e850eca283c0da132bbc44c973aa 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -236,4 +236,17 @@ public class MiraiConfig {
+@@ -234,4 +234,16 @@ public class MiraiConfig {
              enableAsyncEntityTracker = temp;
          }
      }
 +
 +    public static boolean enableSyncEventCallsOnAsyncThreads;
 +    public static boolean enableSyncEventCallsOnAsyncThreadsInitialized;
-+
 +    private static void syncEventCallsOnAsyncThreads() {
 +        boolean temp = getBoolean("enable-sync-event-calls-on-async-threads", true,
 +            "Whether or not sync event calls on async threads should be enabled. (If async entity tracker is enabled, this is enabled.)",

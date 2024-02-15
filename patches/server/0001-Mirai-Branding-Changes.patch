@@ -226,10 +226,10 @@ index 3cb56595822799926a8141e60a42f5d1edfc6de5..6db7517011ac94532751a88db951d28d
                  .option(LineReader.Option.COMPLETE_IN_WORD, true);
 diff --git a/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..127b51d61ab6a4cfbdd8580216279aa1241f75b2
+index 0000000000000000000000000000000000000000..f096fea5da79fe700efded9d448d94781e6f6526
 --- /dev/null
 +++ b/src/main/java/dev/etil/mirai/MiraiVersionFetcher.java
-@@ -0,0 +1,144 @@
+@@ -0,0 +1,148 @@
 +package dev.etil.mirai;
 +
 +import static net.kyori.adventure.text.Component.text;
@@ -290,11 +290,13 @@ index 0000000000000000000000000000000000000000..127b51d61ab6a4cfbdd8580216279aa1
 +
 +            component = this.fetchGithubVersion(versionString.substring(1, versionString.length() - 1));
 +            // Mirai start - Remove Jenkins fetcher
-+            //try {
-+            //    component = this.fetchJenkinsVersion(Integer.parseInt(versionString));
-+            //} catch (NumberFormatException e) {
-+            //    component = this.fetchGithubVersion(versionString.substring(1, versionString.length() - 1));
-+            //}
++            /*
++            try {
++                component = this.fetchJenkinsVersion(Integer.parseInt(versionString));
++            } catch (NumberFormatException e) {
++                component = this.fetchGithubVersion(versionString.substring(1, versionString.length() - 1));
++            }
++             */
 +            // Mirai end
 +        }
 +
@@ -304,29 +306,31 @@ index 0000000000000000000000000000000000000000..127b51d61ab6a4cfbdd8580216279aa1
 +    }
 +
 +    // Mirai start - Remove Jenkins fetcher
-+    //private @NotNull Component fetchJenkinsVersion(final int versionNumber) {
-+    //    final HttpRequest request = HttpRequest.newBuilder(JENKINS_URI).build();
-+    //    try {
-+    //        final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-+    //        if (response.statusCode() != 200) {
-+    //            return text("Received invalid status code (" + response.statusCode() + ") from server.", RED);
-+    //        }
-+    //
-+    //        int latestVersionNumber;
-+    //        try {
-+    //            latestVersionNumber = Integer.parseInt(response.body());
-+    //        } catch (NumberFormatException e) {
-+    //            LOGGER.log(Level.WARNING, "Received invalid response from Jenkins \"" + response.body() + "\".");
-+    //            return text("Received invalid response from server.", RED);
-+    //        }
-+    //
-+    //        final int versionDiff = latestVersionNumber - versionNumber;
-+    //        return this.getResponseMessage(versionDiff);
-+    //    } catch (IOException | InterruptedException e) {
-+    //        LOGGER.log(Level.WARNING, "Failed to look up version from Jenkins", e);
-+    //        return text("Failed to retrieve version from server.", RED);
-+    //    }
-+    //}
++    /*
++    private @NotNull Component fetchJenkinsVersion(final int versionNumber) {
++        final HttpRequest request = HttpRequest.newBuilder(JENKINS_URI).build();
++        try {
++            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
++            if (response.statusCode() != 200) {
++                return text("Received invalid status code (" + response.statusCode() + ") from server.", RED);
++            }
++
++            int latestVersionNumber;
++            try {
++                latestVersionNumber = Integer.parseInt(response.body());
++            } catch (NumberFormatException e) {
++                LOGGER.log(Level.WARNING, "Received invalid response from Jenkins \"" + response.body() + "\".");
++                return text("Received invalid response from server.", RED);
++            }
++
++            final int versionDiff = latestVersionNumber - versionNumber;
++            return this.getResponseMessage(versionDiff);
++        } catch (IOException | InterruptedException e) {
++            LOGGER.log(Level.WARNING, "Failed to look up version from Jenkins", e);
++            return text("Failed to retrieve version from server.", RED);
++        }
++    }
++     */
 +    // Mirai end
 +
 +    // Based off code contributed by Techcable <Techcable@outlook.com> in Paper/GH-65

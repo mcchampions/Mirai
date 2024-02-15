@@ -14,21 +14,10 @@ This patch was ported downstream from the Petal fork.
 Makes most pathfinding-related work happen asynchronously
 
 diff --git a/src/main/java/dev/etil/mirai/MiraiConfig.java b/src/main/java/dev/etil/mirai/MiraiConfig.java
-index 37533ceb3c97c707d6b397ee42991e1bb96040ed..bbcc067e6c157e6469420386b411bdca855ffb9f 100644
+index 37533ceb3c97c707d6b397ee42991e1bb96040ed..2efbfd75b18a72e0ef0b983dcc684b9a11e184f3 100644
 --- a/src/main/java/dev/etil/mirai/MiraiConfig.java
 +++ b/src/main/java/dev/etil/mirai/MiraiConfig.java
-@@ -5,8 +5,10 @@ import java.io.IOException;
- import java.lang.reflect.Method;
- import java.lang.reflect.Modifier;
- import java.util.List;
-+import java.util.logging.Level;
- 
- import net.minecraft.server.MinecraftServer;
-+import org.bukkit.Bukkit;
- import org.bukkit.configuration.ConfigurationSection;
- import org.bukkit.configuration.MemoryConfiguration;
- import org.jetbrains.annotations.Nullable;
-@@ -205,4 +207,21 @@ public class MiraiConfig {
+@@ -205,4 +205,21 @@ public class MiraiConfig {
              "Whether or not zombies from spawners should be able to",
              "pick up items on the ground.");
      }
@@ -47,7 +36,7 @@ index 37533ceb3c97c707d6b397ee42991e1bb96040ed..bbcc067e6c157e6469420386b411bdca
 +        if (!asyncPathfinding)
 +            asyncPathfindingMaxThreads = 0;
 +        else
-+            Bukkit.getLogger().log(Level.INFO, "Using " + asyncPathfindingMaxThreads + " threads for Async Pathfinding");
++            MinecraftServer.LOGGER.info("Using {} threads for Async Pathfinding", asyncPathfindingMaxThreads);
 +    }
  }
 diff --git a/src/main/java/dev/etil/mirai/path/AsyncPath.java b/src/main/java/dev/etil/mirai/path/AsyncPath.java
