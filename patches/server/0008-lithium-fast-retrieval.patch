@@ -7,7 +7,7 @@ Original code by CaffeineMC, licensed under LGPL v3
 You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
-index ee692b49c62f36287bf9d008861f5d47e0e42c00..78632156fdcb1e4567b4c30813310dc8af2b82bb 100644
+index ee7f7a4bd60a104be382757195cf75decffd96b7..b732747f3dbc3897829d266819c8c92919dfc05d 100644
 --- a/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 +++ b/src/main/java/net/minecraft/world/level/entity/EntitySectionStorage.java
 @@ -33,7 +33,7 @@ public class EntitySectionStorage<T extends EntityAccess> {
@@ -75,9 +75,10 @@ index ee692b49c62f36287bf9d008861f5d47e0e42c00..78632156fdcb1e4567b4c30813310dc8
 +                }
 +            }
          }
+-
 +        // Mirai end
 +    }
- 
++
 +    // Mirai start - lithium: fast retrieval
 +    private void forEachInColumn(int x, int k, int n, int z, AbortableIterationConsumer<EntitySection<T>> consumer) {
 +        // y from negative to positive, but y is treated as unsigned

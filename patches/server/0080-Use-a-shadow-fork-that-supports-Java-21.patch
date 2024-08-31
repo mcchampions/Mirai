@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mcchampions <1309635304@qq.com>
+Date: Sat, 31 Aug 2024 13:58:14 +0800
+Subject: [PATCH] Use a shadow fork that supports Java 21
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 6151b134a09986e140bbc9059f49a6622a169ffd..27ed1e3a0a79e92fdd8af234df0d1485ace6bacc 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -3,7 +3,7 @@ import io.papermc.paperweight.util.*
+ plugins {
+     java
+     `maven-publish`
+-    id("com.github.johnrengelman.shadow")
++    id("io.github.goooler.shadow") // Leaf - use a shadow fork that supports Java 21
+ }
+ 
+ val log4jPlugins = sourceSets.create("log4jPlugins")
