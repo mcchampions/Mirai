@@ -1,0 +1,1044 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: mcchampions <1309635304@qq.com>
+Date: Sat, 31 Aug 2024 19:17:20 +0800
+Subject: [PATCH] Remove useless expressions
+
+
+diff --git a/src/main/java/ca/spottedleaf/concurrentutil/executor/standard/DelayedPrioritisedTask.java b/src/main/java/ca/spottedleaf/concurrentutil/executor/standard/DelayedPrioritisedTask.java
+index 3ce10053d4ec51855ad7012abb5d97df1c0e557a..3b84e0754c5f1b0f117271677001a338128203ea 100644
+--- a/src/main/java/ca/spottedleaf/concurrentutil/executor/standard/DelayedPrioritisedTask.java
++++ b/src/main/java/ca/spottedleaf/concurrentutil/executor/standard/DelayedPrioritisedTask.java
+@@ -8,7 +8,7 @@ public class DelayedPrioritisedTask {
+     protected volatile int priority;
+     protected static final VarHandle PRIORITY_HANDLE = ConcurrentUtil.getVarHandle(DelayedPrioritisedTask.class, "priority", int.class);
+ 
+-    protected static final int PRIORITY_SET = Integer.MIN_VALUE >>> 0;
++    protected static final int PRIORITY_SET = Integer.MIN_VALUE;
+ 
+     protected final int getPriorityVolatile() {
+         return (int)PRIORITY_HANDLE.getVolatile((DelayedPrioritisedTask)this);
+diff --git a/src/main/java/io/papermc/paper/chunk/system/scheduling/GenericDataLoadTask.java b/src/main/java/io/papermc/paper/chunk/system/scheduling/GenericDataLoadTask.java
+index 396d72c00e47cf1669ae20dc839c1c961b1f262a..48c6ac204c9b747435bd3c333c20471f05ade860 100644
+--- a/src/main/java/io/papermc/paper/chunk/system/scheduling/GenericDataLoadTask.java
++++ b/src/main/java/io/papermc/paper/chunk/system/scheduling/GenericDataLoadTask.java
+@@ -223,7 +223,7 @@ public abstract class GenericDataLoadTask<OnMain,FinalCompletion> {
+                     return true;
+                 }
+             } else {
+-                if ((curr & ~STAGE_MASK) == (0L << 32)) {
++                if ((curr & ~STAGE_MASK) == (0L)) {
+                     throw new IllegalStateException("Reference count cannot be zero here");
+                 }
+                 // just decrease the reference count
+@@ -353,7 +353,7 @@ public abstract class GenericDataLoadTask<OnMain,FinalCompletion> {
+         protected volatile int priority;
+         protected static final VarHandle PRIORITY_HANDLE = ConcurrentUtil.getVarHandle(LoadDataFromDiskTask.class, "priority", int.class);
+ 
+-        protected static final int PRIORITY_EXECUTED         = Integer.MIN_VALUE >>> 0;
++        protected static final int PRIORITY_EXECUTED         = Integer.MIN_VALUE;
+         protected static final int PRIORITY_LOAD_SCHEDULED   = Integer.MIN_VALUE >>> 1;
+         protected static final int PRIORITY_UNLOAD_SCHEDULED = Integer.MIN_VALUE >>> 2;
+ 
+diff --git a/src/main/java/io/papermc/paper/chunk/system/scheduling/PriorityHolder.java b/src/main/java/io/papermc/paper/chunk/system/scheduling/PriorityHolder.java
+index b4c56bf12dc8dd17452210ece4fd67411cc6b2fd..29048f949bae62567ccd7d9e6c1a1d256c3c8b20 100644
+--- a/src/main/java/io/papermc/paper/chunk/system/scheduling/PriorityHolder.java
++++ b/src/main/java/io/papermc/paper/chunk/system/scheduling/PriorityHolder.java
+@@ -9,7 +9,7 @@ public abstract class PriorityHolder {
+     protected volatile int priority;
+     protected static final VarHandle PRIORITY_HANDLE = ConcurrentUtil.getVarHandle(PriorityHolder.class, "priority", int.class);
+ 
+-    protected static final int PRIORITY_SCHEDULED = Integer.MIN_VALUE >>> 0;
++    protected static final int PRIORITY_SCHEDULED = Integer.MIN_VALUE;
+     protected static final int PRIORITY_EXECUTED  = Integer.MIN_VALUE >>> 1;
+ 
+     protected final int getPriorityVolatile() {
+diff --git a/src/main/java/io/papermc/paper/chunk/system/scheduling/ThreadedTicketLevelPropagator.java b/src/main/java/io/papermc/paper/chunk/system/scheduling/ThreadedTicketLevelPropagator.java
+index 287240ed3b440f2f5733c368416e4276f626405d..bcd1be92f53d83d8a24b1ec8318710d61066a82a 100644
+--- a/src/main/java/io/papermc/paper/chunk/system/scheduling/ThreadedTicketLevelPropagator.java
++++ b/src/main/java/io/papermc/paper/chunk/system/scheduling/ThreadedTicketLevelPropagator.java
+@@ -911,7 +911,7 @@ public abstract class ThreadedTicketLevelPropagator {
+         protected static final long FLAG_WRITE_LEVEL = Long.MIN_VALUE >>> 1;
+         // whether the propagation needs to check if its current level is equal to the expected level
+         // used only in increase propagation
+-        protected static final long FLAG_RECHECK_LEVEL = Long.MIN_VALUE >>> 0;
++        protected static final long FLAG_RECHECK_LEVEL = Long.MIN_VALUE;
+ 
+         protected long[] increaseQueue = new long[SECTION_SIZE * SECTION_SIZE * 2];
+         protected int increaseQueueInitialLength;
+diff --git a/src/main/java/io/papermc/paper/util/CollisionUtil.java b/src/main/java/io/papermc/paper/util/CollisionUtil.java
+index e46c870e351679ec4cb67d270398b78eb951e919..adaee2396fe3d143b91acad4cb897f247467028a 100644
+--- a/src/main/java/io/papermc/paper/util/CollisionUtil.java
++++ b/src/main/java/io/papermc/paper/util/CollisionUtil.java
+@@ -1565,7 +1565,7 @@ public final class CollisionUtil {
+         return x > y ? x : y;
+     }
+ 
+-    public static final int COLLISION_FLAG_LOAD_CHUNKS = 1 << 0;
++    public static final int COLLISION_FLAG_LOAD_CHUNKS = 1;
+     public static final int COLLISION_FLAG_COLLIDE_WITH_UNLOADED_CHUNKS = 1 << 1;
+     public static final int COLLISION_FLAG_CHECK_BORDER = 1 << 2;
+     public static final int COLLISION_FLAG_CHECK_ONLY = 1 << 3;
+diff --git a/src/main/java/io/papermc/paper/util/collisions/FlatBitsetUtil.java b/src/main/java/io/papermc/paper/util/collisions/FlatBitsetUtil.java
+index ff9d2dad39dcc02b2371458b7b5f64c6090e8012..4746883ae26b8fe0dcbfb430dfbb4210e6e858ed 100644
+--- a/src/main/java/io/papermc/paper/util/collisions/FlatBitsetUtil.java
++++ b/src/main/java/io/papermc/paper/util/collisions/FlatBitsetUtil.java
+@@ -16,7 +16,7 @@ public final class FlatBitsetUtil {
+         }
+ 
+         int bitsetIdx = from >>> LOG2_LONG;
+-        int bitIdx = from & ~(BITS_PER_LONG - 1);
++        int bitIdx = from & -BITS_PER_LONG;
+ 
+         long tmp = bitset[bitsetIdx] & (ALL_SET << from);
+         for (;;) {
+@@ -44,7 +44,7 @@ public final class FlatBitsetUtil {
+         // like firstSet, but invert the bitset
+ 
+         int bitsetIdx = from >>> LOG2_LONG;
+-        int bitIdx = from & ~(BITS_PER_LONG - 1);
++        int bitIdx = from & -BITS_PER_LONG;
+ 
+         long tmp = (~bitset[bitsetIdx]) & (ALL_SET << from);
+         for (;;) {
+diff --git a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java b/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
+index dc06747df171678c8531e1153c5fa9b80b70baed..16c07defbb8b186d5fb6a95ae28a0570d3be127c 100644
+--- a/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
++++ b/src/main/java/io/papermc/paper/util/maplist/IteratorSafeOrderedReferenceSet.java
+@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
+ 
+ public final class IteratorSafeOrderedReferenceSet<E> {
+ 
+-    public static final int ITERATOR_FLAG_SEE_ADDITIONS = 1 << 0;
++    public static final int ITERATOR_FLAG_SEE_ADDITIONS = 1;
+ 
+     protected final Reference2IntLinkedOpenHashMap<E> indexMap;
+     protected int firstInvalidIndex = -1;
+diff --git a/src/main/java/net/minecraft/core/SectionPos.java b/src/main/java/net/minecraft/core/SectionPos.java
+index dd1f6f3f89ebee301f587aa2f099910c141fcd6f..6708887d6d5ee98457e03bb6a4d514a545bce141 100644
+--- a/src/main/java/net/minecraft/core/SectionPos.java
++++ b/src/main/java/net/minecraft/core/SectionPos.java
+@@ -38,7 +38,7 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static SectionPos of(BlockPos pos) {
+-        return new SectionPos(pos.getX() >> 4, pos.getY() >> 4, pos.getZ() >> 4); // Paper
++        return new SectionPos(pos.getX() >> 4, pos.getY() >> 4, pos.getZ() >> 4); // Paper
+     }
+ 
+     public static SectionPos of(ChunkPos chunkPos, int y) {
+@@ -54,7 +54,7 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static SectionPos of(long packed) {
+-        return new SectionPos((int) (packed >> 42), (int) (packed << 44 >> 44), (int) (packed << 22 >> 42)); // Paper
++        return new SectionPos((int) (packed >> 42), (int) (packed << 44 >> 44), (int) (packed << 22 >> 42)); // Paper
+     }
+ 
+     public static SectionPos bottomOf(ChunkAccess chunk) {
+@@ -65,16 +65,16 @@ public class SectionPos extends Vec3i {
+         return offset(packed, direction.getStepX(), direction.getStepY(), direction.getStepZ());
+     }
+ 
+-    // Paper start
+-    public static long getAdjacentFromBlockPos(int x, int y, int z, Direction enumdirection) {
+-        return (((long) ((x >> 4) + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y >> 4) + enumdirection.getStepY()) & 1048575L)) | (((long) ((z >> 4) + enumdirection.getStepZ()) & 4194303L) << 20);
+-    }
+-    public static long getAdjacentFromSectionPos(int x, int y, int z, Direction enumdirection) {
+-        return (((long) (x + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y) + enumdirection.getStepY()) & 1048575L)) | (((long) (z + enumdirection.getStepZ()) & 4194303L) << 20);
+-    }
+-    // Paper end
++    // Paper start
++    public static long getAdjacentFromBlockPos(int x, int y, int z, Direction enumdirection) {
++        return (((long) ((x >> 4) + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y >> 4) + enumdirection.getStepY()) & 1048575L)) | (((long) ((z >> 4) + enumdirection.getStepZ()) & 4194303L) << 20);
++    }
++    public static long getAdjacentFromSectionPos(int x, int y, int z, Direction enumdirection) {
++        return (((long) (x + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y) + enumdirection.getStepY()) & 1048575L)) | (((long) (z + enumdirection.getStepZ()) & 4194303L) << 20);
++    }
++    // Paper end
+     public static long offset(long packed, int x, int y, int z) {
+-        return (((long) ((int) (packed >> 42) + x) & 4194303L) << 42) | (((long) ((int) (packed << 44 >> 44) + y) & 1048575L)) | (((long) ((int) (packed << 22 >> 42) + z) & 4194303L) << 20); // Simplify to reduce instruction count
++        return (((long) ((int) (packed >> 42) + x) & 4194303L) << 42) | (((long) ((int) (packed << 44 >> 44) + y) & 1048575L)) | (((long) ((int) (packed << 22 >> 42) + z) & 4194303L) << 20); // Simplify to reduce instruction count
+     }
+ 
+     public static int posToSectionCoord(double coord) {
+@@ -94,7 +94,7 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static short sectionRelativePos(BlockPos pos) {
+-        return (short) ((pos.getX() & 15) << 8 | (pos.getZ() & 15) << 4 | pos.getY() & 15); // Paper - simplify/inline
++        return (short) ((pos.getX() & 15) << 8 | (pos.getZ() & 15) << 4 | pos.getY() & 15); // Paper - simplify/inline
+     }
+ 
+     public static int sectionRelativeX(short packedLocalPos) {
+@@ -102,7 +102,7 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static int sectionRelativeY(short packedLocalPos) {
+-        return packedLocalPos >>> 0 & 15;
++        return packedLocalPos & 15;
+     }
+ 
+     public static int sectionRelativeZ(short packedLocalPos) {
+@@ -134,7 +134,7 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static int x(long packed) {
+-        return (int)(packed << 0 >> 42);
++        return (int)(packed >> 42);
+     }
+ 
+     public static int y(long packed) {
+@@ -157,16 +157,16 @@ public class SectionPos extends Vec3i {
+         return this.getZ();
+     }
+ 
+-    public final int minBlockX() { // Paper - make final
+-        return this.getX() << 4; // Paper - inline
++    public final int minBlockX() { // Paper - make final
++        return this.getX() << 4; // Paper - inline
+     }
+ 
+-    public final int minBlockY() { // Paper - make final
+-        return this.getY() << 4; // Paper - inline
++    public final int minBlockY() { // Paper - make final
++        return this.getY() << 4; // Paper - inline
+     }
+ 
+-    public int minBlockZ() { // Paper - make final
+-        return this.getZ() << 4; // Paper - inline
++    public int minBlockZ() { // Paper - make final
++        return this.getZ() << 4; // Paper - inline
+     }
+ 
+     public int maxBlockX() {
+@@ -182,8 +182,8 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static long blockToSection(long blockPos) {
+-        // b(a(BlockPosition.b(i)), a(BlockPosition.c(i)), a(BlockPosition.d(i)));
+-        return (((long) (int) (blockPos >> 42) & 4194303L) << 42) | (((long) (int) ((blockPos << 52) >> 56) & 1048575L)) | (((long) (int) ((blockPos << 26) >> 42) & 4194303L) << 20); // Simplify to reduce instruction count
++        // b(a(BlockPosition.b(i)), a(BlockPosition.c(i)), a(BlockPosition.d(i)));
++        return (((long) (int) (blockPos >> 42) & 4194303L) << 42) | (((long) (int) ((blockPos << 52) >> 56) & 1048575L)) | (((long) (int) ((blockPos << 26) >> 42) & 4194303L) << 20); // Simplify to reduce instruction count
+     }
+ 
+     public static long getZeroNode(int x, int z) {
+@@ -211,18 +211,18 @@ public class SectionPos extends Vec3i {
+         return asLong(blockToSectionCoord(pos.getX()), blockToSectionCoord(pos.getY()), blockToSectionCoord(pos.getZ()));
+     }
+ 
+-    // Paper start
+-    public static long blockPosAsSectionLong(int i, int j, int k) {
+-        return (((long) (i >> 4) & 4194303L) << 42) | (((long) (j >> 4) & 1048575L)) | (((long) (k >> 4) & 4194303L) << 20);
+-    }
+-    // Paper end
+-
++    // Paper start
++    public static long blockPosAsSectionLong(int i, int j, int k) {
++        return (((long) (i >> 4) & 4194303L) << 42) | (((long) (j >> 4) & 1048575L)) | (((long) (k >> 4) & 4194303L) << 20);
++    }
++    // Paper end
++
+     public static long asLong(int x, int y, int z) {
+-        return (((long) x & 4194303L) << 42) | (((long) y & 1048575L)) | (((long) z & 4194303L) << 20); // Paper - Simplify to reduce instruction count
++        return (((long) x & 4194303L) << 42) | (((long) y & 1048575L)) | (((long) z & 4194303L) << 20); // Paper - Simplify to reduce instruction count
+     }
+ 
+     public long asLong() {
+-        return (((long) getX() & 4194303L) << 42) | (((long) getY() & 1048575L)) | (((long) getZ() & 4194303L) << 20); // Paper - Simplify to reduce instruction count
++        return (((long) getX() & 4194303L) << 42) | (((long) getY() & 1048575L)) | (((long) getZ() & 4194303L) << 20); // Paper - Simplify to reduce instruction count
+     }
+ 
+     @Override
+@@ -235,11 +235,11 @@ public class SectionPos extends Vec3i {
+     }
+ 
+     public static Stream<SectionPos> cube(SectionPos center, int radius) {
+-        return betweenClosedStream(center.getX() - radius, center.getY() - radius, center.getZ() - radius, center.getX() + radius, center.getY() + radius, center.getZ() + radius); // Paper - simplify/inline
++        return betweenClosedStream(center.getX() - radius, center.getY() - radius, center.getZ() - radius, center.getX() + radius, center.getY() + radius, center.getZ() + radius); // Paper - simplify/inline
+     }
+ 
+     public static Stream<SectionPos> aroundChunk(ChunkPos center, int radius, int minY, int maxY) {
+-        return betweenClosedStream(center.x - radius, 0, center.z - radius, center.x + radius, 15, center.z + radius); // Paper - simplify/inline
++        return betweenClosedStream(center.x - radius, 0, center.z - radius, center.x + radius, 15, center.z + radius); // Paper - simplify/inline
+     }
+ 
+     public static Stream<SectionPos> betweenClosedStream(final int minX, final int minY, final int minZ, final int maxX, final int maxY, final int maxZ) {
+diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+index d987795ccaab787ae89af254dec88c6fc7e04f50..a394c85172a0ade6500b26659704424a056331be 100644
+--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
+@@ -989,7 +989,7 @@ public abstract class LivingEntity extends Entity implements Attackable {
+             if (flag1 && i > 0) {
+                 double d0 = (double) (i >> 16 & 255) / 255.0D;
+                 double d1 = (double) (i >> 8 & 255) / 255.0D;
+-                double d2 = (double) (i >> 0 & 255) / 255.0D;
++                double d2 = (double) (i & 255) / 255.0D;
+ 
+                 this.level().addParticle(flag ? ParticleTypes.AMBIENT_ENTITY_EFFECT : ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+             }
+diff --git a/src/main/java/net/minecraft/world/entity/projectile/Arrow.java b/src/main/java/net/minecraft/world/entity/projectile/Arrow.java
+index 8b02ca7a0ea5299a319809cdd2ccc8acd0e647bc..8549263e40b0c3ba3bcc401f1af7f67801ea83a8 100644
+--- a/src/main/java/net/minecraft/world/entity/projectile/Arrow.java
++++ b/src/main/java/net/minecraft/world/entity/projectile/Arrow.java
+@@ -134,7 +134,7 @@ public class Arrow extends AbstractArrow {
+         if (j != -1 && amount > 0) {
+             double d0 = (double) (j >> 16 & 255) / 255.0D;
+             double d1 = (double) (j >> 8 & 255) / 255.0D;
+-            double d2 = (double) (j >> 0 & 255) / 255.0D;
++            double d2 = (double) (j & 255) / 255.0D;
+ 
+             for (int k = 0; k < amount; ++k) {
+                 this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+@@ -252,7 +252,7 @@ public class Arrow extends AbstractArrow {
+             if (i != -1) {
+                 double d0 = (double) (i >> 16 & 255) / 255.0D;
+                 double d1 = (double) (i >> 8 & 255) / 255.0D;
+-                double d2 = (double) (i >> 0 & 255) / 255.0D;
++                double d2 = (double) (i & 255) / 255.0D;
+ 
+                 for (int j = 0; j < 20; ++j) {
+                     this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
+diff --git a/src/main/java/net/minecraft/world/item/DyeColor.java b/src/main/java/net/minecraft/world/item/DyeColor.java
+index 0f42c50359820250fe069d2c90e474386d9b6149..7d19a4ce17bca3fcaded122ae33851d45233f3e6 100644
+--- a/src/main/java/net/minecraft/world/item/DyeColor.java
++++ b/src/main/java/net/minecraft/world/item/DyeColor.java
+@@ -49,7 +49,7 @@ public enum DyeColor implements StringRepresentable {
+         this.textColor = signColor;
+         int j = (color & 16711680) >> 16;
+         int k = (color & '\uff00') >> 8;
+-        int l = (color & 255) >> 0;
++        int l = (color & 255);
+         this.textureDiffuseColors = new float[]{(float)j / 255.0F, (float)k / 255.0F, (float)l / 255.0F};
+         this.fireworkColor = fireworkColor;
+     }
+@@ -103,10 +103,10 @@ public enum DyeColor implements StringRepresentable {
+     public String getSerializedName() {
+         return this.name;
+     }
+-
+-    // Purpur start
+-    public static DyeColor random(net.minecraft.util.RandomSource random) {
+-        return values()[random.nextInt(values().length)];
+-    }
+-    // Purpur end
++
++    // Purpur start
++    public static DyeColor random(net.minecraft.util.RandomSource random) {
++        return values()[random.nextInt(values().length)];
++    }
++    // Purpur end
+ }
+diff --git a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
+index 17ad8fa8826c682eea1f71625f26f5c68cb6ede1..dd01b9b225feddc2963784578f44632a41a08daa 100644
+--- a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
++++ b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
+@@ -11,27 +11,27 @@ public final class ImprovedNoise {
+     public final double yo;
+     public final double zo;
+ 
+-    // Mirai start - c2me: opts math
+-    private static final double[] FLAT_SIMPLEX_GRAD = new double[]{
+-        1, 1, 0, 0,
+-        -1, 1, 0, 0,
+-        1, -1, 0, 0,
+-        -1, -1, 0, 0,
+-        1, 0, 1, 0,
+-        -1, 0, 1, 0,
+-        1, 0, -1, 0,
+-        -1, 0, -1, 0,
+-        0, 1, 1, 0,
+-        0, -1, 1, 0,
+-        0, 1, -1, 0,
+-        0, -1, -1, 0,
+-        1, 1, 0, 0,
+-        0, -1, 1, 0,
+-        -1, 1, 0, 0,
+-        0, -1, -1, 0,
+-    };
+-    // Mirai end
+-
++    // Mirai start - c2me: opts math
++    private static final double[] FLAT_SIMPLEX_GRAD = new double[]{
++        1, 1, 0, 0,
++        -1, 1, 0, 0,
++        1, -1, 0, 0,
++        -1, -1, 0, 0,
++        1, 0, 1, 0,
++        -1, 0, 1, 0,
++        1, 0, -1, 0,
++        -1, 0, -1, 0,
++        0, 1, 1, 0,
++        0, -1, 1, 0,
++        0, 1, -1, 0,
++        0, -1, -1, 0,
++        1, 1, 0, 0,
++        0, -1, 1, 0,
++        -1, 1, 0, 0,
++        0, -1, -1, 0,
++    };
++    // Mirai end
++
+     public ImprovedNoise(RandomSource random) {
+         this.xo = random.nextDouble() * 256.0D;
+         this.yo = random.nextDouble() * 256.0D;
+@@ -55,40 +55,40 @@ public final class ImprovedNoise {
+         return this.noise(x, y, z, 0.0D, 0.0D);
+     }
+ 
+-    // Mirai start - c2me: opts math
+-    /*
+-      @author ishland
+-     * @reason optimize: remove frequent type conversions
+-     */
+-    /**
+-     * @deprecated
+-     */
++    // Mirai start - c2me: opts math
++    /*
++      @author ishland
++     * @reason optimize: remove frequent type conversions
++     */
++    /**
++     * @deprecated
++     */
+     @Deprecated
+     public double noise(double x, double y, double z, double yScale, double yMax) {
+         double d = x + this.xo;
+         double e = y + this.yo;
+         double f = z + this.zo;
+-        double i = Mth.floor(d);
+-        double j = Mth.floor(e);
+-        double k = Mth.floor(f);
+-        double g = d - i;
+-        double h = e - j;
+-        double l = f - k;
+-        double o = 0.0D;
+-        if (yScale != 0.0) {
++        double i = Mth.floor(d);
++        double j = Mth.floor(e);
++        double k = Mth.floor(f);
++        double g = d - i;
++        double h = e - j;
++        double l = f - k;
++        double o = 0.0D;
++        if (yScale != 0.0) {
+             double m;
+-            if (yMax >= 0.0 && yMax < h) {
++            if (yMax >= 0.0 && yMax < h) {
+                 m = yMax;
+             } else {
+                 m = h;
+             }
+ 
+-            o = Mth.floor(m / yScale + 1.0E-7F) * yScale;
++            o = Mth.floor(m / yScale + 1.0E-7F) * yScale;
+         }
+ 
+-        return this.sampleAndLerp((int) i, (int) j, (int) k, g, h - o, l, h);
++        return this.sampleAndLerp((int) i, (int) j, (int) k, g, h - o, l, h);
+     }
+-    // Mirai end
++    // Mirai end
+ 
+     public double noiseWithDerivative(double x, double y, double z, double[] ds) {
+         double d = x + this.xo;
+@@ -111,76 +111,76 @@ public final class ImprovedNoise {
+         return this.p[input & 255] & 255;
+     }
+ 
+-    // Mirai start - c2me: opts math
+-    /**
+-     * @author ishland
+-     * @reason inline math & small optimization: remove frequent type conversions and redundant ops
+-     */
+-    private double sampleAndLerp(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double fadeLocalX) {
+-        // TODO [VanillaCopy] but optimized
+-        final int var0 = sectionX & 0xFF;
+-        final int var1 = (sectionX + 1) & 0xFF;
+-        final int var2 = this.p[var0] & 0xFF;
+-        final int var3 = this.p[var1] & 0xFF;
+-        final int var4 = (var2 + sectionY) & 0xFF;
+-        final int var5 = (var3 + sectionY) & 0xFF;
+-        final int var6 = (var2 + sectionY + 1) & 0xFF;
+-        final int var7 = (var3 + sectionY + 1) & 0xFF;
+-        final int var8 = this.p[var4] & 0xFF;
+-        final int var9 = this.p[var5] & 0xFF;
+-        final int var10 = this.p[var6] & 0xFF;
+-        final int var11 = this.p[var7] & 0xFF;
+-
+-        final int var12 = (var8 + sectionZ) & 0xFF;
+-        final int var13 = (var9 + sectionZ) & 0xFF;
+-        final int var14 = (var10 + sectionZ) & 0xFF;
+-        final int var15 = (var11 + sectionZ) & 0xFF;
+-        final int var16 = (var8 + sectionZ + 1) & 0xFF;
+-        final int var17 = (var9 + sectionZ + 1) & 0xFF;
+-        final int var18 = (var10 + sectionZ + 1) & 0xFF;
+-        final int var19 = (var11 + sectionZ + 1) & 0xFF;
+-        final int var20 = (this.p[var12] & 15) << 2;
+-        final int var21 = (this.p[var13] & 15) << 2;
+-        final int var22 = (this.p[var14] & 15) << 2;
+-        final int var23 = (this.p[var15] & 15) << 2;
+-        final int var24 = (this.p[var16] & 15) << 2;
+-        final int var25 = (this.p[var17] & 15) << 2;
+-        final int var26 = (this.p[var18] & 15) << 2;
+-        final int var27 = (this.p[var19] & 15) << 2;
+-        final double var60 = localX - 1.0;
+-        final double var61 = localY - 1.0;
+-        final double var62 = localZ - 1.0;
+-        final double var87 = FLAT_SIMPLEX_GRAD[(var20) | 0] * localX + FLAT_SIMPLEX_GRAD[(var20) | 1] * localY + FLAT_SIMPLEX_GRAD[(var20) | 2] * localZ;
+-        final double var88 = FLAT_SIMPLEX_GRAD[(var21) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var21) | 1] * localY + FLAT_SIMPLEX_GRAD[(var21) | 2] * localZ;
+-        final double var89 = FLAT_SIMPLEX_GRAD[(var22) | 0] * localX + FLAT_SIMPLEX_GRAD[(var22) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var22) | 2] * localZ;
+-        final double var90 = FLAT_SIMPLEX_GRAD[(var23) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var23) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var23) | 2] * localZ;
+-        final double var91 = FLAT_SIMPLEX_GRAD[(var24) | 0] * localX + FLAT_SIMPLEX_GRAD[(var24) | 1] * localY + FLAT_SIMPLEX_GRAD[(var24) | 2] * var62;
+-        final double var92 = FLAT_SIMPLEX_GRAD[(var25) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var25) | 1] * localY + FLAT_SIMPLEX_GRAD[(var25) | 2] * var62;
+-        final double var93 = FLAT_SIMPLEX_GRAD[(var26) | 0] * localX + FLAT_SIMPLEX_GRAD[(var26) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var26) | 2] * var62;
+-        final double var94 = FLAT_SIMPLEX_GRAD[(var27) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var27) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var27) | 2] * var62;
+-
+-        final double var95 = localX * 6.0 - 15.0;
+-        final double var96 = fadeLocalX * 6.0 - 15.0;
+-        final double var97 = localZ * 6.0 - 15.0;
+-        final double var98 = localX * var95 + 10.0;
+-        final double var99 = fadeLocalX * var96 + 10.0;
+-        final double var100 = localZ * var97 + 10.0;
+-        final double var101 = localX * localX * localX * var98;
+-        final double var102 = fadeLocalX * fadeLocalX * fadeLocalX * var99;
+-        final double var103 = localZ * localZ * localZ * var100;
+-
+-        final double var113 = var87 + var101 * (var88 - var87);
+-        final double var114 = var93 + var101 * (var94 - var93);
+-        final double var115 = var91 + var101 * (var92 - var91);
+-        final double var116 = var89 + var101 * (var90 - var89);
+-        final double var117 = var114 - var115;
+-        final double var118 = var102 * (var116 - var113);
+-        final double var119 = var102 * var117;
+-        final double var120 = var113 + var118;
+-        final double var121 = var115 + var119;
+-        return var120 + (var103 * (var121 - var120));
++    // Mirai start - c2me: opts math
++    /**
++     * @author ishland
++     * @reason inline math & small optimization: remove frequent type conversions and redundant ops
++     */
++    private double sampleAndLerp(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double fadeLocalX) {
++        // TODO [VanillaCopy] but optimized
++        final int var0 = sectionX & 0xFF;
++        final int var1 = (sectionX + 1) & 0xFF;
++        final int var2 = this.p[var0] & 0xFF;
++        final int var3 = this.p[var1] & 0xFF;
++        final int var4 = (var2 + sectionY) & 0xFF;
++        final int var5 = (var3 + sectionY) & 0xFF;
++        final int var6 = (var2 + sectionY + 1) & 0xFF;
++        final int var7 = (var3 + sectionY + 1) & 0xFF;
++        final int var8 = this.p[var4] & 0xFF;
++        final int var9 = this.p[var5] & 0xFF;
++        final int var10 = this.p[var6] & 0xFF;
++        final int var11 = this.p[var7] & 0xFF;
++
++        final int var12 = (var8 + sectionZ) & 0xFF;
++        final int var13 = (var9 + sectionZ) & 0xFF;
++        final int var14 = (var10 + sectionZ) & 0xFF;
++        final int var15 = (var11 + sectionZ) & 0xFF;
++        final int var16 = (var8 + sectionZ + 1) & 0xFF;
++        final int var17 = (var9 + sectionZ + 1) & 0xFF;
++        final int var18 = (var10 + sectionZ + 1) & 0xFF;
++        final int var19 = (var11 + sectionZ + 1) & 0xFF;
++        final int var20 = (this.p[var12] & 15) << 2;
++        final int var21 = (this.p[var13] & 15) << 2;
++        final int var22 = (this.p[var14] & 15) << 2;
++        final int var23 = (this.p[var15] & 15) << 2;
++        final int var24 = (this.p[var16] & 15) << 2;
++        final int var25 = (this.p[var17] & 15) << 2;
++        final int var26 = (this.p[var18] & 15) << 2;
++        final int var27 = (this.p[var19] & 15) << 2;
++        final double var60 = localX - 1.0;
++        final double var61 = localY - 1.0;
++        final double var62 = localZ - 1.0;
++        final double var87 = FLAT_SIMPLEX_GRAD[(var20)] * localX + FLAT_SIMPLEX_GRAD[(var20) | 1] * localY + FLAT_SIMPLEX_GRAD[(var20) | 2] * localZ;
++        final double var88 = FLAT_SIMPLEX_GRAD[(var21)] * var60 + FLAT_SIMPLEX_GRAD[(var21) | 1] * localY + FLAT_SIMPLEX_GRAD[(var21) | 2] * localZ;
++        final double var89 = FLAT_SIMPLEX_GRAD[(var22)] * localX + FLAT_SIMPLEX_GRAD[(var22) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var22) | 2] * localZ;
++        final double var90 = FLAT_SIMPLEX_GRAD[(var23)] * var60 + FLAT_SIMPLEX_GRAD[(var23) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var23) | 2] * localZ;
++        final double var91 = FLAT_SIMPLEX_GRAD[(var24)] * localX + FLAT_SIMPLEX_GRAD[(var24) | 1] * localY + FLAT_SIMPLEX_GRAD[(var24) | 2] * var62;
++        final double var92 = FLAT_SIMPLEX_GRAD[(var25)] * var60 + FLAT_SIMPLEX_GRAD[(var25) | 1] * localY + FLAT_SIMPLEX_GRAD[(var25) | 2] * var62;
++        final double var93 = FLAT_SIMPLEX_GRAD[(var26)] * localX + FLAT_SIMPLEX_GRAD[(var26) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var26) | 2] * var62;
++        final double var94 = FLAT_SIMPLEX_GRAD[(var27)] * var60 + FLAT_SIMPLEX_GRAD[(var27) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var27) | 2] * var62;
++
++        final double var95 = localX * 6.0 - 15.0;
++        final double var96 = fadeLocalX * 6.0 - 15.0;
++        final double var97 = localZ * 6.0 - 15.0;
++        final double var98 = localX * var95 + 10.0;
++        final double var99 = fadeLocalX * var96 + 10.0;
++        final double var100 = localZ * var97 + 10.0;
++        final double var101 = localX * localX * localX * var98;
++        final double var102 = fadeLocalX * fadeLocalX * fadeLocalX * var99;
++        final double var103 = localZ * localZ * localZ * var100;
++
++        final double var113 = var87 + var101 * (var88 - var87);
++        final double var114 = var93 + var101 * (var94 - var93);
++        final double var115 = var91 + var101 * (var92 - var91);
++        final double var116 = var89 + var101 * (var90 - var89);
++        final double var117 = var114 - var115;
++        final double var118 = var102 * (var116 - var113);
++        final double var119 = var102 * var117;
++        final double var120 = var113 + var118;
++        final double var121 = var115 + var119;
++        return var120 + (var103 * (var121 - var120));
+     }
+-    // Mirai end
++    // Mirai end
+ 
+     private double sampleWithDerivative(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double[] ds) {
+         int i = this.p(sectionX);
+diff --git a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
+index 973d13200fcc7b96f1cee9472afc4fa85d9e9b1c..db05b098864c4440b150b4c6c74da311348d3a5f 100644
+--- a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
++++ b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
+@@ -1,21 +1,21 @@
+-package net.minecraft.world.phys.shapes;
+-
+-import com.google.common.annotations.VisibleForTesting;
+-import com.google.common.math.DoubleMath;
+-import com.google.common.math.IntMath;
+-import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
+-import it.unimi.dsi.fastutil.doubles.DoubleList;
+-import java.util.Arrays;
+-import java.util.Objects;
+-import net.minecraft.Util;
+-import net.minecraft.core.AxisCycle;
+-import net.minecraft.core.Direction;
+-import net.minecraft.world.phys.AABB;
+-
+-public final class Shapes {
+-    public static final double EPSILON = 1.0E-7D;
+-    public static final double BIG_EPSILON = 1.0E-6D;
+-    private static final VoxelShape BLOCK = Util.make(() -> {
++package net.minecraft.world.phys.shapes;
++
++import com.google.common.annotations.VisibleForTesting;
++import com.google.common.math.DoubleMath;
++import com.google.common.math.IntMath;
++import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
++import it.unimi.dsi.fastutil.doubles.DoubleList;
++import java.util.Arrays;
++import java.util.Objects;
++import net.minecraft.Util;
++import net.minecraft.core.AxisCycle;
++import net.minecraft.core.Direction;
++import net.minecraft.world.phys.AABB;
++
++public final class Shapes {
++    public static final double EPSILON = 1.0E-7D;
++    public static final double BIG_EPSILON = 1.0E-6D;
++    private static final VoxelShape BLOCK = Util.make(() -> {
+         // Paper start - optimise collisions - force arrayvoxelshape
+         final DiscreteVoxelShape shape = new BitSetDiscreteVoxelShape(1, 1, 1);
+         shape.fill(0, 0, 0);
+@@ -25,13 +25,13 @@ public final class Shapes {
+             io.papermc.paper.util.CollisionUtil.ZERO_ONE, io.papermc.paper.util.CollisionUtil.ZERO_ONE, io.papermc.paper.util.CollisionUtil.ZERO_ONE
+         );
+         // Paper end - optimise collisions - force arrayvoxelshape
+-    });
+-    public static final VoxelShape INFINITY = box(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+-    private static final VoxelShape EMPTY = new ArrayVoxelShape(new BitSetDiscreteVoxelShape(0, 0, 0), (DoubleList)(new DoubleArrayList(new double[]{0.0D})), (DoubleList)(new DoubleArrayList(new double[]{0.0D})), (DoubleList)(new DoubleArrayList(new double[]{0.0D})));
+-
++    });
++    public static final VoxelShape INFINITY = box(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
++    private static final VoxelShape EMPTY = new ArrayVoxelShape(new BitSetDiscreteVoxelShape(0, 0, 0), (DoubleList)(new DoubleArrayList(new double[]{0.0D})), (DoubleList)(new DoubleArrayList(new double[]{0.0D})), (DoubleList)(new DoubleArrayList(new double[]{0.0D})));
++
+     // Paper start - optimise collisions - force arrayvoxelshape
+     private static final DoubleArrayList[] PARTS_BY_BITS = new DoubleArrayList[] {
+-            DoubleArrayList.wrap(generateCubeParts(1 << 0)),
++            DoubleArrayList.wrap(generateCubeParts(1)),
+             DoubleArrayList.wrap(generateCubeParts(1 << 1)),
+             DoubleArrayList.wrap(generateCubeParts(1 << 2)),
+             DoubleArrayList.wrap(generateCubeParts(1 << 3))
+@@ -53,24 +53,24 @@ public final class Shapes {
+     }
+     // Paper end - optimise collisions - force arrayvoxelshape
+ 
+-    public static VoxelShape empty() {
+-        return EMPTY;
+-    }
+-
+-    public static VoxelShape block() {
+-        return BLOCK;
+-    }
+-
+-    public static VoxelShape box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+-        if (!(minX > maxX) && !(minY > maxY) && !(minZ > maxZ)) {
+-            return create(minX, minY, minZ, maxX, maxY, maxZ);
+-        } else {
+-            throw new IllegalArgumentException("The min values need to be smaller or equals to the max values");
+-        }
+-    }
+-
+-    public static VoxelShape create(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+-        if (!(maxX - minX < 1.0E-7D) && !(maxY - minY < 1.0E-7D) && !(maxZ - minZ < 1.0E-7D)) {
++    public static VoxelShape empty() {
++        return EMPTY;
++    }
++
++    public static VoxelShape block() {
++        return BLOCK;
++    }
++
++    public static VoxelShape box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
++        if (!(minX > maxX) && !(minY > maxY) && !(minZ > maxZ)) {
++            return create(minX, minY, minZ, maxX, maxY, maxZ);
++        } else {
++            throw new IllegalArgumentException("The min values need to be smaller or equals to the max values");
++        }
++    }
++
++    public static VoxelShape create(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
++        if (!(maxX - minX < 1.0E-7D) && !(maxY - minY < 1.0E-7D) && !(maxZ - minZ < 1.0E-7D)) {
+             // Paper start - optimise collisions
+             // force ArrayVoxelShape in every case
+             final int bitsX = findBits(minX, maxX);
+@@ -79,7 +79,7 @@ public final class Shapes {
+             if (bitsX >= 0 && bitsY >= 0 && bitsZ >= 0) {
+                 if (bitsX == 0 && bitsY == 0 && bitsZ == 0) {
+                     return BLOCK;
+-                } else {
++                } else {
+                     final int sizeX = 1 << bitsX;
+                     final int sizeY = 1 << bitsY;
+                     final int sizeZ = 1 << bitsZ;
+@@ -94,54 +94,54 @@ public final class Shapes {
+                             PARTS_BY_BITS[bitsY],
+                             PARTS_BY_BITS[bitsZ]
+                     );
+-                }
+-            } else {
++                }
++            } else {
+                 return new ArrayVoxelShape(
+                         BLOCK.shape,
+                         minX == 0.0 && maxX == 1.0 ? io.papermc.paper.util.CollisionUtil.ZERO_ONE : DoubleArrayList.wrap(new double[] { minX, maxX }),
+                         minY == 0.0 && maxY == 1.0 ? io.papermc.paper.util.CollisionUtil.ZERO_ONE : DoubleArrayList.wrap(new double[] { minY, maxY }),
+                         minZ == 0.0 && maxZ == 1.0 ? io.papermc.paper.util.CollisionUtil.ZERO_ONE : DoubleArrayList.wrap(new double[] { minZ, maxZ })
+                 );
+-            }
++            }
+             // Paper end - optimise collisions
+-        } else {
+-            return empty();
+-        }
+-    }
+-
+-    public static VoxelShape create(AABB box) {
+-        return create(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
+-    }
+-
+-    @VisibleForTesting
+-    protected static int findBits(double min, double max) {
+-        if (!(min < -1.0E-7D) && !(max > 1.0000001D)) {
+-            for(int i = 0; i <= 3; ++i) {
+-                int j = 1 << i;
+-                double d = min * (double)j;
+-                double e = max * (double)j;
++        } else {
++            return empty();
++        }
++    }
++
++    public static VoxelShape create(AABB box) {
++        return create(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
++    }
++
++    @VisibleForTesting
++    protected static int findBits(double min, double max) {
++        if (!(min < -1.0E-7D) && !(max > 1.0000001D)) {
++            for(int i = 0; i <= 3; ++i) {
++                int j = 1 << i;
++                double d = min * (double)j;
++                double e = max * (double)j;
+                 boolean bl = Math.abs(d - (double)carpetfixes.helpers.FastMath.round(d)) < 1.0E-7D * (double)j; // Mirai
+                 boolean bl2 = Math.abs(e - (double)carpetfixes.helpers.FastMath.round(e)) < 1.0E-7D * (double)j; // Mirai
+-                if (bl && bl2) {
+-                    return i;
+-                }
+-            }
+-
+-            return -1;
+-        } else {
+-            return -1;
+-        }
+-    }
+-
+-    protected static long lcm(int a, int b) {
+-        return (long)a * (long)(b / IntMath.gcd(a, b));
+-    }
+-
+-    public static VoxelShape or(VoxelShape first, VoxelShape second) {
+-        return join(first, second, BooleanOp.OR);
+-    }
+-
+-    public static VoxelShape or(VoxelShape first, VoxelShape... others) {
++                if (bl && bl2) {
++                    return i;
++                }
++            }
++
++            return -1;
++        } else {
++            return -1;
++        }
++    }
++
++    protected static long lcm(int a, int b) {
++        return (long)a * (long)(b / IntMath.gcd(a, b));
++    }
++
++    public static VoxelShape or(VoxelShape first, VoxelShape second) {
++        return join(first, second, BooleanOp.OR);
++    }
++
++    public static VoxelShape or(VoxelShape first, VoxelShape... others) {
+         // Paper start - optimise collisions
+         int size = others.length;
+         if (size == 0) {
+@@ -177,54 +177,54 @@ public final class Shapes {
+ 
+         return tmp[0];
+         // Paper end - optimise collisions
+-    }
+-
+-    public static VoxelShape join(VoxelShape first, VoxelShape second, BooleanOp function) {
++    }
++
++    public static VoxelShape join(VoxelShape first, VoxelShape second, BooleanOp function) {
+         return io.papermc.paper.util.CollisionUtil.joinOptimized(first, second, function); // Paper - optimise collisions
+-    }
+-
+-    public static VoxelShape joinUnoptimized(VoxelShape one, VoxelShape two, BooleanOp function) {
++    }
++
++    public static VoxelShape joinUnoptimized(VoxelShape one, VoxelShape two, BooleanOp function) {
+         return io.papermc.paper.util.CollisionUtil.joinUnoptimized(one, two, function); // Paper - optimise collisions
+-    }
+-
+-    public static boolean joinIsNotEmpty(VoxelShape shape1, VoxelShape shape2, BooleanOp predicate) {
++    }
++
++    public static boolean joinIsNotEmpty(VoxelShape shape1, VoxelShape shape2, BooleanOp predicate) {
+         return io.papermc.paper.util.CollisionUtil.isJoinNonEmpty(shape1, shape2, predicate); // Paper - optimise collisions
+-    }
+-
+-    private static boolean joinIsNotEmpty(IndexMerger mergedX, IndexMerger mergedY, IndexMerger mergedZ, DiscreteVoxelShape shape1, DiscreteVoxelShape shape2, BooleanOp predicate) {
+-        return !mergedX.forMergedIndexes((x1, x2, index1) -> {
+-            return mergedY.forMergedIndexes((y1, y2, index2) -> {
+-                return mergedZ.forMergedIndexes((z1, z2, index3) -> {
+-                    return !predicate.apply(shape1.isFullWide(x1, y1, z1), shape2.isFullWide(x2, y2, z2));
+-                });
+-            });
+-        });
+-    }
+-
+-    public static double collide(Direction.Axis axis, AABB box, Iterable<VoxelShape> shapes, double maxDist) {
+-        for(VoxelShape voxelShape : shapes) {
+-            if (Math.abs(maxDist) < 1.0E-7D) {
+-                return 0.0D;
+-            }
+-
+-            maxDist = voxelShape.collide(axis, box, maxDist);
+-        }
+-
+-        return maxDist;
+-    }
+-
+-    public static boolean blockOccudes(VoxelShape shape, VoxelShape neighbor, Direction direction) {
++    }
++
++    private static boolean joinIsNotEmpty(IndexMerger mergedX, IndexMerger mergedY, IndexMerger mergedZ, DiscreteVoxelShape shape1, DiscreteVoxelShape shape2, BooleanOp predicate) {
++        return !mergedX.forMergedIndexes((x1, x2, index1) -> {
++            return mergedY.forMergedIndexes((y1, y2, index2) -> {
++                return mergedZ.forMergedIndexes((z1, z2, index3) -> {
++                    return !predicate.apply(shape1.isFullWide(x1, y1, z1), shape2.isFullWide(x2, y2, z2));
++                });
++            });
++        });
++    }
++
++    public static double collide(Direction.Axis axis, AABB box, Iterable<VoxelShape> shapes, double maxDist) {
++        for(VoxelShape voxelShape : shapes) {
++            if (Math.abs(maxDist) < 1.0E-7D) {
++                return 0.0D;
++            }
++
++            maxDist = voxelShape.collide(axis, box, maxDist);
++        }
++
++        return maxDist;
++    }
++
++    public static boolean blockOccudes(VoxelShape shape, VoxelShape neighbor, Direction direction) {
+         // Paper start - optimise collisions
+         final boolean firstBlock = shape == BLOCK;
+         final boolean secondBlock = neighbor == BLOCK;
+ 
+         if (firstBlock & secondBlock) {
+-            return true;
++            return true;
+         }
+ 
+         if (shape.isEmpty() | neighbor.isEmpty()) {
+-            return false;
+-        }
++            return false;
++        }
+ 
+         // we optimise getOpposite, so we can use it
+         // secondly, use our cache to retrieve sliced shape
+@@ -239,12 +239,12 @@ public final class Shapes {
+ 
+         return !joinIsNotEmpty(newFirst, newSecond, BooleanOp.ONLY_FIRST);
+         // Paper end - optimise collisions
+-    }
+-
+-    public static VoxelShape getFaceShape(VoxelShape shape, Direction direction) {
++    }
++
++    public static VoxelShape getFaceShape(VoxelShape shape, Direction direction) {
+         return shape.getFaceShapeClamped(direction); // Paper - optimise collisions
+     }
+-
++
+     // Paper start - optimise collisions
+     private static boolean mergedMayOccludeBlock(final VoxelShape shape1, final VoxelShape shape2) {
+         // if the combined bounds of the two shapes cannot occlude, then neither can the merged
+@@ -262,20 +262,20 @@ public final class Shapes {
+         return (minX <= io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON && maxX >= (1 - io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON)) &&
+             (minY <= io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON && maxY >= (1 - io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON)) &&
+             (minZ <= io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON && maxZ >= (1 - io.papermc.paper.util.CollisionUtil.COLLISION_EPSILON));
+-    }
++    }
+     // Paper end - optimise collisions
+-
+-    public static boolean mergedFaceOccludes(VoxelShape one, VoxelShape two, Direction direction) {
++
++    public static boolean mergedFaceOccludes(VoxelShape one, VoxelShape two, Direction direction) {
+         // Paper start - optimise collisions
+         // see if any of the shapes on their own occludes, only if cached
+         if (one.occludesFullBlockIfCached() || two.occludesFullBlockIfCached()) {
+             return true;
+         }
+-
++
+         if (one.isEmpty() & two.isEmpty()) {
+             return false;
+         }
+-
++
+         // we optimise getOpposite, so we can use it
+         // secondly, use our cache to retrieve sliced shape
+         final VoxelShape newFirst = one.getFaceShapeClamped(direction);
+@@ -283,8 +283,8 @@ public final class Shapes {
+ 
+         // see if any of the shapes on their own occludes, only if cached
+         if (newFirst.occludesFullBlockIfCached() || newSecond.occludesFullBlockIfCached()) {
+-            return true;
+-        }
++            return true;
++        }
+ 
+         final boolean firstEmpty = newFirst.isEmpty();
+         final boolean secondEmpty = newSecond.isEmpty();
+@@ -303,13 +303,13 @@ public final class Shapes {
+ 
+         return mergedMayOccludeBlock(newFirst, newSecond) && newFirst.orUnoptimized(newSecond).occludesFullBlock();
+         // Paper end - optimise collisions
+-    }
+-
+-    public static boolean faceShapeOccludes(VoxelShape one, VoxelShape two) {
++    }
++
++    public static boolean faceShapeOccludes(VoxelShape one, VoxelShape two) {
+         // Paper start - optimise collisions
+         if (one.occludesFullBlockIfCached() || two.occludesFullBlockIfCached()) {
+-            return true;
+-        }
++            return true;
++        }
+ 
+         final boolean s1Empty = one.isEmpty();
+         final boolean s2Empty = two.isEmpty();
+@@ -327,9 +327,9 @@ public final class Shapes {
+ 
+         return mergedMayOccludeBlock(one, two) && (one.orUnoptimized(two)).occludesFullBlock();
+         // Paper end - optimise collisions
+-    }
+-
+-    @VisibleForTesting
++    }
++
++    @VisibleForTesting
+     private static IndexMerger createIndexMerger(int size, DoubleList first, DoubleList second, boolean includeFirst, boolean includeSecond) { // Paper - private
+         // Paper start - fast track the most common scenario
+         // doublelist is usually a DoubleArrayList with Infinite head/tails that falls to the final else clause
+@@ -342,16 +342,16 @@ public final class Shapes {
+     }
+ 
+     private static IndexMerger lessCommonMerge(int size, DoubleList first, DoubleList second, boolean includeFirst, boolean includeSecond) {
+-        int i = first.size() - 1;
+-        int j = second.size() - 1;
++        int i = first.size() - 1;
++        int j = second.size() - 1;
+         // Paper note - Rewrite below as optimized order if instead of nasty ternary
+-        if (first instanceof CubePointRange && second instanceof CubePointRange) {
+-            long l = lcm(i, j);
+-            if ((long)size * l <= 256L) {
+-                return new DiscreteCubeMerger(i, j);
+-            }
+-        }
+-
++        if (first instanceof CubePointRange && second instanceof CubePointRange) {
++            long l = lcm(i, j);
++            if ((long)size * l <= 256L) {
++                return new DiscreteCubeMerger(i, j);
++            }
++        }
++
+         // Paper start - Identical happens more often than Disjoint
+         if (i == j && Objects.equals(first, second)) {
+             if (first instanceof IdenticalMerger) {
+@@ -361,16 +361,16 @@ public final class Shapes {
+             }
+             return new IdenticalMerger(first);
+         } else if (first.getDouble(i) < second.getDouble(0) - 1.0E-7D) {
+-            return new NonOverlappingMerger(first, second, false);
+-        } else if (second.getDouble(j) < first.getDouble(0) - 1.0E-7D) {
+-            return new NonOverlappingMerger(second, first, true);
+-        } else {
++            return new NonOverlappingMerger(first, second, false);
++        } else if (second.getDouble(j) < first.getDouble(0) - 1.0E-7D) {
++            return new NonOverlappingMerger(second, first, true);
++        } else {
+             return new IndirectMerger(first, second, includeFirst, includeSecond);
+-        }
++        }
+         // Paper end
+-    }
+-
+-    public interface DoubleLineConsumer {
+-        void consume(double minX, double minY, double minZ, double maxX, double maxY, double maxZ);
+-    }
+-}
++    }
++
++    public interface DoubleLineConsumer {
++        void consume(double minX, double minY, double minZ, double maxX, double maxY, double maxZ);
++    }
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/bootstrap/Main.java b/src/main/java/org/bukkit/craftbukkit/bootstrap/Main.java
+index 8a4f95049c63afb28bef6719c77b7a7092e75aae..b7e5a22d956a327cb39303f432282ff1396196a2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/bootstrap/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/bootstrap/Main.java
+@@ -135,7 +135,7 @@ public class Main {
+         StringBuilder result = new StringBuilder(bytes.length * 2);
+         for (byte b : bytes) {
+             result.append(Character.forDigit(b >> 4 & 0xF, 16));
+-            result.append(Character.forDigit(b >> 0 & 0xF, 16));
++            result.append(Character.forDigit(b & 0xF, 16));
+         }
+         return result.toString();
+     }
