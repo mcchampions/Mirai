@@ -114,62 +114,9 @@ index dc06747df171678c8531e1153c5fa9b80b70baed..16c07defbb8b186d5fb6a95ae28a0570
      protected final Reference2IntLinkedOpenHashMap<E> indexMap;
      protected int firstInvalidIndex = -1;
 diff --git a/src/main/java/net/minecraft/core/SectionPos.java b/src/main/java/net/minecraft/core/SectionPos.java
-index dd1f6f3f89ebee301f587aa2f099910c141fcd6f..6708887d6d5ee98457e03bb6a4d514a545bce141 100644
+index dd1f6f3f89ebee301f587aa2f099910c141fcd6f..082986c782e0d43a038aae96327b807c7c987513 100644
 --- a/src/main/java/net/minecraft/core/SectionPos.java
 +++ b/src/main/java/net/minecraft/core/SectionPos.java
-@@ -38,7 +38,7 @@ public class SectionPos extends Vec3i {
-     }
- 
-     public static SectionPos of(BlockPos pos) {
--        return new SectionPos(pos.getX() >> 4, pos.getY() >> 4, pos.getZ() >> 4); // Paper
-+        return new SectionPos(pos.getX() >> 4, pos.getY() >> 4, pos.getZ() >> 4); // Paper
-     }
- 
-     public static SectionPos of(ChunkPos chunkPos, int y) {
-@@ -54,7 +54,7 @@ public class SectionPos extends Vec3i {
-     }
- 
-     public static SectionPos of(long packed) {
--        return new SectionPos((int) (packed >> 42), (int) (packed << 44 >> 44), (int) (packed << 22 >> 42)); // Paper
-+        return new SectionPos((int) (packed >> 42), (int) (packed << 44 >> 44), (int) (packed << 22 >> 42)); // Paper
-     }
- 
-     public static SectionPos bottomOf(ChunkAccess chunk) {
-@@ -65,16 +65,16 @@ public class SectionPos extends Vec3i {
-         return offset(packed, direction.getStepX(), direction.getStepY(), direction.getStepZ());
-     }
- 
--    // Paper start
--    public static long getAdjacentFromBlockPos(int x, int y, int z, Direction enumdirection) {
--        return (((long) ((x >> 4) + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y >> 4) + enumdirection.getStepY()) & 1048575L)) | (((long) ((z >> 4) + enumdirection.getStepZ()) & 4194303L) << 20);
--    }
--    public static long getAdjacentFromSectionPos(int x, int y, int z, Direction enumdirection) {
--        return (((long) (x + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y) + enumdirection.getStepY()) & 1048575L)) | (((long) (z + enumdirection.getStepZ()) & 4194303L) << 20);
--    }
--    // Paper end
-+    // Paper start
-+    public static long getAdjacentFromBlockPos(int x, int y, int z, Direction enumdirection) {
-+        return (((long) ((x >> 4) + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y >> 4) + enumdirection.getStepY()) & 1048575L)) | (((long) ((z >> 4) + enumdirection.getStepZ()) & 4194303L) << 20);
-+    }
-+    public static long getAdjacentFromSectionPos(int x, int y, int z, Direction enumdirection) {
-+        return (((long) (x + enumdirection.getStepX()) & 4194303L) << 42) | (((long) ((y) + enumdirection.getStepY()) & 1048575L)) | (((long) (z + enumdirection.getStepZ()) & 4194303L) << 20);
-+    }
-+    // Paper end
-     public static long offset(long packed, int x, int y, int z) {
--        return (((long) ((int) (packed >> 42) + x) & 4194303L) << 42) | (((long) ((int) (packed << 44 >> 44) + y) & 1048575L)) | (((long) ((int) (packed << 22 >> 42) + z) & 4194303L) << 20); // Simplify to reduce instruction count
-+        return (((long) ((int) (packed >> 42) + x) & 4194303L) << 42) | (((long) ((int) (packed << 44 >> 44) + y) & 1048575L)) | (((long) ((int) (packed << 22 >> 42) + z) & 4194303L) << 20); // Simplify to reduce instruction count
-     }
- 
-     public static int posToSectionCoord(double coord) {
-@@ -94,7 +94,7 @@ public class SectionPos extends Vec3i {
-     }
- 
-     public static short sectionRelativePos(BlockPos pos) {
--        return (short) ((pos.getX() & 15) << 8 | (pos.getZ() & 15) << 4 | pos.getY() & 15); // Paper - simplify/inline
-+        return (short) ((pos.getX() & 15) << 8 | (pos.getZ() & 15) << 4 | pos.getY() & 15); // Paper - simplify/inline
-     }
- 
-     public static int sectionRelativeX(short packedLocalPos) {
 @@ -102,7 +102,7 @@ public class SectionPos extends Vec3i {
      }
  
@@ -188,81 +135,6 @@ index dd1f6f3f89ebee301f587aa2f099910c141fcd6f..6708887d6d5ee98457e03bb6a4d514a5
      }
  
      public static int y(long packed) {
-@@ -157,16 +157,16 @@ public class SectionPos extends Vec3i {
-         return this.getZ();
-     }
- 
--    public final int minBlockX() { // Paper - make final
--        return this.getX() << 4; // Paper - inline
-+    public final int minBlockX() { // Paper - make final
-+        return this.getX() << 4; // Paper - inline
-     }
- 
--    public final int minBlockY() { // Paper - make final
--        return this.getY() << 4; // Paper - inline
-+    public final int minBlockY() { // Paper - make final
-+        return this.getY() << 4; // Paper - inline
-     }
- 
--    public int minBlockZ() { // Paper - make final
--        return this.getZ() << 4; // Paper - inline
-+    public int minBlockZ() { // Paper - make final
-+        return this.getZ() << 4; // Paper - inline
-     }
- 
-     public int maxBlockX() {
-@@ -182,8 +182,8 @@ public class SectionPos extends Vec3i {
-     }
- 
-     public static long blockToSection(long blockPos) {
--        // b(a(BlockPosition.b(i)), a(BlockPosition.c(i)), a(BlockPosition.d(i)));
--        return (((long) (int) (blockPos >> 42) & 4194303L) << 42) | (((long) (int) ((blockPos << 52) >> 56) & 1048575L)) | (((long) (int) ((blockPos << 26) >> 42) & 4194303L) << 20); // Simplify to reduce instruction count
-+        // b(a(BlockPosition.b(i)), a(BlockPosition.c(i)), a(BlockPosition.d(i)));
-+        return (((long) (int) (blockPos >> 42) & 4194303L) << 42) | (((long) (int) ((blockPos << 52) >> 56) & 1048575L)) | (((long) (int) ((blockPos << 26) >> 42) & 4194303L) << 20); // Simplify to reduce instruction count
-     }
- 
-     public static long getZeroNode(int x, int z) {
-@@ -211,18 +211,18 @@ public class SectionPos extends Vec3i {
-         return asLong(blockToSectionCoord(pos.getX()), blockToSectionCoord(pos.getY()), blockToSectionCoord(pos.getZ()));
-     }
- 
--    // Paper start
--    public static long blockPosAsSectionLong(int i, int j, int k) {
--        return (((long) (i >> 4) & 4194303L) << 42) | (((long) (j >> 4) & 1048575L)) | (((long) (k >> 4) & 4194303L) << 20);
--    }
--    // Paper end
--
-+    // Paper start
-+    public static long blockPosAsSectionLong(int i, int j, int k) {
-+        return (((long) (i >> 4) & 4194303L) << 42) | (((long) (j >> 4) & 1048575L)) | (((long) (k >> 4) & 4194303L) << 20);
-+    }
-+    // Paper end
-+
-     public static long asLong(int x, int y, int z) {
--        return (((long) x & 4194303L) << 42) | (((long) y & 1048575L)) | (((long) z & 4194303L) << 20); // Paper - Simplify to reduce instruction count
-+        return (((long) x & 4194303L) << 42) | (((long) y & 1048575L)) | (((long) z & 4194303L) << 20); // Paper - Simplify to reduce instruction count
-     }
- 
-     public long asLong() {
--        return (((long) getX() & 4194303L) << 42) | (((long) getY() & 1048575L)) | (((long) getZ() & 4194303L) << 20); // Paper - Simplify to reduce instruction count
-+        return (((long) getX() & 4194303L) << 42) | (((long) getY() & 1048575L)) | (((long) getZ() & 4194303L) << 20); // Paper - Simplify to reduce instruction count
-     }
- 
-     @Override
-@@ -235,11 +235,11 @@ public class SectionPos extends Vec3i {
-     }
- 
-     public static Stream<SectionPos> cube(SectionPos center, int radius) {
--        return betweenClosedStream(center.getX() - radius, center.getY() - radius, center.getZ() - radius, center.getX() + radius, center.getY() + radius, center.getZ() + radius); // Paper - simplify/inline
-+        return betweenClosedStream(center.getX() - radius, center.getY() - radius, center.getZ() - radius, center.getX() + radius, center.getY() + radius, center.getZ() + radius); // Paper - simplify/inline
-     }
- 
-     public static Stream<SectionPos> aroundChunk(ChunkPos center, int radius, int minY, int maxY) {
--        return betweenClosedStream(center.x - radius, 0, center.z - radius, center.x + radius, 15, center.z + radius); // Paper - simplify/inline
-+        return betweenClosedStream(center.x - radius, 0, center.z - radius, center.x + radius, 15, center.z + radius); // Paper - simplify/inline
-     }
- 
-     public static Stream<SectionPos> betweenClosedStream(final int minX, final int minY, final int minZ, final int maxX, final int maxY, final int maxZ) {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 index d987795ccaab787ae89af254dec88c6fc7e04f50..a394c85172a0ade6500b26659704424a056331be 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
@@ -299,7 +171,7 @@ index 8b02ca7a0ea5299a319809cdd2ccc8acd0e647bc..8549263e40b0c3ba3bcc401f1af7f678
                  for (int j = 0; j < 20; ++j) {
                      this.level().addParticle(ParticleTypes.ENTITY_EFFECT, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), d0, d1, d2);
 diff --git a/src/main/java/net/minecraft/world/item/DyeColor.java b/src/main/java/net/minecraft/world/item/DyeColor.java
-index 0f42c50359820250fe069d2c90e474386d9b6149..7d19a4ce17bca3fcaded122ae33851d45233f3e6 100644
+index 0f42c50359820250fe069d2c90e474386d9b6149..87c29b463ac616833477e7213b375185fc43eb4f 100644
 --- a/src/main/java/net/minecraft/world/item/DyeColor.java
 +++ b/src/main/java/net/minecraft/world/item/DyeColor.java
 @@ -49,7 +49,7 @@ public enum DyeColor implements StringRepresentable {
@@ -311,180 +183,14 @@ index 0f42c50359820250fe069d2c90e474386d9b6149..7d19a4ce17bca3fcaded122ae33851d4
          this.textureDiffuseColors = new float[]{(float)j / 255.0F, (float)k / 255.0F, (float)l / 255.0F};
          this.fireworkColor = fireworkColor;
      }
-@@ -103,10 +103,10 @@ public enum DyeColor implements StringRepresentable {
-     public String getSerializedName() {
-         return this.name;
-     }
--
--    // Purpur start
--    public static DyeColor random(net.minecraft.util.RandomSource random) {
--        return values()[random.nextInt(values().length)];
--    }
--    // Purpur end
-+
-+    // Purpur start
-+    public static DyeColor random(net.minecraft.util.RandomSource random) {
-+        return values()[random.nextInt(values().length)];
-+    }
-+    // Purpur end
- }
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
-index 17ad8fa8826c682eea1f71625f26f5c68cb6ede1..dd01b9b225feddc2963784578f44632a41a08daa 100644
+index 17ad8fa8826c682eea1f71625f26f5c68cb6ede1..473d35052b8668897d5ef9527c1ab88eea80feff 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
-@@ -11,27 +11,27 @@ public final class ImprovedNoise {
-     public final double yo;
-     public final double zo;
- 
--    // Mirai start - c2me: opts math
--    private static final double[] FLAT_SIMPLEX_GRAD = new double[]{
--        1, 1, 0, 0,
--        -1, 1, 0, 0,
--        1, -1, 0, 0,
--        -1, -1, 0, 0,
--        1, 0, 1, 0,
--        -1, 0, 1, 0,
--        1, 0, -1, 0,
--        -1, 0, -1, 0,
--        0, 1, 1, 0,
--        0, -1, 1, 0,
--        0, 1, -1, 0,
--        0, -1, -1, 0,
--        1, 1, 0, 0,
--        0, -1, 1, 0,
--        -1, 1, 0, 0,
--        0, -1, -1, 0,
--    };
--    // Mirai end
--
-+    // Mirai start - c2me: opts math
-+    private static final double[] FLAT_SIMPLEX_GRAD = new double[]{
-+        1, 1, 0, 0,
-+        -1, 1, 0, 0,
-+        1, -1, 0, 0,
-+        -1, -1, 0, 0,
-+        1, 0, 1, 0,
-+        -1, 0, 1, 0,
-+        1, 0, -1, 0,
-+        -1, 0, -1, 0,
-+        0, 1, 1, 0,
-+        0, -1, 1, 0,
-+        0, 1, -1, 0,
-+        0, -1, -1, 0,
-+        1, 1, 0, 0,
-+        0, -1, 1, 0,
-+        -1, 1, 0, 0,
-+        0, -1, -1, 0,
-+    };
-+    // Mirai end
-+
-     public ImprovedNoise(RandomSource random) {
-         this.xo = random.nextDouble() * 256.0D;
-         this.yo = random.nextDouble() * 256.0D;
-@@ -55,40 +55,40 @@ public final class ImprovedNoise {
-         return this.noise(x, y, z, 0.0D, 0.0D);
-     }
- 
--    // Mirai start - c2me: opts math
--    /*
--      @author ishland
--     * @reason optimize: remove frequent type conversions
--     */
--    /**
--     * @deprecated
--     */
-+    // Mirai start - c2me: opts math
-+    /*
-+      @author ishland
-+     * @reason optimize: remove frequent type conversions
-+     */
-+    /**
-+     * @deprecated
-+     */
-     @Deprecated
-     public double noise(double x, double y, double z, double yScale, double yMax) {
-         double d = x + this.xo;
-         double e = y + this.yo;
-         double f = z + this.zo;
--        double i = Mth.floor(d);
--        double j = Mth.floor(e);
--        double k = Mth.floor(f);
--        double g = d - i;
--        double h = e - j;
--        double l = f - k;
--        double o = 0.0D;
--        if (yScale != 0.0) {
-+        double i = Mth.floor(d);
-+        double j = Mth.floor(e);
-+        double k = Mth.floor(f);
-+        double g = d - i;
-+        double h = e - j;
-+        double l = f - k;
-+        double o = 0.0D;
-+        if (yScale != 0.0) {
-             double m;
--            if (yMax >= 0.0 && yMax < h) {
-+            if (yMax >= 0.0 && yMax < h) {
-                 m = yMax;
-             } else {
-                 m = h;
-             }
- 
--            o = Mth.floor(m / yScale + 1.0E-7F) * yScale;
-+            o = Mth.floor(m / yScale + 1.0E-7F) * yScale;
-         }
- 
--        return this.sampleAndLerp((int) i, (int) j, (int) k, g, h - o, l, h);
-+        return this.sampleAndLerp((int) i, (int) j, (int) k, g, h - o, l, h);
-     }
--    // Mirai end
-+    // Mirai end
- 
-     public double noiseWithDerivative(double x, double y, double z, double[] ds) {
-         double d = x + this.xo;
-@@ -111,76 +111,76 @@ public final class ImprovedNoise {
-         return this.p[input & 255] & 255;
-     }
- 
--    // Mirai start - c2me: opts math
--    /**
--     * @author ishland
--     * @reason inline math & small optimization: remove frequent type conversions and redundant ops
--     */
--    private double sampleAndLerp(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double fadeLocalX) {
--        // TODO [VanillaCopy] but optimized
--        final int var0 = sectionX & 0xFF;
--        final int var1 = (sectionX + 1) & 0xFF;
--        final int var2 = this.p[var0] & 0xFF;
--        final int var3 = this.p[var1] & 0xFF;
--        final int var4 = (var2 + sectionY) & 0xFF;
--        final int var5 = (var3 + sectionY) & 0xFF;
--        final int var6 = (var2 + sectionY + 1) & 0xFF;
--        final int var7 = (var3 + sectionY + 1) & 0xFF;
--        final int var8 = this.p[var4] & 0xFF;
--        final int var9 = this.p[var5] & 0xFF;
--        final int var10 = this.p[var6] & 0xFF;
--        final int var11 = this.p[var7] & 0xFF;
--
--        final int var12 = (var8 + sectionZ) & 0xFF;
--        final int var13 = (var9 + sectionZ) & 0xFF;
--        final int var14 = (var10 + sectionZ) & 0xFF;
--        final int var15 = (var11 + sectionZ) & 0xFF;
--        final int var16 = (var8 + sectionZ + 1) & 0xFF;
--        final int var17 = (var9 + sectionZ + 1) & 0xFF;
--        final int var18 = (var10 + sectionZ + 1) & 0xFF;
--        final int var19 = (var11 + sectionZ + 1) & 0xFF;
--        final int var20 = (this.p[var12] & 15) << 2;
--        final int var21 = (this.p[var13] & 15) << 2;
--        final int var22 = (this.p[var14] & 15) << 2;
--        final int var23 = (this.p[var15] & 15) << 2;
--        final int var24 = (this.p[var16] & 15) << 2;
--        final int var25 = (this.p[var17] & 15) << 2;
--        final int var26 = (this.p[var18] & 15) << 2;
--        final int var27 = (this.p[var19] & 15) << 2;
--        final double var60 = localX - 1.0;
--        final double var61 = localY - 1.0;
--        final double var62 = localZ - 1.0;
+@@ -150,14 +150,14 @@ public final class ImprovedNoise {
+         final double var60 = localX - 1.0;
+         final double var61 = localY - 1.0;
+         final double var62 = localZ - 1.0;
 -        final double var87 = FLAT_SIMPLEX_GRAD[(var20) | 0] * localX + FLAT_SIMPLEX_GRAD[(var20) | 1] * localY + FLAT_SIMPLEX_GRAD[(var20) | 2] * localZ;
 -        final double var88 = FLAT_SIMPLEX_GRAD[(var21) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var21) | 1] * localY + FLAT_SIMPLEX_GRAD[(var21) | 2] * localZ;
 -        final double var89 = FLAT_SIMPLEX_GRAD[(var22) | 0] * localX + FLAT_SIMPLEX_GRAD[(var22) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var22) | 2] * localZ;
@@ -493,66 +199,6 @@ index 17ad8fa8826c682eea1f71625f26f5c68cb6ede1..dd01b9b225feddc2963784578f44632a
 -        final double var92 = FLAT_SIMPLEX_GRAD[(var25) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var25) | 1] * localY + FLAT_SIMPLEX_GRAD[(var25) | 2] * var62;
 -        final double var93 = FLAT_SIMPLEX_GRAD[(var26) | 0] * localX + FLAT_SIMPLEX_GRAD[(var26) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var26) | 2] * var62;
 -        final double var94 = FLAT_SIMPLEX_GRAD[(var27) | 0] * var60 + FLAT_SIMPLEX_GRAD[(var27) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var27) | 2] * var62;
--
--        final double var95 = localX * 6.0 - 15.0;
--        final double var96 = fadeLocalX * 6.0 - 15.0;
--        final double var97 = localZ * 6.0 - 15.0;
--        final double var98 = localX * var95 + 10.0;
--        final double var99 = fadeLocalX * var96 + 10.0;
--        final double var100 = localZ * var97 + 10.0;
--        final double var101 = localX * localX * localX * var98;
--        final double var102 = fadeLocalX * fadeLocalX * fadeLocalX * var99;
--        final double var103 = localZ * localZ * localZ * var100;
--
--        final double var113 = var87 + var101 * (var88 - var87);
--        final double var114 = var93 + var101 * (var94 - var93);
--        final double var115 = var91 + var101 * (var92 - var91);
--        final double var116 = var89 + var101 * (var90 - var89);
--        final double var117 = var114 - var115;
--        final double var118 = var102 * (var116 - var113);
--        final double var119 = var102 * var117;
--        final double var120 = var113 + var118;
--        final double var121 = var115 + var119;
--        return var120 + (var103 * (var121 - var120));
-+    // Mirai start - c2me: opts math
-+    /**
-+     * @author ishland
-+     * @reason inline math & small optimization: remove frequent type conversions and redundant ops
-+     */
-+    private double sampleAndLerp(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double fadeLocalX) {
-+        // TODO [VanillaCopy] but optimized
-+        final int var0 = sectionX & 0xFF;
-+        final int var1 = (sectionX + 1) & 0xFF;
-+        final int var2 = this.p[var0] & 0xFF;
-+        final int var3 = this.p[var1] & 0xFF;
-+        final int var4 = (var2 + sectionY) & 0xFF;
-+        final int var5 = (var3 + sectionY) & 0xFF;
-+        final int var6 = (var2 + sectionY + 1) & 0xFF;
-+        final int var7 = (var3 + sectionY + 1) & 0xFF;
-+        final int var8 = this.p[var4] & 0xFF;
-+        final int var9 = this.p[var5] & 0xFF;
-+        final int var10 = this.p[var6] & 0xFF;
-+        final int var11 = this.p[var7] & 0xFF;
-+
-+        final int var12 = (var8 + sectionZ) & 0xFF;
-+        final int var13 = (var9 + sectionZ) & 0xFF;
-+        final int var14 = (var10 + sectionZ) & 0xFF;
-+        final int var15 = (var11 + sectionZ) & 0xFF;
-+        final int var16 = (var8 + sectionZ + 1) & 0xFF;
-+        final int var17 = (var9 + sectionZ + 1) & 0xFF;
-+        final int var18 = (var10 + sectionZ + 1) & 0xFF;
-+        final int var19 = (var11 + sectionZ + 1) & 0xFF;
-+        final int var20 = (this.p[var12] & 15) << 2;
-+        final int var21 = (this.p[var13] & 15) << 2;
-+        final int var22 = (this.p[var14] & 15) << 2;
-+        final int var23 = (this.p[var15] & 15) << 2;
-+        final int var24 = (this.p[var16] & 15) << 2;
-+        final int var25 = (this.p[var17] & 15) << 2;
-+        final int var26 = (this.p[var18] & 15) << 2;
-+        final int var27 = (this.p[var19] & 15) << 2;
-+        final double var60 = localX - 1.0;
-+        final double var61 = localY - 1.0;
-+        final double var62 = localZ - 1.0;
 +        final double var87 = FLAT_SIMPLEX_GRAD[(var20)] * localX + FLAT_SIMPLEX_GRAD[(var20) | 1] * localY + FLAT_SIMPLEX_GRAD[(var20) | 2] * localZ;
 +        final double var88 = FLAT_SIMPLEX_GRAD[(var21)] * var60 + FLAT_SIMPLEX_GRAD[(var21) | 1] * localY + FLAT_SIMPLEX_GRAD[(var21) | 2] * localZ;
 +        final double var89 = FLAT_SIMPLEX_GRAD[(var22)] * localX + FLAT_SIMPLEX_GRAD[(var22) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var22) | 2] * localZ;
@@ -561,33 +207,9 @@ index 17ad8fa8826c682eea1f71625f26f5c68cb6ede1..dd01b9b225feddc2963784578f44632a
 +        final double var92 = FLAT_SIMPLEX_GRAD[(var25)] * var60 + FLAT_SIMPLEX_GRAD[(var25) | 1] * localY + FLAT_SIMPLEX_GRAD[(var25) | 2] * var62;
 +        final double var93 = FLAT_SIMPLEX_GRAD[(var26)] * localX + FLAT_SIMPLEX_GRAD[(var26) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var26) | 2] * var62;
 +        final double var94 = FLAT_SIMPLEX_GRAD[(var27)] * var60 + FLAT_SIMPLEX_GRAD[(var27) | 1] * var61 + FLAT_SIMPLEX_GRAD[(var27) | 2] * var62;
-+
-+        final double var95 = localX * 6.0 - 15.0;
-+        final double var96 = fadeLocalX * 6.0 - 15.0;
-+        final double var97 = localZ * 6.0 - 15.0;
-+        final double var98 = localX * var95 + 10.0;
-+        final double var99 = fadeLocalX * var96 + 10.0;
-+        final double var100 = localZ * var97 + 10.0;
-+        final double var101 = localX * localX * localX * var98;
-+        final double var102 = fadeLocalX * fadeLocalX * fadeLocalX * var99;
-+        final double var103 = localZ * localZ * localZ * var100;
-+
-+        final double var113 = var87 + var101 * (var88 - var87);
-+        final double var114 = var93 + var101 * (var94 - var93);
-+        final double var115 = var91 + var101 * (var92 - var91);
-+        final double var116 = var89 + var101 * (var90 - var89);
-+        final double var117 = var114 - var115;
-+        final double var118 = var102 * (var116 - var113);
-+        final double var119 = var102 * var117;
-+        final double var120 = var113 + var118;
-+        final double var121 = var115 + var119;
-+        return var120 + (var103 * (var121 - var120));
-     }
--    // Mirai end
-+    // Mirai end
  
-     private double sampleWithDerivative(int sectionX, int sectionY, int sectionZ, double localX, double localY, double localZ, double[] ds) {
-         int i = this.p(sectionX);
+         final double var95 = localX * 6.0 - 15.0;
+         final double var96 = fadeLocalX * 6.0 - 15.0;
 diff --git a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java b/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
 index 973d13200fcc7b96f1cee9472afc4fa85d9e9b1c..db05b098864c4440b150b4c6c74da311348d3a5f 100644
 --- a/src/main/java/net/minecraft/world/phys/shapes/Shapes.java
